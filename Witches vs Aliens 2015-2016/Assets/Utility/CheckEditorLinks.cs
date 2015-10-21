@@ -368,7 +368,7 @@ public class CheckEditorLinks : MonoBehaviour {
         if (value is ICollection && ((ICollection)value).Count == 0)
             return true;
         
-        if (!(value is MonoBehaviour))
+        if (!(value is MonoBehaviour) && !(value is GameObject))
         {
             var defaultConstructor = type.GetConstructor(Type.EmptyTypes);
             if (defaultConstructor != null)
