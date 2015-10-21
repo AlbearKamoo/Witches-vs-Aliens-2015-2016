@@ -9,6 +9,7 @@ public class Tags{
     public const string canvas = "Canvas";
     public const string untagged = "Untagged";
     public const string stage = "Stage";
+    public const string puck = "Puck";
 
     public class Scenes
     {
