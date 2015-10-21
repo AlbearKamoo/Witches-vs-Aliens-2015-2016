@@ -3,7 +3,8 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Stage
   layers:
   - Default
   - TransparentFX
@@ -20,7 +21,7 @@ TagManager:
   - 
   - 
   - 
-  - 
+  - Stage
   - 
   - 
   - 
@@ -38,6 +39,12 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Stage
+    uniqueID: 260144251
+    locked: 0
+  - name: Players
+    uniqueID: 2853865921
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0

@@ -8,6 +8,7 @@ public class Tags{
     public const string player = "Player";
     public const string canvas = "Canvas";
     public const string untagged = "Untagged";
+    public const string stage = "Stage";
 
     public class Scenes
     {
@@ -15,11 +16,11 @@ public class Tags{
         public const string mainScene = "MainScene";
     }
 
-    public class Axis
-    {
-        //public const string horizontal = "Horizontal";
-        //public const string vertical = "Vertical";
-    }
+    //public class Axis
+    //{
+    //    //public const string horizontal = "Horizontal";
+    //    //public const string vertical = "Vertical";
+    //}
 
     public class Layers
     {
