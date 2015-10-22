@@ -149,7 +149,12 @@ public class CheckEditorLinks : MonoBehaviour {
             Destroy(this.gameObject); //don't run in play mode
     }
 	void Update () {
-	    foreach(MonoBehaviour m in GameObject.FindObjectsOfType(typeof(MonoBehaviour))) //for every monobehaviour
+        CheckAllLinks();
+	}
+
+    void CheckAllLinks()
+    {
+        foreach (MonoBehaviour m in GameObject.FindObjectsOfType(typeof(MonoBehaviour))) //for every monobehaviour
         {
             if (m is UnityEngine.EventSystems.UIBehaviour)
                 continue; //ignore Unity defined classes
@@ -185,7 +190,7 @@ public class CheckEditorLinks : MonoBehaviour {
                 }
             }
         }
-	}
+    }
 
     void RunAutolinking(FieldInfo field, MonoBehaviour script)
     {
@@ -378,7 +383,7 @@ public class CheckEditorLinks : MonoBehaviour {
                     return true;
             }
         }
-        if(type.IsValueType)
+        if(type.IsValueType && !type.IsEnum)
         {
             var valueInstance = Activator.CreateInstance(type);
             if (value == valueInstance || value.Equals(valueInstance))

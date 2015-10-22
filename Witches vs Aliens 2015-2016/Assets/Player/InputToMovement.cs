@@ -19,6 +19,6 @@ public class InputToMovement : MonoBehaviour {
 	
 	// Update is called once per frame
 	void FixedUpdate () {
-        rigid.velocity = Vector2.MoveTowards(rigid.velocity, maxSpeed * normalizedInput, scaledAccel * Time.fixedDeltaTime);
+        rigid.velocity = Vector2.ClampMagnitude(Vector2.MoveTowards(rigid.velocity, maxSpeed * normalizedInput, scaledAccel * Time.fixedDeltaTime), maxSpeed);
 	}
 }
