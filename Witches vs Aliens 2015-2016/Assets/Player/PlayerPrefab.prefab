@@ -72,8 +72,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2550f0f4a9c9558458d2ea2a9f528548, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxSpeed: 5
-  accel: 5
+  maxSpeed: 10
+  accel: 10
 --- !u!114 &11469838
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -132,6 +132,22 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: m_Layer
       value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: baseMaxSpeed
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: baseAccel
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: maxSpeed
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: accel
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

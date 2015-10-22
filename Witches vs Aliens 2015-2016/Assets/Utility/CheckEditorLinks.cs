@@ -205,7 +205,6 @@ public class CheckEditorLinks : MonoBehaviour {
                 //check if autolinking is valid first
                 if(checkExistingLinkValid(field, script, autolinkInfo))
                     return;
-
                 var value = field.GetValue(script);
 
                 Transform[] parentNodes;
@@ -222,13 +221,11 @@ public class CheckEditorLinks : MonoBehaviour {
                         //we can't find untagged objects by tag, but we can compare to check if an object is untagged
                         parentNodes = (FindObjectsOfType(typeof(Transform)) as Transform[]).Where(t => t.CompareTag(autolinkInfo.parentTag)).ToArray();
                     }
-
                     if (!String.IsNullOrEmpty(autolinkInfo.parentName))
                     {
                         //filter by name
                         parentNodes = parentNodes.Where(t => t.name == autolinkInfo.parentName).ToArray();
                     }
-
                     if (!String.IsNullOrEmpty(autolinkInfo.childPath))
                     {
                         //map to children
@@ -248,6 +245,7 @@ public class CheckEditorLinks : MonoBehaviour {
                             if (possibleMatch != null)
                             {
                                 field.SetValue(script, possibleMatch);
+                                UnityEditor.EditorUtility.SetDirty(script);
                                 return;
                             }
                             else
@@ -264,6 +262,7 @@ public class CheckEditorLinks : MonoBehaviour {
                                 if (possibleMatch != null)
                                 {
                                     field.SetValue(script, possibleMatch);
+                                    UnityEditor.EditorUtility.SetDirty(script);
                                     return;
                                 }
                             }
@@ -290,6 +289,7 @@ public class CheckEditorLinks : MonoBehaviour {
                     if (possibleMatch != null)
                     {
                         field.SetValue(script, possibleMatch);
+                        UnityEditor.EditorUtility.SetDirty(script);
                         return;
                     }
                 }

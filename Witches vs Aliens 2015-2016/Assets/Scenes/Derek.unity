@@ -399,6 +399,10 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 486ee4196fa00d744a85e45659f38878, type: 2}
   m_IsPrefabParent: 0
+--- !u!4 &1593348098 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 422084, guid: ae276d1e363cf0c49be7db4c5b225c6b, type: 2}
+  m_PrefabInternal: {fileID: 1594991434}
 --- !u!1001 &1594991434
 Prefab:
   m_ObjectHideFlags: 0
@@ -438,6 +442,18 @@ Prefab:
       propertyPath: m_RootOrder
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 11489474, guid: ae276d1e363cf0c49be7db4c5b225c6b, type: 2}
+      propertyPath: mySide
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11436776, guid: ae276d1e363cf0c49be7db4c5b225c6b, type: 2}
+      propertyPath: respawnPoint
+      value: 
+      objectReference: {fileID: 1593348098}
+    - target: {fileID: 11489474, guid: ae276d1e363cf0c49be7db4c5b225c6b, type: 2}
+      propertyPath: respawnPoint
+      value: 
+      objectReference: {fileID: 1593348098}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ae276d1e363cf0c49be7db4c5b225c6b, type: 2}
   m_IsPrefabParent: 0
