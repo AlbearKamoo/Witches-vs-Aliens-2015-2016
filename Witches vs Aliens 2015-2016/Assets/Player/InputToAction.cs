@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(Collider2D))]
-[RequireComponent(typeof(MovementAbility))]
-[RequireComponent(typeof(SuperAbility))]
 public class InputToAction : MonoBehaviour {
 
     Rigidbody2D rigid;
@@ -27,8 +25,8 @@ public class InputToAction : MonoBehaviour {
 	// Use this for initialization
 	void Awake () {
          rigid = GetComponent<Rigidbody2D>();
-         moveAbility = GetComponent<MovementAbility>();
-         superAbility = GetComponent<SuperAbility>();
+         moveAbility = GetComponentInChildren<MovementAbility>();
+         superAbility = GetComponentInChildren<SuperAbility>();
          _maxSpeed = new FloatStatTracker(initMaxSpeed, updateScaledAccel);
          updateScaledAccel();
 	}

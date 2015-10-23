@@ -3,7 +3,7 @@ using System.Collections;
 
 public abstract class AbstractAbility : MonoBehaviour {
 
-    private float _charge = 0f; //one charge generally means one firing
+    protected float _charge = 0f; //one charge generally means one firing
     public float charge { get { return _charge; } }
     public bool ready { get { return _charge == 1; } }
 

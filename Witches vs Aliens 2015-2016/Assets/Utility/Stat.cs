@@ -7,7 +7,7 @@ public class FloatStatTracker
 
     private bool dirty;
     private float _cachedValue;
-    public float cachedValue 
+    public float value 
     {
         get {
             if (dirty)
@@ -66,24 +66,24 @@ public class FloatStatTracker
 
     public static implicit operator float(FloatStatTracker t) //the style guides say this should be explict, not implicit. I can't see why
     {
-        return t.cachedValue;
+        return t.value;
     }
+}
 
-    public class FloatStat
+public class FloatStat
+{
+
+    private float _value;
+    public float value { get { return _value; } set { _value = value; update(); } }
+    private FloatStatTracker.Recalculate update;
+    public FloatStat(float val, FloatStatTracker.Recalculate update)
     {
-
-        private float _value;
-        protected float value { get { return _value; } set { _value = value; update(); } }
-        private Recalculate update;
-        public FloatStat(float val, Recalculate update)
-        {
-            value = val;
-            this.update = update;
-        }
-        public static implicit operator float(FloatStat stat)
-        {
-            return stat.value;
-        }
+        _value = val;
+        this.update = update;
+    }
+    public static implicit operator float(FloatStat stat)
+    {
+        return stat.value;
     }
 }
 
