@@ -4,7 +4,7 @@ using System.Collections;
 public abstract class AbstractAbility : MonoBehaviour {
 
     private float _charge = 0f; //one charge generally means one firing
-    public float charge { get { return charge; } }
+    public float charge { get { return _charge; } }
     public bool ready { get { return _charge == 1; } }
 
     [SerializeField]
@@ -12,11 +12,13 @@ public abstract class AbstractAbility : MonoBehaviour {
     [SerializeField]
     protected float chargeTime;
 
+    public abstract AbilityType type { get; }
+
     protected virtual void FixedUpdate()
     {
         if (charge < maxCharge)
         {
-            _charge = Mathf.Clamp(charge + Time.fixedDeltaTime / chargeTime, 0, maxCharge);
+            _charge = Mathf.Clamp(_charge + Time.fixedDeltaTime / chargeTime, 0, maxCharge);
         }
     }
 
@@ -41,9 +43,7 @@ public abstract class AbstractAbility : MonoBehaviour {
 
     protected abstract void onFire();
 }
-//interfaces to locate abilities
-public abstract class MovementAbility : AbstractAbility { }
-public abstract class SuperAbility : AbstractAbility { }
+
 public enum AbilityType
 {
     MOVEMENT,

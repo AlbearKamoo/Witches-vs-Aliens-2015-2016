@@ -244,8 +244,12 @@ MonoBehaviour:
   bindings:
   - verticalAxisName: VerticalWASD
     horizontalAxisName: HorizontalWASD
+    movementAbilityKey: 113
+    superAbilityKey: 101
   - verticalAxisName: VerticalArrow
     horizontalAxisName: HorizontalArrow
+    movementAbilityKey: 47
+    superAbilityKey: 0
   numPlayers: 2
 --- !u!4 &557526359
 Transform:
