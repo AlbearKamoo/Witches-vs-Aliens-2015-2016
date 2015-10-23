@@ -13,18 +13,14 @@ public class InputToAction : MonoBehaviour {
     public Vector2 normalizedInput { get; set; }
     [SerializeField]
     protected float initMaxSpeed;
-    private float maxSpeed;
-
-    private List<FloatStat> speedModifiers = new List<FloatStat>();
+    private FloatStatTracker _maxSpeed;
+    public FloatStatTracker maxSpeed { get { return _maxSpeed; } }
 
     public float accel;
     private float scaledAccel; //scales the acceleration to maxSpeed; what we actually use for stuff.
-    private void updateSpeed()
+    private void updateScaledAccel()
     {
-        maxSpeed = initMaxSpeed;
-        foreach(float i in speedModifiers)//recalculateing every removal prevents floating point madness/errors
-            maxSpeed *= i;
-        scaledAccel = maxSpeed * accel;
+        scaledAccel = _maxSpeed * accel;
     }
 
     //Don't change the rigidbody mass from 1; change accel and maxSpeed instead
@@ -33,27 +29,13 @@ public class InputToAction : MonoBehaviour {
          rigid = GetComponent<Rigidbody2D>();
          moveAbility = GetComponent<MovementAbility>();
          superAbility = GetComponent<SuperAbility>();
-         maxSpeed = initMaxSpeed;
-         scaledAccel = maxSpeed * accel;
+         _maxSpeed = new FloatStatTracker(initMaxSpeed, updateScaledAccel);
+         updateScaledAccel();
 	}
-
-    //refactor the modifer stuff into it's own class if we need to use this again
-    public FloatStat addSpeedModifier(float value)
-    {
-        FloatStat result = new FloatStat(value, updateSpeed);
-        speedModifiers.Add(result);
-        updateSpeed();
-        return result;
-    }
-    public void removeSpeedModifier(FloatStat modifier)
-    {
-        speedModifiers.Remove(modifier);
-        updateSpeed();
-    }
 	
 	// Update is called once per frame
 	void FixedUpdate () {
-        rigid.velocity = Vector2.ClampMagnitude(Vector2.MoveTowards(rigid.velocity, maxSpeed * normalizedInput, scaledAccel * Time.fixedDeltaTime), maxSpeed);
+        rigid.velocity = Vector2.ClampMagnitude(Vector2.MoveTowards(rigid.velocity, _maxSpeed * normalizedInput, scaledAccel * Time.fixedDeltaTime), _maxSpeed);
 	}
 
     public void FireAbility(AbilityType t)
