@@ -43,7 +43,7 @@ MonoBehaviour:
   envelopeWidth: 3
   maxRiseOverRun: .75
   pointsPerDistance: 2
-  duration: 0
+  duration: .25
 --- !u!120 &12050188
 LineRenderer:
   m_ObjectHideFlags: 1
@@ -80,14 +80,22 @@ LineRenderer:
     m_EndColor:
       serializedVersion: 2
       rgba: 4294967295
-  m_UseWorldSpace: 1
+  m_UseWorldSpace: 0
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: duration
+      value: .25
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_UseWorldSpace
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 158686}

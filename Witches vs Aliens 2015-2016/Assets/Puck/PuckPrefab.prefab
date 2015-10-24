@@ -112,6 +112,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74cd2621483e91d44989515e2020a0a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  impactVFXPrefab: {fileID: 125700, guid: a7a079c3c5f1feb4598e142edef164ec, type: 2}
 --- !u!212 &21239072
 SpriteRenderer:
   m_ObjectHideFlags: 1
