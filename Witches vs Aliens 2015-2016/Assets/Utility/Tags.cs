@@ -25,7 +25,8 @@ public class Tags{
 
     public class Layers
     {
-        public const string player = "Player";
+        public const string movable = "Movables";
+        public const string stage = "Stage";
     }
 
     public class AnimatorParams

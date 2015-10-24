@@ -11,7 +11,7 @@ GameObject:
   - 58: {fileID: 5845072}
   - 50: {fileID: 5036334}
   - 114: {fileID: 11436540}
-  - 114: {fileID: 11467004}
+  - 114: {fileID: 11470504}
   m_Layer: 11
   m_Name: PuckPrefab
   m_TagString: Puck
@@ -101,7 +101,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxSpeed: 30
---- !u!114 &11467004
+--- !u!114 &11470504
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
