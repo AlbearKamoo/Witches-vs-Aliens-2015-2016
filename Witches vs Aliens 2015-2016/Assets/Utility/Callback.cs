@@ -127,6 +127,12 @@ public static class Callback {
 
             code(1);
         }
+
+        public static IEnumerator WaitForRoutine(Coroutine waitFor, CallbackMethod code)
+        {
+            yield return waitFor;
+            code();
+        }
     }
 
     private static Coroutine RunIfActiveAndEnabled(MonoBehaviour callingScript, IEnumerator code)
@@ -170,5 +176,15 @@ public static class Callback {
     public static Coroutine DoLerpFixedtime(Lerpable code, float time, MonoBehaviour callingScript, bool reverse = false)
     {
         return RunIfActiveAndEnabled(callingScript, Routines.DoLerpFixedtimeRoutine(code, time, reverse));
+    }
+
+    public static Coroutine WaitFor(Coroutine waitFor, CallbackMethod code, MonoBehaviour callingScript)
+    {
+        return RunIfActiveAndEnabled(callingScript, Routines.WaitForRoutine(waitFor, code));
+    }
+
+    public static Coroutine FollowedBy(this Coroutine toFollow, CallbackMethod code, MonoBehaviour callingScript)
+    {
+        return RunIfActiveAndEnabled(callingScript, Routines.WaitForRoutine(toFollow, code));
     }
 }

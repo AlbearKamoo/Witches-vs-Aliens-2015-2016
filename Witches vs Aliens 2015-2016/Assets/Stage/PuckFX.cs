@@ -15,13 +15,6 @@ public class PuckFX : MonoBehaviour {
     {
         rigid.velocity = Vector2.zero;
         rigid.angularVelocity = 0;
-        Callback.DoLerp(shaderLerp, fxTime, this);
+        Callback.DoLerp((float t) => { mat.SetFloat(Tags.ShaderParams.cutoff, t); }, fxTime, this);
     }
-
-    private void shaderLerp(float lerp)
-    {
-        mat.SetFloat(Tags.ShaderParams.cutoff, lerp);
-    }
-
-
 }
