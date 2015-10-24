@@ -7,7 +7,7 @@ public class BlinkAbility : MovementAbility {
     InputToAction action;
     LayerMask stageMask;
     const float distance = 15f;
-    const int numBolts = 3;
+    const int numBolts = 10;
 
     public GameObject LightingFXPrefab;
 	// Use this for initialization
