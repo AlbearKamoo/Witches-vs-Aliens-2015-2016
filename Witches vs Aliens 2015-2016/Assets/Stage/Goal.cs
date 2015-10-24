@@ -14,6 +14,7 @@ public class Goal : MonoBehaviour {
             return;
         Debug.Log("GOOOOOOOOOOOOOOOOOOAL!");
         other.transform.position = respawnPoint.position;
+        other.transform.GetComponent<PuckFX>().Respawn();
 	}
 
     public enum Side

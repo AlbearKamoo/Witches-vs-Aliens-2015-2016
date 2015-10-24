@@ -7,10 +7,10 @@ Material:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: testAlphaMaskMat
-  m_Shader: {fileID: 4800000, guid: 0096ac038b2702f4e9094d7eaae40050, type: 3}
+  m_Shader: {fileID: 4800000, guid: 8e197dfe567e574449daddc9f0700a66, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 5
-  m_CustomRenderQueue: 3000
+  m_CustomRenderQueue: 2000
   stringTagMap: {}
   m_SavedProperties:
     serializedVersion: 2
@@ -19,7 +19,7 @@ Material:
         first:
           name: _MainTex
         second:
-          m_Texture: {fileID: 2800000, guid: ae60f19aac0fb3c4494de1c7a6666e7e, type: 3}
+          m_Texture: {fileID: 2800000, guid: 4c1fc131d59a5c4489acdf88cde8f75a, type: 3}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
       data:
@@ -87,7 +87,28 @@ Material:
           m_Offset: {x: 0, y: 0}
       data:
         first:
+          name: _EffectTex
+        second:
+          m_Texture: {fileID: 2800000, guid: ab13990ba72f31343b216d04e7925d12, type: 3}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
           name: _AlphaMap
+        second:
+          m_Texture: {fileID: 2800000, guid: d8124b975ab35d54f9f3ce6b8839e059, type: 3}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _CullingTex
+        second:
+          m_Texture: {fileID: 2800000, guid: 34f8dfc893a08a24ab92f94e6efaf0ec, type: 3}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _DistortionTex
         second:
           m_Texture: {fileID: 2800000, guid: d8124b975ab35d54f9f3ce6b8839e059, type: 3}
           m_Scale: {x: 1, y: 1}
@@ -104,7 +125,11 @@ Material:
       data:
         first:
           name: _Cutoff
-        second: .5
+        second: 1
+      data:
+        first:
+          name: PixelSnap
+        second: 0
       data:
         first:
           name: _Parallax
@@ -141,6 +166,10 @@ Material:
         first:
           name: _Metallic
         second: 0
+      data:
+        first:
+          name: _Distortion
+        second: .111000001
     m_Colors:
       data:
         first:

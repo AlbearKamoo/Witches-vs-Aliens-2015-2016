@@ -50,7 +50,7 @@ public static class Callback {
             }
         }
 
-        //does a standard coroutine Lerp on a bit of code.
+        //does a standard coroutine Lerp on a bit of code, from zero to one by default.
         public static IEnumerator DoLerpRoutine(Lerpable code, float time, bool reverse = false)
         {
             if (!reverse)

@@ -244,8 +244,12 @@ MonoBehaviour:
   bindings:
   - verticalAxisName: VerticalWASD
     horizontalAxisName: HorizontalWASD
+    movementAbilityKey: 113
+    superAbilityKey: 101
   - verticalAxisName: VerticalArrow
     horizontalAxisName: HorizontalArrow
+    movementAbilityKey: 47
+    superAbilityKey: 0
   numPlayers: 2
 --- !u!4 &557526359
 Transform:
@@ -454,6 +458,10 @@ Prefab:
       propertyPath: respawnPoint
       value: 
       objectReference: {fileID: 1593348098}
+    - target: {fileID: 139428, guid: ae276d1e363cf0c49be7db4c5b225c6b, type: 2}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ae276d1e363cf0c49be7db4c5b225c6b, type: 2}
   m_IsPrefabParent: 0

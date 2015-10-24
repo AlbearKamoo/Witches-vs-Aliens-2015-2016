@@ -46,5 +46,6 @@ public class Tags{
     {
         public static int color = Shader.PropertyToID("_Color");
         public static int emission = Shader.PropertyToID("_EmissionColor");
+        public static int cutoff = Shader.PropertyToID("_Cutoff");
     }
 }
