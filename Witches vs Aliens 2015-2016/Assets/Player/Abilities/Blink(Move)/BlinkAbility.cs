@@ -25,8 +25,7 @@ public class BlinkAbility : MovementAbility {
 
         for (int i = 0; i < numBolts; i++)
         {
-            Debug.Log("BOLT");
-            SimplePool.Spawn(LightingFXPrefab, transform.parent.position).GetComponent<Lightning>().DoFX(targetPos);
+            SimplePool.Spawn(LightingFXPrefab, transform.parent.position).GetComponent<Lightning>().DoFX(targetPos + Random.insideUnitCircle * bounds.radius);
         }
 
         transform.parent.position = targetPos;
