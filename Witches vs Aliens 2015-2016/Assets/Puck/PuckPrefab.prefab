@@ -113,6 +113,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   impactVFXPrefab: {fileID: 125700, guid: a7a079c3c5f1feb4598e142edef164ec, type: 2}
+  defaultSpriteShader: {fileID: 10754, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!212 &21239072
 SpriteRenderer:
   m_ObjectHideFlags: 1
