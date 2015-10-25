@@ -25,11 +25,15 @@ public class InputToAction : MonoBehaviour {
 	// Use this for initialization
 	void Awake () {
          rigid = GetComponent<Rigidbody2D>();
-         moveAbility = GetComponentInChildren<MovementAbility>();
-         superAbility = GetComponentInChildren<SuperAbility>();
          _maxSpeed = new FloatStatTracker(initMaxSpeed, updateScaledAccel);
          updateScaledAccel();
 	}
+
+    void Start()
+    {
+        moveAbility = GetComponentInChildren<MovementAbility>();
+        superAbility = GetComponentInChildren<SuperAbility>();
+    }
 	
 	// Update is called once per frame
 	void FixedUpdate () {

@@ -3,16 +3,17 @@ using System.Collections;
 
 public class ProgrammaticSpawning : MonoBehaviour {
 
-    public GameObject playerPrefab;
+    //demonstration that we can actually do this
+
+    public GameObject[] playerPrefabs;
     [SerializeField]
     public InputConfiguration[] bindings;
-    public int numPlayers;
 
 	// Use this for initialization
 	void Start () {
-        for (int i = 0; i < numPlayers; i++)
+        for (int i = 0; i < bindings.Length && i < playerPrefabs.Length; i++ )
         {
-            SimplePool.Spawn(playerPrefab).GetComponent<PlayerInput>().bindings = bindings[i];
+            SimplePool.Spawn(playerPrefabs[i]).GetComponent<PlayerInput>().bindings = bindings[i];
         }
 	}
 }
