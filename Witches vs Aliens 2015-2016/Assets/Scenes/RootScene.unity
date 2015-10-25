@@ -240,7 +240,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2628f76dd5849c3428e18c4a7917f1fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerPrefab: {fileID: 165624, guid: 4e62dab045187864498fbd675fa1f77b, type: 2}
+  playerPrefabs:
+  - {fileID: 165624, guid: 4e62dab045187864498fbd675fa1f77b, type: 2}
+  - {fileID: 167968, guid: 153f9f5c43925af40a44041c8773d388, type: 2}
   bindings:
   - verticalAxisName: VerticalWASD
     horizontalAxisName: HorizontalWASD
@@ -250,7 +252,6 @@ MonoBehaviour:
     horizontalAxisName: HorizontalArrow
     movementAbilityKey: 47
     superAbilityKey: 0
-  numPlayers: 2
 --- !u!4 &557526359
 Transform:
   m_ObjectHideFlags: 0
@@ -403,10 +404,6 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 486ee4196fa00d744a85e45659f38878, type: 2}
   m_IsPrefabParent: 0
---- !u!4 &1593348098 stripped
-Transform:
-  m_PrefabParentObject: {fileID: 422084, guid: ae276d1e363cf0c49be7db4c5b225c6b, type: 2}
-  m_PrefabInternal: {fileID: 1594991434}
 --- !u!1001 &1594991434
 Prefab:
   m_ObjectHideFlags: 0
@@ -445,22 +442,6 @@ Prefab:
     - target: {fileID: 417488, guid: ae276d1e363cf0c49be7db4c5b225c6b, type: 2}
       propertyPath: m_RootOrder
       value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 11489474, guid: ae276d1e363cf0c49be7db4c5b225c6b, type: 2}
-      propertyPath: mySide
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 11436776, guid: ae276d1e363cf0c49be7db4c5b225c6b, type: 2}
-      propertyPath: respawnPoint
-      value: 
-      objectReference: {fileID: 1593348098}
-    - target: {fileID: 11489474, guid: ae276d1e363cf0c49be7db4c5b225c6b, type: 2}
-      propertyPath: respawnPoint
-      value: 
-      objectReference: {fileID: 1593348098}
-    - target: {fileID: 139428, guid: ae276d1e363cf0c49be7db4c5b225c6b, type: 2}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ae276d1e363cf0c49be7db4c5b225c6b, type: 2}

@@ -13,8 +13,6 @@ public class BoostAbility : MovementAbility {
     bool active { get { return _active; }
         set
         {
-
-
             if (value)
             {
                 if (!_active)
@@ -68,7 +66,6 @@ public class BoostAbility : MovementAbility {
         else
             speedMod.value += (baseBoost - 1);
         active = true;
-        sfx.Play();
         while (active)
         {
             yield return new WaitForFixedUpdate();
