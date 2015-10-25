@@ -21,7 +21,8 @@ public class InputToAction : MonoBehaviour {
         scaledAccel = _maxSpeed * accel;
     }
 
-    //Don't change the rigidbody mass from 1; change accel and maxSpeed instead
+    //Don't change the rigidbody mass from 1 to change speed/agility; change accel and maxSpeed instead
+    //the rigidbody mass(es) generally only affect how collisions happen
 	// Use this for initialization
 	void Awake () {
          rigid = GetComponent<Rigidbody2D>();
