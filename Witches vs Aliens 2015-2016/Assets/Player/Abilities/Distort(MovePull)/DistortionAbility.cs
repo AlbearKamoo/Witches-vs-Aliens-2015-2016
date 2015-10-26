@@ -48,6 +48,7 @@ public class DistortionAbility : MovementAbility {
 
     protected override void onFire()
     {
+        _charge += 1; //charge was decremented by 1 when fired; this ensures that there is no net change, but you need at least one charge to fire
         StartCoroutine(UpdateCharge());
     }
 

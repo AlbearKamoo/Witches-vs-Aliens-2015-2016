@@ -106,6 +106,7 @@ GameObject:
   - 114: {fileID: 11482920}
   - 114: {fileID: 11403086}
   - 114: {fileID: 11448410}
+  - 114: {fileID: 11460096}
   m_Layer: 11
   m_Name: DistortionPlayerPrefab
   m_TagString: Player
@@ -362,6 +363,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxCharge: 1
   chargeTime: 10
+--- !u!114 &11460096
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 167968}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0efb44e6a3482804999fd8b24265d671, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fxTime: 1
+  fxMat: {fileID: 2100000, guid: 3f2b67bb4eb6e5e4faea8bc0c0bdd41c, type: 2}
+  target: {fileID: 21262422}
 --- !u!114 &11460316
 MonoBehaviour:
   m_ObjectHideFlags: 1

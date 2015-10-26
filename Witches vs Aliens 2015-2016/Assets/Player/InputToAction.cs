@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(Collider2D))]
+[RequireComponent(typeof(VisualAnimate))]
 public class InputToAction : MonoBehaviour {
 
     Rigidbody2D rigid;
     MovementAbility moveAbility;
     SuperAbility superAbility;
+    VisualAnimate vfx;
 
     public Vector2 normalizedInput { get; set; }
     [SerializeField]
@@ -28,12 +30,15 @@ public class InputToAction : MonoBehaviour {
          rigid = GetComponent<Rigidbody2D>();
          _maxSpeed = new FloatStatTracker(initMaxSpeed, updateScaledAccel);
          updateScaledAccel();
+
+         vfx = GetComponent<VisualAnimate>();
 	}
 
     void Start()
     {
         moveAbility = GetComponentInChildren<MovementAbility>();
         superAbility = GetComponentInChildren<SuperAbility>();
+        vfx.DoFX();
     }
 	
 	// Update is called once per frame

@@ -120,6 +120,7 @@ GameObject:
   - 114: {fileID: 11459824}
   - 114: {fileID: 11402638}
   - 114: {fileID: 11419868}
+  - 114: {fileID: 11493400}
   m_Layer: 11
   m_Name: BoostPlayerPrefab
   m_TagString: Player
@@ -433,6 +434,20 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 2
+--- !u!114 &11493400
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 196586}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0efb44e6a3482804999fd8b24265d671, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fxTime: 1
+  fxMat: {fileID: 2100000, guid: 3f2b67bb4eb6e5e4faea8bc0c0bdd41c, type: 2}
+  target: {fileID: 21234818}
 --- !u!114 &11497572
 MonoBehaviour:
   m_ObjectHideFlags: 1
