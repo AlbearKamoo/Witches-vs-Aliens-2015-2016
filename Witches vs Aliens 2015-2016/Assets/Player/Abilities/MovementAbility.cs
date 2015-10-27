@@ -5,7 +5,7 @@ public class MovementAbility : AbstractAbility {
 
     public override AbilityType type { get { return AbilityType.MOVEMENT; } }
 
-    protected override void onFire() 
+    protected override void onFire(Vector2 direction) 
     {
         Debug.Log("MOVE!"); 
     } 

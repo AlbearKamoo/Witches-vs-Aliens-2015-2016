@@ -19,11 +19,11 @@ public class BlinkAbility : MovementAbility {
         stageMask = LayerMask.GetMask(new string[]{Tags.Layers.stage});
 	}
 
-    protected override void onFire()
+    protected override void onFire(Vector2 direction)
     {
-        RaycastHit2D hit = Physics2D.CircleCast(transform.parent.position, bounds.radius, action.normalizedMovementInput, distance, stageMask);
+        RaycastHit2D hit = Physics2D.CircleCast(transform.parent.position, bounds.radius, direction, distance, stageMask);
         float jumpDistance = hit ? hit.distance: distance;
-        Vector2 targetPos = (Vector2)(transform.parent.position) + jumpDistance * action.normalizedMovementInput;
+        Vector2 targetPos = (Vector2)(transform.parent.position) + jumpDistance * direction.normalized;
 
         for (int i = 0; i < numFXBolts; i++)
         {

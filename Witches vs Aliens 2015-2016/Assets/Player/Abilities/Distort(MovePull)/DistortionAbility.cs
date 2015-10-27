@@ -46,7 +46,7 @@ public class DistortionAbility : MovementAbility {
         render = GetComponent<MeshRenderer>();
 	}
 
-    protected override void onFire()
+    protected override void onFire(Vector2 direction)
     {
         _charge += 1; //charge was decremented by 1 when fired; this ensures that there is no net change, but you need at least one charge to fire
         StartCoroutine(UpdateCharge());
