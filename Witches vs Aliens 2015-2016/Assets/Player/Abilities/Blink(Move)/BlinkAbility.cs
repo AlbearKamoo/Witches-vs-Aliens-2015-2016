@@ -21,9 +21,9 @@ public class BlinkAbility : MovementAbility {
 
     protected override void onFire()
     {
-        RaycastHit2D hit = Physics2D.CircleCast(transform.parent.position, bounds.radius, action.normalizedInput, distance, stageMask);
+        RaycastHit2D hit = Physics2D.CircleCast(transform.parent.position, bounds.radius, action.normalizedMovementInput, distance, stageMask);
         float jumpDistance = hit ? hit.distance: distance;
-        Vector2 targetPos = (Vector2)(transform.parent.position) + jumpDistance * action.normalizedInput;
+        Vector2 targetPos = (Vector2)(transform.parent.position) + jumpDistance * action.normalizedMovementInput;
 
         for (int i = 0; i < numFXBolts; i++)
         {
