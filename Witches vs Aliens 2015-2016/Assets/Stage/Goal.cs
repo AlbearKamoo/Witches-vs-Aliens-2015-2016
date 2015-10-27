@@ -19,7 +19,7 @@ public class Goal : MonoBehaviour {
 	void OnCollisionEnter2D (Collision2D other) {
         if (!other.collider.CompareTag(Tags.puck))
             return;
-        Debug.Log("GOOOOOOOOOOOOOOOOOOAL!");
+        Debug.Log("GOOOOOOOOOOOOOOOOOOOOOOAL!");
         other.transform.position = respawnPoint.position;
         other.transform.GetComponent<PuckFX>().Respawn();
         vfx.Play();
