@@ -72,10 +72,10 @@ public class InputToAction : MonoBehaviour {
         switch (t)
         {
             case AbilityType.MOVEMENT:
-                moveAbility.Fire();
+                moveAbility.Fire(direction);
                 break;
             case AbilityType.SUPER:
-                superAbility.Fire();
+                superAbility.Fire(direction);
                 break;
         }
     }

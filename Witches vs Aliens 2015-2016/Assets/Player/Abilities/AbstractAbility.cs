@@ -22,12 +22,12 @@ public abstract class AbstractAbility : MonoBehaviour {
         }
     }
 
-    public bool Fire()
+    public bool Fire(Vector2 direction)
     {
         if (_charge >= 1)
         {
             _charge -= 1;
-            onFire();
+            onFire(direction);
             return true;
         }
         else
@@ -41,7 +41,7 @@ public abstract class AbstractAbility : MonoBehaviour {
 
     }
 
-    protected abstract void onFire();
+    protected abstract void onFire(Vector2 direction);
 }
 
 public enum AbilityType
