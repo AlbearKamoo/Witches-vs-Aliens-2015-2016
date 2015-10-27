@@ -68,8 +68,8 @@ Rigidbody2D:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 135402}
-  m_Mass: 1
-  m_LinearDrag: .075000003
+  m_Mass: 3
+  m_LinearDrag: .0250000004
   m_AngularDrag: .75
   m_GravityScale: 0
   m_IsKinematic: 0
@@ -89,7 +89,7 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: .5
+  m_Radius: 1
 --- !u!114 &11436540
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -101,7 +101,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc8cbe6089354fa4984e7ff70deaec69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxSpeed: 30
+  maxSpeed: 20
 --- !u!114 &11449428
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -152,7 +152,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1441101375
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: 4c1fc131d59a5c4489acdf88cde8f75a, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 0c8c07da32362af4aab012bce8a7d1aa, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1001 &100100000
 Prefab:

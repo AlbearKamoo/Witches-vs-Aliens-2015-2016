@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 [RequireComponent(typeof(Rigidbody2D))]
-[RequireComponent(typeof(Collider2D))]
 [RequireComponent(typeof(VisualAnimate))]
 public class InputToAction : MonoBehaviour {
 

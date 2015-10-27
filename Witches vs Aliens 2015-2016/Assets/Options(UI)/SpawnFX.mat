@@ -125,7 +125,7 @@ Material:
       data:
         first:
           name: _Cutoff
-        second: 1
+        second: .854227364
       data:
         first:
           name: PixelSnap

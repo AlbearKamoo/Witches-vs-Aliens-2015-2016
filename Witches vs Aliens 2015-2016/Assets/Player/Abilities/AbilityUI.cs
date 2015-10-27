@@ -31,10 +31,10 @@ public class AbilityUI : MonoBehaviour {
 	void Start () {
         progress = transform.Find("FilledImage").GetComponent<Image>();
         background = transform.Find("BackgroundImage").GetComponent<Image>();
-        ability = transform.parent.parent.GetComponentInChildren<MovementAbility>();
+        ability = transform.parent.GetComponentInChildren<MovementAbility>();
         vfx = GetComponent<ParticleSystem>();
 
-        radius = GetComponentInParent<CircleCollider2D>().radius;
+        radius = transform.parent.GetComponentInChildren<CircleCollider2D>().radius;
 
         Vector2 newSizeDelta = new Vector2(2*radius, 2*radius);
 
