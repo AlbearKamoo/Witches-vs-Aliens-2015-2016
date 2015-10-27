@@ -41,6 +41,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxCharge: 2
   chargeTime: 5
+  distance: 6
+  numFXBolts: 10
   LightingFXPrefab: {fileID: 158686, guid: 7e7134ae1bb3fcf41890ce8c7da7a82d, type: 2}
 --- !u!1001 &100100000
 Prefab:
