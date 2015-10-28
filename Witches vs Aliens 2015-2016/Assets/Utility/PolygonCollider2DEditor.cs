@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using UnityEditor;
-
+/*
 [CustomEditor(typeof(PolygonCollider2D))]
 public class PolygonCollider2DEditor : Editor
 {
@@ -17,3 +17,4 @@ public class PolygonCollider2DEditor : Editor
         EditorUtility.SetDirty(target);
     }
 }
+*/
