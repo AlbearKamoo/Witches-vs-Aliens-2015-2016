@@ -8,7 +8,8 @@ public class DistortionAbility : GenericAbility {
     PointEffector2D effector;
     MeshRenderer render;
 
-    const float activeCost = 1f;
+    [SerializeField]
+    protected float activeCost;
 
     bool _active = false; //do NOT use; use the property because it has setters
     bool active

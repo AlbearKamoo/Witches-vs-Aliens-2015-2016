@@ -112,8 +112,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21c9b8f96f375644c8c2ad69ea98aa61, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxCharge: 5
-  chargeTime: 2
+  maxCharge: 3
+  chargeTime: 5
 --- !u!198 &19871962
 ParticleSystem:
   m_ObjectHideFlags: 1
@@ -1287,6 +1287,14 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: InitialModule.startLifetime.minCurve.m_Curve.Array.data[0].value
       value: .25
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: chargeTime
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: maxCharge
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
