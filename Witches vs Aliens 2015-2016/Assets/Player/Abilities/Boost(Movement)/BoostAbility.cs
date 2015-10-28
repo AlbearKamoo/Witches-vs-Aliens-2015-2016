@@ -35,7 +35,7 @@ public class BoostAbility : MovementAbility {
 
     //may want to turn these into protected [SerializeField]s if the stats are going to be different for each char
     const float baseBoostSpeedMultiplier = 2.5f;
-    const float boostCostPerSec = 0.75f;
+    const float boostCostPerSec = 1.75f;
     const float boostDecayRate = 3f;
     const float baseAccelNerf = 0.066f;
     const float accelNerfDecayRate = 1f;
