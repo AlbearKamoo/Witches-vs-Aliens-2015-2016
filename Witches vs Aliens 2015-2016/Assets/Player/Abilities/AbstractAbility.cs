@@ -47,5 +47,6 @@ public abstract class AbstractAbility : MonoBehaviour {
 public enum AbilityType
 {
     MOVEMENT,
-    SUPER
+    SUPER,
+    GENERIC,
 }

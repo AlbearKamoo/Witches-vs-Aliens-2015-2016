@@ -14,10 +14,15 @@ public class JoystickPlayerInput : AbstractPlayerInput {
             action.FireAbility(AbilityType.MOVEMENT);
         if (Input.GetKeyDown(bindings.superAbilityKey))
             action.FireAbility(AbilityType.SUPER);
+        if (Input.GetKeyDown(bindings.genericAbilityKey))
+            action.FireAbility(AbilityType.GENERIC);
 
         if (Input.GetKeyUp(bindings.movementAbilityKey))
             action.StopFireAbility(AbilityType.MOVEMENT);
         if (Input.GetKeyUp(bindings.superAbilityKey))
             action.StopFireAbility(AbilityType.SUPER);
+        if (Input.GetKeyUp(bindings.genericAbilityKey))
+            action.StopFireAbility(AbilityType.GENERIC);
+
     }
 }

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class DistortionAbility : MovementAbility {
+public class DistortionAbility : GenericAbility {
 
     ParticleSystem vfx;
     CircleCollider2D coll;

@@ -48,6 +48,9 @@ public class InputConfiguration
     public KeyCode movementAbilityKey;
     [CanBeDefaultOrNull]
     [Tooltip("You can leave this as anything for mouse mode")]
+    public KeyCode genericAbilityKey;
+    [CanBeDefaultOrNull]
+    [Tooltip("You can leave this as anything for mouse mode")]
     public KeyCode superAbilityKey;
 
     public InputConfiguration() { }

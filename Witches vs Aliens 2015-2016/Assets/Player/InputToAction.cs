@@ -6,6 +6,7 @@ public class InputToAction : MonoBehaviour {
 
     Rigidbody2D rigid;
     MovementAbility moveAbility;
+    GenericAbility genAbility;
     SuperAbility superAbility;
     VisualAnimate vfx;
     Transform rotating;
@@ -47,6 +48,7 @@ public class InputToAction : MonoBehaviour {
     {
         moveAbility = GetComponentInChildren<MovementAbility>();
         superAbility = GetComponentInChildren<SuperAbility>();
+        genAbility = GetComponentInChildren<GenericAbility>();
         vfx.DoFX();
     }
 	
@@ -74,6 +76,9 @@ public class InputToAction : MonoBehaviour {
             case AbilityType.MOVEMENT:
                 moveAbility.Fire(direction);
                 break;
+            case AbilityType.GENERIC:
+                genAbility.Fire(direction);
+                break;
             case AbilityType.SUPER:
                 superAbility.Fire(direction);
                 break;
@@ -86,6 +91,9 @@ public class InputToAction : MonoBehaviour {
         {
             case AbilityType.MOVEMENT:
                 moveAbility.StopFire();
+                break;
+            case AbilityType.GENERIC:
+                genAbility.StopFire();
                 break;
             case AbilityType.SUPER:
                 superAbility.StopFire();

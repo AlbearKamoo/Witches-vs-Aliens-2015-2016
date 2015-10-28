@@ -775,7 +775,9 @@ PolygonCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Points:
     m_Paths:
-    - - {x: 0, y: 0}
+    - - {x: -8, y: 2}
+      - {x: 2, y: 2}
+      - {x: 2, y: -8}
       - {x: -0, y: -8}
       - {x: -.5, y: -5}
       - {x: -1, y: -4}
@@ -796,7 +798,9 @@ PolygonCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Points:
     m_Paths:
-    - - {x: 0, y: 0}
+    - - {x: -8, y: -2}
+      - {x: 2, y: -2}
+      - {x: 2, y: 8}
       - {x: -0, y: 8}
       - {x: -.5, y: 5}
       - {x: -1, y: 4}
@@ -817,7 +821,9 @@ PolygonCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Points:
     m_Paths:
-    - - {x: 0, y: 0}
+    - - {x: 8, y: -2}
+      - {x: -2, y: -2}
+      - {x: -2, y: 8}
       - {x: -0, y: 8}
       - {x: .5, y: 5}
       - {x: 1, y: 4}
@@ -838,7 +844,9 @@ PolygonCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Points:
     m_Paths:
-    - - {x: 0, y: 0}
+    - - {x: 8, y: 2}
+      - {x: -2, y: 2}
+      - {x: -2, y: -8}
       - {x: -0, y: -8}
       - {x: .5, y: -5}
       - {x: 1, y: -4}

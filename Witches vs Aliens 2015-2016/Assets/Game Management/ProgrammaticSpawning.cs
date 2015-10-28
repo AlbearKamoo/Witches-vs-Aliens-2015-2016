@@ -21,6 +21,7 @@ public class ProgrammaticSpawning : MonoBehaviour {
                 spawnedPlayer.AddComponent<JoystickPlayerInput>().bindings = playerComponentPrefabs[i].bindings;
             }
             GameObject.Instantiate(playerComponentPrefabs[i].movementAbility).transform.SetParent(spawnedPlayer.transform, false);
+            GameObject.Instantiate(playerComponentPrefabs[i].genericAbility).transform.SetParent(spawnedPlayer.transform, false);
             //GameObject.Instantiate(playerComponentPrefabs[i].superAbility).transform.SetParent(spawnedPlayer.transform);
         }
 	}
@@ -30,6 +31,7 @@ public class PlayerComponents
 {
     public GameObject basePlayer;
     public GameObject movementAbility;
+    public GameObject genericAbility;
     //public GameObject superAbility;
 
     public bool mouseMode;
