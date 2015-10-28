@@ -66,6 +66,7 @@ public class DistortionAbility : GenericAbility {
         {
             yield return new WaitForFixedUpdate();
             _charge -= Time.fixedDeltaTime * activeCost;
+            Debug.Log(_charge);
             if (_charge < 0)
             {
                 _charge = 0;
