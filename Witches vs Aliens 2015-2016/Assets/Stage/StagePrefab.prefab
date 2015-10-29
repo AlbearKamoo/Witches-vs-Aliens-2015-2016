@@ -36,6 +36,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &109344
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 418106}
+  - 114: {fileID: 11444978}
+  m_Layer: 15
+  m_Name: SuperGoalSpawnPoints
+  m_TagString: Stage
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &110342
 GameObject:
   m_ObjectHideFlags: 1
@@ -111,7 +127,7 @@ GameObject:
   - 4: {fileID: 487892}
   m_Layer: 15
   m_Name: RespawnPoints
-  m_TagString: Untagged
+  m_TagString: Stage
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -262,6 +278,21 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &146974
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 458350}
+  m_Layer: 15
+  m_Name: PuckRespawnPoints
+  m_TagString: Stage
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &149110
 GameObject:
   m_ObjectHideFlags: 0
@@ -389,6 +420,21 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &182378
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 445444}
+  m_Layer: 15
+  m_Name: Center
+  m_TagString: Stage
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &187292
 GameObject:
   m_ObjectHideFlags: 1
@@ -455,6 +501,21 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &195948
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 427768}
+  m_Layer: 15
+  m_Name: Mirror
+  m_TagString: Stage
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &198176
 GameObject:
   m_ObjectHideFlags: 0
@@ -465,6 +526,21 @@ GameObject:
   - 4: {fileID: 432642}
   m_Layer: 15
   m_Name: LeftWall
+  m_TagString: Stage
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &199226
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 480626}
+  m_Layer: 15
+  m_Name: PlayerRespawnPoints
   m_TagString: Stage
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -523,6 +599,19 @@ Transform:
   - {fileID: 479752}
   m_Father: {fileID: 0}
   m_RootOrder: 0
+--- !u!4 &418106
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 109344}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 445444}
+  m_Father: {fileID: 487892}
+  m_RootOrder: 2
 --- !u!4 &418442
 Transform:
   m_ObjectHideFlags: 1
@@ -545,8 +634,20 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 487892}
-  m_RootOrder: 2
+  m_Father: {fileID: 458350}
+  m_RootOrder: 0
+--- !u!4 &427768
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 195948}
+  m_LocalRotation: {x: 0, y: 0, z: 1, w: -1.62920685e-07}
+  m_LocalPosition: {x: 0, y: -32, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 445444}
+  m_RootOrder: 0
 --- !u!4 &428636
 Transform:
   m_ObjectHideFlags: 1
@@ -600,6 +701,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 492512}
   m_RootOrder: 0
+--- !u!4 &445444
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 182378}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 16, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 427768}
+  m_Father: {fileID: 418106}
+  m_RootOrder: 0
 --- !u!4 &447604
 Transform:
   m_ObjectHideFlags: 1
@@ -648,6 +762,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 487886}
   m_RootOrder: 2
+--- !u!4 &458350
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 146974}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 422084}
+  m_Father: {fileID: 487892}
+  m_RootOrder: 1
 --- !u!4 &461648
 Transform:
   m_ObjectHideFlags: 1
@@ -720,7 +847,7 @@ Transform:
   m_LocalPosition: {x: -10, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 487892}
+  m_Father: {fileID: 480626}
   m_RootOrder: 0
 --- !u!4 &478242
 Transform:
@@ -765,6 +892,20 @@ Transform:
   - {fileID: 461648}
   m_Father: {fileID: 417488}
   m_RootOrder: 4
+--- !u!4 &480626
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 199226}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 474770}
+  - {fileID: 492844}
+  m_Father: {fileID: 487892}
+  m_RootOrder: 0
 --- !u!4 &487886
 Transform:
   m_ObjectHideFlags: 1
@@ -790,9 +931,9 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 474770}
-  - {fileID: 492844}
-  - {fileID: 422084}
+  - {fileID: 480626}
+  - {fileID: 458350}
+  - {fileID: 418106}
   m_Father: {fileID: 417488}
   m_RootOrder: 0
 --- !u!4 &488864
@@ -832,7 +973,7 @@ Transform:
   m_LocalPosition: {x: 10, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 487892}
+  m_Father: {fileID: 480626}
   m_RootOrder: 1
 --- !u!4 &498024
 Transform:
@@ -1107,6 +1248,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mySide: 1
   respawnPoint: {fileID: 422084}
+--- !u!114 &11444978
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 109344}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 923b9dee2c28d76438e4baf8114cca53, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SuperGoalPrefab: {fileID: 120904, guid: 46d89204a79b1b140b8ce20af13e09c4, type: 2}
 --- !u!114 &11489474
 MonoBehaviour:
   m_ObjectHideFlags: 1
