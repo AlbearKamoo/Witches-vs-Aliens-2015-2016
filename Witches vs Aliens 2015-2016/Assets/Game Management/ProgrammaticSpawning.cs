@@ -26,13 +26,17 @@ public class ProgrammaticSpawning : MonoBehaviour {
             {
                 spawnedPlayer = (GameObject)Instantiate(playerComponentPrefabs[i].basePlayer, P2respawnPoint.position, Quaternion.identity);
             }
-            if (playerComponentPrefabs[i].mouseMode)
+            switch (playerComponentPrefabs[i].inputMode)
             {
-                spawnedPlayer.AddComponent<MousePlayerInput>().bindings = playerComponentPrefabs[i].bindings;
-            }
-            else
-            {
-                spawnedPlayer.AddComponent<JoystickPlayerInput>().bindings = playerComponentPrefabs[i].bindings;
+                case PlayerComponents.PlayerInputType.MOUSE:
+                    spawnedPlayer.AddComponent<MousePlayerInput>().bindings = playerComponentPrefabs[i].bindings;
+                    break;
+                case PlayerComponents.PlayerInputType.JOYSTICK:
+                    spawnedPlayer.AddComponent<JoystickPlayerInput>().bindings = playerComponentPrefabs[i].bindings;
+                    break;
+                case PlayerComponents.PlayerInputType.CRAPAI:
+                    spawnedPlayer.AddComponent<CrappyAIInput>().bindings = playerComponentPrefabs[i].bindings;
+                    break;
             }
             GameObject.Instantiate(playerComponentPrefabs[i].movementAbility).transform.SetParent(spawnedPlayer.transform, false);
             GameObject.Instantiate(playerComponentPrefabs[i].genericAbility).transform.SetParent(spawnedPlayer.transform, false);
@@ -48,7 +52,14 @@ public class PlayerComponents
     public GameObject genericAbility;
     //public GameObject superAbility;
 
-    public bool mouseMode;
+    public PlayerInputType inputMode;
     public InputConfiguration bindings;
     public PlayerComponents() { }
+
+    public enum PlayerInputType
+    {
+        MOUSE,
+        JOYSTICK,
+        CRAPAI
+    }
 }

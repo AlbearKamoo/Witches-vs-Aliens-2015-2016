@@ -21,11 +21,15 @@ public abstract class AbstractPlayerInput : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        action.normalizedMovementInput = new Vector2(Input.GetAxis(bindings.horizontalMovementAxisName), Input.GetAxis(bindings.verticalMovementAxisName)).normalized;
+        updateMovement();
 
         updateAim();
 
         checkAbilities();
+    }
+    protected virtual void updateMovement()
+    {
+        action.normalizedMovementInput = new Vector2(Input.GetAxis(bindings.horizontalMovementAxisName), Input.GetAxis(bindings.verticalMovementAxisName)).normalized;
     }
 
     protected abstract void updateAim();
