@@ -309,7 +309,7 @@ MonoBehaviour:
       verticalAimingAxisName: VerticalArrow
       horizontalAimingAxisName: HorizontalArrow
       movementAbilityKey: 47
-      genericAbilityKey: 62
+      genericAbilityKey: 46
       superAbilityKey: 0
   P1respawnPoint: {fileID: 769412413}
   P2respawnPoint: {fileID: 1511767612}
