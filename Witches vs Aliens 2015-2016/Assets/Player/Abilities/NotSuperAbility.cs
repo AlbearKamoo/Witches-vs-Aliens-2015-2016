@@ -18,7 +18,7 @@ public abstract class NotSuperAbility : AbstractAbility {
         set
         {
             base.ready = value;
-            stateChangedObservable.Post(new AbilityStateChangedMessage(value));
+            stateChangedObservable.Post(new AbilityStateChangedMessage(value, type));
         }
     }
 
