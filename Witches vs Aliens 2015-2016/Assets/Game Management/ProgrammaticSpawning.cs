@@ -7,11 +7,25 @@ public class ProgrammaticSpawning : MonoBehaviour {
 
     public PlayerComponents[] playerComponentPrefabs;
 
-	// Use this for initialization
-	void Start () {
+    [AutoLink(parentTag = Tags.stage, parentName = "Player1RespawnPoint")]
+    public Transform P1respawnPoint;
+
+    [AutoLink(parentTag = Tags.stage, parentName = "Player2RespawnPoint")]
+    public Transform P2respawnPoint;
+
+    // Use this for initialization
+    void Start () {
         for (int i = 0; i < playerComponentPrefabs.Length; i++)
         {
-            GameObject spawnedPlayer = GameObject.Instantiate(playerComponentPrefabs[i].basePlayer);
+            GameObject spawnedPlayer;
+            if (i == 0)
+            {
+             spawnedPlayer = (GameObject)Instantiate(playerComponentPrefabs[i].basePlayer, P1respawnPoint.position, Quaternion.identity);
+            }
+            else
+            {
+                spawnedPlayer = (GameObject)Instantiate(playerComponentPrefabs[i].basePlayer, P2respawnPoint.position, Quaternion.identity);
+            }
             if (playerComponentPrefabs[i].mouseMode)
             {
                 spawnedPlayer.AddComponent<MousePlayerInput>().bindings = playerComponentPrefabs[i].bindings;
