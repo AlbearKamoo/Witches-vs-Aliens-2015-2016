@@ -265,6 +265,8 @@ MonoBehaviour:
       movementAbilityKey: 47
       genericAbilityKey: 62
       superAbilityKey: 0
+  P1respawnPoint: {fileID: 769412413}
+  P2respawnPoint: {fileID: 1511767612}
 --- !u!4 &557526359
 Transform:
   m_ObjectHideFlags: 0
