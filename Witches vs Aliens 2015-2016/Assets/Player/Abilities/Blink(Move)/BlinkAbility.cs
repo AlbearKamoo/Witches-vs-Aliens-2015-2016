@@ -4,8 +4,8 @@ using System.Collections;
 public class BlinkAbility : MovementAbility {
 
     CircleCollider2D bounds;
-    InputToAction action;
     LayerMask stageMask;
+    InputToAction action;
     [SerializeField]
     protected float distance = 6f;
     [SerializeField]
@@ -13,23 +13,26 @@ public class BlinkAbility : MovementAbility {
 
     public GameObject LightingFXPrefab;
 	// Use this for initialization
-	void Start () {
+	protected override void Start () {
+        base.Start();
         bounds = transform.parent.GetComponentInChildren<CircleCollider2D>();
-        action = GetComponentInParent<InputToAction>();
         stageMask = LayerMask.GetMask(new string[]{Tags.Layers.stage});
+        action = GetComponentInParent<InputToAction>();
 	}
 
     protected override void onFire(Vector2 direction)
     {
-        RaycastHit2D hit = Physics2D.CircleCast(transform.parent.position, bounds.radius, direction, distance, stageMask);
-        float jumpDistance = hit ? hit.distance: distance;
-        Vector2 targetPos = (Vector2)(transform.parent.position) + jumpDistance * direction.normalized;
+        active = true; //have to toggle it for parent classes to work correctly
+        RaycastHit2D hit = Physics2D.CircleCast(transform.parent.position, bounds.radius, direction, distance * action.aimingInputPercentDistance(distance), stageMask);
+        Vector2 displacement = hit ? hit.distance * direction.normalized : action.aimingInputDisplacement(distance);
+        Vector2 targetPos = (Vector2)(transform.parent.position) + displacement;
 
         for (int i = 0; i < numFXBolts; i++)
         {
-            SimplePool.Spawn(LightingFXPrefab, transform.parent.position).GetComponent<Lightning>().DoFX(targetPos + Random.insideUnitCircle * bounds.radius);
+            SimplePool.Spawn(LightingFXPrefab, (Vector2)(transform.parent.position) + Random.insideUnitCircle * bounds.radius).GetComponent<Lightning>().DoFX(targetPos + Random.insideUnitCircle * bounds.radius);
         }
 
         transform.parent.position = targetPos;
+        active = false;
     }
 }

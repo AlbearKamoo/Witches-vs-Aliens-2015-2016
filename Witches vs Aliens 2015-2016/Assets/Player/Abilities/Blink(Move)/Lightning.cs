@@ -10,6 +10,7 @@ public class Lightning : MonoBehaviour {
     public float maxRiseOverRun;
     public float pointsPerDistance;
     public float duration;
+    public float positiveDurationVariance;
 
 	// Use this for initialization
 	void Awake () {
@@ -20,7 +21,7 @@ public class Lightning : MonoBehaviour {
 	// Update is called once per frame
 	public void DoFX (Vector2 target) {
         createBolt(target);
-        Callback.DoLerp(Decay, duration, this, reverse : true).FollowedBy(reset, this);
+        Callback.DoLerp(Decay, duration + Random.value * positiveDurationVariance, this, reverse : true).FollowedBy(reset, this);
 	}
 
     private void Decay(float lerp)

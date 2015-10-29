@@ -77,6 +77,6 @@ public class AbilityUI : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        SetFill(ability.charge);
+        //SetFill(ability.charge);
 	}
 }

@@ -9,38 +9,30 @@ public class DistortionAbility : GenericAbility {
     MeshRenderer render;
 
     [SerializeField]
-    protected float activeCost;
+    protected float maxDuration;
 
-    bool _active = false; //do NOT use; use the property because it has setters
-    bool active
+    protected override void OnActivate()
     {
-        get { return _active; }
-        set
-        {
-            if (value)
-            {
-                if (!_active)
-                {
-                    vfx.Play();
-                    coll.enabled = true;
-                    effector.enabled = true;
-                    render.enabled = true;
-                }
-            }
-            else if (_active)
-            {
-                vfx.Stop();
-                vfx.Clear();
-                coll.enabled = false;
-                effector.enabled = false;
-                render.enabled = false;
-            }
-            _active = value;
-        }
+        base.OnActivate();
+        vfx.Play();
+        coll.enabled = true;
+        effector.enabled = true;
+        render.enabled = true;
+    }
+
+    protected override void OnDeactivate()
+    {
+        base.OnDeactivate();
+        vfx.Stop();
+        vfx.Clear();
+        coll.enabled = false;
+        effector.enabled = false;
+        render.enabled = false;
     }
 
     // Use this for initialization
-	void Awake () {
+    void Awake()
+    {
         vfx = GetComponent<ParticleSystem>();
         coll = GetComponent<CircleCollider2D>();
         effector = GetComponent<PointEffector2D>();
@@ -49,7 +41,6 @@ public class DistortionAbility : GenericAbility {
 
     protected override void onFire(Vector2 direction)
     {
-        _charge += 1; //charge was decremented by 1 when fired; this ensures that there is no net change, but you need at least one charge to fire
         StartCoroutine(UpdateCharge());
     }
 
@@ -62,14 +53,13 @@ public class DistortionAbility : GenericAbility {
     private IEnumerator UpdateCharge()
     {
         active = true;
+        float duration = 0;
         while (active)
         {
             yield return new WaitForFixedUpdate();
-            _charge -= Time.fixedDeltaTime * activeCost;
-            Debug.Log(_charge);
-            if (_charge < 0)
+            duration += Time.fixedDeltaTime;
+            if (duration > maxDuration)
             {
-                _charge = 0;
                 active = false;
                 yield break;
             }

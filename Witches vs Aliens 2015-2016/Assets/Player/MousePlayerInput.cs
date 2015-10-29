@@ -5,6 +5,12 @@ public class MousePlayerInput : AbstractPlayerInput {
 
     Transform thisTransform;
 
+    protected override void setInputToActionAimingDelegates()
+    {
+        action.vectorQuantified = (Vector2 aim, float distance) => Vector2.ClampMagnitude(aim, distance);
+        action.vectorToPercent = (Vector2 aim, float distance) => Mathf.Clamp01(aim.magnitude / distance);
+    }
+
     void Awake()
     {
         thisTransform = this.transform;
@@ -12,7 +18,7 @@ public class MousePlayerInput : AbstractPlayerInput {
 
     protected override void updateAim()
     {
-        action.aimingInput = Format.mousePosInWorld() - thisTransform.position;
+        action.aimingInputDirection = Format.mousePosInWorld() - thisTransform.position;
     }
 
     protected override void checkAbilities()

@@ -39,10 +39,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95e70b2fb85a85942802a128e11002cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxCharge: 2
-  chargeTime: 4
+  cooldownTime: 3
   distance: 6
-  numFXBolts: 10
+  numFXBolts: 3
   LightingFXPrefab: {fileID: 158686, guid: 7e7134ae1bb3fcf41890ce8c7da7a82d, type: 2}
 --- !u!1001 &100100000
 Prefab:
@@ -58,6 +57,14 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: chargeTime
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: cooldownTime
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: numFXBolts
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

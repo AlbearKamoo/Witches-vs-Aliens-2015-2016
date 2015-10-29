@@ -11,35 +11,27 @@ public class BoostAbility : MovementAbility {
     AudioSource sfx;
     ParticleSystem vfx;
     Rigidbody2D rigid;
-    bool _active = false; //do NOT use; use the property because it has setters
-    bool active { get { return _active; }
-        set
-        {
-            if (value)
-            {
-                if (!_active)
-                {
-                    sfx.Play();
-                    StartCoroutine(playFX());
-                }
-            }
-                /*
-            else if (_active)
-            {
-                
-            }
-                 */
-            _active = value;
-        }
+
+    protected override void OnActivate()
+    {
+        base.OnActivate();
+        sfx.Play();
+        StartCoroutine(playFX());
     }
 
     //may want to turn these into protected [SerializeField]s if the stats are going to be different for each char
-    const float baseBoostSpeedMultiplier = 2.5f;
-    const float boostCostPerSec = 1.75f;
-    const float boostDecayRate = 3f;
-    const float baseAccelNerf = 0.066f;
-    const float accelNerfDecayRate = 1f;
-    const float minFXTime = 0.5f;
+    [SerializeField]
+    protected float speedMultiplier = 2.5f;
+    [SerializeField]
+    protected float maxDuration = 0.5f;
+    [SerializeField]
+    protected float boostDecayTime = 1f;
+    [SerializeField]
+    protected float baseAccelDebuff = 0.066f;
+    [SerializeField]
+    protected float accelNerfDecayTime = 1f;
+    [SerializeField]
+    protected float FXDurationExtend = 0.5f;
 
     void Awake()
     {
@@ -47,8 +39,9 @@ public class BoostAbility : MovementAbility {
         vfx = GetComponent<ParticleSystem>();
     }
 
-    void Start()
+    protected override void Start()
     {
+        base.Start();
         action = GetComponentInParent<InputToAction>();
         vfx.startSize = 2*transform.parent.GetComponentInChildren<CircleCollider2D>().radius;
         rigid = GetComponentInParent<Rigidbody2D>();
@@ -68,25 +61,25 @@ public class BoostAbility : MovementAbility {
     IEnumerator Boost(Vector2 direction)
     {
         if (speedMod == null)
-            speedMod = action.maxSpeed.addSpeedModifier(baseBoostSpeedMultiplier);
+            speedMod = action.maxSpeed.addSpeedModifier(speedMultiplier);
         else
-            speedMod.value = baseBoostSpeedMultiplier;
+            speedMod.value = speedMultiplier;
 
         if (accelMod == null)
-            accelMod = action.accel.addSpeedModifier(baseAccelNerf);
+            accelMod = action.accel.addSpeedModifier(baseAccelDebuff);
         else
-            accelMod.value = baseAccelNerf;
+            accelMod.value = baseAccelDebuff;
 
         rigid.velocity = action.maxSpeed * direction.normalized;
 
         active = true;
+        float duration = 0;
         while (active)
         {
             yield return new WaitForFixedUpdate();
-            _charge -= Time.fixedDeltaTime * boostCostPerSec;
-            if (_charge < 0)
+            duration += Time.fixedDeltaTime;
+            if (duration > maxDuration)
             {
-                _charge = 0;
                 active = false;
             }
         }
@@ -96,10 +89,12 @@ public class BoostAbility : MovementAbility {
     }
     IEnumerator DecaySpeed()
     {
+        float time = 0;
         while (!active)
         {
-            speedMod.value -= Time.fixedDeltaTime * boostDecayRate;
-            if (speedMod.value < 1)
+            time += Time.fixedDeltaTime;
+            speedMod.value = Mathf.Lerp(speedMultiplier, 1, time / boostDecayTime);
+            if (time > boostDecayTime)
             {
                 action.maxSpeed.removeSpeedModifier(speedMod);
                 speedMod = null;
@@ -111,10 +106,12 @@ public class BoostAbility : MovementAbility {
     }
     IEnumerator DecayAccel()
     {
+        float time = 0;
         while (!active)
         {
-            accelMod.value += Time.fixedDeltaTime * accelNerfDecayRate;
-            if (accelMod.value > 1)
+            time += Time.fixedDeltaTime;
+            accelMod.value = Mathf.Lerp(baseAccelDebuff, 1, time / accelNerfDecayTime);
+            if (time > boostDecayTime)
             {
                 action.accel.removeSpeedModifier(accelMod);
                 accelMod = null;
@@ -127,13 +124,9 @@ public class BoostAbility : MovementAbility {
     IEnumerator playFX()
     {
         vfx.Play();
-        float time = 0;
-        while (active || time < minFXTime)
-        {
-            time += Time.deltaTime;
+        while (active)
             yield return null;
-        }
-        vfx.Stop();
+        Callback.FireAndForget(() => vfx.Stop(), FXDurationExtend, this);
     }
 
 

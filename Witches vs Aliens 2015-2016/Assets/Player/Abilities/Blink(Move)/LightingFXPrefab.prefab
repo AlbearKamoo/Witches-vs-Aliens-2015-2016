@@ -44,6 +44,7 @@ MonoBehaviour:
   maxRiseOverRun: .75
   pointsPerDistance: 2
   duration: .25
+  positiveDurationVariance: .100000001
 --- !u!120 &12050188
 LineRenderer:
   m_ObjectHideFlags: 1
@@ -95,6 +96,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: m_UseWorldSpace
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: positiveDurationVariance
+      value: .100000001
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

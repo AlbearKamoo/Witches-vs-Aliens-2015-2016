@@ -12,7 +12,15 @@ public class InputToAction : MonoBehaviour {
     Transform rotating;
 
     public Vector2 normalizedMovementInput { get; set; }
-    public Vector2 aimingInput { get; set; }
+    public Vector2 aimingInputDirection { get; set; }
+    public delegate Vector2 vectorQuantifier(Vector2 aimingInput, float maxDistance);
+    vectorQuantifier _vectorQuantified;
+    public vectorQuantifier vectorQuantified {set { _vectorQuantified = value; } }
+    public delegate float vectorPercent(Vector2 aimingInput, float maxDistance);
+    vectorPercent _vectorPercent;
+    public vectorPercent vectorToPercent { set { _vectorPercent = value; } }
+    public Vector2 aimingInputDisplacement(float maxDistanceForScale) { return _vectorQuantified(aimingInputDirection, maxDistanceForScale); }
+    public float aimingInputPercentDistance(float maxDistanceForScale) { return _vectorPercent(aimingInputDirection, maxDistanceForScale); }
     [SerializeField]
     protected float initMaxSpeed;
     private FloatStatTracker _maxSpeed;
@@ -57,8 +65,8 @@ public class InputToAction : MonoBehaviour {
         rigid.velocity = Vector2.ClampMagnitude(Vector2.MoveTowards(rigid.velocity, _maxSpeed * normalizedMovementInput, _maxSpeed * _accel * Time.fixedDeltaTime), _maxSpeed);
 
         //rotation
-        if (aimingInput.sqrMagnitude != 0)
-            rotateTowards(aimingInput);
+        if (aimingInputDirection.sqrMagnitude != 0)
+            rotateTowards(aimingInputDirection);
         else if (normalizedMovementInput.sqrMagnitude != 0)
             rotateTowards(normalizedMovementInput);
 	}

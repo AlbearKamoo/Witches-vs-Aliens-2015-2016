@@ -112,8 +112,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21c9b8f96f375644c8c2ad69ea98aa61, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxCharge: 2
-  chargeTime: 5
+  cooldownTime: 5
+  speedMultiplier: 2.5
+  maxDuration: .333333343
+  boostDecayTime: 1
+  baseAccelDebuff: .0659999996
+  accelNerfDecayTime: 1
+  FXDurationExtend: .5
 --- !u!198 &19871962
 ParticleSystem:
   m_ObjectHideFlags: 1
@@ -1295,6 +1300,14 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: maxCharge
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: cooldownTime
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: maxDuration
+      value: .333333343
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

@@ -13,7 +13,10 @@ public abstract class AbstractPlayerInput : MonoBehaviour
     void Start()
     {
         action = GetComponent<InputToAction>();
+        setInputToActionAimingDelegates();
     }
+
+    protected abstract void setInputToActionAimingDelegates();
 
     // Update is called once per frame
     void Update()
