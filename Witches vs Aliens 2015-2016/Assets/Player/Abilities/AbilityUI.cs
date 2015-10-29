@@ -12,7 +12,7 @@ public class AbilityUI : MonoBehaviour {
     MovementAbility ability;
 
     float radius = 0;
-    const float particlesPerFillAngle = 600f;
+    const float particlesPerFillAngle = 400f;
 
     static Color[] colorLevels = {
                                      Color.clear, 
@@ -31,10 +31,10 @@ public class AbilityUI : MonoBehaviour {
 	void Start () {
         progress = transform.Find("FilledImage").GetComponent<Image>();
         background = transform.Find("BackgroundImage").GetComponent<Image>();
-        ability = transform.parent.parent.GetComponentInChildren<MovementAbility>();
+        ability = transform.parent.GetComponentInChildren<MovementAbility>();
         vfx = GetComponent<ParticleSystem>();
 
-        radius = GetComponentInParent<CircleCollider2D>().radius;
+        radius = transform.parent.GetComponentInChildren<CircleCollider2D>().radius;
 
         Vector2 newSizeDelta = new Vector2(2*radius, 2*radius);
 
@@ -68,7 +68,7 @@ public class AbilityUI : MonoBehaviour {
             for (int i = 0; i < numParticles; i++)
             {
                 Vector2 radial = Vector3.Slerp(oldRadial, newRadial, Random.value);
-                vfx.Emit(Random.value * radial, Vector3.zero, 1f, 1f, Color.black);
+                vfx.Emit(Random.value * radial, Vector3.zero, 0.25f, 0.25f, Color.black);
             }
         }
 

@@ -1,14 +1,15 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class DistortionAbility : MovementAbility {
+public class DistortionAbility : GenericAbility {
 
     ParticleSystem vfx;
     CircleCollider2D coll;
     PointEffector2D effector;
     MeshRenderer render;
 
-    const float activeCost = 1f;
+    [SerializeField]
+    protected float activeCost;
 
     bool _active = false; //do NOT use; use the property because it has setters
     bool active
@@ -46,8 +47,9 @@ public class DistortionAbility : MovementAbility {
         render = GetComponent<MeshRenderer>();
 	}
 
-    protected override void onFire()
+    protected override void onFire(Vector2 direction)
     {
+        _charge += 1; //charge was decremented by 1 when fired; this ensures that there is no net change, but you need at least one charge to fire
         StartCoroutine(UpdateCharge());
     }
 
@@ -64,6 +66,7 @@ public class DistortionAbility : MovementAbility {
         {
             yield return new WaitForFixedUpdate();
             _charge -= Time.fixedDeltaTime * activeCost;
+            Debug.Log(_charge);
             if (_charge < 0)
             {
                 _charge = 0;

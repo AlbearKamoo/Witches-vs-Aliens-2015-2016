@@ -1,0 +1,38 @@
+﻿using UnityEngine;
+using System.Collections;
+
+public class MousePlayerInput : AbstractPlayerInput {
+
+    Transform thisTransform;
+
+    void Awake()
+    {
+        thisTransform = this.transform;
+    }
+
+    protected override void updateAim()
+    {
+        action.aimingInput = Format.mousePosInWorld() - thisTransform.position;
+    }
+
+    protected override void checkAbilities()
+    {
+        if (Input.GetMouseButtonDown(0))
+            action.FireAbility(AbilityType.MOVEMENT);
+        if (Input.GetMouseButtonDown(1))
+            action.FireAbility(AbilityType.GENERIC);
+        if (Input.GetMouseButtonDown(2))
+            action.FireAbility(AbilityType.SUPER); //not all mouses have middle mouse buttons; might want to change
+
+        if (Input.GetMouseButtonUp(0))
+            action.StopFireAbility(AbilityType.MOVEMENT);
+        if (Input.GetMouseButtonUp(1))
+            action.StopFireAbility(AbilityType.GENERIC);
+        if (Input.GetMouseButtonUp(2))
+            action.StopFireAbility(AbilityType.SUPER);
+
+    }
+}
+
+    
+
