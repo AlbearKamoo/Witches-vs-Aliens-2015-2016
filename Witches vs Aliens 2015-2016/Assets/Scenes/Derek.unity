@@ -333,6 +333,8 @@ MonoBehaviour:
       superAbilityKey: 0
   leftRespawnPointsParent: {fileID: 432936661}
   rightRespawnPointsParent: {fileID: 432936660}
+  resetDuration: 1
+  goalToResetTime: 2
 --- !u!4 &819210143
 Transform:
   m_ObjectHideFlags: 0
@@ -344,7 +346,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 6
 --- !u!1001 &1034567232
 Prefab:
   m_ObjectHideFlags: 0

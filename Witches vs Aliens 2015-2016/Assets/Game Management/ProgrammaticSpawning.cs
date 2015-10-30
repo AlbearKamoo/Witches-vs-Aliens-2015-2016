@@ -14,6 +14,12 @@ public class ProgrammaticSpawning : MonoBehaviour, IObserver<Message> {
     [AutoLink(parentTag = Tags.stage, parentName = "Right")]
     protected Transform rightRespawnPointsParent;
 
+    [SerializeField]
+    protected float resetDuration;
+
+    [SerializeField]
+    protected float goalToResetTime;
+
     Vector2[] leftPoints;
     Vector2[] rightPoints;
     Transform[] players;
@@ -60,8 +66,7 @@ public class ProgrammaticSpawning : MonoBehaviour, IObserver<Message> {
             //GameObject.Instantiate(playerComponentPrefabs[i].superAbility).transform.SetParent(spawnedPlayer.transform);
             players[i] = spawnedPlayer.transform;
         }
-
-        resetPlayerPositions();
+        Callback.FireForNextFrame(() => resetPlayerPositions(), this);
 	}
 
     void resetPlayerPositions()
@@ -75,15 +80,14 @@ public class ProgrammaticSpawning : MonoBehaviour, IObserver<Message> {
             switch (t.GetComponent<Stats>().side)
             {
                 case Side.LEFT:
-                    t.position = leftPoints[leftPointsIndex];
+                    t.GetComponent<ResetScripting>().Reset(leftPoints[leftPointsIndex], resetDuration);
                     leftPointsIndex++;
                     break;
                 case Side.RIGHT:
-                    t.position = rightPoints[rightPointsIndex];
+                    t.GetComponent<ResetScripting>().Reset(rightPoints[rightPointsIndex], resetDuration);
                     rightPointsIndex++;
                     break;
             }
-            t.GetComponent<VisualAnimate>().DoFX();
         }
 
     }
@@ -93,7 +97,7 @@ public class ProgrammaticSpawning : MonoBehaviour, IObserver<Message> {
         switch (m.messageType)
         {
             case GoalScoredMessage.classMessageType:
-                resetPlayerPositions();
+                Callback.FireAndForget(() => resetPlayerPositions(), goalToResetTime, this);
                 break;
         }
     }

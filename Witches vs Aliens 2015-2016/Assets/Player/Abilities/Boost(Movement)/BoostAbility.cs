@@ -3,7 +3,7 @@ using System.Collections;
 
 [RequireComponent(typeof(AudioSource))]
 [RequireComponent(typeof(ParticleSystem))]
-public class BoostAbility : MovementAbility {
+public class BoostAbility : MovementAbility, IObserver<ResetMessage> {
 
     InputToAction action;
     FloatStat speedMod;
@@ -45,6 +45,7 @@ public class BoostAbility : MovementAbility {
         action = GetComponentInParent<InputToAction>();
         vfx.startSize = 2*transform.parent.GetComponentInChildren<CircleCollider2D>().radius;
         rigid = GetComponentInParent<Rigidbody2D>();
+        GetComponentInParent<IObservable<ResetMessage>>().Observable().Subscribe(this);
     }
 
     protected override void onFire(Vector2 direction)
@@ -129,5 +130,9 @@ public class BoostAbility : MovementAbility {
         Callback.FireAndForget(() => vfx.Stop(), FXDurationExtend, this);
     }
 
+    public void Notify(ResetMessage m)
+    {
+        vfx.Stop();
+    }
 
 }

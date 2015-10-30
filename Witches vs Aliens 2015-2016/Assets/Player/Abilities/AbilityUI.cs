@@ -3,7 +3,7 @@ using UnityEngine.UI;
 using System.Collections;
 
 [RequireComponent(typeof(AutoRotate))]
-public class AbilityUI : MonoBehaviour, IObserver<AbilityStateChangedMessage> {
+public class AbilityUI : MonoBehaviour, IObserver<AbilityStateChangedMessage>, IObserver<ResetMessage> {
 
     [SerializeField]
     protected ParticleSystem movementVFX;
@@ -16,6 +16,7 @@ public class AbilityUI : MonoBehaviour, IObserver<AbilityStateChangedMessage> {
 	void Start () {
         transform.parent.GetComponentInChildren<MovementAbility>().Observable().Subscribe(this);
         transform.parent.GetComponentInChildren<GenericAbility>().Observable().Subscribe(this);
+        GetComponentInParent<IObservable<ResetMessage>>().Observable().Subscribe(this);
 
         radius = transform.parent.GetComponentInChildren<CircleCollider2D>().radius;
 
@@ -39,6 +40,20 @@ public class AbilityUI : MonoBehaviour, IObserver<AbilityStateChangedMessage> {
                 else
                     genericVFX.Stop();
                 break;
+        }
+    }
+
+    public void Notify(ResetMessage m)
+    {
+        if (movementVFX.isPlaying)
+        {
+            movementVFX.Stop();
+            Callback.FireForNextFrame(() => movementVFX.Play(), this);
+        }
+        if (genericVFX.isPlaying)
+        {
+            genericVFX.Stop();
+            Callback.FireForNextFrame(() => genericVFX.Play(), this);
         }
     }
 }

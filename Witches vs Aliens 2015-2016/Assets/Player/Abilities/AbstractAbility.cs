@@ -4,7 +4,7 @@ using System.Collections;
 public abstract class AbstractAbility : MonoBehaviour {
 
     bool _active;
-    protected bool active {
+    public bool active {
         get
         {
             return _active;

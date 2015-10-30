@@ -12,6 +12,7 @@ public class InputToAction : MonoBehaviour {
     Transform rotating;
 
     public Vector2 normalizedMovementInput { get; set; }
+    public bool movementEnabled = false;
     public Vector2 aimingInputDirection { get; set; }
     public delegate Vector2 vectorQuantifier(Vector2 aimingInput, float maxDistance);
     vectorQuantifier _vectorQuantified;
@@ -61,7 +62,8 @@ public class InputToAction : MonoBehaviour {
 	
 	// Update is called once per frame
 	void FixedUpdate () {
-        rigid.velocity = Vector2.ClampMagnitude(Vector2.MoveTowards(rigid.velocity, _maxSpeed * normalizedMovementInput, _maxSpeed * _accel * Time.fixedDeltaTime), _maxSpeed);
+        if(movementEnabled)
+            rigid.velocity = Vector2.ClampMagnitude(Vector2.MoveTowards(rigid.velocity, _maxSpeed * normalizedMovementInput, _maxSpeed * _accel * Time.fixedDeltaTime), _maxSpeed);
 
         //rotation
         if (aimingInputDirection.sqrMagnitude != 0)
@@ -106,5 +108,12 @@ public class InputToAction : MonoBehaviour {
                 superAbility.StopFire();
                 break;
         }
+    }
+
+    public void DisableMovement(float duration)
+    {
+        movementEnabled = false;
+        rigid.velocity = Vector2.zero;
+        Callback.FireAndForget(() => movementEnabled = true, duration, this);
     }
 }
