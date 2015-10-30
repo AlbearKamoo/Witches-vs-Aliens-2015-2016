@@ -55,6 +55,7 @@
 			{
 				fixed4 col = tex2D(_MainTex, i.uv);		
 				fixed4 img = tex2D(_ImageTex, i.uv_screen);
+				img += col;
 				img.a *= col.a;
 					
 				return img;

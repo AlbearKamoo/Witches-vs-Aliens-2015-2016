@@ -8,7 +8,7 @@ public class PuckFX : MonoBehaviour, IObserver<BumpedSideChangedMessage> {
 
     const float fxTime = 1f;
     const float ssfxTime = 0.05f;
-    const float ssfxIntensityMultiplier = 0.000075f;
+    const float ssfxIntensityMultiplier = 0.00025f;
 
     VisualAnimate vfx;
     Rigidbody2D rigid;
