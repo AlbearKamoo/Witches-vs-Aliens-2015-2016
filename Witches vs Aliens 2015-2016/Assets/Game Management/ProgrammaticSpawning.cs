@@ -3,9 +3,10 @@ using System.Collections;
 
 public class ProgrammaticSpawning : MonoBehaviour, IObserver<Message> {
 
-    //demonstration that we can actually do this
-
-    public PlayerComponents[] playerComponentPrefabs;
+    [SerializeField]
+    protected GameObject PuckPrefab;
+    [SerializeField]
+    protected PlayerComponents[] playerComponentPrefabs;
 
     [SerializeField]
     [AutoLink(parentTag = Tags.stage, parentName = "Left")]
@@ -13,6 +14,10 @@ public class ProgrammaticSpawning : MonoBehaviour, IObserver<Message> {
     [SerializeField]
     [AutoLink(parentTag = Tags.stage, parentName = "Right")]
     protected Transform rightRespawnPointsParent;
+
+    [SerializeField]
+    [AutoLink(parentTag = Tags.stage, parentName = "PuckRespawnPoint")]
+    protected Transform puckRespawnPoint;
 
     [SerializeField]
     protected float resetDuration;
@@ -23,9 +28,10 @@ public class ProgrammaticSpawning : MonoBehaviour, IObserver<Message> {
     Vector2[] leftPoints;
     Vector2[] rightPoints;
     Transform[] players;
+    PuckFX puck;
 
     // Use this for initialization
-    void Start () {
+    void Awake () {
         Observers.Subscribe(this, new string[]{GoalScoredMessage.classMessageType});
 
         leftPoints = new Vector2[leftRespawnPointsParent.childCount];
@@ -44,10 +50,12 @@ public class ProgrammaticSpawning : MonoBehaviour, IObserver<Message> {
             index++;
         }
 
+        puck = ((GameObject)(Instantiate(PuckPrefab, puckRespawnPoint.position, Quaternion.identity))).GetComponent<PuckFX>();
+
         players = new Transform[playerComponentPrefabs.Length];
         for (int i = 0; i < playerComponentPrefabs.Length; i++)
         {
-            GameObject spawnedPlayer = (GameObject)Instantiate(playerComponentPrefabs[i].basePlayer, Vector3.zero, Quaternion.identity);
+            GameObject spawnedPlayer = (GameObject)Instantiate(playerComponentPrefabs[i].basePlayer, i % 2 == 0 ? leftPoints[i % 2] : rightPoints[i % 2], Quaternion.identity); //the positions are temporary
             spawnedPlayer.AddComponent<Stats>().side = playerComponentPrefabs[i].side;
             switch (playerComponentPrefabs[i].inputMode)
             {
@@ -66,10 +74,10 @@ public class ProgrammaticSpawning : MonoBehaviour, IObserver<Message> {
             //GameObject.Instantiate(playerComponentPrefabs[i].superAbility).transform.SetParent(spawnedPlayer.transform);
             players[i] = spawnedPlayer.transform;
         }
-        Callback.FireForNextFrame(() => resetPlayerPositions(), this);
+        Callback.FireForNextFrame(() => resetPositions(), this);
 	}
 
-    void resetPlayerPositions()
+    void resetPositions()
     {
         leftPoints.Shuffle<Vector2>();
         rightPoints.Shuffle<Vector2>();
@@ -89,7 +97,7 @@ public class ProgrammaticSpawning : MonoBehaviour, IObserver<Message> {
                     break;
             }
         }
-
+        puck.Respawn(puckRespawnPoint.position);
     }
 
     public void Notify(Message m)
@@ -97,7 +105,7 @@ public class ProgrammaticSpawning : MonoBehaviour, IObserver<Message> {
         switch (m.messageType)
         {
             case GoalScoredMessage.classMessageType:
-                Callback.FireAndForget(() => resetPlayerPositions(), goalToResetTime, this);
+                Callback.FireAndForget(() => resetPositions(), goalToResetTime, this);
                 break;
         }
     }

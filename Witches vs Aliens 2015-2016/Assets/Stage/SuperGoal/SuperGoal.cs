@@ -75,7 +75,11 @@ public class SuperGoal : MonoBehaviour {
         coll = GetComponent<Collider2D>();
         render = GetComponentInChildren<SpriteRenderer>();
         vfx = GetComponentInChildren<ParticleSystem>();
-        puckFX = GameObject.FindGameObjectWithTag(Tags.puck).GetComponent<PuckFX>();
+    }
+
+    void Start()
+    {
+        Callback.FireForNextFrame(() => puckFX = GameObject.FindGameObjectWithTag(Tags.puck).GetComponent<PuckFX>(), this);
     }
 
 	// Use this for initialization

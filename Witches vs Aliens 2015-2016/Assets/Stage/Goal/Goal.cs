@@ -6,10 +6,6 @@ public class Goal : MonoBehaviour {
     protected Side mySide;
 
     ParticleSystem vfx;
-
-    [AutoLink(parentTag = Tags.stage, parentName = "PuckRespawnPoint")]
-    public Transform respawnPoint;
-
     void Start()
     {
         vfx = GetComponent<ParticleSystem>();
@@ -20,8 +16,7 @@ public class Goal : MonoBehaviour {
         if (!other.collider.CompareTag(Tags.puck))
             return;
         Debug.Log("GOOOOOOOOOOOOOOOOOOOOOOAL!");
-        other.transform.position = respawnPoint.position;
-        other.transform.GetComponent<PuckFX>().Respawn();
+        other.gameObject.GetComponent<PuckFX>().Hide();
         vfx.Play();
         ScreenShake.RandomShake(this, 0.1f, 0.25f);
         Observers.Post(new GoalScoredMessage(mySide));

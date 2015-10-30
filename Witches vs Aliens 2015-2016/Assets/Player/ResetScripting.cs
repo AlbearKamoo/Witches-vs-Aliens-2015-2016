@@ -7,9 +7,11 @@ public class ResetScripting : MonoBehaviour, IObservable<ResetMessage> {
     InputToAction action;
     MovementAbility movementAbility;
     GenericAbility genericAbility;
+    VisualAnimate vfx;
 	// Use this for initialization
 	void Awake () {
         action = GetComponent<InputToAction>();
+        vfx = GetComponent<VisualAnimate>();
 	}
 
     void Start() {
@@ -23,6 +25,7 @@ public class ResetScripting : MonoBehaviour, IObservable<ResetMessage> {
         movementAbility.active = false;
         genericAbility.active = false;
         transform.position = newPos;
+        vfx.DoFX();
         action.DisableMovement(disabledTime);
     }
 }

@@ -13,6 +13,7 @@ public class PuckFX : MonoBehaviour, IObserver<BumpedSideChangedMessage> {
     VisualAnimate vfx;
     Rigidbody2D rigid;
     LastBumped bumped;
+    Collider2D coll;
     [SerializeField]
     [AutoLink(parentTag = Tags.puck, parentName = "AlienSideVFX")]
     protected SpriteRenderer alienSideVFX;
@@ -44,19 +45,23 @@ public class PuckFX : MonoBehaviour, IObserver<BumpedSideChangedMessage> {
 	void Awake () {
         rigid = GetComponent<Rigidbody2D>();
         vfx = GetComponent<VisualAnimate>();
+        coll = GetComponent<Collider2D>();
         bumped = GetComponent<LastBumped>();
         bumped.Observable().Subscribe(this);
 	}
-
-    void Start()
+    public void Hide() //called after a goal is scored
     {
-        vfx.DoFX();
+        rigid.constraints = RigidbodyConstraints2D.FreezeAll;
+        coll.enabled = false;
     }
 
-    public void Respawn()
+    public void Respawn(Vector2 position)
     {
+        rigid.constraints = RigidbodyConstraints2D.None;
+        transform.position = position;
         rigid.velocity = Vector2.zero;
         rigid.angularVelocity = 0;
+        coll.enabled = true;
         vfx.DoFX();
     }
 
