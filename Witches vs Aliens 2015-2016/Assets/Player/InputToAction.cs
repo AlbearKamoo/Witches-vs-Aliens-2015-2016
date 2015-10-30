@@ -57,7 +57,6 @@ public class InputToAction : MonoBehaviour {
         moveAbility = GetComponentInChildren<MovementAbility>();
         superAbility = GetComponentInChildren<SuperAbility>();
         genAbility = GetComponentInChildren<GenericAbility>();
-        vfx.DoFX();
     }
 	
 	// Update is called once per frame

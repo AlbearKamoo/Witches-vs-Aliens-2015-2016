@@ -285,7 +285,7 @@ public class CheckEditorLinks : MonoBehaviour {
                 //use the parent nodes to try to find
                 foreach (Transform t in parentNodes)
                 {
-                    Component possibleMatch = t.GetComponent(value.GetType());
+                    Component possibleMatch = value.GetType() == typeof(Transform) ? t : t.GetComponent(value.GetType());
                     if (possibleMatch != null)
                     {
                         field.SetValue(script, possibleMatch);
