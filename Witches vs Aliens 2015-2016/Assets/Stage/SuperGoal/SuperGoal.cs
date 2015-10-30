@@ -25,7 +25,6 @@ public class SuperGoal : MonoBehaviour {
                 if (!_active)
                 {
                     coll.enabled = true;
-
                     render.enabled = true;
                     rotateParticlesToTransform();
                     vfx.playbackSpeed = 1.5f;
@@ -52,7 +51,6 @@ public class SuperGoal : MonoBehaviour {
                 {
                     float tweenedF = 6 * (Mathf.Pow(f, 2) - Mathf.Pow(f, 3)) + 1 - f;
                     render.transform.localScale = new Vector2(tweenedF, 1 + 3 * f);
-                    Debug.Log(3 * tweenedF * (originalLocalPosition.y - 1));
                     render.transform.localPosition = new Vector2(0f, originalLocalPosition.y + 3 * f * (originalLocalPosition.y - 1));
                     render.color = Color.Lerp(mainRenderColor, Color.white, f);
                 }, 1f, this).FollowedBy(() => 
@@ -86,6 +84,7 @@ public class SuperGoal : MonoBehaviour {
         other.transform.position = _mirror.transform.TransformPoint((transform.InverseTransformPoint(other.transform.position)));
         active = false;
         _mirror.active = false;
+        Debug.Log("SUPERGOAL!");
     }
 
     void rotateParticlesToTransform()

@@ -26,6 +26,7 @@ public class ProgrammaticSpawning : MonoBehaviour {
             {
                 spawnedPlayer = (GameObject)Instantiate(playerComponentPrefabs[i].basePlayer, P2respawnPoint.position, Quaternion.identity);
             }
+            spawnedPlayer.AddComponent<Stats>().side = playerComponentPrefabs[i].side;
             switch (playerComponentPrefabs[i].inputMode)
             {
                 case PlayerComponents.PlayerInputType.MOUSE:
@@ -53,6 +54,7 @@ public class PlayerComponents
     //public GameObject superAbility;
 
     public PlayerInputType inputMode;
+    public Side side;
     public InputConfiguration bindings;
     public PlayerComponents() { }
 

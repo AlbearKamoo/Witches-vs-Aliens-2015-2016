@@ -25,11 +25,11 @@ public class Goal : MonoBehaviour {
         vfx.Play();
         ScreenShake.RandomShake(this, 0.1f, 0.25f);
 	}
+}
 
-    public enum Side
-    {
-        LEFT,
-        RIGHT
-    }
+public enum Side
+{
+    LEFT,
+    RIGHT
 }
 

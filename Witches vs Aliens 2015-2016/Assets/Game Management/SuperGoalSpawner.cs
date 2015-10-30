@@ -7,6 +7,12 @@ public class SuperGoalSpawner : MonoBehaviour {
     [SerializeField]
     protected GameObject SuperGoalPrefab;
 
+    [SerializeField]
+    protected float spawnTime;
+    [SerializeField]
+    protected float spawnTimeVariance;
+    [SerializeField]
+    protected float superGoalDuration;
     SuperGoal SuperGoal1;
     SuperGoal SuperGoal2;
 	// Use this for initialization
@@ -16,6 +22,11 @@ public class SuperGoalSpawner : MonoBehaviour {
         SuperGoal1.mirror = SuperGoal2;
         SuperGoal2.mirror = SuperGoal1;
 
+        StartCoroutine(GoalSpawning());
+	}
+
+    void spawnSuperGoal()
+    {
         //randomly chose a spawn point
         int childNum = Random.Range(0, transform.childCount);
         int currentChild = 0;
@@ -33,10 +44,15 @@ public class SuperGoalSpawner : MonoBehaviour {
         }
         SuperGoal1.active = true;
         SuperGoal2.active = true;
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+    }
+
+    IEnumerator GoalSpawning()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(RandomLib.RandFloatRange(spawnTime, spawnTimeVariance));
+            spawnSuperGoal();
+            Callback.FireAndForget(() => { SuperGoal1.active = false; SuperGoal2.active = false; }, superGoalDuration, this);
+        }
+    }
 }
