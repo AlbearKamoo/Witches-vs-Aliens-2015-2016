@@ -91,6 +91,7 @@ public static class Observers
 
     public static void Post(Message message)
     {
-        theObservables[message.messageType].Post(message);
+        if(theObservables.ContainsKey(message.messageType))
+            theObservables[message.messageType].Post(message);
     }
 }

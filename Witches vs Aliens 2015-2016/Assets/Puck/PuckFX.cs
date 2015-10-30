@@ -13,7 +13,9 @@ public class PuckFX : MonoBehaviour, IObserver<BumpedSideChangedMessage> {
     VisualAnimate vfx;
     Rigidbody2D rigid;
     LastBumped bumped;
-
+    [SerializeField]
+    [AutoLink(parentTag = Tags.puck, parentName = "AlienSideVFX")]
+    protected SpriteRenderer alienSideVFX;
     bool _perSideEffectsActive = false;
     public bool perSideEffectsActive
     {
@@ -33,6 +35,7 @@ public class PuckFX : MonoBehaviour, IObserver<BumpedSideChangedMessage> {
             else if (_perSideEffectsActive)
             {
                 //deactivate per side effects
+                alienSideVFX.enabled = false;
             }
             _perSideEffectsActive = value;
         }
@@ -42,6 +45,7 @@ public class PuckFX : MonoBehaviour, IObserver<BumpedSideChangedMessage> {
         rigid = GetComponent<Rigidbody2D>();
         vfx = GetComponent<VisualAnimate>();
         bumped = GetComponent<LastBumped>();
+        bumped.Observable().Subscribe(this);
 	}
 
     void Start()
@@ -72,8 +76,12 @@ public class PuckFX : MonoBehaviour, IObserver<BumpedSideChangedMessage> {
     {
         switch (side)
         {
-            default:
-              break;
+            case Side.LEFT:
+                alienSideVFX.enabled = true;
+                break;
+            case Side.RIGHT:
+                alienSideVFX.enabled = false;
+                break;
         }
     }
 }

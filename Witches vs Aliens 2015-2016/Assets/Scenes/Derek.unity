@@ -23,7 +23,7 @@ RenderSettings:
   m_AmbientSkyColor: {r: .211999997, g: .226999998, b: .259000003, a: 1}
   m_AmbientEquatorColor: {r: .114, g: .125, b: .133000001, a: 1}
   m_AmbientGroundColor: {r: .0469999984, g: .0430000015, b: .0350000001, a: 1}
-  m_AmbientIntensity: 1
+  m_AmbientIntensity: 0
   m_AmbientMode: 3
   m_SkyboxMaterial: {fileID: 0}
   m_HaloStrength: .5
@@ -270,8 +270,8 @@ MonoBehaviour:
   - basePlayer: {fileID: 146214, guid: a8095cd9d9bc36f4e87d6eeda567d5fa, type: 2}
     movementAbility: {fileID: 186010, guid: 999ab97c110d5bc4baa999b79b3005e9, type: 2}
     genericAbility: {fileID: 110450, guid: bc177a2768bd39946866f5ebcbe5d375, type: 2}
-    inputMode: 1
-    side: 0
+    inputMode: 2
+    side: 1
     bindings:
       verticalMovementAxisName: VerticalArrow
       horizontalMovementAxisName: HorizontalArrow
@@ -439,6 +439,18 @@ Prefab:
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2087710, guid: 486ee4196fa00d744a85e45659f38878, type: 2}
+      propertyPath: m_BackGroundColor.r
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2087710, guid: 486ee4196fa00d744a85e45659f38878, type: 2}
+      propertyPath: m_BackGroundColor.g
+      value: .388888836
+      objectReference: {fileID: 0}
+    - target: {fileID: 2087710, guid: 486ee4196fa00d744a85e45659f38878, type: 2}
+      propertyPath: m_BackGroundColor.b
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 486ee4196fa00d744a85e45659f38878, type: 2}
   m_IsPrefabParent: 0
@@ -522,6 +534,14 @@ Prefab:
     - target: {fileID: 417488, guid: ae276d1e363cf0c49be7db4c5b225c6b, type: 2}
       propertyPath: m_RootOrder
       value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 139428, guid: ae276d1e363cf0c49be7db4c5b225c6b, type: 2}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 21245664, guid: ae276d1e363cf0c49be7db4c5b225c6b, type: 2}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ae276d1e363cf0c49be7db4c5b225c6b, type: 2}

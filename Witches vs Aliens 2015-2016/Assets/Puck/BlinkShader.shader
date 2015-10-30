@@ -11,8 +11,7 @@
 	}
 	SubShader
 	{
-		Tags { "RenderType"="Opaque"
-		"IgnoreProjector"="True" "Queue"="Transparent"  "PreviewType"="Plane"}
+		Tags { "RenderType"="Opaque" "IgnoreProjector"="True" "Queue"="Transparent"  "PreviewType"="Plane"}
 
 		Lighting Off
 
