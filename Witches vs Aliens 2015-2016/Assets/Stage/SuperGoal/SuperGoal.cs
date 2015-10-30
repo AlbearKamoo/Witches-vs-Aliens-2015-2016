@@ -7,6 +7,7 @@ public class SuperGoal : MonoBehaviour {
     SuperGoal _mirror;
     SpriteRenderer render;
     ParticleSystem vfx;
+    PuckFX puckFX;
     public SuperGoal mirror { set { _mirror = value; } }
     bool _active = false;
 
@@ -24,6 +25,7 @@ public class SuperGoal : MonoBehaviour {
             {
                 if (!_active)
                 {
+                    puckFX.perSideEffectsActive = true;
                     coll.enabled = true;
                     render.enabled = true;
                     rotateParticlesToTransform();
@@ -42,6 +44,7 @@ public class SuperGoal : MonoBehaviour {
             }
             else if (_active)
             {
+                puckFX.perSideEffectsActive = false;
                 coll.enabled = false;
                 Color mainRenderColor = render.color;
                 vfx.Stop();
@@ -72,12 +75,12 @@ public class SuperGoal : MonoBehaviour {
         coll = GetComponent<Collider2D>();
         render = GetComponentInChildren<SpriteRenderer>();
         vfx = GetComponentInChildren<ParticleSystem>();
+        puckFX = GameObject.FindGameObjectWithTag(Tags.puck).GetComponent<PuckFX>();
     }
 
 	// Use this for initialization
     void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log(other);
         if (!other.CompareTag(Tags.puck))
             return;
 

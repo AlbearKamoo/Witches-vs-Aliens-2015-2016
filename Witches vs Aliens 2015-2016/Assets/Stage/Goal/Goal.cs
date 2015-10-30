@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Goal : MonoBehaviour {
     [SerializeField]
-    private Side mySide;
+    protected Side mySide;
 
     ParticleSystem vfx;
 
@@ -24,6 +24,7 @@ public class Goal : MonoBehaviour {
         other.transform.GetComponent<PuckFX>().Respawn();
         vfx.Play();
         ScreenShake.RandomShake(this, 0.1f, 0.25f);
+        Observers.Post(new GoalScoredMessage(mySide));
 	}
 }
 
@@ -31,5 +32,15 @@ public enum Side
 {
     LEFT,
     RIGHT
+}
+
+public class GoalScoredMessage : Message
+{
+    public readonly Side side;
+    public const string classMessageType = "GoalScoredMessage";
+    public GoalScoredMessage(Side side) : base(classMessageType)
+    {
+        this.side = side;
+    }
 }
 

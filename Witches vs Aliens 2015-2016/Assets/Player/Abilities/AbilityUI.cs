@@ -14,8 +14,8 @@ public class AbilityUI : MonoBehaviour, IObserver<AbilityStateChangedMessage> {
 
 	// Use this for initialization
 	void Start () {
-        transform.parent.GetComponentInChildren<MovementAbility>().stateChangedObservable.Subscribe(this);
-        transform.parent.GetComponentInChildren<GenericAbility>().stateChangedObservable.Subscribe(this);
+        transform.parent.GetComponentInChildren<MovementAbility>().Observable().Subscribe(this);
+        transform.parent.GetComponentInChildren<GenericAbility>().Observable().Subscribe(this);
 
         radius = transform.parent.GetComponentInChildren<CircleCollider2D>().radius;
 

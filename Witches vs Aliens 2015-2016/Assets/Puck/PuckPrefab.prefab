@@ -13,6 +13,7 @@ GameObject:
   - 114: {fileID: 11436540}
   - 114: {fileID: 11470504}
   - 114: {fileID: 11449428}
+  - 114: {fileID: 11412818}
   m_Layer: 11
   m_Name: PuckPrefab
   m_TagString: Puck
@@ -31,7 +32,7 @@ GameObject:
   - 212: {fileID: 21239072}
   m_Layer: 11
   m_Name: PuckVisuals
-  m_TagString: Puck
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -90,6 +91,17 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 1
+--- !u!114 &11412818
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 135402}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4524e3349633f9439550c3361cbf0ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &11436540
 MonoBehaviour:
   m_ObjectHideFlags: 1

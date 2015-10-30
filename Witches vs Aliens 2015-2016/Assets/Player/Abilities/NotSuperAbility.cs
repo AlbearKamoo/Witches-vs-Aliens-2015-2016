@@ -1,12 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public abstract class NotSuperAbility : AbstractAbility {
+public abstract class NotSuperAbility : AbstractAbility, IObservable<AbilityStateChangedMessage>
+{
 
     Observable<AbilityStateChangedMessage> _stateChangedObservable = new Observable<AbilityStateChangedMessage>();
-    public Observable<AbilityStateChangedMessage> stateChangedObservable
+    public Observable<AbilityStateChangedMessage> Observable()
     {
-        get { return _stateChangedObservable; }
+        return _stateChangedObservable;
     }
 
     public override bool ready
@@ -18,7 +19,7 @@ public abstract class NotSuperAbility : AbstractAbility {
         set
         {
             base.ready = value;
-            stateChangedObservable.Post(new AbilityStateChangedMessage(value, type));
+            _stateChangedObservable.Post(new AbilityStateChangedMessage(value, type));
         }
     }
 
@@ -26,5 +27,16 @@ public abstract class NotSuperAbility : AbstractAbility {
     {
         base.OnDeactivate();
         Callback.FireAndForget(() => ready = true, cooldownTime, this);
+    }
+}
+
+public class AbilityStateChangedMessage
+{
+    public readonly bool ready;
+    public readonly AbilityType type;
+    public AbilityStateChangedMessage(bool ready, AbilityType type)
+    {
+        this.ready = ready;
+        this.type = type;
     }
 }
