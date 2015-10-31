@@ -85,6 +85,13 @@ Material:
           m_Texture: {fileID: 2800000, guid: 9c431dce07b2b3446abd1046fe4fe801, type: 3}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _NoiseTex
+        second:
+          m_Texture: {fileID: 2800000, guid: 5ae8fa8c7db40bb41a5e5828e4def5c1, type: 3}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
     m_Floats:
       data:
         first:
@@ -136,8 +143,28 @@ Material:
         second: 0
       data:
         first:
+          name: _NoiseStrength
+        second: .00499999989
+      data:
+        first:
           name: _Strength
         second: .134000003
+      data:
+        first:
+          name: _EffectStrength
+        second: .194000006
+      data:
+        first:
+          name: _MainTexAlpha
+        second: .275999993
+      data:
+        first:
+          name: _ScrollSpeed
+        second: .150000006
+      data:
+        first:
+          name: _ImageStrength
+        second: .162
     m_Colors:
       data:
         first:

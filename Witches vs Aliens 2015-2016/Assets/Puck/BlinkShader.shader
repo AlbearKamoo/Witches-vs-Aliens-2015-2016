@@ -12,7 +12,7 @@
 	SubShader
 	{
 		Tags { "RenderType"="Opaque" "IgnoreProjector"="True" "Queue"="Transparent"  "PreviewType"="Plane"}
-
+		ZWrite Off
 		Lighting Off
 
 		Pass
