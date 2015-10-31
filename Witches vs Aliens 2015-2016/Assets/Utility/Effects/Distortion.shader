@@ -74,7 +74,7 @@
 			
 			fixed4 frag (v2f i) : COLOR
 			{
-				half4 effectColor = tex2D(_EffectTex, PingPong(i.uv, 1));  //ping pong gets rid off artifacts when sampling outside of textures
+				half4 effectColor = tex2D(_EffectTex, i.uv);
 				half2 uv = i.uv_2 + 0.01 * distortion(effectColor.rg);
 				fixed4 col = tex2D(_GrabTexture, uv);
 				UNITY_OPAQUE_ALPHA(col.a);

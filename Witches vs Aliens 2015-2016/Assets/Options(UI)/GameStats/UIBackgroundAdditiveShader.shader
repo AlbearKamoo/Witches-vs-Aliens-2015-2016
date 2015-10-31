@@ -5,6 +5,7 @@
 		_MainTex ("Texture", 2D) = "white" {}
 		_ImageTex("Texture", 2D) = "white" {}
 		_NoiseTex ("Noise Bumpmap", 2D) = "bump" {}
+		_Overlay ("Overlay", 2D) = "white" {}
 		_ScrollSpeed ("ScrollSpeed", Range(0,1)) = 1
 		_NoiseStrength ("NoiseStrength", Range(-1,1)) = 1
 		_ImageStrength ("Strength", Range(0,1)) = 1
@@ -41,6 +42,7 @@
 			sampler2D _MainTex;
 			sampler2D _ImageTex;
 			sampler2D _NoiseTex;
+			sampler2D _Overlay;
 			float _ScrollSpeed;
 		
 			float4 _MainTex_ST;
@@ -69,7 +71,7 @@
 				v2f o;
 				o.vertex = mul(UNITY_MATRIX_MVP, v.vertex);
 				o.uv = v.uv;
-				o.uv2 = PingPong(o.uv + fixed2(_ScrollSpeed/10, _ScrollSpeed) * _Time.gg, 1);
+				o.uv2 = o.uv + fixed2(_ScrollSpeed/10, _ScrollSpeed) * _Time.gg;
 				return o;
 			}
 			
@@ -83,7 +85,7 @@
 				img *= _ImageStrength * col.a;
 				col *= col.a;
 				img = _MainTexAlpha * col + img;
-					
+				img -= tex2D(_Overlay, i.uv + fixed2(0, _ScrollSpeed/3) * _Time.gg)/30;
 				return img;
 			}
 			ENDCG

@@ -84,7 +84,7 @@
 				half4 effectColor = tex2D(_EffectTex, i.uv);
 				half4 strengthColor = tex2D(_StrengthTex, i.uv);
 				i.uv += fixed2(_XShift, _YShift) * _Time.gg;
-				half4 effectNoiseColor = tex2D(_EffectTex, PingPong(i.uv, 1));  //ping pong gets rid off artifacts when sampling outside of textures
+				half4 effectNoiseColor = tex2D(_EffectTex, i.uv);  //ping pong gets rid off artifacts when sampling outside of textures
 				half2 uv = i.uv_2 + (strengthColor.rg * (_DistortionStrength * distortion(effectColor.rg) + _NoiseStrength * distortion(effectNoiseColor.rg)));
 				fixed4 col = tex2D(_GrabTexture, uv);
 				UNITY_OPAQUE_ALPHA(col.a);
