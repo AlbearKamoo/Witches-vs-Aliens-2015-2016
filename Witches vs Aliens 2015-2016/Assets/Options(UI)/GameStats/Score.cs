@@ -22,12 +22,21 @@ public class Score : MonoBehaviour, IObserver<Message> {
     int leftScore = 0;
     int rightScore = 0;
 	// Use this for initialization
-	void Awake () {
+    void Awake()
+    {
         Observers.Subscribe(this, new string[] { GoalScoredMessage.classMessageType });
         background = GetComponent<Image>().material;
         leftOutline = leftScoreBoard.GetComponent<Outline>();
         rightOutline = rightScoreBoard.GetComponent<Outline>();
-	}
+
+        int imageStrength = Shader.PropertyToID("_ImageStrength");
+        float baseImageStrength = background.GetFloat(imageStrength);
+        int alpha = Shader.PropertyToID("_MainTexAlpha");
+        float baseAlpha = background.GetFloat(alpha);
+        CanvasGroup group = GetComponent<CanvasGroup>();
+        Callback.DoLerp((float l) => { background.SetFloat(imageStrength, baseImageStrength * l); background.SetFloat(alpha, baseAlpha * l); group.alpha = l;}, 1f, this)
+            .FollowedBy(() => Destroy(group), this);
+    }
 
     void UpdateScore(Side side)
     {

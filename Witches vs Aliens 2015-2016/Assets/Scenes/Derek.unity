@@ -442,6 +442,21 @@ Transform:
 Transform:
   m_PrefabParentObject: {fileID: 490304, guid: ae276d1e363cf0c49be7db4c5b225c6b, type: 2}
   m_PrefabInternal: {fileID: 432936659}
+--- !u!1 &579103005 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 116076, guid: 493d0645e9344de4ca9a6bc5d6b2510a, type: 2}
+  m_PrefabInternal: {fileID: 100124491}
+--- !u!225 &579103010
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 579103005}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 0
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 0
 --- !u!1 &819210141
 GameObject:
   m_ObjectHideFlags: 0
@@ -576,18 +591,6 @@ Prefab:
     - target: {fileID: 424032, guid: 486ee4196fa00d744a85e45659f38878, type: 2}
       propertyPath: m_RootOrder
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2087710, guid: 486ee4196fa00d744a85e45659f38878, type: 2}
-      propertyPath: m_BackGroundColor.r
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2087710, guid: 486ee4196fa00d744a85e45659f38878, type: 2}
-      propertyPath: m_BackGroundColor.g
-      value: .388888836
-      objectReference: {fileID: 0}
-    - target: {fileID: 2087710, guid: 486ee4196fa00d744a85e45659f38878, type: 2}
-      propertyPath: m_BackGroundColor.b
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 486ee4196fa00d744a85e45659f38878, type: 2}
