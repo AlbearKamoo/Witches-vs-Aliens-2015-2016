@@ -16,8 +16,7 @@ public class Blit : MonoBehaviour
         material = new Material(Shader.Find("Hidden/Blit"));
         material.SetTexture(Tags.ShaderParams.effectTexture, tex);
         Callback.DoLerpRealtime((float l) => intensity = l, time, this, reverse: true)
-            .FollowedBy(() => { intensity = 0; Pause.unPause(); Observers.Post(new InitializationMessage()); Callback.DoLerpRealtime((float l) => Time.timeScale = l, time, this)
-                .FollowedBy(() => Destroy(this), this); }, this);
+            .FollowedBy(() => { intensity = 0; Pause.unPause(); Destroy(this);}, this);
     }
 
     // Postprocess the image
@@ -32,10 +31,4 @@ public class Blit : MonoBehaviour
         material.SetFloat(Tags.ShaderParams.cutoff, intensity);
         Graphics.Blit(source, destination, material);
     }
-}
-
-public class InitializationMessage : Message
-{
-    public const string constMessageType = "Initialization";
-    public InitializationMessage() : base(constMessageType) {}
 }
