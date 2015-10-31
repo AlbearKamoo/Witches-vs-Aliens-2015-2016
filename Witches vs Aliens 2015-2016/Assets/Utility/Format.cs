@@ -60,4 +60,16 @@ public static class Format{
         return screenPoint.toWorldPoint();
     }
 
+    public static string formatMilliseconds(float numSeconds) //precision  = 0 means seconds, = 1 means milliseconds, and so on
+    {
+        System.Text.StringBuilder result = new System.Text.StringBuilder(Mathf.FloorToInt(numSeconds / 60f).ToString("00"));
+        result.Append(':');
+
+        numSeconds = Mathf.Abs(numSeconds % 60f);
+        result.Append(((int)numSeconds).ToString("00"));
+        result.Append(':');
+        numSeconds = (numSeconds % 1f) / 0.001f;
+        result.Append(((int)numSeconds).ToString("000"));
+        return result.ToString();
+    }
 }

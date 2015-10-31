@@ -20,6 +20,10 @@ public class ProgrammaticSpawning : MonoBehaviour, IObserver<Message> {
     protected Transform puckRespawnPoint;
 
     [SerializeField]
+    [AutoLink(parentTag = Tags.canvas, parentName = "Timer")]
+    protected GameTimer timer;
+
+    [SerializeField]
     protected float resetDuration;
 
     [SerializeField]
@@ -98,6 +102,7 @@ public class ProgrammaticSpawning : MonoBehaviour, IObserver<Message> {
             }
         }
         puck.Respawn(puckRespawnPoint.position);
+        Callback.FireAndForget(() => timer.running = true, resetDuration, this);
     }
 
     public void Notify(Message m)
@@ -105,6 +110,7 @@ public class ProgrammaticSpawning : MonoBehaviour, IObserver<Message> {
         switch (m.messageType)
         {
             case GoalScoredMessage.classMessageType:
+                timer.running = false;
                 Callback.FireAndForget(() => resetPositions(), goalToResetTime, this);
                 break;
         }

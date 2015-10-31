@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Stage
   - Puck
+  - Canvas
   layers:
   - Default
   - TransparentFX

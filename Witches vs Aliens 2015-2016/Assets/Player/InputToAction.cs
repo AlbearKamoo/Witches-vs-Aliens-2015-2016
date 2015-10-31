@@ -8,7 +8,6 @@ public class InputToAction : MonoBehaviour {
     MovementAbility moveAbility;
     GenericAbility genAbility;
     SuperAbility superAbility;
-    VisualAnimate vfx;
     Transform rotating;
 
     public Vector2 normalizedMovementInput { get; set; }
@@ -47,8 +46,6 @@ public class InputToAction : MonoBehaviour {
          rigid = GetComponent<Rigidbody2D>();
          _maxSpeed = new FloatStatTracker(initMaxSpeed);
          _accel = new FloatStatTracker(initAccel);
-
-         vfx = GetComponent<VisualAnimate>();
 
          rotating = transform.Find("Rotating");
 	}
