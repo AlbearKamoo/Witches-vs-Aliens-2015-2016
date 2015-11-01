@@ -19,7 +19,7 @@
 
 		Pass
 		{
-			ZWrite On
+			ZWrite Off
 			Blend One Zero
 			Lighting Off
 			Fog { Mode Off }

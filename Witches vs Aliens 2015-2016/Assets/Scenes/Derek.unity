@@ -240,26 +240,6 @@ Prefab:
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 11453274, guid: 493d0645e9344de4ca9a6bc5d6b2510a, type: 2}
-      propertyPath: m_EffectColor.r
-      value: .80392158
-      objectReference: {fileID: 0}
-    - target: {fileID: 11453274, guid: 493d0645e9344de4ca9a6bc5d6b2510a, type: 2}
-      propertyPath: m_EffectColor.g
-      value: .998361468
-      objectReference: {fileID: 0}
-    - target: {fileID: 11450816, guid: 493d0645e9344de4ca9a6bc5d6b2510a, type: 2}
-      propertyPath: m_EffectColor.r
-      value: .80392158
-      objectReference: {fileID: 0}
-    - target: {fileID: 11450816, guid: 493d0645e9344de4ca9a6bc5d6b2510a, type: 2}
-      propertyPath: m_EffectColor.g
-      value: .996078432
-      objectReference: {fileID: 0}
-    - target: {fileID: 11450816, guid: 493d0645e9344de4ca9a6bc5d6b2510a, type: 2}
-      propertyPath: m_EffectColor.a
-      value: .498039216
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 493d0645e9344de4ca9a6bc5d6b2510a, type: 2}
   m_IsPrefabParent: 0
@@ -390,7 +370,49 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
+--- !u!1001 &362977579
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 424032, guid: 486ee4196fa00d744a85e45659f38878, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 424032, guid: 486ee4196fa00d744a85e45659f38878, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 424032, guid: 486ee4196fa00d744a85e45659f38878, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: -10
+      objectReference: {fileID: 0}
+    - target: {fileID: 424032, guid: 486ee4196fa00d744a85e45659f38878, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 424032, guid: 486ee4196fa00d744a85e45659f38878, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 424032, guid: 486ee4196fa00d744a85e45659f38878, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 424032, guid: 486ee4196fa00d744a85e45659f38878, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 424032, guid: 486ee4196fa00d744a85e45659f38878, type: 2}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 486ee4196fa00d744a85e45659f38878, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1001 &432936659
 Prefab:
   m_ObjectHideFlags: 0
@@ -442,21 +464,6 @@ Transform:
 Transform:
   m_PrefabParentObject: {fileID: 490304, guid: ae276d1e363cf0c49be7db4c5b225c6b, type: 2}
   m_PrefabInternal: {fileID: 432936659}
---- !u!1 &579103005 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 116076, guid: 493d0645e9344de4ca9a6bc5d6b2510a, type: 2}
-  m_PrefabInternal: {fileID: 100124491}
---- !u!225 &579103010
-CanvasGroup:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 579103005}
-  m_Enabled: 1
-  m_Alpha: 1
-  m_Interactable: 0
-  m_BlocksRaycasts: 0
-  m_IgnoreParentGroups: 0
 --- !u!1 &819210141
 GameObject:
   m_ObjectHideFlags: 0
@@ -466,6 +473,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 819210143}
   - 114: {fileID: 819210142}
+  - 114: {fileID: 819210144}
   m_Layer: 0
   m_Name: ProgrammaticSpawning
   m_TagString: Untagged
@@ -485,52 +493,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PuckPrefab: {fileID: 135402, guid: 6e5f3e0169f30de41bb5f3e1b78cbd68, type: 2}
-  playerComponentPrefabs:
-  - basePlayer: {fileID: 146214, guid: a8095cd9d9bc36f4e87d6eeda567d5fa, type: 2}
-    movementAbility: {fileID: 186010, guid: 999ab97c110d5bc4baa999b79b3005e9, type: 2}
-    genericAbility: {fileID: 110450, guid: bc177a2768bd39946866f5ebcbe5d375, type: 2}
-    inputMode: 0
-    side: 1
-    bindings:
-      verticalMovementAxisName: VerticalWASD
-      horizontalMovementAxisName: HorizontalWASD
-      verticalAimingAxisName: 
-      horizontalAimingAxisName: 
-      movementAbilityKey: 0
-      genericAbilityKey: 0
-      superAbilityKey: 0
-  - basePlayer: {fileID: 146214, guid: a8095cd9d9bc36f4e87d6eeda567d5fa, type: 2}
-    movementAbility: {fileID: 186010, guid: 999ab97c110d5bc4baa999b79b3005e9, type: 2}
-    genericAbility: {fileID: 110450, guid: bc177a2768bd39946866f5ebcbe5d375, type: 2}
-    inputMode: 1
-    side: 1
-    bindings:
-      verticalMovementAxisName: VerticalArrow
-      horizontalMovementAxisName: HorizontalArrow
-      verticalAimingAxisName: VerticalArrow
-      horizontalAimingAxisName: HorizontalArrow
-      movementAbilityKey: 47
-      genericAbilityKey: 46
-      superAbilityKey: 0
-  - basePlayer: {fileID: 146214, guid: a8095cd9d9bc36f4e87d6eeda567d5fa, type: 2}
-    movementAbility: {fileID: 186010, guid: 999ab97c110d5bc4baa999b79b3005e9, type: 2}
-    genericAbility: {fileID: 110450, guid: bc177a2768bd39946866f5ebcbe5d375, type: 2}
-    inputMode: 2
-    side: 0
-    bindings:
-      verticalMovementAxisName: VerticalArrow
-      horizontalMovementAxisName: HorizontalArrow
-      verticalAimingAxisName: VerticalArrow
-      horizontalAimingAxisName: HorizontalArrow
-      movementAbilityKey: 47
-      genericAbilityKey: 46
-      superAbilityKey: 0
   leftRespawnPointsParent: {fileID: 432936661}
   rightRespawnPointsParent: {fileID: 432936660}
   puckRespawnPoint: {fileID: 1020276493}
   timer: {fileID: 1034567235}
   resetDuration: 1
   goalToResetTime: .75
+  data: {fileID: 819210144}
 --- !u!4 &819210143
 Transform:
   m_ObjectHideFlags: 0
@@ -542,7 +511,61 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
+--- !u!114 &819210144
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 819210141}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 415f7c4a0e662484b90f9f8cffef8d80, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerComponentPrefabs:
+  - character:
+      basePlayer: {fileID: 146214, guid: a8095cd9d9bc36f4e87d6eeda567d5fa, type: 2}
+      movementAbility: {fileID: 123882, guid: 21b4b94fb80128a42b3c5c473d839bbe, type: 2}
+      genericAbility: {fileID: 110450, guid: bc177a2768bd39946866f5ebcbe5d375, type: 2}
+      side: 0
+    bindings:
+      inputMode: 0
+      verticalMovementAxisName: VerticalWASD
+      horizontalMovementAxisName: HorizontalWASD
+      verticalAimingAxisName: 
+      horizontalAimingAxisName: 
+      movementAbilityKey: 0
+      genericAbilityKey: 0
+      superAbilityKey: 0
+  - character:
+      basePlayer: {fileID: 146214, guid: a8095cd9d9bc36f4e87d6eeda567d5fa, type: 2}
+      movementAbility: {fileID: 186010, guid: 999ab97c110d5bc4baa999b79b3005e9, type: 2}
+      genericAbility: {fileID: 110450, guid: bc177a2768bd39946866f5ebcbe5d375, type: 2}
+      side: 1
+    bindings:
+      inputMode: 1
+      verticalMovementAxisName: VerticalArrow
+      horizontalMovementAxisName: HorizontalArrow
+      verticalAimingAxisName: VerticalArrow
+      horizontalAimingAxisName: HorizontalArrow
+      movementAbilityKey: 47
+      genericAbilityKey: 46
+      superAbilityKey: 0
+  - character:
+      basePlayer: {fileID: 146214, guid: a8095cd9d9bc36f4e87d6eeda567d5fa, type: 2}
+      movementAbility: {fileID: 186010, guid: 999ab97c110d5bc4baa999b79b3005e9, type: 2}
+      genericAbility: {fileID: 110450, guid: bc177a2768bd39946866f5ebcbe5d375, type: 2}
+      side: 1
+    bindings:
+      inputMode: 2
+      verticalMovementAxisName: VerticalArrow
+      horizontalMovementAxisName: HorizontalArrow
+      verticalAimingAxisName: VerticalArrow
+      horizontalAimingAxisName: HorizontalArrow
+      movementAbilityKey: 47
+      genericAbilityKey: 46
+      superAbilityKey: 0
 --- !u!4 &1020276493 stripped
 Transform:
   m_PrefabParentObject: {fileID: 422084, guid: ae276d1e363cf0c49be7db4c5b225c6b, type: 2}
@@ -553,47 +576,47 @@ MonoBehaviour:
     type: 2}
   m_PrefabInternal: {fileID: 100124491}
   m_Script: {fileID: 11500000, guid: 1ea0fab5273495344a13e5a97055dd06, type: 3}
---- !u!1001 &1553273177
+--- !u!1001 &1167685588
 Prefab:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 424032, guid: 486ee4196fa00d744a85e45659f38878, type: 2}
+    - target: {fileID: 471200, guid: c11a39805b0734f40bae483a2f720505, type: 2}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 424032, guid: 486ee4196fa00d744a85e45659f38878, type: 2}
+    - target: {fileID: 471200, guid: c11a39805b0734f40bae483a2f720505, type: 2}
       propertyPath: m_LocalPosition.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 424032, guid: 486ee4196fa00d744a85e45659f38878, type: 2}
+    - target: {fileID: 471200, guid: c11a39805b0734f40bae483a2f720505, type: 2}
       propertyPath: m_LocalPosition.z
-      value: -10
+      value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 424032, guid: 486ee4196fa00d744a85e45659f38878, type: 2}
+    - target: {fileID: 471200, guid: c11a39805b0734f40bae483a2f720505, type: 2}
       propertyPath: m_LocalRotation.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 424032, guid: 486ee4196fa00d744a85e45659f38878, type: 2}
+    - target: {fileID: 471200, guid: c11a39805b0734f40bae483a2f720505, type: 2}
       propertyPath: m_LocalRotation.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 424032, guid: 486ee4196fa00d744a85e45659f38878, type: 2}
+    - target: {fileID: 471200, guid: c11a39805b0734f40bae483a2f720505, type: 2}
       propertyPath: m_LocalRotation.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 424032, guid: 486ee4196fa00d744a85e45659f38878, type: 2}
+    - target: {fileID: 471200, guid: c11a39805b0734f40bae483a2f720505, type: 2}
       propertyPath: m_LocalRotation.w
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 424032, guid: 486ee4196fa00d744a85e45659f38878, type: 2}
+    - target: {fileID: 471200, guid: c11a39805b0734f40bae483a2f720505, type: 2}
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 100100000, guid: 486ee4196fa00d744a85e45659f38878, type: 2}
+  m_ParentPrefab: {fileID: 100100000, guid: c11a39805b0734f40bae483a2f720505, type: 2}
   m_IsPrefabParent: 0
 --- !u!1001 &1939242293
 Prefab:

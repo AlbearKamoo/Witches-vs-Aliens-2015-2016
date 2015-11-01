@@ -25,7 +25,9 @@ public class Score : MonoBehaviour, IObserver<Message> {
     void Awake()
     {
         Observers.Subscribe(this, new string[] { GoalScoredMessage.classMessageType });
-        background = GetComponent<Image>().material;
+        Image image = GetComponent<Image>();
+        background = Instantiate(image.material); //workaround to avoid modifying assets directly
+        image.material = background;
         leftOutline = leftScoreBoard.GetComponent<Outline>();
         rightOutline = rightScoreBoard.GetComponent<Outline>();
 
@@ -34,7 +36,7 @@ public class Score : MonoBehaviour, IObserver<Message> {
         int alpha = Shader.PropertyToID("_MainTexAlpha");
         float baseAlpha = background.GetFloat(alpha);
         CanvasGroup group = GetComponent<CanvasGroup>();
-        Callback.DoLerp((float l) => { background.SetFloat(imageStrength, baseImageStrength * l); background.SetFloat(alpha, baseAlpha * l); group.alpha = l;}, 1f, this)
+        Callback.DoLerp((float l) => {background.SetFloat(imageStrength, baseImageStrength * l); background.SetFloat(alpha, baseAlpha * l); group.alpha = l; }, 1f, this)
             .FollowedBy(() => Destroy(group), this);
     }
 

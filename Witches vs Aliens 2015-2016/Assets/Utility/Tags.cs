@@ -13,8 +13,10 @@ public class Tags{
 
     public class Scenes
     {
-        public const string mainMenu = "MainMenu";
-        public const string mainScene = "MainScene";
+        public const string root = "RootScene";
+#if UNITY_EDITOR
+        public const string derek = "Derek";
+#endif
     }
 
     //public class Axis

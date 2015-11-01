@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 [RequireComponent(typeof(Rigidbody2D))]
-[RequireComponent(typeof(VisualAnimate))]
 public class InputToAction : MonoBehaviour {
 
     Rigidbody2D rigid;
@@ -11,7 +10,10 @@ public class InputToAction : MonoBehaviour {
     Transform rotating;
 
     public Vector2 normalizedMovementInput { get; set; }
-    public bool movementEnabled = false;
+    bool _movementEnabled = false;
+    public bool movementEnabled { get { return _movementEnabled; } set { _movementEnabled = value; } }
+    bool _rotationEnabled = true;
+    public bool rotationEnabled { get { return _rotationEnabled; } set { _rotationEnabled = value; } }
     public Vector2 aimingInputDirection { get; set; }
     public delegate Vector2 vectorQuantifier(Vector2 aimingInput, float maxDistance);
     vectorQuantifier _vectorQuantified;
@@ -59,7 +61,7 @@ public class InputToAction : MonoBehaviour {
 	
 	// Update is called once per frame
 	void FixedUpdate () {
-        if(movementEnabled)
+        if (_movementEnabled)
             rigid.velocity = Vector2.ClampMagnitude(Vector2.MoveTowards(rigid.velocity, _maxSpeed * normalizedMovementInput, _maxSpeed * _accel * Time.fixedDeltaTime), _maxSpeed);
 
         //rotation
@@ -71,8 +73,11 @@ public class InputToAction : MonoBehaviour {
 
     void rotateTowards(Vector2 targetDirection)
     {
-        rotating.rotation = Quaternion.Slerp(rotating.rotation, targetDirection.ToRotation(), rotationLerpValue); //it's in fixed update, and the direction property should be used instead of sampling the transform
-        _direction = targetDirection;
+        if (_rotationEnabled)
+        {
+            rotating.rotation = Quaternion.Slerp(rotating.rotation, targetDirection.ToRotation(), rotationLerpValue); //it's in fixed update, and the direction property should be used instead of sampling the transform
+            _direction = targetDirection;
+        }
     }
 
     public void FireAbility(AbilityType t)
@@ -109,8 +114,8 @@ public class InputToAction : MonoBehaviour {
 
     public void DisableMovement(float duration)
     {
-        movementEnabled = false;
+        _movementEnabled = false;
         rigid.velocity = Vector2.zero;
-        Callback.FireAndForget(() => movementEnabled = true, duration, this);
+        Callback.FireAndForget(() => _movementEnabled = true, duration, this);
     }
 }

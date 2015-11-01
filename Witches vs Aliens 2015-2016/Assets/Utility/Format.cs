@@ -10,8 +10,6 @@ using System.Collections;
 
 public static class Format{
 
-    readonly static Transform mainCameraTransform = Camera.main.transform;
-
     //transform it into 2k, 3m, etc.
     public static string makeReadable(int number) //int, so no decimals (YAY!)
     {
@@ -50,7 +48,7 @@ public static class Format{
     }
     public static Vector3 mousePosInWorld()
     {
-        return mousePosInWorld(mainCameraTransform); //I don't want to use default parameters, because that would involve some extra computation through null-coalescing (the ?? thing)
+        return mousePosInWorld(Camera.main.transform); //I don't want to use default parameters, because that would involve some extra computation through null-coalescing (the ?? thing)
     }
 
     public static Vector3 mousePosInWorld(Transform cameraTransform)

@@ -151,7 +151,7 @@ Material:
       data:
         first:
           name: _NoiseStrength
-        second: .00999999978
+        second: .00749999983
       data:
         first:
           name: _Strength
@@ -163,15 +163,15 @@ Material:
       data:
         first:
           name: _MainTexAlpha
-        second: .275999993
+        second: .25
       data:
         first:
           name: _ScrollSpeed
-        second: .150000006
+        second: .125
       data:
         first:
           name: _ImageStrength
-        second: .162
+        second: .150000006
     m_Colors:
       data:
         first:

@@ -8,6 +8,7 @@ using UnityEngine.Assertions;
 public class MusicManager : MonoBehaviour
 {
     private AudioSource source;
+    private static MusicManager _self; //there can only be one
 
     [SerializeField]
     private AudioClip[] playlistData; //for serialization and the inspector; not used after the data is loaded into the queue
@@ -15,8 +16,13 @@ public class MusicManager : MonoBehaviour
 
     void Awake()
     {
+        if (_self != null)
+            Destroy(this.gameObject);
+        _self = this;
+        DontDestroyOnLoad(this.gameObject);
         Assert.IsTrue(playlistData.Length != 0);
         source = GetComponent<AudioSource>();
+        source.Play();
         playlist = new Queue<AudioClip>(playlistData);
         playlistData = null;
         StartCoroutine(UpdateCoroutine());

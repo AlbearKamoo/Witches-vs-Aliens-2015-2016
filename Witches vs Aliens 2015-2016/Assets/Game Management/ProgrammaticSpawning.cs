@@ -5,8 +5,6 @@ public class ProgrammaticSpawning : MonoBehaviour, IObserver<Message> {
 
     [SerializeField]
     protected GameObject PuckPrefab;
-    [SerializeField]
-    protected PlayerComponents[] playerComponentPrefabs;
 
     [SerializeField]
     [AutoLink(parentTag = Tags.stage, parentName = "Left")]
@@ -29,6 +27,7 @@ public class ProgrammaticSpawning : MonoBehaviour, IObserver<Message> {
     [SerializeField]
     protected float goalToResetTime;
 
+    public SetupData data;
     Vector2[] leftPoints;
     Vector2[] rightPoints;
     Transform[] players;
@@ -36,6 +35,10 @@ public class ProgrammaticSpawning : MonoBehaviour, IObserver<Message> {
 
     // Use this for initialization
     void Awake () {
+
+        if (SetupData.self != null) //workaround for unity level-loading method order
+            data = SetupData.self;
+
         Observers.Subscribe(this, new string[]{GoalScoredMessage.classMessageType});
 
         leftPoints = new Vector2[leftRespawnPointsParent.childCount];
@@ -56,26 +59,26 @@ public class ProgrammaticSpawning : MonoBehaviour, IObserver<Message> {
 
         puck = ((GameObject)(Instantiate(PuckPrefab, puckRespawnPoint.position, Quaternion.identity))).GetComponent<PuckFX>();
 
-        players = new Transform[playerComponentPrefabs.Length];
-        for (int i = 0; i < playerComponentPrefabs.Length; i++)
+        players = new Transform[data.playerComponentPrefabs.Length];
+        for (int i = 0; i < data.playerComponentPrefabs.Length; i++)
         {
-            GameObject spawnedPlayer = (GameObject)Instantiate(playerComponentPrefabs[i].basePlayer, i % 2 == 0 ? leftPoints[i % 2] : rightPoints[i % 2], Quaternion.identity); //the positions are temporary
-            spawnedPlayer.AddComponent<Stats>().side = playerComponentPrefabs[i].side;
-            switch (playerComponentPrefabs[i].inputMode)
+            GameObject spawnedPlayer = (GameObject)Instantiate(data.playerComponentPrefabs[i].character.basePlayer, i % 2 == 0 ? leftPoints[i % 2] : rightPoints[i % 2], Quaternion.identity); //the positions are temporary
+            spawnedPlayer.AddComponent<Stats>().side = data.playerComponentPrefabs[i].character.side;
+            switch (data.playerComponentPrefabs[i].bindings.inputMode)
             {
-                case PlayerComponents.PlayerInputType.MOUSE:
-                    spawnedPlayer.AddComponent<MousePlayerInput>().bindings = playerComponentPrefabs[i].bindings;
+                case InputConfiguration.PlayerInputType.MOUSE:
+                    spawnedPlayer.AddComponent<MousePlayerInput>().bindings = data.playerComponentPrefabs[i].bindings;
                     break;
-                case PlayerComponents.PlayerInputType.JOYSTICK:
-                    spawnedPlayer.AddComponent<JoystickPlayerInput>().bindings = playerComponentPrefabs[i].bindings;
+                case InputConfiguration.PlayerInputType.JOYSTICK:
+                    spawnedPlayer.AddComponent<JoystickPlayerInput>().bindings = data.playerComponentPrefabs[i].bindings;
                     break;
-                case PlayerComponents.PlayerInputType.CRAPAI:
-                    spawnedPlayer.AddComponent<CrappyAIInput>().bindings = playerComponentPrefabs[i].bindings;
+                case InputConfiguration.PlayerInputType.CRAPAI:
+                    spawnedPlayer.AddComponent<CrappyAIInput>().bindings = data.playerComponentPrefabs[i].bindings;
                     break;
             }
-            GameObject.Instantiate(playerComponentPrefabs[i].movementAbility).transform.SetParent(spawnedPlayer.transform, false);
-            GameObject.Instantiate(playerComponentPrefabs[i].genericAbility).transform.SetParent(spawnedPlayer.transform, false);
-            //GameObject.Instantiate(playerComponentPrefabs[i].superAbility).transform.SetParent(spawnedPlayer.transform);
+            GameObject.Instantiate(data.playerComponentPrefabs[i].character.movementAbility).transform.SetParent(spawnedPlayer.transform, false);
+            GameObject.Instantiate(data.playerComponentPrefabs[i].character.genericAbility).transform.SetParent(spawnedPlayer.transform, false);
+            //GameObject.Instantiate(data.playerComponentPrefabs[i].character.superAbility).transform.SetParent(spawnedPlayer.transform, false);
             players[i] = spawnedPlayer.transform;
         }
         Callback.FireForNextFrame(() => resetPositions(), this);
@@ -114,25 +117,5 @@ public class ProgrammaticSpawning : MonoBehaviour, IObserver<Message> {
                 Callback.FireAndForget(() => resetPositions(), goalToResetTime, this);
                 break;
         }
-    }
-}
-[System.Serializable]
-public class PlayerComponents
-{
-    public GameObject basePlayer;
-    public GameObject movementAbility;
-    public GameObject genericAbility;
-    //public GameObject superAbility;
-
-    public PlayerInputType inputMode;
-    public Side side;
-    public InputConfiguration bindings;
-    public PlayerComponents() { }
-
-    public enum PlayerInputType
-    {
-        MOUSE,
-        JOYSTICK,
-        CRAPAI
     }
 }

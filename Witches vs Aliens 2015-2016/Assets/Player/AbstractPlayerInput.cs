@@ -40,6 +40,8 @@ public abstract class AbstractPlayerInput : MonoBehaviour
 [System.Serializable]
 public class InputConfiguration
 {
+    public PlayerInputType inputMode;
+
     public string verticalMovementAxisName;
     public string horizontalMovementAxisName;
 
@@ -62,4 +64,11 @@ public class InputConfiguration
 
     public InputConfiguration() { }
 
+    public enum PlayerInputType
+    {
+        MOUSE,
+        JOYSTICK,
+        CRAPAI
+    }
 }
+
