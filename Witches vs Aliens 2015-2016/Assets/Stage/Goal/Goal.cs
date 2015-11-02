@@ -4,6 +4,7 @@ using System.Collections;
 public class Goal : MonoBehaviour {
     [SerializeField]
     protected Side mySide;
+    public Side side { get { return mySide; } }
 
     ParticleSystem vfx;
     void Start()
