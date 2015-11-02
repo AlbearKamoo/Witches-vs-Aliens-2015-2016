@@ -7,7 +7,7 @@
 		_CullingMask ("TextureMask (black = cull)", 2D) = "white" {}
 		_NoiseTex("TextureNoise", 2D) = "white" {}
 		_PulsesPerSecond("PulsesPerSecond", Range(0,10)) = 1
-		_ColorCyclesPerSecond("PulsesPerSecond", Range(0,2)) = 0.25
+		_ColorCyclesPerSecond("_ColorCyclesPerSecond", Range(0,2)) = 0.25
 	}
 	SubShader
 	{
@@ -82,7 +82,7 @@
 				float2 vect = uvToVector(i.uv);
 				fixed4 img = tex2D(_NoiseTex, vectorToUV(vect - (normalize(vect) * (1 + 2 * fmod(_Time.y, 1)))));
 				fixed4 resultColor = (expvalue + col.r) * timeToColor();
-				resultColor.a = saturate(col.r - value/2 - img.r/4);
+				resultColor.a = saturate(col.r - value/2 - img.r/2);
 				return resultColor;
 			}
 			ENDCG

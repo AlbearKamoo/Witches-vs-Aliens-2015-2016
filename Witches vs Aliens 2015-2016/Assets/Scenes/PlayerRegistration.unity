@@ -141,6 +141,18 @@ MonoBehaviour:
       movementAbilityKey: 0
       genericAbilityKey: 0
       superAbilityKey: 0
+  - name: Player1(Joystick)
+    abbreviation: 1
+    color: {r: 0, g: 1, b: .627586126, a: 1}
+    bindings:
+      inputMode: 1
+      verticalMovementAxisName: VerticalMovement_J1
+      horizontalMovementAxisName: HorizontalMovement_J1
+      verticalAimingAxisName: VerticalAim_J1
+      horizontalAimingAxisName: HorizontalAim_J1
+      movementAbilityKey: 0
+      genericAbilityKey: 0
+      superAbilityKey: 0
 --- !u!114 &21640696
 MonoBehaviour:
   m_ObjectHideFlags: 0

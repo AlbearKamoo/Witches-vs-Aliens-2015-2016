@@ -530,27 +530,13 @@ MonoBehaviour:
       genericAbility: {fileID: 110450, guid: bc177a2768bd39946866f5ebcbe5d375, type: 2}
       side: 0
     bindings:
-      inputMode: 2
+      inputMode: 1
       verticalMovementAxisName: VerticalWASD
       horizontalMovementAxisName: HorizontalWASD
-      verticalAimingAxisName: 
-      horizontalAimingAxisName: 
-      movementAbilityKey: 0
-      genericAbilityKey: 0
-      superAbilityKey: 0
-  - character:
-      basePlayer: {fileID: 146214, guid: a8095cd9d9bc36f4e87d6eeda567d5fa, type: 2}
-      movementAbility: {fileID: 186010, guid: 999ab97c110d5bc4baa999b79b3005e9, type: 2}
-      genericAbility: {fileID: 110450, guid: bc177a2768bd39946866f5ebcbe5d375, type: 2}
-      side: 0
-    bindings:
-      inputMode: 3
-      verticalMovementAxisName: VerticalArrow
-      horizontalMovementAxisName: HorizontalArrow
-      verticalAimingAxisName: VerticalArrow
-      horizontalAimingAxisName: HorizontalArrow
-      movementAbilityKey: 47
-      genericAbilityKey: 46
+      verticalAimingAxisName: VerticalWASD
+      horizontalAimingAxisName: HorizontalWASD
+      movementAbilityKey: 113
+      genericAbilityKey: 101
       superAbilityKey: 0
   - character:
       basePlayer: {fileID: 146214, guid: a8095cd9d9bc36f4e87d6eeda567d5fa, type: 2}
@@ -558,7 +544,7 @@ MonoBehaviour:
       genericAbility: {fileID: 110450, guid: bc177a2768bd39946866f5ebcbe5d375, type: 2}
       side: 1
     bindings:
-      inputMode: 4
+      inputMode: 0
       verticalMovementAxisName: VerticalArrow
       horizontalMovementAxisName: HorizontalArrow
       verticalAimingAxisName: VerticalArrow
