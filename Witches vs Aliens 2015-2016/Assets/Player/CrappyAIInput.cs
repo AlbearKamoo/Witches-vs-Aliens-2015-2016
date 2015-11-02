@@ -24,7 +24,7 @@ public class CrappyAIInput : AbstractPlayerInput
 
     protected override void updateAim()
     {
-        action.normalizedMovementInput = (puckTransform.position - thisTransform.position);
+        action.aimingInputDirection = (puckTransform.position - thisTransform.position);
     }
 
     protected override void checkAbilities()

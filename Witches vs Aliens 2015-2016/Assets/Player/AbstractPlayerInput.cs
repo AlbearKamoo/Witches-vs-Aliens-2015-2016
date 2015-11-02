@@ -68,7 +68,8 @@ public class InputConfiguration
     {
         MOUSE,
         JOYSTICK,
-        CRAPAI
+        CRAPAI,
+        INTERPOSEAI,
     }
 }
 

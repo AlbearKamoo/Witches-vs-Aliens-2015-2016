@@ -558,7 +558,7 @@ MonoBehaviour:
       genericAbility: {fileID: 110450, guid: bc177a2768bd39946866f5ebcbe5d375, type: 2}
       side: 1
     bindings:
-      inputMode: 2
+      inputMode: 3
       verticalMovementAxisName: VerticalArrow
       horizontalMovementAxisName: HorizontalArrow
       verticalAimingAxisName: VerticalArrow

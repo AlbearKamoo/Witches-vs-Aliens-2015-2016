@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 
 public class ProgrammaticSpawning : MonoBehaviour, IObserver<Message> {
 
@@ -73,13 +75,33 @@ public class ProgrammaticSpawning : MonoBehaviour, IObserver<Message> {
                     spawnedPlayer.AddComponent<JoystickPlayerInput>().bindings = data.playerComponentPrefabs[i].bindings;
                     break;
                 case InputConfiguration.PlayerInputType.CRAPAI:
-                    spawnedPlayer.AddComponent<CrappyAIInput>().bindings = data.playerComponentPrefabs[i].bindings;
+                    spawnedPlayer.AddComponent<CrappyAIInput>().bindings = data.playerComponentPrefabs[i].bindings; //don't really need the bindings; it's an AI
+                    break;
+                case InputConfiguration.PlayerInputType.INTERPOSEAI:
+                    spawnedPlayer.AddComponent<InterposeAI>().bindings = data.playerComponentPrefabs[i].bindings; //don't really need the bindings; it's an AI
                     break;
             }
             GameObject.Instantiate(data.playerComponentPrefabs[i].character.movementAbility).transform.SetParent(spawnedPlayer.transform, false);
             GameObject.Instantiate(data.playerComponentPrefabs[i].character.genericAbility).transform.SetParent(spawnedPlayer.transform, false);
             //GameObject.Instantiate(data.playerComponentPrefabs[i].character.superAbility).transform.SetParent(spawnedPlayer.transform, false);
             players[i] = spawnedPlayer.transform;
+        }
+        //set up AI data
+        for (int i = 0; i < data.playerComponentPrefabs.Length; i++)
+        {
+            if (data.playerComponentPrefabs[i].bindings.inputMode == InputConfiguration.PlayerInputType.INTERPOSEAI)
+            {
+                List<int> opponents = new List<int>();
+                for (int j = 0; j < data.playerComponentPrefabs.Length; j++)
+                {
+                    if (data.playerComponentPrefabs[j].character.side != data.playerComponentPrefabs[i].character.side)
+                        opponents.Add(j);
+                }
+                Transform[] opponentTransforms = new Transform[opponents.Count];
+                for (int j = 0; j < opponents.Count; j++)
+                    opponentTransforms[j] = players[j];
+                players[i].GetComponent<InterposeAI>().opponents = opponentTransforms;
+            }
         }
         Callback.FireForNextFrame(() => resetPositions(), this);
 	}

@@ -36,4 +36,9 @@ public static class VectorExtension
         float _angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
         return Quaternion.AngleAxis(_angle, Vector3.forward);
     }
+
+    public static Vector2 normal(this Vector2 dir)
+    {
+        return new Vector2(-dir.y, dir.x);
+    }
 }
