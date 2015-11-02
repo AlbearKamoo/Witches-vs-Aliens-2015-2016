@@ -70,7 +70,6 @@ public class InputConfiguration
         JOYSTICK,
         CRAPAI,
         INTERPOSEAI,
-        DEFENSIVEAI,
     }
 }
 

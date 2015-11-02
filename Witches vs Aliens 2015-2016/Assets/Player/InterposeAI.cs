@@ -8,8 +8,6 @@ public class InterposeAI : AbstractPlayerInput
 
     public Transform[] opponents = new Transform[0];
 
-    const float guardDistance = 1f;
-
     Transform targetTransform;
     void Awake()
     {
@@ -44,9 +42,7 @@ public class InterposeAI : AbstractPlayerInput
             Vector2 nearestOnLinePoint = ClosestPointOnLine(targetTransform.position, puckPos, thisTransform.position);
             if (OnLine(targetTransform.position, puckPos, nearestOnLinePoint))
             {
-                if (Vector2.Distance(nearestOnLinePoint, puckPos) < guardDistance)
-                    nearestOnLinePoint = guardDistance * (((Vector2)(targetTransform.position)) - puckPos).normalized;
-                SetTargetVector(nearestOnLinePoint); return;
+                SetTargetVector((((Vector2)(targetTransform.position)) + puckPos)/2); return;
             }
 
             if ((targetTransform.position - thisTransform.position).sqrMagnitude < (puckTransform.position - thisTransform.position).sqrMagnitude)
