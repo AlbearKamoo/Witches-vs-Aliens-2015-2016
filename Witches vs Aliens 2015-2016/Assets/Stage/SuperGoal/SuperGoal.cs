@@ -26,7 +26,6 @@ public class SuperGoal : MonoBehaviour {
                 if (!_active)
                 {
                     puckFX.perSideEffectsActive = true;
-                    coll.enabled = true;
                     render.enabled = true;
                     rotateParticlesToTransform();
                     vfx.playbackSpeed = 1.5f;
@@ -39,6 +38,7 @@ public class SuperGoal : MonoBehaviour {
                         {
                             vfx.playbackSpeed = 1f;
                             render.transform.localScale = Vector2.one;
+                            coll.enabled = true;
                         }, this);
                 }
             }
@@ -89,6 +89,7 @@ public class SuperGoal : MonoBehaviour {
             return;
 
         other.transform.position = _mirror.transform.TransformPoint((transform.InverseTransformPoint(other.transform.position)));
+        other.GetComponent<LastBumped>().player.GetComponentInChildren<SuperAbility>().ready = true;
         active = false;
         _mirror.active = false;
         Debug.Log("SUPERGOAL!");

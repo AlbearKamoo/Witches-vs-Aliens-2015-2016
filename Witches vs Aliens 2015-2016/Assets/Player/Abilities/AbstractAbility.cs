@@ -32,9 +32,6 @@ public abstract class AbstractAbility : MonoBehaviour {
 
     public virtual bool ready { get; set; }
 
-    [SerializeField]
-    protected float cooldownTime;
-
     public abstract AbilityType type { get; }
 
     protected virtual void Start()

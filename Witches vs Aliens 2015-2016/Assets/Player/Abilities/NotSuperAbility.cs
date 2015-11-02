@@ -28,6 +28,9 @@ public abstract class NotSuperAbility : AbstractAbility, IObservable<AbilityStat
         base.OnDeactivate();
         Callback.FireAndForget(() => ready = true, cooldownTime, this);
     }
+
+    [SerializeField]
+    protected float cooldownTime;
 }
 
 public class AbilityStateChangedMessage
