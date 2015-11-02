@@ -1,20 +1,20 @@
 ﻿using UnityEngine;
 using System.Collections;
-
-public class InterposeAI : AbstractPlayerInput
+using System.Linq;
+public class DefensiveAI : AbstractPlayerInput
 {
     Transform puckTransform;
     Transform thisTransform;
+    Transform goalTransform;
 
-    public Transform[] opponents = new Transform[0];
+    const float chargeDistance = 0.75f;
 
-    const float guardDistance = 1f;
-
-    Transform targetTransform;
     void Awake()
     {
         puckTransform = GameObject.FindGameObjectWithTag(Tags.puck).transform;
         thisTransform = this.transform;
+        Side mySide = GetComponent<Stats>().side;
+        goalTransform = GameObject.FindObjectsOfType<Goal>().Where((Goal g) => g.side == mySide).ToArray<Goal>()[0].transform;
     }
 
     protected override void setInputToActionAimingDelegates()
@@ -25,39 +25,20 @@ public class InterposeAI : AbstractPlayerInput
 
     protected override void updateMovement()
     {
-        if (opponents.Length != 0)
+        Vector2 puckPos = puckTransform.position;
+
+        Vector2 nearestOnLinePoint = ClosestPointOnLine(goalTransform.position, puckPos, thisTransform.position);
+        if (OnLine(goalTransform.position, puckPos, nearestOnLinePoint))
         {
-            Vector2 puckPos = puckTransform.position;
-            targetTransform = opponents[0];
-
-            float distanceSquared = (((Vector2)(targetTransform.position)) - puckPos).sqrMagnitude;
-            for (int i = 1; i < opponents.Length; i++)
-            {
-                float possibleNewDistance = (((Vector2)(opponents[i].position)) - puckPos).sqrMagnitude;
-                if (possibleNewDistance < distanceSquared)
-                {
-                    distanceSquared = possibleNewDistance;
-                    targetTransform = opponents[i];
-                }
-            }
-
-            Vector2 nearestOnLinePoint = ClosestPointOnLine(targetTransform.position, puckPos, thisTransform.position);
-            if (OnLine(targetTransform.position, puckPos, nearestOnLinePoint))
-            {
-                if (Vector2.Distance(nearestOnLinePoint, puckPos) < guardDistance)
-                    nearestOnLinePoint = guardDistance * (((Vector2)(targetTransform.position)) - puckPos).normalized;
-                SetTargetVector(nearestOnLinePoint); return;
-            }
-
-            if ((targetTransform.position - thisTransform.position).sqrMagnitude < (puckTransform.position - thisTransform.position).sqrMagnitude)
-            {
-                SetTargetVector(targetTransform.position); return;
-            }
+            if (Vector2.Distance(nearestOnLinePoint, thisTransform.position) < chargeDistance)
+                SetTargetVector(puckPos);
+            else
+                SetTargetVector(nearestOnLinePoint);
         }
-        //if all else fails, target the puck
-
-        //consider using abilities here
-        SetTargetVector(puckTransform.position);
+        else
+        {
+            SetTargetVector(goalTransform.position);
+        }
     }
     void SetTargetVector(Vector2 target)
     {
