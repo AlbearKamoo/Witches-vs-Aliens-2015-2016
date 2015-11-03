@@ -528,9 +528,9 @@ MonoBehaviour:
       basePlayer: {fileID: 146214, guid: a8095cd9d9bc36f4e87d6eeda567d5fa, type: 2}
       movementAbility: {fileID: 123882, guid: 21b4b94fb80128a42b3c5c473d839bbe, type: 2}
       genericAbility: {fileID: 110450, guid: bc177a2768bd39946866f5ebcbe5d375, type: 2}
-      side: 0
+      side: 1
     bindings:
-      inputMode: 1
+      inputMode: 2
       verticalMovementAxisName: VerticalMovement_J1
       horizontalMovementAxisName: HorizontalMovement_J1
       verticalAimingAxisName: VerticalAim_J1
@@ -540,11 +540,11 @@ MonoBehaviour:
       superAbilityAxis: J1_Super
   - character:
       basePlayer: {fileID: 146214, guid: a8095cd9d9bc36f4e87d6eeda567d5fa, type: 2}
-      movementAbility: {fileID: 186010, guid: 999ab97c110d5bc4baa999b79b3005e9, type: 2}
+      movementAbility: {fileID: 123882, guid: 21b4b94fb80128a42b3c5c473d839bbe, type: 2}
       genericAbility: {fileID: 110450, guid: bc177a2768bd39946866f5ebcbe5d375, type: 2}
-      side: 1
+      side: 0
     bindings:
-      inputMode: 0
+      inputMode: 4
       verticalMovementAxisName: VerticalWASD
       horizontalMovementAxisName: HorizontalWASD
       verticalAimingAxisName: VerticalWASD

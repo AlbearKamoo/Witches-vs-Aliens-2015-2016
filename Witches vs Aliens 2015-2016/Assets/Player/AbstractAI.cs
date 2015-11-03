@@ -7,7 +7,7 @@ public abstract class AbstractAI : AbstractPlayerInput {
     protected Transform puckTransform;
     protected Transform thisTransform;
 
-    void Awake()
+    protected virtual void Awake()
     {
         puckTransform = GameObject.FindGameObjectWithTag(Tags.puck).transform;
         thisTransform = this.transform;

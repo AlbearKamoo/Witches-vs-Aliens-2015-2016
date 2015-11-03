@@ -10,7 +10,7 @@ public abstract class AbstractPlayerInput : MonoBehaviour
     public InputConfiguration bindings;
 
     // Use this for initialization
-    void Start()
+    protected virtual void Start()
     {
         action = GetComponent<InputToAction>();
         setInputToActionAimingDelegates();

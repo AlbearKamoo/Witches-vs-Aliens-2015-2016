@@ -14,7 +14,8 @@ public class InputToAction : MonoBehaviour {
     public bool movementEnabled { get { return _movementEnabled; } set { _movementEnabled = value; } }
     bool _rotationEnabled = true;
     public bool rotationEnabled { get { return _rotationEnabled; } set { _rotationEnabled = value; } }
-    public Vector2 aimingInputDirection { get; set; }
+    Vector2 _aimingInputDirection;
+    public Vector2 aimingInputDirection { get { return _aimingInputDirection; } set { _aimingInputDirection = value; rotateTowards(_aimingInputDirection); } }
     public delegate Vector2 vectorQuantifier(Vector2 aimingInput, float maxDistance);
     vectorQuantifier _vectorQuantified;
     public vectorQuantifier vectorQuantified {set { _vectorQuantified = value; } }
@@ -65,9 +66,7 @@ public class InputToAction : MonoBehaviour {
             rigid.velocity = Vector2.ClampMagnitude(Vector2.MoveTowards(rigid.velocity, _maxSpeed * normalizedMovementInput, _maxSpeed * _accel * Time.fixedDeltaTime), _maxSpeed);
 
         //rotation
-        if (aimingInputDirection.sqrMagnitude != 0)
-            rotateTowards(aimingInputDirection);
-        else if (normalizedMovementInput.sqrMagnitude != 0)
+        if (aimingInputDirection.sqrMagnitude == 0 && normalizedMovementInput.sqrMagnitude != 0) //aimingInput rotation is handled when the aiming input is set
             rotateTowards(normalizedMovementInput);
 	}
 
