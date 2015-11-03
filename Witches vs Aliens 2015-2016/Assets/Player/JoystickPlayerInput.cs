@@ -2,7 +2,9 @@
 using System.Collections;
 
 public class JoystickPlayerInput : AbstractPlayerInput {
-
+    float prevMovement = 0;
+    float prevGeneric = 0;
+    float prevSuper = 0;
     protected override void setInputToActionAimingDelegates()
     {
         action.vectorQuantified = (Vector2 aim, float distance) => distance * aim;
@@ -16,19 +18,27 @@ public class JoystickPlayerInput : AbstractPlayerInput {
 
     protected override void checkAbilities()
     {
-        if (Input.GetKeyDown(bindings.movementAbilityKey))
+        if (Input.GetAxis(bindings.movementAbilityAxis) != 0)
+        {
             action.FireAbility(AbilityType.MOVEMENT);
-        if (Input.GetKeyDown(bindings.superAbilityKey))
+            prevMovement = Input.GetAxis(bindings.movementAbilityAxis);
+        }
+        if (Input.GetAxis(bindings.superAbilityAxis) != 0)
+        {
             action.FireAbility(AbilityType.SUPER);
-        if (Input.GetKeyDown(bindings.genericAbilityKey))
+            prevSuper = Input.GetAxis(bindings.superAbilityAxis);
+        }
+        if (Input.GetAxis(bindings.genericAbilityAxis) != 0)
+        {
             action.FireAbility(AbilityType.GENERIC);
+            prevGeneric = Input.GetAxis(bindings.genericAbilityAxis);
+        }
 
-        if (Input.GetKeyUp(bindings.movementAbilityKey))
+        if (prevMovement != 0 && Input.GetAxis(bindings.movementAbilityAxis) == 0)
             action.StopFireAbility(AbilityType.MOVEMENT);
-        if (Input.GetKeyUp(bindings.superAbilityKey))
+        if (prevSuper != 0 && Input.GetAxis(bindings.superAbilityAxis) == 0)
             action.StopFireAbility(AbilityType.SUPER);
-        if (Input.GetKeyUp(bindings.genericAbilityKey))
+        if (prevGeneric != 0 && Input.GetAxis(bindings.genericAbilityAxis) == 0)
             action.StopFireAbility(AbilityType.GENERIC);
-
     }
 }

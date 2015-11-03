@@ -512,7 +512,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2550f0f4a9c9558458d2ea2a9f528548, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initMaxSpeed: 10
+  initMaxSpeed: 15
   initAccel: 5
   rotationLerpValue: .200000003
 --- !u!114 &11429366
@@ -9141,6 +9141,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: m_SortingOrder
       value: -2
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: initMaxSpeed
+      value: 15
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

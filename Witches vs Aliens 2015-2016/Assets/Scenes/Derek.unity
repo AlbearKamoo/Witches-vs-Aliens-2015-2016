@@ -531,13 +531,13 @@ MonoBehaviour:
       side: 0
     bindings:
       inputMode: 1
-      verticalMovementAxisName: VerticalWASD
-      horizontalMovementAxisName: HorizontalWASD
-      verticalAimingAxisName: VerticalWASD
-      horizontalAimingAxisName: HorizontalWASD
-      movementAbilityKey: 113
-      genericAbilityKey: 101
-      superAbilityKey: 0
+      verticalMovementAxisName: VerticalMovement_J1
+      horizontalMovementAxisName: HorizontalMovement_J1
+      verticalAimingAxisName: VerticalAim_J1
+      horizontalAimingAxisName: HorizontalAim_J1
+      movementAbilityAxis: J1_Move
+      genericAbilityAxis: J1_Generic
+      superAbilityAxis: J1_Super
   - character:
       basePlayer: {fileID: 146214, guid: a8095cd9d9bc36f4e87d6eeda567d5fa, type: 2}
       movementAbility: {fileID: 186010, guid: 999ab97c110d5bc4baa999b79b3005e9, type: 2}
@@ -549,9 +549,9 @@ MonoBehaviour:
       horizontalMovementAxisName: HorizontalArrow
       verticalAimingAxisName: VerticalArrow
       horizontalAimingAxisName: HorizontalArrow
-      movementAbilityKey: 47
-      genericAbilityKey: 46
-      superAbilityKey: 0
+      movementAbilityAxis: 
+      genericAbilityAxis: 
+      superAbilityAxis: 
 --- !u!4 &1020276493 stripped
 Transform:
   m_PrefabParentObject: {fileID: 422084, guid: ae276d1e363cf0c49be7db4c5b225c6b, type: 2}
