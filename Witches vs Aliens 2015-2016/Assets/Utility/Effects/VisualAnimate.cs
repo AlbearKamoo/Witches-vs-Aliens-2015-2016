@@ -8,6 +8,12 @@ public class VisualAnimate : MonoBehaviour {
     public Material fxMat;
     public Renderer target;
 	// Update is called once per frame
+
+    void Awake()
+    {
+        fxMat = Instantiate(fxMat);
+    }
+
 	public void DoFX () {
         Material previousMat = target.material;
         target.material = fxMat;
