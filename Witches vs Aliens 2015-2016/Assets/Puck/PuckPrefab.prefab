@@ -156,7 +156,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fxTime: 1
   fxMat: {fileID: 2100000, guid: 3f2b67bb4eb6e5e4faea8bc0c0bdd41c, type: 2}
-  target: {fileID: 21239072}
+  targets:
+  - {fileID: 21239072}
 --- !u!114 &11470504
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -230,6 +231,10 @@ Prefab:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 0}
+      propertyPath: targets.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
       propertyPath: m_Material
       value: 
       objectReference: {fileID: 6200000, guid: ba110187c84da0f448b148acba8b978d, type: 2}
@@ -237,6 +242,10 @@ Prefab:
       propertyPath: m_Mass
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: targets.Array.data[0]
+      value: 
+      objectReference: {fileID: 21239072}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 135402}

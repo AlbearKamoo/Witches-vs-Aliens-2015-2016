@@ -545,10 +545,10 @@ MonoBehaviour:
       side: 1
     bindings:
       inputMode: 0
-      verticalMovementAxisName: VerticalArrow
-      horizontalMovementAxisName: HorizontalArrow
-      verticalAimingAxisName: VerticalArrow
-      horizontalAimingAxisName: HorizontalArrow
+      verticalMovementAxisName: VerticalWASD
+      horizontalMovementAxisName: HorizontalWASD
+      verticalAimingAxisName: VerticalWASD
+      horizontalAimingAxisName: HorizontalWASD
       movementAbilityAxis: 
       genericAbilityAxis: 
       superAbilityAxis: 

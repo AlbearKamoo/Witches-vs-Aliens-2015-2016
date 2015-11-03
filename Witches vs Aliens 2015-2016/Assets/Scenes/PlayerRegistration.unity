@@ -124,11 +124,11 @@ MonoBehaviour:
       inputMode: 0
       verticalMovementAxisName: VerticalWASD
       horizontalMovementAxisName: HorizontalWASD
-      verticalAimingAxisName: 
-      horizontalAimingAxisName: 
-      movementAbilityKey: 0
-      genericAbilityKey: 0
-      superAbilityKey: 0
+      verticalAimingAxisName: VerticalWASD
+      horizontalAimingAxisName: HorizontalWASD
+      movementAbilityAxis: 
+      genericAbilityAxis: 
+      superAbilityAxis: 
   - name: Player0(ArrowKeys)
     abbreviation: 0
     color: {r: 1, g: 0, b: 0, a: 1}
@@ -136,11 +136,11 @@ MonoBehaviour:
       inputMode: 0
       verticalMovementAxisName: VerticalArrow
       horizontalMovementAxisName: HorizontalArrow
-      verticalAimingAxisName: 
-      horizontalAimingAxisName: 
-      movementAbilityKey: 0
-      genericAbilityKey: 0
-      superAbilityKey: 0
+      verticalAimingAxisName: VerticalArrow
+      horizontalAimingAxisName: HorizontalArrow
+      movementAbilityAxis: 
+      genericAbilityAxis: 
+      superAbilityAxis: 
   - name: Player1(Joystick)
     abbreviation: 1
     color: {r: 0, g: 1, b: .627586126, a: 1}
@@ -150,9 +150,45 @@ MonoBehaviour:
       horizontalMovementAxisName: HorizontalMovement_J1
       verticalAimingAxisName: VerticalAim_J1
       horizontalAimingAxisName: HorizontalAim_J1
-      movementAbilityKey: 0
-      genericAbilityKey: 0
-      superAbilityKey: 0
+      movementAbilityAxis: J1_Move
+      genericAbilityAxis: J1_Generic
+      superAbilityAxis: J1_Super
+  - name: Player2(Joystick)
+    abbreviation: 2
+    color: {r: .86206913, g: 0, b: 1, a: 1}
+    bindings:
+      inputMode: 1
+      verticalMovementAxisName: VerticalMovement_J2
+      horizontalMovementAxisName: HorizontalMovement_J2
+      verticalAimingAxisName: VerticalAim_J2
+      horizontalAimingAxisName: HorizontalAim_J2
+      movementAbilityAxis: J2_Move
+      genericAbilityAxis: J2_Generic
+      superAbilityAxis: J2_Super
+  - name: Player3(Joystick)
+    abbreviation: 3
+    color: {r: .779310346, g: 1, b: 0, a: 1}
+    bindings:
+      inputMode: 1
+      verticalMovementAxisName: VerticalMovement_J3
+      horizontalMovementAxisName: HorizontalMovement_J3
+      verticalAimingAxisName: VerticalAim_J3
+      horizontalAimingAxisName: HorizontalAim_J3
+      movementAbilityAxis: J3_Move
+      genericAbilityAxis: J3_Generic
+      superAbilityAxis: J3_Super
+  - name: Player4(Joystick)
+    abbreviation: 4
+    color: {r: .158620834, g: 0, b: 1, a: 1}
+    bindings:
+      inputMode: 1
+      verticalMovementAxisName: VerticalMovement_J4
+      horizontalMovementAxisName: HorizontalMovement_J4
+      verticalAimingAxisName: VerticalAim_J4
+      horizontalAimingAxisName: HorizontalAim_J4
+      movementAbilityAxis: J4_Move
+      genericAbilityAxis: J4_Generic
+      superAbilityAxis: J4_Super
 --- !u!114 &21640696
 MonoBehaviour:
   m_ObjectHideFlags: 0
