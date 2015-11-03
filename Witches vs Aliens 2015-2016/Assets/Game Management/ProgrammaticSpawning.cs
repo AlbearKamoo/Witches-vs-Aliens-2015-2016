@@ -33,6 +33,8 @@ public class ProgrammaticSpawning : MonoBehaviour, IObserver<Message> {
     Vector2[] leftPoints;
     Vector2[] rightPoints;
     Transform[] players;
+    List<Transform> leftPlayers = new List<Transform>();
+    List<Transform> rightPlayers = new List<Transform>();
     PuckFX puck;
 
     // Use this for initialization
@@ -88,22 +90,60 @@ public class ProgrammaticSpawning : MonoBehaviour, IObserver<Message> {
             GameObject.Instantiate(data.playerComponentPrefabs[i].character.genericAbility).transform.SetParent(spawnedPlayer.transform, false);
             //GameObject.Instantiate(data.playerComponentPrefabs[i].character.superAbility).transform.SetParent(spawnedPlayer.transform, false);
             players[i] = spawnedPlayer.transform;
+            switch (data.playerComponentPrefabs[i].character.side)
+            {
+                case Side.LEFT:
+                    leftPlayers.Add(players[i]);
+                    break;
+                case Side.RIGHT:
+                    rightPlayers.Add(players[i]);
+                    break;
+            }
         }
         //set up AI data
-        for (int i = 0; i < data.playerComponentPrefabs.Length; i++)
+        Goal[] goals = GameObject.FindObjectsOfType<Goal>();
+        Transform leftGoal = null; //null to get the compiler to shut up about it not being assigned
+        Transform rightGoal = null;
+        switch(goals[0].side)
         {
-            if (data.playerComponentPrefabs[i].bindings.inputMode == InputConfiguration.PlayerInputType.INTERPOSEAI)
+            case Side.LEFT:
+                leftGoal = goals[0].transform;
+                rightGoal = goals[1].transform;
+                break;
+            case Side.RIGHT:
+                rightGoal = goals[0].transform;
+                leftGoal = goals[1].transform;
+                break;
+        }
+        for (int i = 0; i < players.Length; i++)
+        {
+            AbstractPlayerInput input = players[i].GetComponent<AbstractPlayerInput>();
+            if (input is InterferenceAI)
             {
-                List<int> opponents = new List<int>();
-                for (int j = 0; j < data.playerComponentPrefabs.Length; j++)
+                switch (data.playerComponentPrefabs[i].character.side)
                 {
-                    if (data.playerComponentPrefabs[j].character.side != data.playerComponentPrefabs[i].character.side)
-                        opponents.Add(j);
+                    case Side.LEFT:
+                        (input as InterferenceAI).myOpponents = rightPlayers;
+                        break;
+                    case Side.RIGHT:
+                        (input as InterferenceAI).myOpponents = leftPlayers;
+                        break;
                 }
-                Transform[] opponentTransforms = new Transform[opponents.Count];
-                for (int j = 0; j < opponents.Count; j++)
-                    opponentTransforms[j] = players[opponents[j]];
-                players[i].GetComponent<InterposeAI>().opponents = opponentTransforms;
+            }
+
+            if (input is GoalAI)
+            {
+                switch (data.playerComponentPrefabs[i].character.side)
+                {
+                    case Side.LEFT:
+                        (input as GoalAI).myGoal = leftGoal;
+                        (input as GoalAI).opponentGoal = rightGoal;
+                        break;
+                    case Side.RIGHT:
+                        (input as GoalAI).myGoal = rightGoal;
+                        (input as GoalAI).opponentGoal = leftGoal;
+                        break;
+                }
             }
         }
         Callback.FireForNextFrame(() => resetPositions(), this);
