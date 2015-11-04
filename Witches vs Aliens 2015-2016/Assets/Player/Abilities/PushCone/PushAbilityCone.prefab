@@ -16,7 +16,7 @@ GameObject:
   - 198: {fileID: 19819740}
   - 199: {fileID: 19914874}
   m_Layer: 0
-  m_Name: Push Ability
+  m_Name: PushAbilityCone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

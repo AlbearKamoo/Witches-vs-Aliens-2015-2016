@@ -15,7 +15,7 @@ public class InputToAction : MonoBehaviour {
     bool _rotationEnabled = true;
     public bool rotationEnabled { get { return _rotationEnabled; } set { _rotationEnabled = value; } }
     Vector2 _aimingInputDirection;
-    public Vector2 aimingInputDirection { get { return _aimingInputDirection; } set { _aimingInputDirection = value; rotateTowards(_aimingInputDirection); } }
+    public Vector2 aimingInputDirection { get { return _aimingInputDirection; } set { _aimingInputDirection = value; if(value.sqrMagnitude != 0) rotateTowards(_aimingInputDirection); } }
     public delegate Vector2 vectorQuantifier(Vector2 aimingInput, float maxDistance);
     vectorQuantifier _vectorQuantified;
     public vectorQuantifier vectorQuantified {set { _vectorQuantified = value; } }
