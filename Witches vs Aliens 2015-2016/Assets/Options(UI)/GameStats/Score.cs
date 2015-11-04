@@ -15,6 +15,7 @@ public class Score : MonoBehaviour, IObserver<Message> {
     Outline rightOutline;
 
     Material background;
+    bool overtime = false;
 
     [SerializeField]
     protected float scoreFXTime;
@@ -51,6 +52,8 @@ public class Score : MonoBehaviour, IObserver<Message> {
                 UpdateUI(rightScoreBoard, rightOutline, ++rightScore);
                 break;
         }
+        if (overtime)
+            GameEnd();
     }
 
     void UpdateUI(Text text, Outline outline, int newScore)
@@ -80,5 +83,20 @@ public class Score : MonoBehaviour, IObserver<Message> {
         float baseNoiseStrength = background.GetFloat(Tags.ShaderParams.noiseStrength);
         Callback.DoLerp((float l) => background.SetFloat(Tags.ShaderParams.noiseStrength, baseNoiseStrength * (1 + Mathf.Pow((1 - l), 2) * 10 * Mathf.Cos(60f * l))), scoreFXTime / 2, this)
             .FollowedBy(() => background.SetFloat(Tags.ShaderParams.noiseStrength, baseNoiseStrength), this);
+    }
+
+    public bool GameEnd()
+    {
+        if (leftScore == rightScore)
+        {
+            overtime = true;
+            return false;
+        }
+        else
+        {
+            //end the game
+            Application.LoadLevel(Tags.Scenes.select); //should really be the main menu, but we don't have one
+            return true;
+        }
     }
 }

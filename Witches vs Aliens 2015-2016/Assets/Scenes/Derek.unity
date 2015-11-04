@@ -240,6 +240,10 @@ Prefab:
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 11448284, guid: 493d0645e9344de4ca9a6bc5d6b2510a, type: 2}
+      propertyPath: timeRemainingSec
+      value: 30
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 493d0645e9344de4ca9a6bc5d6b2510a, type: 2}
   m_IsPrefabParent: 0
@@ -526,32 +530,32 @@ MonoBehaviour:
   playerComponentPrefabs:
   - character:
       basePlayer: {fileID: 146214, guid: a8095cd9d9bc36f4e87d6eeda567d5fa, type: 2}
-      movementAbility: {fileID: 123882, guid: 21b4b94fb80128a42b3c5c473d839bbe, type: 2}
+      movementAbility: {fileID: 186010, guid: 999ab97c110d5bc4baa999b79b3005e9, type: 2}
       genericAbility: {fileID: 110450, guid: bc177a2768bd39946866f5ebcbe5d375, type: 2}
       side: 1
     bindings:
-      inputMode: 2
-      verticalMovementAxisName: VerticalMovement_J1
-      horizontalMovementAxisName: HorizontalMovement_J1
-      verticalAimingAxisName: VerticalAim_J1
-      horizontalAimingAxisName: HorizontalAim_J1
+      inputMode: 0
+      verticalMovementAxisName: VerticalArrow
+      horizontalMovementAxisName: HorizontalArrow
+      verticalAimingAxisName: VerticalArrow
+      horizontalAimingAxisName: HorizontalArrow
       movementAbilityAxis: J1_Move
       genericAbilityAxis: J1_Generic
       superAbilityAxis: J1_Super
   - character:
       basePlayer: {fileID: 146214, guid: a8095cd9d9bc36f4e87d6eeda567d5fa, type: 2}
-      movementAbility: {fileID: 123882, guid: 21b4b94fb80128a42b3c5c473d839bbe, type: 2}
+      movementAbility: {fileID: 186010, guid: 999ab97c110d5bc4baa999b79b3005e9, type: 2}
       genericAbility: {fileID: 110450, guid: bc177a2768bd39946866f5ebcbe5d375, type: 2}
       side: 0
     bindings:
-      inputMode: 4
+      inputMode: 1
       verticalMovementAxisName: VerticalWASD
       horizontalMovementAxisName: HorizontalWASD
       verticalAimingAxisName: VerticalWASD
       horizontalAimingAxisName: HorizontalWASD
-      movementAbilityAxis: 
-      genericAbilityAxis: 
-      superAbilityAxis: 
+      movementAbilityAxis: P0_Move
+      genericAbilityAxis: P0_Generic
+      superAbilityAxis: P0_Super
 --- !u!4 &1020276493 stripped
 Transform:
   m_PrefabParentObject: {fileID: 422084, guid: ae276d1e363cf0c49be7db4c5b225c6b, type: 2}
@@ -601,6 +605,10 @@ Prefab:
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 11409060, guid: c11a39805b0734f40bae483a2f720505, type: 2}
+      propertyPath: playlistData.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: d2f6e9ab17e5380409efb4a1df5a238b, type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c11a39805b0734f40bae483a2f720505, type: 2}
   m_IsPrefabParent: 0

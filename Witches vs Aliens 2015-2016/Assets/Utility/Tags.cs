@@ -17,6 +17,7 @@ public class Tags{
 #if UNITY_EDITOR
         public const string derek = "Derek";
 #endif
+        public const string select = "PlayerRegistration";
     }
 
     //public class Axis

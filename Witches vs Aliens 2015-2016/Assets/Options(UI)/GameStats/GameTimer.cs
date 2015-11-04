@@ -4,6 +4,8 @@ using System.Collections;
 
 public class GameTimer : MonoBehaviour {
 
+    const string overtime = "OVERTIME!";
+
     public float timeRemainingSec;
     Text UITimer;
     Coroutine timer;
@@ -35,6 +37,12 @@ public class GameTimer : MonoBehaviour {
             if (timeRemainingSec < 0)
             {
                 //stuffs
+                if (!GetComponentInParent<Score>().GameEnd())
+                {
+                    //overtime!
+                    UITimer.text = overtime;
+                    //and VFX
+                }
                 Debug.Log("GAME END!");
                 timer = null;
                 yield break;
