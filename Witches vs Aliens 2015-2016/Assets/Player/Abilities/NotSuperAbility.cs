@@ -23,6 +23,12 @@ public abstract class NotSuperAbility : AbstractAbility, IObservable<AbilityStat
         }
     }
 
+    protected override void Start()
+    {
+        base.Start();
+        ready = true;
+    }
+
     protected override void OnDeactivate()
     {
         base.OnDeactivate();

@@ -170,75 +170,75 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22488076, guid: 493d0645e9344de4ca9a6bc5d6b2510a, type: 2}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 22488076, guid: 493d0645e9344de4ca9a6bc5d6b2510a, type: 2}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 22488076, guid: 493d0645e9344de4ca9a6bc5d6b2510a, type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 129
       objectReference: {fileID: 0}
     - target: {fileID: 22488076, guid: 493d0645e9344de4ca9a6bc5d6b2510a, type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -32.25
       objectReference: {fileID: 0}
     - target: {fileID: 22488076, guid: 493d0645e9344de4ca9a6bc5d6b2510a, type: 2}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 72
       objectReference: {fileID: 0}
     - target: {fileID: 22488076, guid: 493d0645e9344de4ca9a6bc5d6b2510a, type: 2}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 64.5
       objectReference: {fileID: 0}
     - target: {fileID: 22479102, guid: 493d0645e9344de4ca9a6bc5d6b2510a, type: 2}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 22479102, guid: 493d0645e9344de4ca9a6bc5d6b2510a, type: 2}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 22479102, guid: 493d0645e9344de4ca9a6bc5d6b2510a, type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 250
       objectReference: {fileID: 0}
     - target: {fileID: 22479102, guid: 493d0645e9344de4ca9a6bc5d6b2510a, type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -16.125
       objectReference: {fileID: 0}
     - target: {fileID: 22479102, guid: 493d0645e9344de4ca9a6bc5d6b2510a, type: 2}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 140
       objectReference: {fileID: 0}
     - target: {fileID: 22479102, guid: 493d0645e9344de4ca9a6bc5d6b2510a, type: 2}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 32.25
       objectReference: {fileID: 0}
     - target: {fileID: 22416476, guid: 493d0645e9344de4ca9a6bc5d6b2510a, type: 2}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 22416476, guid: 493d0645e9344de4ca9a6bc5d6b2510a, type: 2}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 22416476, guid: 493d0645e9344de4ca9a6bc5d6b2510a, type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 371
       objectReference: {fileID: 0}
     - target: {fileID: 22416476, guid: 493d0645e9344de4ca9a6bc5d6b2510a, type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -32.25
       objectReference: {fileID: 0}
     - target: {fileID: 22416476, guid: 493d0645e9344de4ca9a6bc5d6b2510a, type: 2}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 72
       objectReference: {fileID: 0}
     - target: {fileID: 22416476, guid: 493d0645e9344de4ca9a6bc5d6b2510a, type: 2}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 64.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 493d0645e9344de4ca9a6bc5d6b2510a, type: 2}
@@ -528,6 +528,7 @@ MonoBehaviour:
       basePlayer: {fileID: 146214, guid: a8095cd9d9bc36f4e87d6eeda567d5fa, type: 2}
       movementAbility: {fileID: 186010, guid: 999ab97c110d5bc4baa999b79b3005e9, type: 2}
       genericAbility: {fileID: 110450, guid: bc177a2768bd39946866f5ebcbe5d375, type: 2}
+      superAbility: {fileID: 143026, guid: 9f0bc11609a97544496b9a6170fe50f5, type: 2}
       side: 1
     bindings:
       inputMode: 1
@@ -542,6 +543,7 @@ MonoBehaviour:
       basePlayer: {fileID: 146214, guid: a8095cd9d9bc36f4e87d6eeda567d5fa, type: 2}
       movementAbility: {fileID: 123882, guid: 21b4b94fb80128a42b3c5c473d839bbe, type: 2}
       genericAbility: {fileID: 110450, guid: bc177a2768bd39946866f5ebcbe5d375, type: 2}
+      superAbility: {fileID: 143026, guid: 9f0bc11609a97544496b9a6170fe50f5, type: 2}
       side: 0
     bindings:
       inputMode: 1
@@ -552,6 +554,36 @@ MonoBehaviour:
       movementAbilityAxis: J2_Move
       genericAbilityAxis: J2_Generic
       superAbilityAxis: J2_Super
+  - character:
+      basePlayer: {fileID: 146214, guid: a8095cd9d9bc36f4e87d6eeda567d5fa, type: 2}
+      movementAbility: {fileID: 123882, guid: 21b4b94fb80128a42b3c5c473d839bbe, type: 2}
+      genericAbility: {fileID: 110450, guid: bc177a2768bd39946866f5ebcbe5d375, type: 2}
+      superAbility: {fileID: 143026, guid: 9f0bc11609a97544496b9a6170fe50f5, type: 2}
+      side: 1
+    bindings:
+      inputMode: 1
+      verticalMovementAxisName: VerticalMovement_J3
+      horizontalMovementAxisName: HorizontalMovement_J3
+      verticalAimingAxisName: VerticalAim_J3
+      horizontalAimingAxisName: HorizontalAim_J3
+      movementAbilityAxis: J3_Move
+      genericAbilityAxis: J3_Generic
+      superAbilityAxis: J3_Super
+  - character:
+      basePlayer: {fileID: 146214, guid: a8095cd9d9bc36f4e87d6eeda567d5fa, type: 2}
+      movementAbility: {fileID: 123882, guid: 21b4b94fb80128a42b3c5c473d839bbe, type: 2}
+      genericAbility: {fileID: 110450, guid: bc177a2768bd39946866f5ebcbe5d375, type: 2}
+      superAbility: {fileID: 143026, guid: 9f0bc11609a97544496b9a6170fe50f5, type: 2}
+      side: 0
+    bindings:
+      inputMode: 1
+      verticalMovementAxisName: VerticalMovement_J4
+      horizontalMovementAxisName: HorizontalMovement_J4
+      verticalAimingAxisName: VerticalAim_J4
+      horizontalAimingAxisName: HorizontalAim_J4
+      movementAbilityAxis: J4_Move
+      genericAbilityAxis: J4_Generic
+      superAbilityAxis: J4_Super
 --- !u!4 &1020276493 stripped
 Transform:
   m_PrefabParentObject: {fileID: 422084, guid: ae276d1e363cf0c49be7db4c5b225c6b, type: 2}
