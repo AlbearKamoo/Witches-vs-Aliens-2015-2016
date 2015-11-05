@@ -58,7 +58,7 @@ public class PuckFX : MonoBehaviour, IObserver<BumpedSideChangedMessage> {
     public void Respawn(Vector2 position)
     {
         rigid.constraints = RigidbodyConstraints2D.None;
-        transform.position = position;
+        rigid.MovePosition(position);
         rigid.velocity = Vector2.zero;
         rigid.angularVelocity = 0;
         coll.enabled = true;

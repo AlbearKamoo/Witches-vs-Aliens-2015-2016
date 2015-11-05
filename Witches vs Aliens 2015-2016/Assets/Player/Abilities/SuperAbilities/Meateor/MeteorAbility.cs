@@ -27,6 +27,7 @@ public class MeteorAbility : SuperAbility {
     {
         base.Start();
         side = GetComponentInParent<Stats>().side;
+        ready = true;
     }
 
     protected override void onFire(Vector2 direction)
@@ -50,7 +51,7 @@ public class MeteorAbility : SuperAbility {
 
                     //no problems, accept
                     previousMeteors[i] = potentialPos;
-                    SimplePool.Spawn(MeteorPrefab, potentialPos).GetComponent<MeteorCrater>().side = side;
+                    SimplePool.Spawn(MeteorPrefab, potentialPos).GetComponent<MeteorTarget>().side = side;
                     notFound = false;
                 }
             }

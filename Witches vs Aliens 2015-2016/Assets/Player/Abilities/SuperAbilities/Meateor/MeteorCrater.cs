@@ -9,6 +9,9 @@ public class MeteorCrater : MonoBehaviour, ISpawnable {
     [SerializeField]
     protected float speedNerf;
 
+    SpriteRenderer rend;
+    ParticleSystem vfx;
+    Collider2D coll;
     Side _side;
     public Side side {
         set { _side = value; }
@@ -16,9 +19,18 @@ public class MeteorCrater : MonoBehaviour, ISpawnable {
 
     Dictionary<InputToAction, FloatStat> modifiers = new Dictionary<InputToAction, FloatStat>();
 
+    void Awake()
+    {
+        rend = GetComponent<SpriteRenderer>();
+        vfx = GetComponent<ParticleSystem>();
+        coll = GetComponent<Collider2D>();
+    }
+
 	// Use this for initialization
 	public void Create () { //called on spawn
-        Callback.FireAndForget(() => SimplePool.Despawn(this.gameObject), duration, this);
+        Callback.FireAndForget(despawn, duration, this);
+        vfx.Play();
+        Callback.DoLerp((float l) => rend.color = rend.color.setAlphaFloat(l), 0.5f, this);
         //vfx stuff
 	}
 	
@@ -29,7 +41,10 @@ public class MeteorCrater : MonoBehaviour, ISpawnable {
             if (other.GetComponentInParent<Stats>().side != _side)
             {
                 InputToAction otherController = other.GetComponentInParent<InputToAction>();
-                modifiers[otherController] = otherController.maxSpeed.addModifier(speedNerf);
+                if (!modifiers.ContainsKey(otherController))
+                {
+                    modifiers[otherController] = otherController.maxSpeed.addModifier(speedNerf);
+                }
             }
         }
 	}
@@ -44,5 +59,15 @@ public class MeteorCrater : MonoBehaviour, ISpawnable {
                 otherController.maxSpeed.removeModifier(modifiers[otherController]);
             }
         }
+    }
+
+    void despawn()
+    {
+        foreach (var element in modifiers)
+        {
+            element.Key.maxSpeed.removeModifier(element.Value);
+        }
+        coll.enabled = false;
+        Callback.DoLerp((float l) => rend.color = rend.color.setAlphaFloat(l), 1f, this, reverse: true).FollowedBy(() => { coll.enabled = true; SimplePool.Despawn(this.gameObject); }, this);
     }
 }

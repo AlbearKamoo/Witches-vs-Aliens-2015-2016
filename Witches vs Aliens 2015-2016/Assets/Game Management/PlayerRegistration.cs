@@ -32,7 +32,7 @@ public class PlayerRegistration : MonoBehaviour {
     {
         for (int i = 0; i < possiblePlayers.Length; i++)
         {
-            if (possiblePlayers[i] != null && possiblePlayers[i].name != null)
+            if (possiblePlayers[i].name != null)
             {
                 if (Input.GetAxis(possiblePlayers[i].bindings.verticalMovementAxisName) != 0 ||
                     Input.GetAxis(possiblePlayers[i].bindings.horizontalMovementAxisName) != 0 ||
@@ -55,7 +55,7 @@ public class PlayerRegistration : MonoBehaviour {
                     action.movementEnabled = true;
                     spawnedPlayerRegistationPuck.GetComponentInChildren<Image>().color = possiblePlayers[i].color;
                     spawnedPlayerRegistationPuck.GetComponentInChildren<Text>().text = possiblePlayers[i].abbreviation;
-                    possiblePlayers[i] = null;
+                    possiblePlayers[i].name = null;
                 }
             }
         }
@@ -76,7 +76,7 @@ public class PlayerRegistration : MonoBehaviour {
         for (int i = 0; i < playerSelections.Length; i++)
         {
             if (playerSelections[i] != null && playerSelections[i].selectedCharacter != null)
-                data.playerComponentPrefabs[count++] = new PlayerComponents( playerSelections[i].selectedCharacter, possiblePlayers[i].bindings);
+                data.playerComponentPrefabs[count++] = new PlayerComponents(playerSelections[i].selectedCharacter, possiblePlayers[i].bindings);
         }
         Application.LoadLevel(mainGameSceneName);
         Destroy(this);
