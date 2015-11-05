@@ -51,14 +51,14 @@ public class FloatStatTracker
         _cachedValue = initValue;
     }
 
-    public FloatStat addModifier(float value)
+    public FloatStat addSpeedModifier(float value)
     {
         FloatStat result = new FloatStat(value, internalUpdate);
         stats.Add(result);
         internalUpdate();
         return result;
     }
-    public void removeModifier(FloatStat modifier)
+    public void removeSpeedModifier(FloatStat modifier)
     {
         stats.Remove(modifier);
         internalUpdate();

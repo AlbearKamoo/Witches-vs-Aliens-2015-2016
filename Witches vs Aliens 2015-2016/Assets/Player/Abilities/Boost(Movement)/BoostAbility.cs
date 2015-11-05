@@ -62,12 +62,12 @@ public class BoostAbility : MovementAbility, IObserver<ResetMessage> {
     IEnumerator Boost(Vector2 direction)
     {
         if (speedMod == null)
-            speedMod = action.maxSpeed.addModifier(speedMultiplier);
+            speedMod = action.maxSpeed.addSpeedModifier(speedMultiplier);
         else
             speedMod.value = speedMultiplier;
 
         if (accelMod == null)
-            accelMod = action.accel.addModifier(baseAccelDebuff);
+            accelMod = action.accel.addSpeedModifier(baseAccelDebuff);
         else
             accelMod.value = baseAccelDebuff;
 
@@ -97,7 +97,7 @@ public class BoostAbility : MovementAbility, IObserver<ResetMessage> {
             speedMod.value = Mathf.Lerp(speedMultiplier, 1, time / boostDecayTime);
             if (time > boostDecayTime)
             {
-                action.maxSpeed.removeModifier(speedMod);
+                action.maxSpeed.removeSpeedModifier(speedMod);
                 speedMod = null;
                 yield break;
             }
@@ -114,7 +114,7 @@ public class BoostAbility : MovementAbility, IObserver<ResetMessage> {
             accelMod.value = Mathf.Lerp(baseAccelDebuff, 1, time / accelNerfDecayTime);
             if (time > boostDecayTime)
             {
-                action.accel.removeModifier(accelMod);
+                action.accel.removeSpeedModifier(accelMod);
                 accelMod = null;
                 yield break;
             }

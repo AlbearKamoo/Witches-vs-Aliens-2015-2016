@@ -12,7 +12,7 @@ public class CharacterComponents
     public GameObject basePlayer;
     public GameObject movementAbility;
     public GameObject genericAbility;
-    public GameObject superAbility;
+    //public GameObject superAbility;
 
     public Side side;
     public CharacterComponents(){}

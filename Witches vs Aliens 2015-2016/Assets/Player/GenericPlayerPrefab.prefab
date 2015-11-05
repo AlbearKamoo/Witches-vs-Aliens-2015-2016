@@ -157,6 +157,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 421432}
   - 212: {fileID: 21286718}
+  - 114: {fileID: 11437132}
   m_Layer: 0
   m_Name: SuperUI
   m_TagString: Player
@@ -559,6 +560,17 @@ MonoBehaviour:
   targets:
   - {fileID: 21224744}
   - {fileID: 21244448}
+--- !u!114 &11437132
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 145908}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23ead001f33f3c54580e5196a725278e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &11491142
 MonoBehaviour:
   m_ObjectHideFlags: 1
