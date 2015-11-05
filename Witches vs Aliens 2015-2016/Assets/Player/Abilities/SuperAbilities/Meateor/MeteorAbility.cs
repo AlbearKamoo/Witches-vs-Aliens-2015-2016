@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+[RequireComponent(typeof(AudioSource))]
 public class MeteorAbility : SuperAbility {
 
     [SerializeField]
@@ -17,10 +18,12 @@ public class MeteorAbility : SuperAbility {
 
     LayerMask walls;
     Side side;
+    AudioSource sfx;
 
     protected virtual void Awake()
     {
         walls = LayerMask.GetMask(new string[] { Tags.Layers.stage });
+        sfx = GetComponent<AudioSource>();
     }
 
     protected override void Start()
@@ -32,6 +35,8 @@ public class MeteorAbility : SuperAbility {
 
     protected override void onFire(Vector2 direction)
     {
+        sfx.Play();
+
         Vector2[] previousMeteors = new Vector2[numMeteors];
         for (int i = 0; i < numMeteors; i++)
         {
