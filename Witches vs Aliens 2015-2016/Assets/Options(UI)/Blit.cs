@@ -27,7 +27,7 @@ public class Blit : MonoBehaviour
             Graphics.Blit(source, destination);
             return;
         }
-
+        Debug.Log(material.GetFloat(Tags.ShaderParams.cutoff));
         material.SetFloat(Tags.ShaderParams.cutoff, intensity);
         Graphics.Blit(source, destination, material);
     }
