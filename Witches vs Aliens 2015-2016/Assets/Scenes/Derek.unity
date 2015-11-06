@@ -532,7 +532,7 @@ MonoBehaviour:
       basePlayer: {fileID: 146214, guid: a8095cd9d9bc36f4e87d6eeda567d5fa, type: 2}
       movementAbility: {fileID: 186010, guid: 999ab97c110d5bc4baa999b79b3005e9, type: 2}
       genericAbility: {fileID: 110450, guid: bc177a2768bd39946866f5ebcbe5d375, type: 2}
-      superAbility: {fileID: 143026, guid: 9f0bc11609a97544496b9a6170fe50f5, type: 2}
+      superAbility: {fileID: 189548, guid: 92c627e1702f90443a4a43a527a7d20d, type: 2}
       side: 1
     bindings:
       inputMode: 0
@@ -659,46 +659,4 @@ Prefab:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 244a2caf881d9a240aa864c1994d4fb3, type: 2}
-  m_IsPrefabParent: 0
---- !u!1001 &1945983230
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 470314, guid: b0c2d8326a94ca34ebb0f0255557f43e, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 470314, guid: b0c2d8326a94ca34ebb0f0255557f43e, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 470314, guid: b0c2d8326a94ca34ebb0f0255557f43e, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 470314, guid: b0c2d8326a94ca34ebb0f0255557f43e, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 470314, guid: b0c2d8326a94ca34ebb0f0255557f43e, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 470314, guid: b0c2d8326a94ca34ebb0f0255557f43e, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 470314, guid: b0c2d8326a94ca34ebb0f0255557f43e, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 470314, guid: b0c2d8326a94ca34ebb0f0255557f43e, type: 2}
-      propertyPath: m_RootOrder
-      value: 8
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 100100000, guid: b0c2d8326a94ca34ebb0f0255557f43e, type: 2}
   m_IsPrefabParent: 0

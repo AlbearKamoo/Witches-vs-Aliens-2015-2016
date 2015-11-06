@@ -100,7 +100,7 @@ public class ProgrammaticSpawning : MonoBehaviour, IObserver<Message> {
                     break;
             }
         }
-        //set up AI data
+        //set up AI/Ability data
         Goal[] goals = GameObject.FindObjectsOfType<Goal>();
         Transform leftGoal = null; //null to get the compiler to shut up about it not being assigned
         Transform rightGoal = null;
@@ -118,31 +118,79 @@ public class ProgrammaticSpawning : MonoBehaviour, IObserver<Message> {
         for (int i = 0; i < players.Length; i++)
         {
             AbstractPlayerInput input = players[i].GetComponent<AbstractPlayerInput>();
-            if (input is InterferenceAI)
+            if (input is IInterferenceAI)
             {
                 switch (data.playerComponentPrefabs[i].character.side)
                 {
                     case Side.LEFT:
-                        (input as InterferenceAI).myOpponents = rightPlayers;
+                        (input as IInterferenceAI).myOpponents = rightPlayers;
                         break;
                     case Side.RIGHT:
-                        (input as InterferenceAI).myOpponents = leftPlayers;
+                        (input as IInterferenceAI).myOpponents = leftPlayers;
                         break;
                 }
             }
 
-            if (input is GoalAI)
+            if (input is IGoalAI)
             {
                 switch (data.playerComponentPrefabs[i].character.side)
                 {
                     case Side.LEFT:
-                        (input as GoalAI).myGoal = leftGoal;
-                        (input as GoalAI).opponentGoal = rightGoal;
+                        (input as IGoalAI).myGoal = leftGoal;
+                        (input as IGoalAI).opponentGoal = rightGoal;
                         break;
                     case Side.RIGHT:
-                        (input as GoalAI).myGoal = rightGoal;
-                        (input as GoalAI).opponentGoal = leftGoal;
+                        (input as IGoalAI).myGoal = rightGoal;
+                        (input as IGoalAI).opponentGoal = leftGoal;
                         break;
+                }
+            }
+
+            //now abilities
+
+            foreach (AbstractAbility ability in players[i].GetComponentsInChildren<AbstractAbility>())
+            {
+                if (ability is IAlliesAbility)
+                {
+                    switch (data.playerComponentPrefabs[i].character.side)
+                    {
+                        case Side.LEFT:
+                            (ability as IAlliesAbility).allies = leftPlayers;
+                            break;
+                        case Side.RIGHT:
+                            (ability as IAlliesAbility).allies = rightPlayers;
+                            break;
+                    }
+                }
+                if (ability is IOpponentsAbility)
+                {
+                    switch (data.playerComponentPrefabs[i].character.side)
+                    {
+                        case Side.LEFT:
+                            (ability as IOpponentsAbility).opponents = rightPlayers;
+                            break;
+                        case Side.RIGHT:
+                            (ability as IOpponentsAbility).opponents = leftPlayers;
+                            break;
+                    }
+                }
+                if (ability is IGoalAbility)
+                {
+                    switch (data.playerComponentPrefabs[i].character.side)
+                    {
+                        case Side.LEFT:
+                            (ability as IGoalAbility).myGoal = leftGoal;
+                            (ability as IGoalAbility).opponentGoal = rightGoal;
+                            break;
+                        case Side.RIGHT:
+                            (ability as IGoalAbility).myGoal = rightGoal;
+                            (ability as IGoalAbility).opponentGoal = leftGoal;
+                            break;
+                    }
+                }
+                if (ability is IPuckAbility)
+                {
+                    (ability as IPuckAbility).puck = puck.transform;
                 }
             }
         }

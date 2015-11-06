@@ -73,7 +73,7 @@ public static class Callback {
                     timeRemaining -= Time.deltaTime;
                 }
             }
-            code(1);
+            code(reverse?0:1);
         }
 
         //same, but run the lerp code independent of any timewarping

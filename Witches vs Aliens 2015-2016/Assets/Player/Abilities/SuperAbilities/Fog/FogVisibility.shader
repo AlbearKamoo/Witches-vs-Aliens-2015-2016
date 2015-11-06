@@ -3,10 +3,10 @@
 	Properties
 	{
 		_MainTex("Main Render Texture", 2D) = "white" {}
-		_WitchPos1("WitchPos1", Vector) = (10,10,0,0)
-		_WitchPos2("WitchPos2", Vector) = (10,10,0,0)
-		_WitchPos3("WitchPos3", Vector) = (10,10,0,0)
-		_PuckPos("PuckPos", Vector) = (0,0,0,0)
+		_WitchPos1("WitchPos1", Vector) = (10,10,0,1)
+		_WitchPos2("WitchPos2", Vector) = (10,10,0,1)
+		_WitchPos3("WitchPos3", Vector) = (10,10,0,1)
+		_PuckPos("PuckPos", Vector) = (0,0,0,1)
 		_RangeMin("Visibility Range Min", Float) = 1
 		_RangeMax("Visibility Range Max", Float) = 2
 	}

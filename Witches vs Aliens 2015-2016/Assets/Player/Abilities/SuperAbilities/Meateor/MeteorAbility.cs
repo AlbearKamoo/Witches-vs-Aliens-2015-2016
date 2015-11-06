@@ -30,7 +30,7 @@ public class MeteorAbility : SuperAbility {
     {
         base.Start();
         side = GetComponentInParent<Stats>().side;
-        ready = true;
+        //ready = true; //for easy testing
     }
 
     protected override void onFire(Vector2 direction)

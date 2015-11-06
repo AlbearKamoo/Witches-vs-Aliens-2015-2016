@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public abstract class AbstractAbility : MonoBehaviour {
 
@@ -65,4 +66,22 @@ public enum AbilityType
     MOVEMENT,
     SUPER,
     GENERIC,
+}
+
+public interface IAlliesAbility
+{
+    List<Transform> allies { set; }
+}
+public interface IOpponentsAbility
+{
+    List<Transform> opponents { set; }
+}
+public interface IGoalAbility
+{
+    Transform myGoal { set; }
+    Transform opponentGoal { set; }
+}
+public interface IPuckAbility
+{
+    Transform puck { set; }
 }

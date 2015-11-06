@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Linq;
-public class DefensiveAI : AbstractAI, GoalAI
+public class DefensiveAI : AbstractAI, IGoalAI
 {
     Transform _myGoal;
     public Transform myGoal { set { _myGoal = value; } }

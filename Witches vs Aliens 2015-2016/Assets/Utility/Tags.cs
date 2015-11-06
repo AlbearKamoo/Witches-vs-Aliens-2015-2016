@@ -53,5 +53,7 @@ public class Tags{
         public static int cutoff = Shader.PropertyToID("_Cutoff");
         public static int noiseStrength = Shader.PropertyToID("_NoiseStrength");
         public static int effectTexture = Shader.PropertyToID("_EffectTex");
+        public static int rangeMin = Shader.PropertyToID("_RangeMin");
+        public static int rangeMax = Shader.PropertyToID("_RangeMax");
     }
 }

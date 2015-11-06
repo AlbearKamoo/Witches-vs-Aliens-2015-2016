@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class InterposeAI : AbstractAI, InterferenceAI
+public class InterposeAI : AbstractAI, IInterferenceAI
 {
     List<Transform> opponents;
     public List<Transform> myOpponents { set { opponents = value; } }

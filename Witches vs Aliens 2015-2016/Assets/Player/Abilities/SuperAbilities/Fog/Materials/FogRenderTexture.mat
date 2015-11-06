@@ -134,7 +134,7 @@ Material:
       data:
         first:
           name: _RangeMin
-        second: 1
+        second: .100000001
       data:
         first:
           name: _RangeMax
@@ -151,16 +151,16 @@ Material:
       data:
         first:
           name: _WitchPos1
-        second: {r: .600000024, g: .5, b: 0, a: 0}
+        second: {r: 9999, g: 0, b: 0, a: 1}
       data:
         first:
           name: _WitchPos2
-        second: {r: 10, g: 10, b: 0, a: 0}
+        second: {r: 9999, g: 10, b: 0, a: 1}
       data:
         first:
           name: _WitchPos3
-        second: {r: 10, g: 10, b: 0, a: 0}
+        second: {r: -9999, g: 10, b: 0, a: 1}
       data:
         first:
           name: _PuckPos
-        second: {r: .5, g: .5, b: 0, a: 0}
+        second: {r: -9999, g: .5, b: 0, a: 1}

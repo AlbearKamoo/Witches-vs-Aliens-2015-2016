@@ -65,13 +65,13 @@ public abstract class AbstractAI : AbstractPlayerInput {
     }
 }
 
-public interface GoalAI
+public interface IGoalAI
 {
     Transform myGoal {set;}
     Transform opponentGoal {set;}
 }
 
-public interface InterferenceAI
+public interface IInterferenceAI
 {
     List<Transform> myOpponents {set;}
 }
