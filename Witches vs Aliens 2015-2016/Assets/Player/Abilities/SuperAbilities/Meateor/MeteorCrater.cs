@@ -31,6 +31,7 @@ public class MeteorCrater : MonoBehaviour, ISpawnable {
         Callback.FireAndForget(despawn, duration, this);
         vfx.Play();
         Callback.DoLerp((float l) => rend.color = rend.color.setAlphaFloat(l), 0.5f, this);
+        ScreenShake.RandomShake(this, 0.05f, 0.1f);
         //vfx stuff
 	}
 	
@@ -57,6 +58,7 @@ public class MeteorCrater : MonoBehaviour, ISpawnable {
             if (modifiers.ContainsKey(otherController))
             {
                 otherController.maxSpeed.removeModifier(modifiers[otherController]);
+                modifiers.Remove(otherController);
             }
         }
     }

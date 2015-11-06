@@ -25,7 +25,7 @@ public class FogSuper : SuperAbility, IAlliesAbility, IPuckAbility {
     protected override void Start()
     {
         base.Start();
-        ready = true; //for easy testing
+        //ready = true; //for easy testing
     }
 
     protected override void onFire(Vector2 direction)
