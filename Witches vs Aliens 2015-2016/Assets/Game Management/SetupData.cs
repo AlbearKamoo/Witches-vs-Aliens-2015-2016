@@ -12,6 +12,12 @@ public class SetupData : MonoBehaviour {
         _self = this;
         DontDestroyOnLoad(this.gameObject);
     }
+
+    public void Destruct()
+    {
+        _self = null;
+        Destroy(this.gameObject);
+    }
 }
 [System.Serializable]
 public class PlayerComponents

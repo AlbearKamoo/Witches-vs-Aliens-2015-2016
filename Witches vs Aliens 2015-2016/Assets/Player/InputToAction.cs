@@ -5,7 +5,9 @@ public class InputToAction : MonoBehaviour {
 
     Rigidbody2D rigid;
     MovementAbility moveAbility;
+    public MovementAbility MoveAbility { set { moveAbility = value; } }
     GenericAbility genAbility;
+    public GenericAbility GenAbility { set { genAbility = value; } }
     SuperAbility superAbility;
     Transform rotating;
 

@@ -5,6 +5,9 @@ using System.Collections;
 [RequireComponent(typeof(Image))]
 public class Score : MonoBehaviour, IObserver<Message> {
     [SerializeField]
+    protected GameObject GameEndPrefab;
+
+    [SerializeField]
     [AutoLink(parentTag = Tags.canvas, parentName = "LeftScoreBoard")]
     protected Text leftScoreBoard;
     Outline leftOutline;
@@ -22,23 +25,24 @@ public class Score : MonoBehaviour, IObserver<Message> {
 
     int leftScore = 0;
     int rightScore = 0;
+
+    static int imageStrength = Shader.PropertyToID("_ImageStrength");
+    static int alpha = Shader.PropertyToID("_MainTexAlpha");
+
 	// Use this for initialization
     void Awake()
     {
-        Observers.Subscribe(this, new string[] { GoalScoredMessage.classMessageType });
+        Observers.Subscribe(this, new string[] { GoalScoredMessage.classMessageType, GameEndMessage.classMessageType });
         Image image = GetComponent<Image>();
         background = Instantiate(image.material); //workaround to avoid modifying assets directly
         image.material = background;
         leftOutline = leftScoreBoard.GetComponent<Outline>();
         rightOutline = rightScoreBoard.GetComponent<Outline>();
 
-        int imageStrength = Shader.PropertyToID("_ImageStrength");
         float baseImageStrength = background.GetFloat(imageStrength);
-        int alpha = Shader.PropertyToID("_MainTexAlpha");
         float baseAlpha = background.GetFloat(alpha);
         CanvasGroup group = GetComponent<CanvasGroup>();
-        Callback.DoLerp((float l) => {background.SetFloat(imageStrength, baseImageStrength * l); background.SetFloat(alpha, baseAlpha * l); group.alpha = l; }, 1f, this)
-            .FollowedBy(() => Destroy(group), this);
+        Callback.DoLerp((float l) => {background.SetFloat(imageStrength, baseImageStrength * l); background.SetFloat(alpha, baseAlpha * l); group.alpha = l; }, 1f, this);
     }
 
     void UpdateScore(Side side)
@@ -75,6 +79,18 @@ public class Score : MonoBehaviour, IObserver<Message> {
                 UpdateScore((m as GoalScoredMessage).side);
                 animateBackgroundTexture();
                 break;
+
+            case GameEndMessage.classMessageType:
+                GameEndScripting endData = (m as GameEndMessage).endData;
+                endData.leftScore = this.leftScore;
+                endData.rightScore = this.rightScore;
+
+                float baseImageStrength = background.GetFloat(imageStrength);
+                float baseAlpha = background.GetFloat(alpha);
+                CanvasGroup group = GetComponent<CanvasGroup>();
+                Callback.DoLerp((float l) => { background.SetFloat(imageStrength, baseImageStrength * l); background.SetFloat(alpha, baseAlpha * l); group.alpha = l; }, (m as GameEndMessage).time, this, reverse: true);
+                Observers.Subscribe(this, new string[] { GoalScoredMessage.classMessageType, GameEndMessage.classMessageType });
+                break;
         }
     }
 
@@ -95,7 +111,7 @@ public class Score : MonoBehaviour, IObserver<Message> {
         else
         {
             //end the game
-            Application.LoadLevel(Tags.Scenes.select); //should really be the main menu, but we don't have one
+            Instantiate(GameEndPrefab);
             return true;
         }
     }

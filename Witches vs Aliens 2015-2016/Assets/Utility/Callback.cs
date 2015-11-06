@@ -24,6 +24,12 @@ public static class Callback {
             code();
         }
 
+        public static IEnumerator FireAndForgetRealtimeRoutine(CallbackMethod code, float time, MonoBehaviour callingScript)
+        {
+            yield return callingScript.StartCoroutine(WaitForRealSecondsRoutine(time));
+            code();
+        }
+
         //Fires the code on the next fixed update. Lazy way to keep the code from affecting what you're doing right now
         public static IEnumerator FireForFixedUpdateRoutine(CallbackMethod code)
         {
@@ -98,7 +104,7 @@ public static class Callback {
                 }
             }
 
-            code(1);
+            code(reverse ? 0 : 1);
         }
 
         //used Time.FixedDeltaTime instead of delta time (for important physics/gameplay things)
@@ -125,7 +131,7 @@ public static class Callback {
                 }
             }
 
-            code(1);
+            code(reverse ? 0 : 1);
         }
 
         public static IEnumerator WaitForRoutine(Coroutine waitFor, CallbackMethod code)
@@ -148,6 +154,12 @@ public static class Callback {
     {
         return RunIfActiveAndEnabled(callingScript, Routines.FireAndForgetRoutine(code, time));
     }
+
+    public static Coroutine FireAndForgetRealtime(this CallbackMethod code, float time, MonoBehaviour callingScript)
+    {
+        return RunIfActiveAndEnabled(callingScript, Routines.FireAndForgetRealtimeRoutine(code, time, callingScript));
+    }
+
     public static Coroutine FireForFixedUpdate(this CallbackMethod code, MonoBehaviour callingScript)
     {
         return RunIfActiveAndEnabled(callingScript, Routines.FireForFixedUpdateRoutine(code));

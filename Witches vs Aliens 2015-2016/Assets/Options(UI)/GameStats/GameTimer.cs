@@ -43,7 +43,11 @@ public class GameTimer : MonoBehaviour {
                     UITimer.text = overtime;
                     //and VFX
                 }
-                Debug.Log("GAME END!");
+                else
+                {
+                    timeRemainingSec = 0;
+                    setTime();
+                }
                 timer = null;
                 yield break;
             }

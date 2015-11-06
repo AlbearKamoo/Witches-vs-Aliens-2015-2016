@@ -35,9 +35,9 @@ public class Observable<T>
 
     public void Post(T message)
     {
-        foreach(IObserver<T> observer in observers)
+        for (int i = observers.Count - 1; i >= 0; i--) //backwards iteration to allow elements to be removed
         {
-            observer.Notify(message);
+            observers[i].Notify(message);
         }
     }
 }
