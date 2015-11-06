@@ -32,7 +32,7 @@ public class Score : MonoBehaviour, IObserver<Message> {
 	// Use this for initialization
     void Awake()
     {
-        Observers.Subscribe(this, new string[] { GoalScoredMessage.classMessageType, GameEndMessage.classMessageType });
+        Observers.Subscribe(this, GoalScoredMessage.classMessageType, GameEndMessage.classMessageType);
         Image image = GetComponent<Image>();
         background = Instantiate(image.material); //workaround to avoid modifying assets directly
         image.material = background;
@@ -89,7 +89,7 @@ public class Score : MonoBehaviour, IObserver<Message> {
                 float baseAlpha = background.GetFloat(alpha);
                 CanvasGroup group = GetComponent<CanvasGroup>();
                 Callback.DoLerp((float l) => { background.SetFloat(imageStrength, baseImageStrength * l); background.SetFloat(alpha, baseAlpha * l); group.alpha = l; }, (m as GameEndMessage).time, this, reverse: true);
-                Observers.Subscribe(this, new string[] { GoalScoredMessage.classMessageType, GameEndMessage.classMessageType });
+                Observers.Subscribe(this, GoalScoredMessage.classMessageType, GameEndMessage.classMessageType);
                 break;
         }
     }

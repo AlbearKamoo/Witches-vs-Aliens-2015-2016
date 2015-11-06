@@ -13,6 +13,7 @@ public class GameEndScripting : MonoBehaviour {
 	void Awake () {
         Camera.main.gameObject.AddComponent<BlitGreyscale>().time = gameEndTime;
         Observers.Post(new GameEndMessage(this, gameEndTime));
+        Observers.Clear(GameEndMessage.classMessageType, GoalScoredMessage.classMessageType);
         Pause.pause();
         Callback.FireAndForgetRealtime(() => { Application.LoadLevel(Tags.Scenes.select); Pause.unPause(); Destroy(this); }, gameEndTime, this);
 	}

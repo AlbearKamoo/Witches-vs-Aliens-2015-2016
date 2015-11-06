@@ -19,12 +19,16 @@ public class FogSuper : SuperAbility, IAlliesAbility, IPuckAbility {
     Transform _puck;
     public Transform puck { set { _puck = value; } }
 
-    private static int[] witchPos = {Shader.PropertyToID("_WitchPos1"), Shader.PropertyToID("_WitchPos2"), Shader.PropertyToID("_WitchPos3")};
+    private static int[] witchPos;
     private static int puckPos = Shader.PropertyToID("_PuckPos");
 
     protected override void Start()
     {
         base.Start();
+        if (witchPos == null)
+        {
+            witchPos = new int[] {Shader.PropertyToID("_WitchPos1"), Shader.PropertyToID("_WitchPos2"), Shader.PropertyToID("_WitchPos3")};
+        }
         //ready = true; //for easy testing
     }
 

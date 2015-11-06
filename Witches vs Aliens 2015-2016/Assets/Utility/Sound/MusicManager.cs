@@ -8,6 +8,7 @@ using UnityEngine.Assertions;
 public class MusicManager : MonoBehaviour
 {
     private AudioSource source;
+    private static bool created = false; //_self has issues when looping back to the starting scene
     private static MusicManager _self; //there can only be one
 
     [SerializeField]
@@ -16,8 +17,9 @@ public class MusicManager : MonoBehaviour
 
     void Awake()
     {
-        if (_self != null)
+        if (created)
             Destroy(this.gameObject);
+        created = true;
         _self = this;
         DontDestroyOnLoad(this.gameObject);
         Assert.IsTrue(playlistData.Length != 0);

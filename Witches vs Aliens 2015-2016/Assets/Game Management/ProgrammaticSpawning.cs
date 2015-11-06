@@ -43,7 +43,7 @@ public class ProgrammaticSpawning : MonoBehaviour, IObserver<Message> {
         if (SetupData.self != null) //workaround for unity level-loading method order
             data = SetupData.self;
 
-        Observers.Subscribe(this, new string[]{GoalScoredMessage.classMessageType, GameEndMessage.classMessageType});
+        Observers.Subscribe(this, GoalScoredMessage.classMessageType, GameEndMessage.classMessageType);
 
         leftPoints = new Vector2[leftRespawnPointsParent.childCount];
         int index = 0;
@@ -231,8 +231,6 @@ public class ProgrammaticSpawning : MonoBehaviour, IObserver<Message> {
                 break;
 
             case GameEndMessage.classMessageType:
-                Observers.Unsubscribe(this, new string[] { GoalScoredMessage.classMessageType, GameEndMessage.classMessageType });
-                Debug.Log(data);
                 //add player stats data to the endData, once we figure out what stats to use
                 data.Destruct();
                 

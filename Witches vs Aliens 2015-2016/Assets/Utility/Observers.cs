@@ -40,6 +40,11 @@ public class Observable<T>
             observers[i].Notify(message);
         }
     }
+
+    public void Clear()
+    {
+        observers.Clear();
+    }
 }
 
 public interface IObserver<T>
@@ -93,5 +98,12 @@ public static class Observers
     {
         if(theObservables.ContainsKey(message.messageType))
             theObservables[message.messageType].Post(message);
+    }
+
+    public static void Clear(params string[] messageTypes)
+    {
+        foreach (string messageType in messageTypes)
+            if (theObservables.ContainsKey(messageType))
+                theObservables[messageType].Clear();
     }
 }
