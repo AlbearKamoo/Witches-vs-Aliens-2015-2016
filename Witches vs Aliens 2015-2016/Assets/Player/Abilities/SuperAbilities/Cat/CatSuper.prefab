@@ -40,7 +40,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   duration: 20
-  PounceAbilityprefab: {fileID: 123882, guid: 21b4b94fb80128a42b3c5c473d839bbe, type: 2}
+  PounceAbilityprefab: {fileID: 176148, guid: 310d384bb46e8c748b94d24012e5d234, type: 2}
   BatAbilityprefab: {fileID: 151458, guid: 62991535b17bd214283bee1c6a865af0, type: 2}
 --- !u!1001 &100100000
 Prefab:
@@ -48,7 +48,11 @@ Prefab:
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: PounceAbilityprefab
+      value: 
+      objectReference: {fileID: 176148, guid: 310d384bb46e8c748b94d24012e5d234, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 137540}

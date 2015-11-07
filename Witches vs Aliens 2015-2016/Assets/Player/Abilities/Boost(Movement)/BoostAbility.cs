@@ -1,14 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-[RequireComponent(typeof(AudioSource))]
+[RequireComponent(typeof(AudioController))]
 [RequireComponent(typeof(ParticleSystem))]
 public class BoostAbility : MovementAbility, IObserver<ResetMessage> {
 
     InputToAction action;
     FloatStat speedMod;
     FloatStat accelMod;
-    AudioSource sfx;
+    AudioController sfx;
     ParticleSystem vfx;
     Rigidbody2D rigid;
 
@@ -35,7 +35,7 @@ public class BoostAbility : MovementAbility, IObserver<ResetMessage> {
 
     void Awake()
     {
-        sfx = GetComponent<AudioSource>();
+        sfx = GetComponent<AudioController>();
         vfx = GetComponent<ParticleSystem>();
     }
 

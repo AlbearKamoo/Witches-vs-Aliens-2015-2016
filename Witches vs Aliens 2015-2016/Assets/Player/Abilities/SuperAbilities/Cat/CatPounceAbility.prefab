@@ -1,44 +1,44 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &186010
+--- !u!1 &176148
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 4
   m_Component:
-  - 4: {fileID: 452798}
-  - 114: {fileID: 11476958}
-  - 82: {fileID: 8219600}
-  - 199: {fileID: 19973864}
-  - 198: {fileID: 19871962}
-  - 114: {fileID: 11461890}
-  - 114: {fileID: 11435950}
+  - 4: {fileID: 455394}
+  - 114: {fileID: 11481758}
+  - 82: {fileID: 8278238}
+  - 199: {fileID: 19951490}
+  - 198: {fileID: 19886964}
+  - 114: {fileID: 11426728}
+  - 114: {fileID: 11432040}
   m_Layer: 11
-  m_Name: BoostAbility
+  m_Name: CatPounceAbility
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &452798
+--- !u!4 &455394
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 186010}
+  m_GameObject: {fileID: 176148}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
---- !u!82 &8219600
+--- !u!82 &8278238
 AudioSource:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 186010}
+  m_GameObject: {fileID: 176148}
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
@@ -103,57 +103,61 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
---- !u!114 &11435950
+--- !u!114 &11426728
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 186010}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 82356766d5e18c74ba97587c51f03bc1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  minPitch: .800000012
-  maxPitch: 1.20000005
---- !u!114 &11461890
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 186010}
+  m_GameObject: {fileID: 176148}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7e13d56536cc11c42a78b0ee5338ccf4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   actions:
-  - {fileID: 11435950}
-  sound: {fileID: 8219600}
---- !u!114 &11476958
+  - {fileID: 11432040}
+  sound: {fileID: 8278238}
+--- !u!114 &11432040
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 186010}
+  m_GameObject: {fileID: 176148}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d050513a5c65f946b5f2ed83f0bf435, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clips:
+  - {fileID: 8300000, guid: f7a33d1def2ea8a4ab316b1a70d2b658, type: 3}
+  - {fileID: 8300000, guid: 19377bb47357e644ebfa9691acd6fad6, type: 3}
+  - {fileID: 8300000, guid: c930754a3c1b26640aa423d0c4089267, type: 3}
+  - {fileID: 8300000, guid: fdccbdb4c99fb6c42a0f8b8f4f71abc1, type: 3}
+  - {fileID: 8300000, guid: 34abe2ab27aeb204a8a4f4aa7a285ea8, type: 3}
+--- !u!114 &11481758
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 176148}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 21c9b8f96f375644c8c2ad69ea98aa61, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cooldownTime: 5
+  cooldownTime: 1
   speedMultiplier: 2.5
   maxDuration: .333333343
   boostDecayTime: 1
   baseAccelDebuff: .0659999996
   accelNerfDecayTime: 1
   FXDurationExtend: .5
---- !u!198 &19871962
+--- !u!198 &19886964
 ParticleSystem:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 186010}
+  m_GameObject: {fileID: 176148}
   lengthInSec: 1
   startDelay: 0
   speed: 1
@@ -312,7 +316,7 @@ ParticleSystem:
         rgba: 4294967295
       maxColor:
         serializedVersion: 2
-        rgba: 4294967295
+        rgba: 2164260863
       minMaxState: 0
     startSize:
       scalar: 5
@@ -521,7 +525,7 @@ ParticleSystem:
           rgba: 4294967295
         key1:
           serializedVersion: 2
-          rgba: 4288615680
+          rgba: 4288610412
         key2:
           serializedVersion: 2
           rgba: 0
@@ -1191,17 +1195,17 @@ ParticleSystem:
     subEmitterCollision1: {fileID: 0}
     subEmitterDeath: {fileID: 0}
     subEmitterDeath1: {fileID: 0}
---- !u!199 &19973864
+--- !u!199 &19951490
 ParticleSystemRenderer:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 186010}
+  m_GameObject: {fileID: 176148}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_Materials:
-  - {fileID: 2100000, guid: 8ee7b5d74d0378e459730f1aca3f4427, type: 2}
+  - {fileID: 2100000, guid: c5b5117aae2be664392b91c29a301191, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 1
@@ -1235,130 +1239,54 @@ Prefab:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 0}
+      propertyPath: clips.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
       propertyPath: actions.Array.size
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 0}
-      propertyPath: InitialModule.startLifetime.maxCurve.m_Curve.Array.size
-      value: 1
-      objectReference: {fileID: 0}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: c5b5117aae2be664392b91c29a301191, type: 2}
     - target: {fileID: 0}
-      propertyPath: InitialModule.startLifetime.minCurve.m_Curve.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: m_SortingLayerID
-      value: -1441101375
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: m_SortingOrder
-      value: -1
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: InitialModule.startLifetime.scalar
-      value: .400000006
+      propertyPath: ColorModule.gradient.maxGradient.key1.rgba
+      value: 4288610412
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: InitialModule.startColor.maxColor.rgba
-      value: 4294967295
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: ColorModule.gradient.maxGradient.key1.rgba
-      value: 4288615680
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: EmissionModule.m_Type
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: ColorModule.gradient.maxGradient.ctime1
-      value: 32768
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: ColorModule.gradient.maxGradient.ctime2
-      value: 65535
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: ColorModule.gradient.maxGradient.m_NumColorKeys
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: ColorModule.gradient.maxGradient.key0.rgba
-      value: 4294967295
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: SizeModule.enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[1].value
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[1].inSlope
-      value: -2
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[1].outSlope
-      value: -2
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: InitialModule.startLifetime.maxCurve.m_Curve.Array.data[1].time
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: InitialModule.startLifetime.maxCurve.m_Curve.Array.data[1].value
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: InitialModule.startLifetime.minCurve.m_Curve.Array.data[1].time
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: InitialModule.startLifetime.minMaxState
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: InitialModule.startLifetime.maxCurve.m_Curve.Array.data[0].value
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: InitialModule.startLifetime.minCurve.m_Curve.Array.data[0].value
-      value: .25
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: chargeTime
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: maxCharge
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: cooldownTime
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: maxDuration
-      value: .333333343
+      value: 2164260863
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: sound
       value: 
-      objectReference: {fileID: 8219600}
+      objectReference: {fileID: 8278238}
     - target: {fileID: 0}
       propertyPath: actions.Array.data[0]
       value: 
-      objectReference: {fileID: 11435950}
+      objectReference: {fileID: 11432040}
     - target: {fileID: 0}
-      propertyPath: minPitch
-      value: .800000012
-      objectReference: {fileID: 0}
+      propertyPath: clips.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: f7a33d1def2ea8a4ab316b1a70d2b658, type: 3}
     - target: {fileID: 0}
-      propertyPath: maxPitch
-      value: 1.20000005
-      objectReference: {fileID: 0}
+      propertyPath: clips.Array.data[1]
+      value: 
+      objectReference: {fileID: 8300000, guid: 19377bb47357e644ebfa9691acd6fad6, type: 3}
+    - target: {fileID: 0}
+      propertyPath: clips.Array.data[2]
+      value: 
+      objectReference: {fileID: 8300000, guid: c930754a3c1b26640aa423d0c4089267, type: 3}
+    - target: {fileID: 0}
+      propertyPath: clips.Array.data[3]
+      value: 
+      objectReference: {fileID: 8300000, guid: fdccbdb4c99fb6c42a0f8b8f4f71abc1, type: 3}
+    - target: {fileID: 0}
+      propertyPath: clips.Array.data[4]
+      value: 
+      objectReference: {fileID: 8300000, guid: 34abe2ab27aeb204a8a4f4aa7a285ea8, type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 186010}
+  m_RootGameObject: {fileID: 176148}
   m_IsPrefabParent: 1
