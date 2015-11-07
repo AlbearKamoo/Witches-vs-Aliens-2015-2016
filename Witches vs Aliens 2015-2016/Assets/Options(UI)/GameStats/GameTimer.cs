@@ -7,6 +7,9 @@ public class GameTimer : MonoBehaviour {
     const string overtime = "OVERTIME!";
 
     [SerializeField]
+    protected GameObject CountdownPrefab;
+
+    [SerializeField]
     protected Color OvertimeTextColor;
     Color normalTextColor;
     [SerializeField]
