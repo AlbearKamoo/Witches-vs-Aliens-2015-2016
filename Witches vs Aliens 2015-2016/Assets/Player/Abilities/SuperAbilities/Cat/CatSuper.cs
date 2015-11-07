@@ -17,11 +17,13 @@ public class CatSuper : SuperAbility {
 
     bool instantiated = false;
     InputToAction action;
+    GameObject defaultAbilityUI;
 
     protected override void Start()
     {
         base.Start();
         action = GetComponentInParent<InputToAction>();
+        defaultAbilityUI = transform.parent.Find("UI").gameObject;
         ready = true; //for easy testing
     }
 
@@ -32,11 +34,17 @@ public class CatSuper : SuperAbility {
 
         action.MoveAbility = catMove;
         action.GenAbility = catGeneric;
+        defaultAbilityUI.SetActive(false);
 
         Callback.FireAndForget(() =>
             {
                 action.MoveAbility = defaultMove;
                 action.GenAbility = defaultGeneric;
+                defaultAbilityUI.SetActive(true);
+                foreach (ParticleSystem abilityUI in defaultAbilityUI.GetComponentsInChildren<ParticleSystem>())
+                {
+                    abilityUI.Play();
+                }
             }, duration, this);
 
     }
