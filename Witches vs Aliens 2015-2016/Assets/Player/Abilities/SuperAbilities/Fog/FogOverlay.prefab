@@ -330,10 +330,10 @@ ParticleSystem:
         m_NumAlphaKeys: 2
       minColor:
         serializedVersion: 2
-        rgba: 1082163328
+        rgba: 1082155120
       maxColor:
         serializedVersion: 2
-        rgba: 1090519039
+        rgba: 1090514911
       minMaxState: 2
     startSize:
       scalar: 5

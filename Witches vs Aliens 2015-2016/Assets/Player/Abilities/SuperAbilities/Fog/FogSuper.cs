@@ -29,7 +29,7 @@ public class FogSuper : SuperAbility, IAlliesAbility, IPuckAbility {
         {
             witchPos = new int[] {Shader.PropertyToID("_WitchPos1"), Shader.PropertyToID("_WitchPos2"), Shader.PropertyToID("_WitchPos3")};
         }
-        //ready = true; //for easy testing
+        ready = true; //for easy testing
     }
 
     protected override void onFire(Vector2 direction)

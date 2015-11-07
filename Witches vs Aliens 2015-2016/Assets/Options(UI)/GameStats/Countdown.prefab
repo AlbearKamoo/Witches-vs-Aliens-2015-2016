@@ -50,6 +50,7 @@ MonoBehaviour:
   endTextColor: {r: 1, g: .501392722, b: 0, a: 1}
   startOutlineColor: {r: 1, g: 1, b: 1, a: .501960814}
   endOutlineColor: {r: .501960814, g: .25167951, b: 0, a: .501960814}
+  duration: 1
 --- !u!114 &11421378
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -117,8 +118,8 @@ Canvas:
   m_ReceivesEvents: 1
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
-  m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingLayerID: 800498191
+  m_SortingOrder: 2
 --- !u!224 &22440146
 RectTransform:
   m_ObjectHideFlags: 1
@@ -160,7 +161,15 @@ Prefab:
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: m_SortingOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_SortingLayerID
+      value: 800498191
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 117972}
