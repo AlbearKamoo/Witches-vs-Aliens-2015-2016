@@ -55,5 +55,7 @@ public class Tags{
         public static int effectTexture = Shader.PropertyToID("_EffectTex");
         public static int rangeMin = Shader.PropertyToID("_RangeMin");
         public static int rangeMax = Shader.PropertyToID("_RangeMax");
+        public static int imageStrength = Shader.PropertyToID("_ImageStrength");
+        public static int alpha = Shader.PropertyToID("_MainTexAlpha");
     }
 }

@@ -6,7 +6,7 @@
 		_ImageTex("Texture", 2D) = "white" {}
 		_NoiseTex ("Noise Bumpmap", 2D) = "bump" {}
 		_Overlay ("Overlay", 2D) = "white" {}
-		_ScrollSpeed ("ScrollSpeed", Range(0,1)) = 1
+		_ScrollSpeed ("ScrollSpeed", Range(-1,1)) = 1
 		_NoiseStrength ("NoiseStrength", Range(-1,1)) = 1
 		_ImageStrength ("Strength", Range(0,1)) = 1
 		_MainTexAlpha ("MainTexAlpha", Range(0,1)) = 1

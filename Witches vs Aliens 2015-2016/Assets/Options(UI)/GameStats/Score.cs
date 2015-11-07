@@ -26,9 +26,6 @@ public class Score : MonoBehaviour, IObserver<Message> {
     int leftScore = 0;
     int rightScore = 0;
 
-    static int imageStrength = Shader.PropertyToID("_ImageStrength");
-    static int alpha = Shader.PropertyToID("_MainTexAlpha");
-
 	// Use this for initialization
     void Awake()
     {
@@ -39,10 +36,10 @@ public class Score : MonoBehaviour, IObserver<Message> {
         leftOutline = leftScoreBoard.GetComponent<Outline>();
         rightOutline = rightScoreBoard.GetComponent<Outline>();
 
-        float baseImageStrength = background.GetFloat(imageStrength);
-        float baseAlpha = background.GetFloat(alpha);
+        float baseImageStrength = background.GetFloat(Tags.ShaderParams.imageStrength);
+        float baseAlpha = background.GetFloat(Tags.ShaderParams.alpha);
         CanvasGroup group = GetComponent<CanvasGroup>();
-        Callback.DoLerp((float l) => {background.SetFloat(imageStrength, baseImageStrength * l); background.SetFloat(alpha, baseAlpha * l); group.alpha = l; }, 1f, this);
+        Callback.DoLerp((float l) => { background.SetFloat(Tags.ShaderParams.imageStrength, baseImageStrength * l); background.SetFloat(Tags.ShaderParams.alpha, baseAlpha * l); group.alpha = l; }, 1f, this);
     }
 
     void UpdateScore(Side side)
@@ -85,10 +82,10 @@ public class Score : MonoBehaviour, IObserver<Message> {
                 endData.leftScore = this.leftScore;
                 endData.rightScore = this.rightScore;
 
-                float baseImageStrength = background.GetFloat(imageStrength);
-                float baseAlpha = background.GetFloat(alpha);
+                float baseImageStrength = background.GetFloat(Tags.ShaderParams.imageStrength);
+                float baseAlpha = background.GetFloat(Tags.ShaderParams.alpha);
                 CanvasGroup group = GetComponent<CanvasGroup>();
-                Callback.DoLerpRealtime((float l) => { background.SetFloat(imageStrength, baseImageStrength * l); background.SetFloat(alpha, baseAlpha * l); group.alpha = l; }, (m as GameEndMessage).time, this, reverse: true);
+                Callback.DoLerpRealtime((float l) => { background.SetFloat(Tags.ShaderParams.imageStrength, baseImageStrength * l); background.SetFloat(Tags.ShaderParams.alpha, baseAlpha * l); group.alpha = l; }, (m as GameEndMessage).time, this, reverse: true);
                 Observers.Subscribe(this, GoalScoredMessage.classMessageType, GameEndMessage.classMessageType);
                 break;
         }

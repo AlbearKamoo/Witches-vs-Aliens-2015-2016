@@ -6,7 +6,7 @@ Material:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: UIConstantImageShader
+  m_Name: OvertimeBackground
   m_Shader: {fileID: 4800000, guid: 9fe56d4f7d5195545b6fe881bb0765c2, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 5
@@ -151,27 +151,19 @@ Material:
       data:
         first:
           name: _ImageStrength
-        second: .150000006
+        second: 0
       data:
         first:
           name: _MainTexAlpha
-        second: .25
+        second: 0
       data:
         first:
           name: _NoiseStrength
-        second: .00999999978
-      data:
-        first:
-          name: _Strength
-        second: .134000003
-      data:
-        first:
-          name: _EffectStrength
-        second: .194000006
+        second: .100000001
       data:
         first:
           name: _ScrollSpeed
-        second: .125
+        second: .25
     m_Colors:
       data:
         first:
