@@ -88,7 +88,7 @@ public class Score : MonoBehaviour, IObserver<Message> {
                 float baseImageStrength = background.GetFloat(imageStrength);
                 float baseAlpha = background.GetFloat(alpha);
                 CanvasGroup group = GetComponent<CanvasGroup>();
-                Callback.DoLerp((float l) => { background.SetFloat(imageStrength, baseImageStrength * l); background.SetFloat(alpha, baseAlpha * l); group.alpha = l; }, (m as GameEndMessage).time, this, reverse: true);
+                Callback.DoLerpRealtime((float l) => { background.SetFloat(imageStrength, baseImageStrength * l); background.SetFloat(alpha, baseAlpha * l); group.alpha = l; }, (m as GameEndMessage).time, this, reverse: true);
                 Observers.Subscribe(this, GoalScoredMessage.classMessageType, GameEndMessage.classMessageType);
                 break;
         }

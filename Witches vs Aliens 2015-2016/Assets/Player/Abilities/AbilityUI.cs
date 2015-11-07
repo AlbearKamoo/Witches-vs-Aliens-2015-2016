@@ -7,15 +7,26 @@ public class AbilityUI : MonoBehaviour, IObserver<AbilityStateChangedMessage>, I
 
     [SerializeField]
     protected ParticleSystem movementVFX;
+    public ParticleSystem MovementVFX { set { movementVFX = value; } } //to be set before Start. (cat super)
     [SerializeField]
     protected ParticleSystem genericVFX;
+    public ParticleSystem GenericVFX { set { genericVFX = value; } }
+
+    MovementAbility move;
+    public MovementAbility Move { set { move = value; } }
+    GenericAbility gen;
+    public GenericAbility Generic { set { gen = value; } }
 
     float radius;
 
 	// Use this for initialization
 	void Start () {
-        transform.parent.GetComponentInChildren<MovementAbility>().Observable().Subscribe(this);
-        transform.parent.GetComponentInChildren<GenericAbility>().Observable().Subscribe(this);
+        if(move == null)
+            move = transform.parent.GetComponentInChildren<MovementAbility>();
+        move.Observable().Subscribe(this);
+        if (gen == null)
+            gen = transform.parent.GetComponentInChildren<GenericAbility>();
+        gen.Observable().Subscribe(this);
         GetComponentInParent<IObservable<ResetMessage>>().Observable().Subscribe(this);
 
         radius = transform.parent.GetComponentInChildren<CircleCollider2D>().radius;
