@@ -1148,7 +1148,7 @@ MonoBehaviour:
     type: 2}
   OvertimeTextColor: {r: 1, g: .752089143, b: 0, a: 1}
   OvertimeOutlineColor: {r: .501960814, g: .25167951, b: 0, a: .501960814}
-  timeRemainingSec: 10
+  timeRemainingSec: 180
 --- !u!114 &11449838
 MonoBehaviour:
   m_ObjectHideFlags: 1
