@@ -29,7 +29,7 @@ public class AbilityUI : MonoBehaviour, IObserver<AbilityStateChangedMessage>, I
         gen.Observable().Subscribe(this);
         GetComponentInParent<IObservable<ResetMessage>>().Observable().Subscribe(this);
 
-        radius = transform.parent.GetComponentInChildren<CircleCollider2D>().radius;
+        radius = 1.25f * transform.parent.GetComponentInChildren<CircleCollider2D>().radius;
 
         movementVFX.transform.localPosition = new Vector2(radius, 0);
         genericVFX.transform.localPosition = new Vector2(-radius, 0);

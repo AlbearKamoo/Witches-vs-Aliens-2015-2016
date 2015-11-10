@@ -15,12 +15,20 @@ public class SuperGoalSpawner : MonoBehaviour {
     protected float superGoalDuration;
     SuperGoal SuperGoal1;
     SuperGoal SuperGoal2;
+    Transform[] children;
 	// Use this for initialization
 	void Awake () {
         SuperGoal1 = Instantiate(SuperGoalPrefab).GetComponent<SuperGoal>();
         SuperGoal2 = Instantiate(SuperGoalPrefab).GetComponent<SuperGoal>();
         SuperGoal1.mirror = SuperGoal2;
         SuperGoal2.mirror = SuperGoal1;
+
+        children = new Transform[transform.childCount];
+        int i = 0;
+        foreach (Transform child in transform)
+        {
+            children[i++] = child;
+        }
 
         StartCoroutine(GoalSpawning());
 	}
@@ -29,19 +37,10 @@ public class SuperGoalSpawner : MonoBehaviour {
     {
         //randomly chose a spawn point
         int childNum = Random.Range(0, transform.childCount);
-        int currentChild = 0;
-        foreach (Transform child in transform)
-        {
-            if (currentChild == childNum)
-            {
-                SuperGoal1.transform.SetParent(child, false);
-                SuperGoal2.transform.SetParent(child.Find("Mirror"), false);
-            }
-            else
-            {
-                currentChild++;
-            }
-        }
+
+        SuperGoal1.transform.SetParent(children[childNum], false);
+        SuperGoal2.transform.SetParent(children[childNum].Find("Mirror"), false);
+
         SuperGoal1.active = true;
         SuperGoal2.active = true;
     }
