@@ -29,7 +29,9 @@ public class SuperAbility : AbstractAbility
     protected override void Start()
     {
         base.Start();
-        rend = transform.parent.Find("SuperUI").GetComponent<SpriteRenderer>();
+        
+        if(transform.parent != null)
+            rend = transform.parent.Find("SuperUI").GetComponent<SpriteRenderer>();
     }
 
     protected override void onFire(Vector2 direction)

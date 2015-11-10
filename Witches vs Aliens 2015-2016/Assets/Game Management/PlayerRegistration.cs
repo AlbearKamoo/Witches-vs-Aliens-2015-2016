@@ -16,10 +16,15 @@ public class PlayerRegistration : MonoBehaviour {
     protected GameObject playerRegistrationPrefab;
 
     [SerializeField]
+    protected GameObject playerRegistrationUIPrefab;
+
+    [SerializeField]
     protected PlayerRegisters[] possiblePlayers;
 
     SetupData data;
+    Transform UIParent;
     CharacterSelector[] playerSelections;
+    RegisteredPlayerUIView[] playerUI;
     bool[] playersReady;
     bool[] previousAxisInputNonzero; //create edge-trigger instead of constant flipping
 
@@ -29,6 +34,7 @@ public class PlayerRegistration : MonoBehaviour {
         data = GetComponent<SetupData>();
 
         playerSelections = new CharacterSelector[possiblePlayers.Length];
+        playerUI = new RegisteredPlayerUIView[possiblePlayers.Length];
 
         playersReady = new bool[possiblePlayers.Length];
         previousAxisInputNonzero = new bool[possiblePlayers.Length];
@@ -38,6 +44,11 @@ public class PlayerRegistration : MonoBehaviour {
             previousAxisInputNonzero[i] = false;
         }
 	}
+
+    void Start()
+    {
+        UIParent = GameObject.FindGameObjectWithTag(Tags.canvas).transform.Find("RegisteredPlayers");
+    }
 
     void Update()
     {
@@ -58,12 +69,18 @@ public class PlayerRegistration : MonoBehaviour {
                             spawnedPlayerRegistationPuck.AddComponent<JoystickPlayerInput>().bindings = possiblePlayers[i].bindings;
                             break;
                     }
+
+                    //spawn them
                     playerSelections[i] = spawnedPlayerRegistationPuck.AddComponent<CharacterSelector>();
+                    playerUI[i] = SimplePool.Spawn(playerRegistrationUIPrefab).GetComponent<RegisteredPlayerUIView>();
+                    playerUI[i].transform.SetParent(UIParent);
                     InputToAction action = spawnedPlayerRegistationPuck.GetComponent<InputToAction>();
                     action.rotationEnabled = false;
                     action.movementEnabled = true;
                     spawnedPlayerRegistationPuck.GetComponentInChildren<Image>().color = possiblePlayers[i].color;
+                    playerUI[i].playerColor = possiblePlayers[i].color;
                     spawnedPlayerRegistationPuck.GetComponentInChildren<Text>().text = possiblePlayers[i].abbreviation;
+                    playerUI[i].playerName = possiblePlayers[i].name;
                 }
             }
             else
@@ -73,6 +90,8 @@ public class PlayerRegistration : MonoBehaviour {
                 {
                     Destroy(playerSelections[i].gameObject);
                     playerSelections[i] = null;
+                    playerUI[i].Despawn();
+                    playerUI[i] = null;
                     playersReady[i] = false;
                 }
 
