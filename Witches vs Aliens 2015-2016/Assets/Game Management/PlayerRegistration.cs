@@ -73,10 +73,11 @@ public class PlayerRegistration : MonoBehaviour {
                     //spawn them
                     playerSelections[i] = spawnedPlayerRegistationPuck.AddComponent<CharacterSelector>();
                     playerUI[i] = SimplePool.Spawn(playerRegistrationUIPrefab).GetComponent<RegisteredPlayerUIView>();
-                    playerUI[i].transform.SetParent(UIParent);
+                    playerUI[i].transform.SetParent(UIParent, Vector3.one, false);
                     InputToAction action = spawnedPlayerRegistationPuck.GetComponent<InputToAction>();
                     action.rotationEnabled = false;
                     action.movementEnabled = true;
+                    playerUI[i].inputMode = possiblePlayers[i].bindings.inputMode;
                     spawnedPlayerRegistationPuck.GetComponentInChildren<Image>().color = possiblePlayers[i].color;
                     playerUI[i].playerColor = possiblePlayers[i].color;
                     spawnedPlayerRegistationPuck.GetComponentInChildren<Text>().text = possiblePlayers[i].abbreviation;

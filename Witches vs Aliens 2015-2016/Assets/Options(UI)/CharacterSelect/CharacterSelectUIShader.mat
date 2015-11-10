@@ -127,7 +127,7 @@ Material:
       data:
         first:
           name: _MainTexAlpha
-        second: .25
+        second: .5
       data:
         first:
           name: _USES_COLOR
