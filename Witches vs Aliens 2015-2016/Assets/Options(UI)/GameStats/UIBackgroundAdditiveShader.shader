@@ -3,6 +3,7 @@
 	Properties
 	{
 		_MainTex ("Texture", 2D) = "white" {}
+		[Toggle(USES_COLOR)] _USES_COLOR ("Uses the Color to tint", Float) = 0
 		_ImageTex("Texture", 2D) = "white" {}
 		_NoiseTex ("Noise Bumpmap", 2D) = "bump" {}
 		_Overlay ("Overlay", 2D) = "white" {}
@@ -23,6 +24,7 @@
 			CGPROGRAM
 			#pragma vertex vert
 			#pragma fragment frag
+			#pragma shader_feature USES_COLOR
 			
 			#include "UnityCG.cginc"
 
@@ -30,6 +32,7 @@
 			{
 				float4 vertex : POSITION;
 				float2 uv : TEXCOORD0;
+				fixed4 color : COLOR;
 			};
 
 			struct v2f
@@ -37,6 +40,9 @@
 				float2 uv : TEXCOORD0;
 				float2 uv2 : TEXCOORD1;
 				float4 vertex : SV_POSITION;
+				#ifdef USES_COLOR
+				fixed4 color : COLOR;
+				#endif
 			};
 
 			sampler2D _MainTex;
@@ -49,6 +55,10 @@
 			float _NoiseStrength;
 			float _ImageStrength;
 			float _MainTexAlpha;
+
+			#ifdef USES_COLOR
+			fixed4 _Color;
+			#endif
 			
 			inline half2 distortion(half2 rg)
 			{
@@ -72,6 +82,9 @@
 				o.vertex = mul(UNITY_MATRIX_MVP, v.vertex);
 				o.uv = v.uv;
 				o.uv2 = o.uv + fixed2(_ScrollSpeed/10, _ScrollSpeed) * _Time.gg;
+				#ifdef USES_COLOR
+				o.color = v.color;
+				#endif
 				return o;
 			}
 			
@@ -86,6 +99,9 @@
 				col *= col.a;
 				img = _MainTexAlpha * col + img;
 				img -= tex2D(_Overlay, i.uv + fixed2(0, _ScrollSpeed/3) * _Time.gg)/30;
+				#ifdef USES_COLOR
+				img *= i.color;
+				#endif
 				return img;
 			}
 			ENDCG

@@ -6,9 +6,9 @@ Material:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: UIConstantImageShader
+  m_Name: CharacterSelectUIShader
   m_Shader: {fileID: 4800000, guid: 9fe56d4f7d5195545b6fe881bb0765c2, type: 3}
-  m_ShaderKeywords: 
+  m_ShaderKeywords: USES_COLOR
   m_LightmapFlags: 5
   m_CustomRenderQueue: 3000
   stringTagMap: {}
@@ -115,7 +115,7 @@ Material:
       data:
         first:
           name: _ScrollSpeed
-        second: .125
+        second: .118000001
       data:
         first:
           name: _NoiseStrength
@@ -123,7 +123,7 @@ Material:
       data:
         first:
           name: _ImageStrength
-        second: .150000006
+        second: 1
       data:
         first:
           name: _MainTexAlpha
@@ -131,7 +131,7 @@ Material:
       data:
         first:
           name: _USES_COLOR
-        second: 0
+        second: 1
       data:
         first:
           name: _Parallax
@@ -168,14 +168,6 @@ Material:
         first:
           name: _Metallic
         second: 0
-      data:
-        first:
-          name: _Strength
-        second: .134000003
-      data:
-        first:
-          name: _EffectStrength
-        second: .194000006
     m_Colors:
       data:
         first:
@@ -184,4 +176,4 @@ Material:
       data:
         first:
           name: _Color
-        second: {r: 1, g: 1, b: 1, a: 0}
+        second: {r: 1, g: 1, b: 1, a: 1}
