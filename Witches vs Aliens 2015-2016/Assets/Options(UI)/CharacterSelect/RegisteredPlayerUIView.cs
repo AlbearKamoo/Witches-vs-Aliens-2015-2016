@@ -6,10 +6,14 @@ public class RegisteredPlayerUIView : MonoBehaviour {
 
     Image background;
     Text title;
+    GameObject LeaveTooltip;
+    GameObject ReadyTooltip;
     GameObject LeaveMouseIcon;
     GameObject ReadyMouseIcon;
     GameObject LeaveJoystickIcon;
     GameObject ReadyJoystickIcon;
+
+    GameObject ReadyIcon;
     public Color playerColor { set { background.color = value; } }
     public string playerName { set { title.text = value; } }
     public InputConfiguration.PlayerInputType inputMode
@@ -33,14 +37,26 @@ public class RegisteredPlayerUIView : MonoBehaviour {
             }
         }
     }
+    public bool ready
+    {
+        set
+        {
+            ReadyIcon.SetActive(value);
+            LeaveTooltip.SetActive(!value);
+            ReadyTooltip.SetActive(!value);
+        }
+    }
 	// Use this for initialization
 	void Awake () {
         background = GetComponent<Image>();
         title = transform.Find("Title").GetComponent<Text>();
-        LeaveMouseIcon = transform.Find("Leave Tooltip/IconMouse").gameObject;
-        ReadyMouseIcon = transform.Find("Ready Tooltip/IconMouse").gameObject;
-        LeaveJoystickIcon = transform.Find("Leave Tooltip/IconBumper").gameObject;
-        ReadyJoystickIcon = transform.Find("Ready Tooltip/IconBumper").gameObject;
+        LeaveTooltip = transform.Find("Leave Tooltip").gameObject;
+        ReadyTooltip = transform.Find("Ready Tooltip").gameObject;
+        LeaveMouseIcon = LeaveTooltip.transform.Find("IconMouse").gameObject;
+        ReadyMouseIcon = ReadyTooltip.transform.Find("IconMouse").gameObject;
+        LeaveJoystickIcon = LeaveTooltip.transform.Find("IconBumper").gameObject;
+        ReadyJoystickIcon = ReadyTooltip.transform.Find("IconBumper").gameObject;
+        ReadyIcon = transform.Find("ReadyIcon").gameObject;
 	}
 
     public void Despawn()

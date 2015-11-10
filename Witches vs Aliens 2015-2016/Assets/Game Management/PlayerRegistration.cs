@@ -99,7 +99,8 @@ public class PlayerRegistration : MonoBehaviour {
                 if (possiblePlayers[i].bindings.inputMode == InputConfiguration.PlayerInputType.MOUSE && Input.GetMouseButtonDown(2))
                 {
                     //toggle ready
-                    playersReady[i] = !playersReady[i];
+                    playerUI[i].ready = playersReady[i] = !playersReady[i];
+                    
                 }
                 else if(possiblePlayers[i].bindings.inputMode == InputConfiguration.PlayerInputType.JOYSTICK)
                 {
@@ -107,7 +108,7 @@ public class PlayerRegistration : MonoBehaviour {
                     {
                         if (!previousAxisInputNonzero[i])
                         {
-                            playersReady[i] = !playersReady[i]; //toggle
+                            playerUI[i].ready = playersReady[i] = !playersReady[i]; //toggle
                         }
                         previousAxisInputNonzero[i] = true;
                     }
