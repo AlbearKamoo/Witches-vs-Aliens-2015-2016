@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using System.Linq;
 
 [RequireComponent(typeof(SetupData))]
 public class PlayerRegistration : MonoBehaviour {
@@ -19,25 +20,33 @@ public class PlayerRegistration : MonoBehaviour {
 
     SetupData data;
     CharacterSelector[] playerSelections;
+    bool[] playersReady;
+    bool[] previousAxisInputNonzero; //create edge-trigger instead of constant flipping
+
+    Coroutine startCountdown;
 	void Awake ()
     {
         data = GetComponent<SetupData>();
 
         playerSelections = new CharacterSelector[possiblePlayers.Length];
 
-        Callback.FireAndForget(startGame, 10f, this);
+        playersReady = new bool[possiblePlayers.Length];
+        previousAxisInputNonzero = new bool[possiblePlayers.Length];
+        for (int i = 0; i < possiblePlayers.Length; i++)
+        {
+            playersReady[i] = false;
+            previousAxisInputNonzero[i] = false;
+        }
 	}
 
     void Update()
     {
         for (int i = 0; i < possiblePlayers.Length; i++)
         {
-            if (possiblePlayers[i].name != null)
+            if (playerSelections[i] == null)
             {
-                if (Input.GetAxis(possiblePlayers[i].bindings.verticalMovementAxisName) != 0 ||
-                    Input.GetAxis(possiblePlayers[i].bindings.horizontalMovementAxisName) != 0 ||
-                    Input.GetAxis(possiblePlayers[i].bindings.verticalAimingAxisName) != 0 ||
-                    Input.GetAxis(possiblePlayers[i].bindings.horizontalAimingAxisName) != 0) //basically, if there is any input detected
+                if (possiblePlayers[i].bindings.inputMode == InputConfiguration.PlayerInputType.MOUSE && Input.GetMouseButtonDown(0)
+                    || possiblePlayers[i].bindings.inputMode == InputConfiguration.PlayerInputType.JOYSTICK && Input.GetAxis(possiblePlayers[i].bindings.movementAbilityAxis) != 0) //register
                 {
                     GameObject spawnedPlayerRegistationPuck = (GameObject)Instantiate(playerRegistrationPrefab, Vector2.zero, Quaternion.identity); //the positions are temporary
                     switch (possiblePlayers[i].bindings.inputMode)
@@ -55,8 +64,65 @@ public class PlayerRegistration : MonoBehaviour {
                     action.movementEnabled = true;
                     spawnedPlayerRegistationPuck.GetComponentInChildren<Image>().color = possiblePlayers[i].color;
                     spawnedPlayerRegistationPuck.GetComponentInChildren<Text>().text = possiblePlayers[i].abbreviation;
-                    possiblePlayers[i].name = null;
                 }
+            }
+            else
+            {
+                if (possiblePlayers[i].bindings.inputMode == InputConfiguration.PlayerInputType.MOUSE && Input.GetMouseButtonDown(1)
+                    || possiblePlayers[i].bindings.inputMode == InputConfiguration.PlayerInputType.JOYSTICK && Input.GetAxis(possiblePlayers[i].bindings.genericAbilityAxis) != 0) //deregister
+                {
+                    Destroy(playerSelections[i].gameObject);
+                    playerSelections[i] = null;
+                    playersReady[i] = false;
+                }
+
+                if (possiblePlayers[i].bindings.inputMode == InputConfiguration.PlayerInputType.MOUSE && Input.GetMouseButtonDown(2))
+                {
+                    //toggle ready
+                    playersReady[i] = !playersReady[i];
+                }
+                else if(possiblePlayers[i].bindings.inputMode == InputConfiguration.PlayerInputType.JOYSTICK)
+                {
+                    if (Input.GetAxis(possiblePlayers[i].bindings.superAbilityAxis) != 0)
+                    {
+                        if (!previousAxisInputNonzero[i])
+                        {
+                            playersReady[i] = !playersReady[i]; //toggle
+                        }
+                        previousAxisInputNonzero[i] = true;
+                    }
+                    else
+                    {
+                        previousAxisInputNonzero[i] = false;
+                    }
+                }
+            }
+        }
+        bool allReady = true;
+        bool oneReady = false;
+        for (int i = 0; i < playersReady.Length; i++)
+        {
+            if (playerSelections[i] != null)
+            {
+                oneReady = true;
+                if (!playersReady[i])
+                    allReady = false;
+            }
+        }
+        if (startCountdown == null)
+        {
+            if (oneReady && allReady)
+            {
+                startCountdown = Callback.FireAndForget(startGame, 5, this);
+                Debug.Log("Counting Down");
+            }
+        }
+        else
+        {
+            if (!oneReady || !allReady)
+            {
+                StopCoroutine(startCountdown);
+                startCountdown = null;
             }
         }
     }
