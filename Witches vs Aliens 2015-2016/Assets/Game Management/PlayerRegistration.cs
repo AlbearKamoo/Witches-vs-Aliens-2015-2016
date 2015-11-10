@@ -78,6 +78,7 @@ public class PlayerRegistration : MonoBehaviour {
                     action.rotationEnabled = false;
                     action.movementEnabled = true;
                     playerUI[i].inputMode = possiblePlayers[i].bindings.inputMode;
+                    playerUI[i].ready = false;
                     spawnedPlayerRegistationPuck.GetComponentInChildren<Image>().color = possiblePlayers[i].color;
                     playerUI[i].playerColor = possiblePlayers[i].color;
                     spawnedPlayerRegistationPuck.GetComponentInChildren<Text>().text = possiblePlayers[i].abbreviation;
@@ -86,6 +87,32 @@ public class PlayerRegistration : MonoBehaviour {
             }
             else
             {
+                //check if ready
+                if (playerSelections[i].selectedCharacter != null)
+                {
+                    if (possiblePlayers[i].bindings.inputMode == InputConfiguration.PlayerInputType.MOUSE && Input.GetMouseButtonDown(2))
+                    {
+                        //toggle ready
+                        playerUI[i].ready = playersReady[i] = !playersReady[i];
+
+                    }
+                    else if (possiblePlayers[i].bindings.inputMode == InputConfiguration.PlayerInputType.JOYSTICK)
+                    {
+                        if (Input.GetAxis(possiblePlayers[i].bindings.superAbilityAxis) != 0)
+                        {
+                            if (!previousAxisInputNonzero[i])
+                            {
+                                playerUI[i].ready = playersReady[i] = !playersReady[i]; //toggle
+                            }
+                            previousAxisInputNonzero[i] = true;
+                        }
+                        else
+                        {
+                            previousAxisInputNonzero[i] = false;
+                        }
+                    }
+                }
+
                 if (possiblePlayers[i].bindings.inputMode == InputConfiguration.PlayerInputType.MOUSE && Input.GetMouseButtonDown(1)
                     || possiblePlayers[i].bindings.inputMode == InputConfiguration.PlayerInputType.JOYSTICK && Input.GetAxis(possiblePlayers[i].bindings.genericAbilityAxis) != 0) //deregister
                 {
@@ -96,27 +123,7 @@ public class PlayerRegistration : MonoBehaviour {
                     playersReady[i] = false;
                 }
 
-                if (possiblePlayers[i].bindings.inputMode == InputConfiguration.PlayerInputType.MOUSE && Input.GetMouseButtonDown(2))
-                {
-                    //toggle ready
-                    playerUI[i].ready = playersReady[i] = !playersReady[i];
-                    
-                }
-                else if(possiblePlayers[i].bindings.inputMode == InputConfiguration.PlayerInputType.JOYSTICK)
-                {
-                    if (Input.GetAxis(possiblePlayers[i].bindings.superAbilityAxis) != 0)
-                    {
-                        if (!previousAxisInputNonzero[i])
-                        {
-                            playerUI[i].ready = playersReady[i] = !playersReady[i]; //toggle
-                        }
-                        previousAxisInputNonzero[i] = true;
-                    }
-                    else
-                    {
-                        previousAxisInputNonzero[i] = false;
-                    }
-                }
+                
             }
         }
         bool allReady = true;

@@ -26,9 +26,9 @@ public class Countdown : MonoBehaviour, ISpawnable {
 
     public void Create()
     {
-        Callback.DoLerp(lerpIn, 0.5f, this);
+        Callback.DoLerpRealtime(lerpIn, 0.5f, this);
 
-        Callback.FireAndForget(Despawn, duration, this);
+        Callback.FireAndForgetRealtime(Despawn, duration, this);
     }
 
     protected virtual void lerpIn(float l)

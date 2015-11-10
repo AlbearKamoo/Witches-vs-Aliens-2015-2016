@@ -9,6 +9,9 @@ public class ProgrammaticSpawning : MonoBehaviour, IObserver<Message> {
     protected GameObject PuckPrefab;
 
     [SerializeField]
+    protected GameObject CountdownPrefab;
+
+    [SerializeField]
     [AutoLink(parentTag = Tags.stage, parentName = "Left")]
     protected Transform leftRespawnPointsParent;
     [SerializeField]
@@ -22,6 +25,9 @@ public class ProgrammaticSpawning : MonoBehaviour, IObserver<Message> {
     [SerializeField]
     [AutoLink(parentTag = Tags.canvas, parentName = "Timer")]
     protected GameTimer timer;
+
+    [SerializeField]
+    protected int countdownTime;
 
     [SerializeField]
     protected float resetDuration;
@@ -66,7 +72,7 @@ public class ProgrammaticSpawning : MonoBehaviour, IObserver<Message> {
         players = new Transform[data.playerComponentPrefabs.Length];
         for (int i = 0; i < data.playerComponentPrefabs.Length; i++)
         {
-            GameObject spawnedPlayer = (GameObject)Instantiate(data.playerComponentPrefabs[i].character.basePlayer, i % 2 == 0 ? leftPoints[i % 2] : rightPoints[i % 2], Quaternion.identity); //the positions are temporary
+            GameObject spawnedPlayer = (GameObject)Instantiate(data.playerComponentPrefabs[i].character.basePlayer, new Vector2((i+1) * 200, 0), Quaternion.identity); //the positions are temporary
             spawnedPlayer.AddComponent<Stats>().side = data.playerComponentPrefabs[i].character.side;
             switch (data.playerComponentPrefabs[i].bindings.inputMode)
             {
@@ -194,8 +200,30 @@ public class ProgrammaticSpawning : MonoBehaviour, IObserver<Message> {
                 }
             }
         }
-        Callback.FireForNextFrame(() => resetPositions(), this);
+        StartCoroutine(Countdown());
 	}
+
+    IEnumerator Countdown()
+    {
+        Queue<float> countdownTimes = new Queue<float>(countdownTime);
+        for (int i = countdownTime; i > 0; i--)
+        {
+            countdownTimes.Enqueue(i);
+        }
+        countdownTimes.Enqueue(-1); //ensure there is always something to Peek();
+        yield return null;
+        float timeRemaining = countdownTime;
+
+        Callback.FireAndForget(resetPositions, timeRemaining - resetDuration, this);
+
+        while (timeRemaining > 0)
+        {
+            yield return null;
+            timeRemaining -= Time.deltaTime;
+            if(timeRemaining < countdownTimes.Peek())
+                SimplePool.Spawn(CountdownPrefab, Vector3.zero).GetComponent<Countdown>().count = countdownTimes.Dequeue().ToString();
+        }
+    }
 
     void resetPositions()
     {
