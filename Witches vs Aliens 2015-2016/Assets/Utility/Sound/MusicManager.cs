@@ -9,7 +9,9 @@ public class MusicManager : MonoBehaviour
 {
     private AudioSource source;
     private static bool created = false; //_self has issues when looping back to the starting scene
+    bool paused = false;
     private static MusicManager _self; //there can only be one
+    public static MusicManager self { get { return _self; } }
 
     [SerializeField]
     private AudioClip[] playlistData; //for serialization and the inspector; not used after the data is loaded into the queue
@@ -24,7 +26,11 @@ public class MusicManager : MonoBehaviour
         DontDestroyOnLoad(this.gameObject);
         Assert.IsTrue(playlistData.Length != 0);
         source = GetComponent<AudioSource>();
-        source.Play();
+        if (!paused)
+        {
+            source.Play();
+            Debug.Log("Play");
+        }
         playlist = new Queue<AudioClip>(playlistData);
         playlistData = null;
         StartCoroutine(UpdateCoroutine());
@@ -37,11 +43,26 @@ public class MusicManager : MonoBehaviour
         source.Play();
     }
 
+    public void Pause()
+    {
+        Debug.Log("Puase");
+        paused = true;
+        source.Pause();
+    }
+
+    public void Skip()
+    {
+        paused = false;
+        playlist.Enqueue(playlist.Peek()); //everything is on a loop
+        source.clip = playlist.Dequeue();
+        source.Play();
+    }
+
     IEnumerator UpdateCoroutine()
     {
         while (true)
         {
-            if (!source.isPlaying)
+            if (!paused && !source.isPlaying)
             {
                 playNext();
             }

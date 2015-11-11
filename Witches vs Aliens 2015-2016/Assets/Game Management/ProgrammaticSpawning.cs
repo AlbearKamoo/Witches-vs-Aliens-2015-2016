@@ -3,7 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
+[RequireComponent(typeof(AudioSource))]
 public class ProgrammaticSpawning : MonoBehaviour, IObserver<Message> {
+
+    [SerializeField]
+    protected AudioClip introBit;
 
     [SerializeField]
     protected GameObject PuckPrefab;
@@ -205,6 +209,7 @@ public class ProgrammaticSpawning : MonoBehaviour, IObserver<Message> {
 
     IEnumerator Countdown()
     {
+        MusicManager.self.Pause();
         Queue<float> countdownTimes = new Queue<float>(countdownTime);
         for (int i = countdownTime; i > 0; i--)
         {
@@ -212,9 +217,12 @@ public class ProgrammaticSpawning : MonoBehaviour, IObserver<Message> {
         }
         countdownTimes.Enqueue(-1); //ensure there is always something to Peek();
         yield return null;
+        AudioSource source = GetComponent<AudioSource>();
+        source.clip = introBit;
+        source.Play();
         float timeRemaining = countdownTime;
 
-        Callback.FireAndForget(resetPositions, timeRemaining - resetDuration, this);
+        Callback.FireAndForget(() => { resetPositions();  MusicManager.self.Skip(); }, timeRemaining - resetDuration, this);
 
         while (timeRemaining > 0)
         {
