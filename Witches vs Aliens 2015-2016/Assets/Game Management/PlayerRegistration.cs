@@ -57,7 +57,7 @@ public class PlayerRegistration : MonoBehaviour {
             if (playerSelections[i] == null)
             {
                 if (possiblePlayers[i].bindings.inputMode == InputConfiguration.PlayerInputType.MOUSE && Input.GetMouseButtonDown(0)
-                    || possiblePlayers[i].bindings.inputMode == InputConfiguration.PlayerInputType.JOYSTICK && Input.GetAxis(possiblePlayers[i].bindings.movementAbilityAxis) != 0) //register
+                    || possiblePlayers[i].bindings.inputMode == InputConfiguration.PlayerInputType.JOYSTICK && Input.GetAxis(possiblePlayers[i].bindings.AcceptAxis) != 0) //register
                 {
                     GameObject spawnedPlayerRegistationPuck = (GameObject)Instantiate(playerRegistrationPrefab, Vector2.zero, Quaternion.identity); //the positions are temporary
                     switch (possiblePlayers[i].bindings.inputMode)
@@ -90,15 +90,15 @@ public class PlayerRegistration : MonoBehaviour {
                 //check if ready
                 if (playerSelections[i].selectedCharacter != null)
                 {
-                    if (possiblePlayers[i].bindings.inputMode == InputConfiguration.PlayerInputType.MOUSE && Input.GetMouseButtonDown(2))
+                    if (possiblePlayers[i].bindings.inputMode == InputConfiguration.PlayerInputType.MOUSE && Input.GetMouseButtonDown(0))
                     {
-                        //toggle ready
+                            //toggle ready
                         playerUI[i].ready = playersReady[i] = !playersReady[i];
 
                     }
                     else if (possiblePlayers[i].bindings.inputMode == InputConfiguration.PlayerInputType.JOYSTICK)
                     {
-                        if (Input.GetAxis(possiblePlayers[i].bindings.superAbilityAxis) != 0)
+                        if (Input.GetAxis(possiblePlayers[i].bindings.AcceptAxis) != 0)
                         {
                             if (!previousAxisInputNonzero[i])
                             {

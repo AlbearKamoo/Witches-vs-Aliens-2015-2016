@@ -61,6 +61,8 @@ public class InputConfiguration
     [CanBeDefaultOrNull]
     [Tooltip("You can leave this as anything for mouse mode")]
     public string superAbilityAxis;
+    [Tooltip("Only For Joysticks")]
+    public string AcceptAxis;
 
     public InputConfiguration() { }
 

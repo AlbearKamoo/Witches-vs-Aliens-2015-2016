@@ -119,30 +119,19 @@ MonoBehaviour:
   playerRegistrationUIPrefab: {fileID: 188064, guid: 7d3002974c2c21c4395e3760c66a4b4f,
     type: 2}
   possiblePlayers:
-  - name: Player0 (WASD)
-    abbreviation: W
-    color: {r: 1, g: 0, b: 0, a: 1}
-    bindings:
-      inputMode: 0
-      verticalMovementAxisName: VerticalWASD
-      horizontalMovementAxisName: HorizontalWASD
-      verticalAimingAxisName: VerticalWASD
-      horizontalAimingAxisName: HorizontalWASD
-      movementAbilityAxis: 
-      genericAbilityAxis: 
-      superAbilityAxis: 
-  - name: Player0 (Arrows)
+  - name: Player0
     abbreviation: 0
     color: {r: 1, g: 0, b: 0, a: 1}
     bindings:
       inputMode: 0
-      verticalMovementAxisName: VerticalArrow
-      horizontalMovementAxisName: HorizontalArrow
-      verticalAimingAxisName: VerticalArrow
-      horizontalAimingAxisName: HorizontalArrow
+      verticalMovementAxisName: Vertical
+      horizontalMovementAxisName: Horizontal
+      verticalAimingAxisName: Vertical
+      horizontalAimingAxisName: Horizontal
       movementAbilityAxis: 
       genericAbilityAxis: 
       superAbilityAxis: 
+      AcceptAxis: 
   - name: Player1(Joystick)
     abbreviation: 1
     color: {r: 0, g: 1, b: .627586126, a: 1}
@@ -155,6 +144,7 @@ MonoBehaviour:
       movementAbilityAxis: J1_Move
       genericAbilityAxis: J1_Generic
       superAbilityAxis: J1_Super
+      AcceptAxis: J1_A
   - name: Player2(Joystick)
     abbreviation: 2
     color: {r: .86206913, g: 0, b: 1, a: 1}
@@ -167,6 +157,7 @@ MonoBehaviour:
       movementAbilityAxis: J2_Move
       genericAbilityAxis: J2_Generic
       superAbilityAxis: J2_Super
+      AcceptAxis: J2_A
   - name: Player3(Joystick)
     abbreviation: 3
     color: {r: .779310346, g: 1, b: 0, a: 1}
@@ -179,6 +170,7 @@ MonoBehaviour:
       movementAbilityAxis: J3_Move
       genericAbilityAxis: J3_Generic
       superAbilityAxis: J3_Super
+      AcceptAxis: J3_A
   - name: Player4(Joystick)
     abbreviation: 4
     color: {r: .158620834, g: 0, b: 1, a: 1}
@@ -191,6 +183,7 @@ MonoBehaviour:
       movementAbilityAxis: J4_Move
       genericAbilityAxis: J4_Generic
       superAbilityAxis: J4_Super
+      AcceptAxis: J4_A
 --- !u!114 &21640696
 MonoBehaviour:
   m_ObjectHideFlags: 0
