@@ -12,6 +12,8 @@ GameObject:
   - 199: {fileID: 19990398}
   - 114: {fileID: 11423582}
   - 82: {fileID: 8212312}
+  - 114: {fileID: 11457926}
+  - 114: {fileID: 11494172}
   m_Layer: 0
   m_Name: ImpactVFX
   m_TagString: Untagged
@@ -71,7 +73,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 9b14f74b503ca55489b824d721012162, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -143,6 +145,34 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   time: .75
+--- !u!114 &11457926
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 125700}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e13d56536cc11c42a78b0ee5338ccf4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PlayOnAwake: 1
+  actions:
+  - {fileID: 11494172}
+  sound: {fileID: 8212312}
+--- !u!114 &11494172
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 125700}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82356766d5e18c74ba97587c51f03bc1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minPitch: .800000012
+  maxPitch: 1.20000005
 --- !u!198 &19868584
 ParticleSystem:
   m_ObjectHideFlags: 1
@@ -2299,6 +2329,10 @@ Prefab:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 0}
+      propertyPath: actions.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
       propertyPath: time
       value: .75
       objectReference: {fileID: 0}
@@ -2310,6 +2344,30 @@ Prefab:
       propertyPath: m_audioClip
       value: 
       objectReference: {fileID: 8300000, guid: 9b14f74b503ca55489b824d721012162, type: 3}
+    - target: {fileID: 0}
+      propertyPath: sound
+      value: 
+      objectReference: {fileID: 8212312}
+    - target: {fileID: 0}
+      propertyPath: minPitch
+      value: .800000012
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: maxPitch
+      value: 1.20000005
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: actions.Array.data[0]
+      value: 
+      objectReference: {fileID: 11494172}
+    - target: {fileID: 0}
+      propertyPath: PlayOnAwake
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_PlayOnAwake
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 125700}

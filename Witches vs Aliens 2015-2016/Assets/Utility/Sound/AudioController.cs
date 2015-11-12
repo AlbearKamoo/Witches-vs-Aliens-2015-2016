@@ -4,13 +4,22 @@ using System.Collections;
 //encapsulates things like randomizing sound effects
 
 [RequireComponent(typeof(AudioSource))]
-public class AudioController : MonoBehaviour {
+public class AudioController : MonoBehaviour, ISpawnable {
+
+    [SerializeField]
+    protected bool PlayOnAwake;
 
     [SerializeField]
     protected AudioAction[] actions;
 
     [SerializeField]
     protected AudioSource sound;
+
+    public void Create()
+    {
+        if (PlayOnAwake)
+            Play();
+    }
 
     public void Play()
     {

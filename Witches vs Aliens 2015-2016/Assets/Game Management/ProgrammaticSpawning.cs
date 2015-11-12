@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-[RequireComponent(typeof(AudioSource))]
 public class ProgrammaticSpawning : MonoBehaviour, IObserver<Message> {
     [SerializeField]
     protected GameObject MainMusicPrefab;
