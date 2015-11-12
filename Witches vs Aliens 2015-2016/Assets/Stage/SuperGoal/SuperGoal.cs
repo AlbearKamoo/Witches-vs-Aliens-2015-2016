@@ -2,17 +2,26 @@
 using System.Collections;
 
 [RequireComponent(typeof(Collider2D))]
+[RequireComponent(typeof(AudioSource))]
 public class SuperGoal : MonoBehaviour {
     Collider2D coll;
     SuperGoal _mirror;
     SpriteRenderer render;
     ParticleSystem vfx;
     PuckFX puckFX;
+    AudioSource sfx;
     public SuperGoal mirror { set { _mirror = value; } }
     bool _active = false;
 
     [SerializeField]
     protected float lerpInTime;
+
+    [SerializeField]
+    protected AudioClip WitchesSuperClip;
+
+    [SerializeField]
+    protected AudioClip AliensSuperClip;
+
     public bool active
     {
         get
@@ -75,6 +84,7 @@ public class SuperGoal : MonoBehaviour {
         coll = GetComponent<Collider2D>();
         render = GetComponentInChildren<SpriteRenderer>();
         vfx = GetComponentInChildren<ParticleSystem>();
+        sfx = GetComponent<AudioSource>();
     }
 
     void Start()
@@ -89,9 +99,20 @@ public class SuperGoal : MonoBehaviour {
             return;
 
         other.transform.position = _mirror.transform.TransformPoint((transform.InverseTransformPoint(other.transform.position)));
-        other.GetComponent<LastBumped>().player.GetComponentInChildren<SuperAbility>().ready = true;
+        LastBumped bumped = other.GetComponent<LastBumped>();
+        bumped.player.GetComponentInChildren<SuperAbility>().ready = true;
         active = false;
         _mirror.active = false;
+        switch (bumped.side)
+        {
+            case Side.LEFT:
+                sfx.clip = WitchesSuperClip;
+                break;
+            case Side.RIGHT:
+                sfx.clip = AliensSuperClip;
+                break;
+        }
+        sfx.Play();
         Debug.Log("SUPERGOAL!");
     }
 

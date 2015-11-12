@@ -7,7 +7,7 @@ public class LastBumped : MonoBehaviour, IObservable<BumpedSideChangedMessage>
     public Observable<BumpedSideChangedMessage> Observable() { return _bumpedSideChangedObservable; }
     //keeps track of who bumped the puck last
     Side _side;
-    public Side side {get{return _side;}}
+    public Side side { get { return _side; } }
     Transform _player;
     public Transform player { get { return _player; } }
 	// Use this for initialization

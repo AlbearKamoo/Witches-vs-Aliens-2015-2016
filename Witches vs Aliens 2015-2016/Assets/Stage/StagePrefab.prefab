@@ -44,6 +44,7 @@ GameObject:
   - 114: {fileID: 11489474}
   - 199: {fileID: 19958824}
   - 198: {fileID: 19862068}
+  - 82: {fileID: 8271506}
   m_Layer: 15
   m_Name: Back
   m_TagString: Stage
@@ -568,6 +569,7 @@ GameObject:
   - 114: {fileID: 11436776}
   - 199: {fileID: 19975688}
   - 198: {fileID: 19826048}
+  - 82: {fileID: 8282008}
   m_Layer: 15
   m_Name: Back
   m_TagString: Stage
@@ -689,7 +691,6 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 480626}
-  - 114: {fileID: 11401838}
   m_Layer: 15
   m_Name: PlayerRespawnPoints
   m_TagString: Stage
@@ -1516,59 +1517,146 @@ BoxCollider2D:
   m_Offset: {x: -1, y: 0}
   serializedVersion: 2
   m_Size: {x: 4, y: 2}
---- !u!114 &11401838
-MonoBehaviour:
+--- !u!82 &8271506
+AudioSource:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 199226}
+  m_GameObject: {fileID: 107606}
   m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2628f76dd5849c3428e18c4a7917f1fa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerComponentPrefabs:
-  - basePlayer: {fileID: 146214, guid: a8095cd9d9bc36f4e87d6eeda567d5fa, type: 2}
-    movementAbility: {fileID: 186010, guid: 999ab97c110d5bc4baa999b79b3005e9, type: 2}
-    genericAbility: {fileID: 110450, guid: bc177a2768bd39946866f5ebcbe5d375, type: 2}
-    inputMode: 0
-    side: 1
-    bindings:
-      verticalMovementAxisName: VerticalWASD
-      horizontalMovementAxisName: HorizontalWASD
-      verticalAimingAxisName: 
-      horizontalAimingAxisName: 
-      movementAbilityKey: 0
-      genericAbilityKey: 0
-      superAbilityKey: 0
-  - basePlayer: {fileID: 146214, guid: a8095cd9d9bc36f4e87d6eeda567d5fa, type: 2}
-    movementAbility: {fileID: 186010, guid: 999ab97c110d5bc4baa999b79b3005e9, type: 2}
-    genericAbility: {fileID: 110450, guid: bc177a2768bd39946866f5ebcbe5d375, type: 2}
-    inputMode: 1
-    side: 1
-    bindings:
-      verticalMovementAxisName: VerticalArrow
-      horizontalMovementAxisName: HorizontalArrow
-      verticalAimingAxisName: VerticalArrow
-      horizontalAimingAxisName: HorizontalArrow
-      movementAbilityKey: 47
-      genericAbilityKey: 46
-      superAbilityKey: 0
-  - basePlayer: {fileID: 146214, guid: a8095cd9d9bc36f4e87d6eeda567d5fa, type: 2}
-    movementAbility: {fileID: 186010, guid: 999ab97c110d5bc4baa999b79b3005e9, type: 2}
-    genericAbility: {fileID: 110450, guid: bc177a2768bd39946866f5ebcbe5d375, type: 2}
-    inputMode: 2
-    side: 0
-    bindings:
-      verticalMovementAxisName: VerticalArrow
-      horizontalMovementAxisName: HorizontalArrow
-      verticalAimingAxisName: VerticalArrow
-      horizontalAimingAxisName: HorizontalArrow
-      movementAbilityKey: 47
-      genericAbilityKey: 46
-      superAbilityKey: 0
-  leftRespawnPointsParent: {fileID: 0}
-  rightRespawnPointsParent: {fileID: 0}
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 44c46b86b8e70f74bbbaa71096fa4cd1, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+--- !u!82 &8282008
+AudioSource:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 190336}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 44c46b86b8e70f74bbbaa71096fa4cd1, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
 --- !u!114 &11436776
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1581,7 +1669,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mySide: 1
-  respawnPoint: {fileID: 422084}
 --- !u!114 &11444978
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1609,7 +1696,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mySide: 0
-  respawnPoint: {fileID: 422084}
 --- !u!198 &19821280
 ParticleSystem:
   m_ObjectHideFlags: 1

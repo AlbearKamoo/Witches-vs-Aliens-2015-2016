@@ -1,15 +1,17 @@
 ﻿using UnityEngine;
 using System.Collections;
-
+[RequireComponent(typeof(AudioSource))]
 public class Goal : MonoBehaviour {
     [SerializeField]
     protected Side mySide;
     public Side side { get { return mySide; } }
 
     ParticleSystem vfx;
+    AudioSource sfx;
     void Start()
     {
         vfx = GetComponent<ParticleSystem>();
+        sfx = GetComponent<AudioSource>();
     }
 	
 	// Update is called once per frame
@@ -19,6 +21,7 @@ public class Goal : MonoBehaviour {
         Debug.Log("GOOOOOOOOOOOOOOOOOOOOOOAL!");
         other.gameObject.GetComponent<PuckFX>().Hide();
         vfx.Play();
+        sfx.Play();
         ScreenShake.RandomShake(this, 0.1f, 0.25f);
         Observers.Post(new GoalScoredMessage(mySide));
 	}

@@ -8,6 +8,12 @@ public class PlayerRegistration : MonoBehaviour {
 
 #if UNITY_EDITOR
     [SerializeField]
+    protected GameObject introMusicPrefab;
+    GameObject introMusic;
+
+    [SerializeField]
+    protected AudioClip[] mainScenePlaylist;
+    [SerializeField]
     protected string mainGameSceneName;
 #else
     const string mainGameSceneName = Tags.Scenes.root;
@@ -141,6 +147,7 @@ public class PlayerRegistration : MonoBehaviour {
         {
             if (oneReady && allReady)
             {
+                introMusic = Instantiate(introMusicPrefab);
                 startCountdown = Callback.FireAndForget(startGame, 5, this);
                 Debug.Log("Counting Down");
             }
@@ -151,6 +158,7 @@ public class PlayerRegistration : MonoBehaviour {
             {
                 StopCoroutine(startCountdown);
                 startCountdown = null;
+                Destroy(introMusic);
             }
         }
     }

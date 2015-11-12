@@ -113,6 +113,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12e12d08f0b2f0a48a44129fc0675a20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  introMusicPrefab: {fileID: 129924, guid: c11a39805b0734f40bae483a2f720505, type: 2}
+  mainScenePlaylist:
+  - {fileID: 8300000, guid: be780e3e9d1b8ec4c84c7078e3c479c0, type: 3}
+  - {fileID: 8300000, guid: 530fe8bdec66d204fbdb0219139b2e81, type: 3}
   mainGameSceneName: Derek
   playerRegistrationPrefab: {fileID: 171078, guid: df99a46226850ad4194db9a6272820ae,
     type: 2}
@@ -511,6 +515,18 @@ Prefab:
     - target: {fileID: 471200, guid: c11a39805b0734f40bae483a2f720505, type: 2}
       propertyPath: m_RootOrder
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8250790, guid: c11a39805b0734f40bae483a2f720505, type: 2}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: d2f6e9ab17e5380409efb4a1df5a238b, type: 3}
+    - target: {fileID: 8250790, guid: c11a39805b0734f40bae483a2f720505, type: 2}
+      propertyPath: m_PlayOnAwake
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8250790, guid: c11a39805b0734f40bae483a2f720505, type: 2}
+      propertyPath: Loop
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c11a39805b0734f40bae483a2f720505, type: 2}
