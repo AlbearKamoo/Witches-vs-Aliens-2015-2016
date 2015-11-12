@@ -112,7 +112,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   numMeteors: 10
   rangeFromCenter: 50
-  minDistanceBetweenImpacts: 10
+  minDistanceBetweenImpacts: 6
   MeteorPrefab: {fileID: 180204, guid: c6c3627f93ed3964ea39b42b4f05e0c3, type: 2}
 --- !u!1001 &100100000
 Prefab:
@@ -127,7 +127,7 @@ Prefab:
       objectReference: {fileID: 180204, guid: c6c3627f93ed3964ea39b42b4f05e0c3, type: 2}
     - target: {fileID: 0}
       propertyPath: minDistanceBetweenImpacts
-      value: 10
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_audioClip

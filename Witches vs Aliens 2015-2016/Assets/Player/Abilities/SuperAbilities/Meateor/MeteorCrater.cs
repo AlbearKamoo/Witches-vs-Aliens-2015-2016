@@ -10,6 +10,7 @@ public class MeteorCrater : MonoBehaviour, ISpawnable {
     protected float speedNerf;
 
     SpriteRenderer rend;
+    Material glowMat;
     ParticleSystem vfx;
     Collider2D coll;
     Side _side;
@@ -24,6 +25,9 @@ public class MeteorCrater : MonoBehaviour, ISpawnable {
         rend = GetComponent<SpriteRenderer>();
         vfx = GetComponent<ParticleSystem>();
         coll = GetComponent<Collider2D>();
+        SpriteRenderer glowSprite = transform.Find("Glow").GetComponent<SpriteRenderer>();
+        glowMat = Instantiate(glowSprite.material);
+        glowSprite.material = glowMat;
     }
 
 	// Use this for initialization
@@ -31,6 +35,7 @@ public class MeteorCrater : MonoBehaviour, ISpawnable {
         Callback.FireAndForget(despawn, duration, this);
         vfx.Play();
         Callback.DoLerp((float l) => rend.color = rend.color.setAlphaFloat(l), 0.5f, this);
+        Callback.DoLerp((float l) => glowMat.SetFloat(Tags.ShaderParams.cutoff, 1 / (20 * l + 1)), duration, this);
         ScreenShake.RandomShake(this, 0.05f, 0.1f);
         //vfx stuff
 	}
@@ -70,6 +75,7 @@ public class MeteorCrater : MonoBehaviour, ISpawnable {
             element.Key.maxSpeed.removeModifier(element.Value);
         }
         coll.enabled = false;
-        Callback.DoLerp((float l) => rend.color = rend.color.setAlphaFloat(l), 1f, this, reverse: true).FollowedBy(() => { coll.enabled = true; SimplePool.Despawn(this.gameObject); }, this);
+        float startingGlowCutoff = glowMat.GetFloat(Tags.ShaderParams.cutoff);
+        Callback.DoLerp((float l) => { rend.color = rend.color.setAlphaFloat(l); glowMat.SetFloat(Tags.ShaderParams.cutoff, l * startingGlowCutoff); }, 1f, this, reverse: true).FollowedBy(() => { coll.enabled = true; SimplePool.Despawn(this.gameObject); }, this);
     }
 }
