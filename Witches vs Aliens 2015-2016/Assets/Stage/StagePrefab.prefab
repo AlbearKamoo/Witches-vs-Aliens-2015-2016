@@ -1669,6 +1669,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mySide: 1
+  goalSound: {fileID: 8300000, guid: 44c46b86b8e70f74bbbaa71096fa4cd1, type: 3}
+  crySound: {fileID: 8300000, guid: 617d848a1ea877c4cbd5ed61df00badf, type: 3}
 --- !u!114 &11444978
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1696,6 +1698,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mySide: 0
+  goalSound: {fileID: 8300000, guid: 44c46b86b8e70f74bbbaa71096fa4cd1, type: 3}
+  crySound: {fileID: 8300000, guid: 9fe7fce397c749643bef0d862cd8cf5f, type: 3}
 --- !u!198 &19821280
 ParticleSystem:
   m_ObjectHideFlags: 1

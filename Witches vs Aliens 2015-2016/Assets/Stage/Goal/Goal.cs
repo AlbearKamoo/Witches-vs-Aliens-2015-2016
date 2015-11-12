@@ -8,6 +8,11 @@ public class Goal : MonoBehaviour {
 
     ParticleSystem vfx;
     AudioSource sfx;
+
+    [SerializeField]
+    protected AudioClip goalSound;
+    [SerializeField]
+    protected AudioClip crySound;
     void Start()
     {
         vfx = GetComponent<ParticleSystem>();
@@ -21,7 +26,9 @@ public class Goal : MonoBehaviour {
         Debug.Log("GOOOOOOOOOOOOOOOOOOOOOOAL!");
         other.gameObject.GetComponent<PuckFX>().Hide();
         vfx.Play();
+        sfx.clip = goalSound;
         sfx.Play();
+        Callback.FireAndForget(() => { sfx.clip = crySound; sfx.Play(); }, sfx.clip.length, this);
         ScreenShake.RandomShake(this, 0.1f, 0.25f);
         Observers.Post(new GoalScoredMessage(mySide));
 	}
