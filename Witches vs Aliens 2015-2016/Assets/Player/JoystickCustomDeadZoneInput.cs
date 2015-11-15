@@ -2,18 +2,17 @@
 using System.Collections;
 
 public class JoystickCustomDeadZoneInput : JoystickPlayerInput {
-    [SerializeField]
-    protected float deadZone;
-    float deadZoneSqr;
-    protected void Awake()
-    {
-        deadZoneSqr = Mathf.Pow(deadZone, 2);
-    }
+    const float deadZone = 0.25f;
+    const float deadZoneSqr = deadZone * deadZone; //approx 0.05f;
     protected override void updateAim()
     {
         Vector2 aimingInput = new Vector2(Input.GetAxis(bindings.horizontalAimingAxisName), Input.GetAxis(bindings.verticalAimingAxisName));
         if (aimingInput.sqrMagnitude > deadZoneSqr)
-            action.aimingInputDirection = aimingInput;
+        {
+            //continuous transition from dead zone to not-dead zone
+            action.aimingInputDirection = ((aimingInput.magnitude - deadZone)/(1-deadZone)) * aimingInput.normalized;
+            //action.aimingInputDirection = aimingInput;
+        }
         else
             action.aimingInputDirection = Vector2.zero;
     }

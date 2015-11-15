@@ -84,7 +84,7 @@ public class ProgrammaticSpawning : MonoBehaviour, IObserver<Message> {
                     spawnedPlayer.AddComponent<MousePlayerInput>().bindings = data.playerComponentPrefabs[i].bindings;
                     break;
                 case InputConfiguration.PlayerInputType.JOYSTICK:
-                    spawnedPlayer.AddComponent<JoystickPlayerInput>().bindings = data.playerComponentPrefabs[i].bindings;
+                    spawnedPlayer.AddComponent<JoystickCustomDeadZoneInput>().bindings = data.playerComponentPrefabs[i].bindings;
                     break;
                 case InputConfiguration.PlayerInputType.CRAPAI:
                     spawnedPlayer.AddComponent<CrappyAIInput>().bindings = data.playerComponentPrefabs[i].bindings; //don't really need the bindings; it's an AI

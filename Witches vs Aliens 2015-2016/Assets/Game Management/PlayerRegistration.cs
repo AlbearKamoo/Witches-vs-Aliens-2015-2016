@@ -31,8 +31,7 @@ public class PlayerRegistration : MonoBehaviour {
     Transform UIParent;
     CharacterSelector[] playerSelections;
     RegisteredPlayerUIView[] playerUI;
-    bool[] playersReady;
-    bool[] previousAxisInputNonzero; //create edge-trigger instead of constant flipping
+    RegistrationState[] registrationStates;
 
     Coroutine startCountdown;
 	void Awake ()
@@ -42,12 +41,10 @@ public class PlayerRegistration : MonoBehaviour {
         playerSelections = new CharacterSelector[possiblePlayers.Length];
         playerUI = new RegisteredPlayerUIView[possiblePlayers.Length];
 
-        playersReady = new bool[possiblePlayers.Length];
-        previousAxisInputNonzero = new bool[possiblePlayers.Length];
+        registrationStates = new RegistrationState[possiblePlayers.Length];
         for (int i = 0; i < possiblePlayers.Length; i++)
         {
-            playersReady[i] = false;
-            previousAxisInputNonzero[i] = false;
+            registrationStates[i] = RegistrationState.NOTREGISTERED;
         }
 	}
 
@@ -56,6 +53,107 @@ public class PlayerRegistration : MonoBehaviour {
         UIParent = GameObject.FindGameObjectWithTag(Tags.canvas).transform.Find("RegisteredPlayers");
     }
 
+    void Update()
+    {
+        for (int i = 0; i < possiblePlayers.Length; i++)
+        {
+            switch (registrationStates[i])
+            {
+                case RegistrationState.NOTREGISTERED:
+                    if (pressedAccept(i)) //register
+                    {
+                        GameObject spawnedPlayerRegistationPuck = (GameObject)Instantiate(playerRegistrationPrefab, Vector2.zero, Quaternion.identity); //the positions are temporary
+                        switch (possiblePlayers[i].bindings.inputMode)
+                        {
+                            case InputConfiguration.PlayerInputType.MOUSE:
+                                spawnedPlayerRegistationPuck.AddComponent<MousePlayerInput>().bindings = possiblePlayers[i].bindings;
+                                break;
+                            case InputConfiguration.PlayerInputType.JOYSTICK:
+                                spawnedPlayerRegistationPuck.AddComponent<JoystickCustomDeadZoneInput>().bindings = possiblePlayers[i].bindings;
+                                break;
+                        }
+
+                        //spawn them
+                        playerSelections[i] = spawnedPlayerRegistationPuck.AddComponent<CharacterSelector>();
+                        playerUI[i] = SimplePool.Spawn(playerRegistrationUIPrefab).GetComponent<RegisteredPlayerUIView>();
+                        playerUI[i].transform.SetParent(UIParent, Vector3.one, false);
+                        InputToAction action = spawnedPlayerRegistationPuck.GetComponent<InputToAction>();
+                        action.rotationEnabled = false;
+                        action.movementEnabled = true;
+                        playerUI[i].inputMode = possiblePlayers[i].bindings.inputMode;
+                        playerUI[i].ready = false;
+                        spawnedPlayerRegistationPuck.GetComponentInChildren<Image>().color = possiblePlayers[i].color;
+                        playerUI[i].playerColor = possiblePlayers[i].color;
+                        spawnedPlayerRegistationPuck.GetComponentInChildren<Text>().text = possiblePlayers[i].abbreviation;
+                        playerUI[i].playerName = possiblePlayers[i].name;
+
+                        registrationStates[i] = RegistrationState.REGISTERING;
+                    }
+                    break;
+
+                case RegistrationState.REGISTERING:
+                    //check deregistration
+                    if ( pressedBack(i)) //deregister
+                    {
+                        Destroy(playerSelections[i].gameObject);
+                        playerSelections[i] = null;
+                        playerUI[i].Despawn();
+                        playerUI[i] = null;
+                        registrationStates[i] = RegistrationState.NOTREGISTERED;
+                    }
+                    else if (playerSelections[i].selectedCharacter != null //if they've made a choice
+                    && pressedAccept(i)) //ready
+                    {
+                        registrationStates[i] = RegistrationState.READY;
+                        playerUI[i].ready = true;
+                    }
+                    break;
+
+                case RegistrationState.READY:
+                    if (pressedBack(i)) //not ready
+                    {
+                        registrationStates[i] = RegistrationState.REGISTERING;
+                        playerUI[i].ready = false;
+                    }
+                    break;
+            }
+        }
+
+        //now check if all are ready
+        bool ready = registrationStates.All<RegistrationState>((RegistrationState s) => s != RegistrationState.REGISTERING) && registrationStates.Any<RegistrationState>((RegistrationState s) => s == RegistrationState.READY);
+        for (int i = 0; i < registrationStates.Length; i++)
+        if (startCountdown == null)
+        {
+            if (ready)
+            {
+                introMusic = Instantiate(introMusicPrefab);
+                startCountdown = Callback.FireAndForget(startGame, 5, this);
+            }
+        }
+        else
+        {
+            if (!ready)
+            {
+                StopCoroutine(startCountdown);
+                startCountdown = null;
+                Destroy(introMusic);
+            }
+        }
+    }
+
+    bool pressedAccept(int i)
+    {
+        return possiblePlayers[i].bindings.inputMode == InputConfiguration.PlayerInputType.MOUSE && Input.GetMouseButtonDown(0)
+                    || possiblePlayers[i].bindings.inputMode == InputConfiguration.PlayerInputType.JOYSTICK && Input.GetAxis(possiblePlayers[i].bindings.AcceptAxis) != 0;
+    }
+
+    bool pressedBack(int i)
+    {
+        return possiblePlayers[i].bindings.inputMode == InputConfiguration.PlayerInputType.MOUSE && Input.GetMouseButtonDown(1)
+                    || possiblePlayers[i].bindings.inputMode == InputConfiguration.PlayerInputType.JOYSTICK && Input.GetAxis(possiblePlayers[i].bindings.genericAbilityAxis) != 0;
+    }
+    // non-state-machine implementation
+    /*
     void Update()
     {
         for (int i = 0; i < possiblePlayers.Length; i++)
@@ -72,7 +170,7 @@ public class PlayerRegistration : MonoBehaviour {
                             spawnedPlayerRegistationPuck.AddComponent<MousePlayerInput>().bindings = possiblePlayers[i].bindings;
                             break;
                         case InputConfiguration.PlayerInputType.JOYSTICK:
-                            spawnedPlayerRegistationPuck.AddComponent<JoystickPlayerInput>().bindings = possiblePlayers[i].bindings;
+                            spawnedPlayerRegistationPuck.AddComponent<JoystickCustomDeadZoneInput>().bindings = possiblePlayers[i].bindings;
                             break;
                     }
 
@@ -161,7 +259,8 @@ public class PlayerRegistration : MonoBehaviour {
                 Destroy(introMusic);
             }
         }
-    }
+     * }
+         */
 
     void startGame()
     {
@@ -182,6 +281,13 @@ public class PlayerRegistration : MonoBehaviour {
         }
         Application.LoadLevel(mainGameSceneName);
         Destroy(this);
+    }
+
+    enum RegistrationState
+    {
+        NOTREGISTERED,
+        REGISTERING,
+        READY
     }
 }
 
