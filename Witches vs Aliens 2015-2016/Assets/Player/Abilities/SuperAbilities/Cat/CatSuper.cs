@@ -24,7 +24,7 @@ public class CatSuper : SuperAbility {
         base.Start();
         action = GetComponentInParent<InputToAction>();
         defaultAbilityUI = transform.parent.Find("UI").gameObject;
-        //ready = true; //for easy testing
+        ready = true; //for easy testing
     }
 
     protected override void onFire(Vector2 direction)

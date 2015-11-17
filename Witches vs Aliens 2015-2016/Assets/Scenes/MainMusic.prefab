@@ -11,6 +11,7 @@ GameObject:
   - 82: {fileID: 8206988}
   - 114: {fileID: 11481504}
   - 114: {fileID: 11423932}
+  - 114: {fileID: 11492000}
   m_Layer: 0
   m_Name: MainMusic
   m_TagString: Untagged
@@ -122,6 +123,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 647bf210f3074fc4a94fefa336df675e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &11492000
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 153826}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7712114490fbdcd4db244659ec7ebcc6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  crowdClips:
+  - {fileID: 8300000, guid: 0fd99083d45ab5e4b9559b1d4f349081, type: 3}
+  - {fileID: 8300000, guid: ed5b80e5b18c2d943af780e41e92fe7b, type: 3}
+  overlap: .333299994
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
