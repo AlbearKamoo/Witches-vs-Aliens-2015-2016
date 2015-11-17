@@ -229,6 +229,7 @@ GameObject:
   - 114: {fileID: 11483730}
   - 114: {fileID: 11497724}
   - 114: {fileID: 11455004}
+  - 114: {fileID: 11472768}
   m_Layer: 5
   m_Name: OptionsButton
   m_TagString: Canvas
@@ -1425,6 +1426,18 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &11472768
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 130050}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ffa05e88045fae4b97e8c280ef1f88d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  key: 337
 --- !u!114 &11482538
 MonoBehaviour:
   m_ObjectHideFlags: 1
