@@ -31,10 +31,24 @@ public static class VectorExtension
         return Camera.main.ScreenToWorldPoint(screenPoint);
     }
 
+    public static float ToAngleRad(this Vector2 dir)
+    {
+        return Mathf.Atan2(dir.y, dir.x);
+    }
+
+    public static float ToAngle(this Vector2 dir)
+    {
+         return dir.ToAngleRad() * Mathf.Rad2Deg;
+    }
+
     public static Quaternion ToRotation(this Vector2 dir)
     {
-        float _angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
-        return Quaternion.AngleAxis(_angle, Vector3.forward);
+        return dir.ToRotation(Vector3.forward);
+    }
+
+    public static Quaternion ToRotation(this Vector2 dir, Vector3 axis)
+    {
+        return Quaternion.AngleAxis(dir.ToAngle(), axis);
     }
 
     public static Vector2 normal(this Vector2 dir)

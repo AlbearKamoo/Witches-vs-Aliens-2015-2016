@@ -10,6 +10,7 @@ public class CharacterHolder : MonoBehaviour {
 public class CharacterComponents
 {
     public GameObject basePlayer;
+    public GameObject visuals;
     public GameObject movementAbility;
     public GameObject genericAbility;
     public GameObject superAbility;
