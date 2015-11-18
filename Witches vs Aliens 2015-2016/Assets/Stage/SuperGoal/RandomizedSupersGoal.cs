@@ -22,7 +22,7 @@ public class RandomizedSupersGoal : SuperGoal {
                 break;
         }
         newAbility.transform.SetParent(bumped.player, false);
-        SuperAbility newSuper = GetComponent<SuperAbility>();
+        SuperAbility newSuper = newAbility.GetComponent<SuperAbility>();
         newSuper.ready = true;
         bumped.player.GetComponent<InputToAction>().SuperAbility = newSuper;
     }
