@@ -69,6 +69,7 @@ GameObject:
   - 114: {fileID: 11452674}
   - 114: {fileID: 11452140}
   - 114: {fileID: 11410206}
+  - 114: {fileID: 11474514}
   m_Layer: 5
   m_Name: Close Button
   m_TagString: Canvas
@@ -1432,6 +1433,18 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 130050}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ffa05e88045fae4b97e8c280ef1f88d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  key: 337
+--- !u!114 &11474514
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 109882}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2ffa05e88045fae4b97e8c280ef1f88d, type: 3}
