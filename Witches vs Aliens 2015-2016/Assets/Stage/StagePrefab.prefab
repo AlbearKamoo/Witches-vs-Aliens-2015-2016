@@ -1682,7 +1682,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 923b9dee2c28d76438e4baf8114cca53, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SuperGoalPrefab: {fileID: 120904, guid: 46d89204a79b1b140b8ce20af13e09c4, type: 2}
+  SuperGoalPrefab: {fileID: 198324, guid: 9fd14d893457b2c4e9fee47fe54f8819, type: 2}
   spawnTime: 30
   spawnTimeVariance: 10
   superGoalDuration: 20

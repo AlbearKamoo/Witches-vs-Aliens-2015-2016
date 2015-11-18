@@ -100,7 +100,8 @@ public class SuperGoal : MonoBehaviour {
 
         other.transform.position = _mirror.transform.TransformPoint((transform.InverseTransformPoint(other.transform.position)));
         LastBumped bumped = other.GetComponent<LastBumped>();
-        bumped.player.GetComponentInChildren<SuperAbility>().ready = true;
+        activateSuper(bumped);
+
         active = false;
         _mirror.active = false;
         switch (bumped.side)
@@ -114,6 +115,11 @@ public class SuperGoal : MonoBehaviour {
         }
         sfx.Play();
         Debug.Log("SUPERGOAL!");
+    }
+
+    protected virtual void activateSuper(LastBumped bumped)
+    {
+        bumped.player.GetComponentInChildren<SuperAbility>().ready = true;
     }
 
     void rotateParticlesToTransform()
