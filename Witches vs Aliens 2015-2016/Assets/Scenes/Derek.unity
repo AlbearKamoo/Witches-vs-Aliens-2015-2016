@@ -346,7 +346,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22492538, guid: 493d0645e9344de4ca9a6bc5d6b2510a, type: 2}
       propertyPath: m_RootOrder
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22492538, guid: 493d0645e9344de4ca9a6bc5d6b2510a, type: 2}
       propertyPath: m_AnchoredPosition.x
@@ -479,7 +479,7 @@ GameObject:
   - 114: {fileID: 819210144}
   m_Layer: 0
   m_Name: ProgrammaticSpawning
-  m_TagString: Untagged
+  m_TagString: GameController
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

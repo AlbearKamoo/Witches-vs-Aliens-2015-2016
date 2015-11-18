@@ -10,6 +10,7 @@ public class Tags{
     public const string untagged = "Untagged";
     public const string stage = "Stage";
     public const string puck = "Puck";
+    public const string gameController = "GameController";
 
     public class Scenes
     {

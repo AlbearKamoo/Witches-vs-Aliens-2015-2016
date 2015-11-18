@@ -79,7 +79,7 @@ public class SuperGoal : MonoBehaviour {
         }
     }
 
-    void Awake()
+    protected virtual void Awake()
     {
         coll = GetComponent<Collider2D>();
         render = GetComponentInChildren<SpriteRenderer>();

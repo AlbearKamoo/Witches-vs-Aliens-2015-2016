@@ -44,8 +44,15 @@ public class ProgrammaticSpawning : MonoBehaviour, IObserver<Message> {
     Vector2[] rightPoints;
     Transform[] players;
     List<Transform> leftPlayers = new List<Transform>();
+    public List<Transform> LeftPlayers { get { return leftPlayers; } }
     List<Transform> rightPlayers = new List<Transform>();
+    public List<Transform> RightPlayers { get { return rightPlayers; } }
     PuckFX puck;
+    public Transform Puck { get { return puck.transform; } }
+    Transform leftGoal;
+    public Transform LeftGoal { get { return LeftGoal; } }
+    Transform rightGoal;
+    public Transform RightGoal { get { return RightGoal; } }
 
     // Use this for initialization
     void Awake () {
@@ -113,8 +120,6 @@ public class ProgrammaticSpawning : MonoBehaviour, IObserver<Message> {
         }
         //set up AI/Ability data
         Goal[] goals = GameObject.FindObjectsOfType<Goal>();
-        Transform leftGoal = null; //null to get the compiler to shut up about it not being assigned
-        Transform rightGoal = null;
         switch(goals[0].side)
         {
             case Side.LEFT:

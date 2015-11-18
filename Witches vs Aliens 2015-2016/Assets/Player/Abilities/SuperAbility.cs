@@ -29,7 +29,9 @@ public class SuperAbility : AbstractAbility
     protected override void Start()
     {
         base.Start();
-        
+
+        Debug.Log(transform.parent);
+
         if(transform.parent != null)
             rend = transform.parent.Find("SuperUI").GetComponent<SpriteRenderer>();
     }

@@ -8,12 +8,12 @@ public class Score : MonoBehaviour, IObserver<Message> {
     protected GameObject GameEndPrefab;
 
     [SerializeField]
-    [AutoLink(parentTag = Tags.canvas, parentName = "LeftScoreBoard")]
+    [AutoLink(parentTag = Tags.canvas, parentName = "RightScoreBoard")]
     protected Text leftScoreBoard;
     Outline leftOutline;
 
     [SerializeField]
-    [AutoLink(parentTag = Tags.canvas, parentName = "RightScoreBoard")]
+    [AutoLink(parentTag = Tags.canvas, parentName = "LeftScoreBoard")]
     protected Text rightScoreBoard;
     Outline rightOutline;
 
