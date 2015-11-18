@@ -55,7 +55,7 @@ public class BoostAbility : MovementAbility, IObserver<ResetMessage> {
 
     public override void StopFire()
     {
-        active = false;
+        //active = false;
         base.StopFire();
     }
 

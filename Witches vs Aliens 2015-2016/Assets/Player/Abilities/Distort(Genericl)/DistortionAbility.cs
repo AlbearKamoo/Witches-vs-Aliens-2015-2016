@@ -7,6 +7,9 @@ public class DistortionAbility : GenericAbility {
     CircleCollider2D coll;
     PointEffector2D effector;
     MeshRenderer render;
+    Rigidbody2D rigid;
+
+    float rigidMass;
 
     [SerializeField]
     protected float maxDuration;
@@ -18,6 +21,7 @@ public class DistortionAbility : GenericAbility {
         coll.enabled = true;
         effector.enabled = true;
         render.enabled = true;
+        rigid.mass = 99999f;
     }
 
     protected override void OnDeactivate()
@@ -28,6 +32,7 @@ public class DistortionAbility : GenericAbility {
         coll.enabled = false;
         effector.enabled = false;
         render.enabled = false;
+        rigid.mass = rigidMass;
     }
 
     // Use this for initialization
@@ -38,6 +43,13 @@ public class DistortionAbility : GenericAbility {
         effector = GetComponent<PointEffector2D>();
         render = GetComponent<MeshRenderer>();
 	}
+
+    protected override void Start()
+    {
+        base.Start();
+        rigid = GetComponentInParent<Rigidbody2D>();
+        rigidMass = rigid.mass;
+    }
 
     protected override void onFire(Vector2 direction)
     {

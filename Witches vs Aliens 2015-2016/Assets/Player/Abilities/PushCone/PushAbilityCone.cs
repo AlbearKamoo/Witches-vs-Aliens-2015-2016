@@ -52,7 +52,7 @@ public class PushAbilityCone : GenericAbility {
 	
 	public override void StopFire()
 	{
-		active = false;
+		//active = false;
 		base.StopFire();
 	}
 	

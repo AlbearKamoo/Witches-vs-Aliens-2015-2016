@@ -138,7 +138,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 0fd99083d45ab5e4b9559b1d4f349081, type: 3}
   - {fileID: 8300000, guid: ed5b80e5b18c2d943af780e41e92fe7b, type: 3}
   overlap: .333299994
-  relativeVolume: .5
+  relativeVolume: .75
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
@@ -152,7 +152,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: relativeVolume
-      value: .5
+      value: .75
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
