@@ -82,10 +82,10 @@ public class PuckFX : MonoBehaviour, IObserver<BumpedSideChangedMessage> {
         switch (side)
         {
             case Side.LEFT:
-                alienSideVFX.enabled = true;
+                alienSideVFX.enabled = false;
                 break;
             case Side.RIGHT:
-                alienSideVFX.enabled = false;
+                alienSideVFX.enabled = true;
                 break;
         }
     }
