@@ -1946,10 +1946,10 @@ ParticleSystem:
       maxGradient:
         key0:
           serializedVersion: 2
-          rgba: 4294934497
+          rgba: 4286644095
         key1:
           serializedVersion: 2
-          rgba: 4290379918
+          rgba: 4278303232
         key2:
           serializedVersion: 2
           rgba: 0
@@ -5035,10 +5035,10 @@ ParticleSystem:
       maxGradient:
         key0:
           serializedVersion: 2
-          rgba: 4294934497
+          rgba: 4286644095
         key1:
           serializedVersion: 2
-          rgba: 4290379918
+          rgba: 4278303232
         key2:
           serializedVersion: 2
           rgba: 0
