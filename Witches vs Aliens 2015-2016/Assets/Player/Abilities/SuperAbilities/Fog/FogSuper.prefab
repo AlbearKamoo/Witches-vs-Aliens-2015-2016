@@ -40,7 +40,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   FogOverlay: {fileID: 146144, guid: b0c2d8326a94ca34ebb0f0255557f43e, type: 2}
-  duration: 30
+  duration: 20
   easeTime: 2
 --- !u!1001 &100100000
 Prefab:
@@ -48,7 +48,11 @@ Prefab:
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: duration
+      value: 20
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 189548}
