@@ -6,7 +6,6 @@ public class PushAbilityCone : GenericAbility {
 	ParticleSystem vfx;
 	PolygonCollider2D coll;
 	PointEffector2D effector;
-	MeshRenderer render;
 	
 	[SerializeField]
 	protected float maxDuration;
@@ -17,7 +16,7 @@ public class PushAbilityCone : GenericAbility {
 		vfx.Play();
 		coll.enabled = true;
 		effector.enabled = true;
-		render.enabled = true;
+
 	}
 	
 	protected override void OnDeactivate()
@@ -27,7 +26,6 @@ public class PushAbilityCone : GenericAbility {
 		vfx.Clear();
 		coll.enabled = false;
 		effector.enabled = false;
-		render.enabled = false;
 	}
 	
 	// Use this for initialization
@@ -36,7 +34,6 @@ public class PushAbilityCone : GenericAbility {
 		vfx = GetComponent<ParticleSystem>();
 		coll = GetComponent<PolygonCollider2D>();
 		effector = GetComponent<PointEffector2D>();
-		render = GetComponent<MeshRenderer>();
 	}
 	
 	protected override void onFire(Vector2 direction)
