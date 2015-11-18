@@ -9,6 +9,7 @@ public class InputToAction : MonoBehaviour {
     GenericAbility genAbility;
     public GenericAbility GenAbility { set { genAbility = value; } }
     SuperAbility superAbility;
+    public SuperAbility SuperAbility { set { superAbility = value; } }
     Transform rotating;
 
     public Vector2 normalizedMovementInput { get; set; }

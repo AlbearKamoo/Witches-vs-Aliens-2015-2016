@@ -22,6 +22,8 @@ public class RandomizedSupersGoal : SuperGoal {
                 break;
         }
         newAbility.transform.SetParent(bumped.player, false);
-        newAbility.GetComponent<SuperAbility>().ready = true;
+        SuperAbility newSuper = GetComponent<SuperAbility>();
+        newSuper.ready = true;
+        bumped.player.GetComponent<InputToAction>().SuperAbility = newSuper;
     }
 }
