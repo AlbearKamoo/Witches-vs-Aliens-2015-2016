@@ -150,7 +150,7 @@ public class PlayerRegistration : MonoBehaviour {
     bool pressedBack(int i)
     {
         return possiblePlayers[i].bindings.inputMode == InputConfiguration.PlayerInputType.MOUSE && Input.GetMouseButtonDown(1)
-                    || possiblePlayers[i].bindings.inputMode == InputConfiguration.PlayerInputType.JOYSTICK && Input.GetAxis(possiblePlayers[i].bindings.genericAbilityAxis) != 0;
+                    || possiblePlayers[i].bindings.inputMode == InputConfiguration.PlayerInputType.JOYSTICK && Input.GetAxis(possiblePlayers[i].bindings.superAbilityAxis) != 0;
     }
     // non-state-machine implementation
     /*
