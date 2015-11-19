@@ -46,9 +46,9 @@ public class DistortionAbility : GenericAbility {
 
     protected override void Start()
     {
-        base.Start();
         rigid = GetComponentInParent<Rigidbody2D>();
         rigidMass = rigid.mass;
+        base.Start();
     }
 
     protected override void onFire(Vector2 direction)
