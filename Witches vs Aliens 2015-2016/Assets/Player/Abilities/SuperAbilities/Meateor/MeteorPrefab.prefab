@@ -146,8 +146,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   duration: 20
-  glowDuration: 10
   speedNerf: .300000012
+  glowSprite: {fileID: 21238020}
 --- !u!198 &19811134
 ParticleSystem:
   m_ObjectHideFlags: 1

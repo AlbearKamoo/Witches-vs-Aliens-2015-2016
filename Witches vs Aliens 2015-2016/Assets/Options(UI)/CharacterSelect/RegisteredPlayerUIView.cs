@@ -5,15 +5,30 @@ using System.Collections;
 public class RegisteredPlayerUIView : MonoBehaviour {
 
     Image background;
-    Text title;
-    GameObject LeaveTooltip;
-    GameObject ReadyTooltip;
-    GameObject LeaveMouseIcon;
-    GameObject ReadyMouseIcon;
-    GameObject LeaveJoystickIcon;
-    GameObject ReadyJoystickIcon;
-
-    GameObject ReadyIcon;
+    [SerializeField]
+    [AutoLink(childPath = "Title")]
+    protected Text title;
+    [SerializeField]
+    [AutoLink(childPath = "Leave Tooltip")]
+    protected GameObject LeaveTooltip;
+    [SerializeField]
+    [AutoLink(childPath = "Ready Tooltip")]
+    protected GameObject ReadyTooltip;
+    [SerializeField]
+    [AutoLink(childPath = "Leave Tooltip/IconMouse")]
+    protected GameObject LeaveMouseIcon;
+    [SerializeField]
+    [AutoLink(childPath = "Ready Tooltip/IconMouse")]
+    protected GameObject ReadyMouseIcon;
+    [SerializeField]
+    [AutoLink(childPath = "Leave Tooltip/IconBumper")]
+    protected GameObject LeaveJoystickIcon;
+    [SerializeField]
+    [AutoLink(childPath = "Ready Tooltip/IconBumper")]
+    protected GameObject ReadyJoystickIcon;
+    [SerializeField]
+    [AutoLink(childPath = "ReadyIcon")]
+    protected GameObject ReadyIcon;
     public Color playerColor { set { background.color = value; } }
     public string playerName { set { title.text = value; } }
     public InputConfiguration.PlayerInputType inputMode
@@ -49,14 +64,6 @@ public class RegisteredPlayerUIView : MonoBehaviour {
 	// Use this for initialization
 	void Awake () {
         background = GetComponent<Image>();
-        title = transform.Find("Title").GetComponent<Text>();
-        LeaveTooltip = transform.Find("Leave Tooltip").gameObject;
-        ReadyTooltip = transform.Find("Ready Tooltip").gameObject;
-        LeaveMouseIcon = LeaveTooltip.transform.Find("IconMouse").gameObject;
-        ReadyMouseIcon = ReadyTooltip.transform.Find("IconMouse").gameObject;
-        LeaveJoystickIcon = LeaveTooltip.transform.Find("IconBumper").gameObject;
-        ReadyJoystickIcon = ReadyTooltip.transform.Find("IconBumper").gameObject;
-        ReadyIcon = transform.Find("ReadyIcon").gameObject;
 	}
 
     public void Despawn()

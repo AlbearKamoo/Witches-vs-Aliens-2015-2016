@@ -9,6 +9,10 @@ public class MeteorCrater : MonoBehaviour, ISpawnable {
     [SerializeField]
     protected float speedNerf;
 
+    [SerializeField]
+    [AutoLink(childPath = "Glow")]
+    protected SpriteRenderer glowSprite;
+
     SpriteRenderer rend;
     Material glowMat;
     ParticleSystem vfx;
@@ -25,7 +29,6 @@ public class MeteorCrater : MonoBehaviour, ISpawnable {
         rend = GetComponent<SpriteRenderer>();
         vfx = GetComponent<ParticleSystem>();
         coll = GetComponent<Collider2D>();
-        SpriteRenderer glowSprite = transform.Find("Glow").GetComponent<SpriteRenderer>();
         glowMat = Instantiate(glowSprite.material);
         glowSprite.material = glowMat;
     }

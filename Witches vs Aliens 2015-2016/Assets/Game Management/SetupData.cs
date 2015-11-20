@@ -2,6 +2,7 @@
 using System.Collections;
 
 public class SetupData : MonoBehaviour {
+    [CanBeDefaultOrNull]
     public PlayerComponents[] playerComponentPrefabs;
     private static SetupData _self; //there shall only be one
     public static SetupData self { get { return _self; } } //workaround for unity level-loading method order

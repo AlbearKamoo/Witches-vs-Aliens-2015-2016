@@ -10,7 +10,6 @@ public class InputToAction : MonoBehaviour {
     public GenericAbility GenAbility { set { genAbility = value; } }
     SuperAbility superAbility;
     public SuperAbility SuperAbility { set { superAbility = value; } }
-    Transform rotating;
 
     public Vector2 normalizedMovementInput { get; set; }
     bool _movementEnabled = false;
@@ -39,6 +38,10 @@ public class InputToAction : MonoBehaviour {
 
     [Range(0,1)]
     public float rotationLerpValue;
+    
+    [SerializeField]
+    [AutoLink(childPath = "Rotating")]
+    protected Transform rotating;
 
     Vector2 _direction = Vector2.zero;
     public Vector2 direction { get {
@@ -52,8 +55,6 @@ public class InputToAction : MonoBehaviour {
          rigid = GetComponent<Rigidbody2D>();
          _maxSpeed = new FloatStatTracker(initMaxSpeed);
          _accel = new FloatStatTracker(initAccel);
-
-         rotating = transform.Find("Rotating");
 	}
 
     void Start()

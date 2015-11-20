@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEditor;
 using System.Collections.Generic;
 using System.Collections;
 using System.Reflection;
@@ -241,7 +242,7 @@ public class CheckEditorLinks : MonoBehaviour {
                         if (String.IsNullOrEmpty(autolinkInfo.childPath))
                         {
                             //if every tag is empty, then we'll limit the search to the local transform
-                            Component possibleMatch = script.GetComponentInChildren(value.GetType());
+                            Component possibleMatch = script.GetComponentInChildren(field.FieldType);
                             if (possibleMatch != null)
                             {
                                 field.SetValue(script, possibleMatch);
@@ -258,7 +259,15 @@ public class CheckEditorLinks : MonoBehaviour {
                             Transform parent = script.transform.Find(autolinkInfo.childPath);
                             if(parent != null)
                             {
-                                Component possibleMatch = parent.GetComponent(value.GetType());
+                                Type type = field.FieldType;
+                                UnityEngine.Object possibleMatch;
+                                if(type == typeof(Transform))
+                                    possibleMatch = parent;
+                                else if(type == typeof(GameObject))
+                                    possibleMatch = parent.gameObject;
+                                else
+                                    possibleMatch = parent.GetComponent(type);
+
                                 if (possibleMatch != null)
                                 {
                                     field.SetValue(script, possibleMatch);
@@ -286,7 +295,13 @@ public class CheckEditorLinks : MonoBehaviour {
                 foreach (Transform t in parentNodes)
                 {
                     Type type = field.FieldType;
-                    Component possibleMatch = type == typeof(Transform) ? t : t.GetComponent(type);
+                    UnityEngine.Object possibleMatch;
+                    if (type == typeof(Transform))
+                        possibleMatch = t;
+                    else if (type == typeof(GameObject))
+                        possibleMatch = t.gameObject;
+                    else
+                        possibleMatch = t.GetComponent(type);
                     if (possibleMatch != null)
                     {
                         field.SetValue(script, possibleMatch);
@@ -305,7 +320,7 @@ public class CheckEditorLinks : MonoBehaviour {
         if (value == null || value.Equals(null)) //GameObjects being null aren't really null, so need to use equals as well
             return false;
 
-        Assert.IsTrue(value is Component, "AutoLink can only link components");
+        Assert.IsTrue(value is Component || value is GameObject, "AutoLink can only link components");
 
         //if the value could be valid, we have to find the link between it and the parent
 
@@ -329,7 +344,13 @@ public class CheckEditorLinks : MonoBehaviour {
         else
         {
             // else we need to traverse up the tree to find the parent
-            Transform currentParent = ((Component)value).transform;
+            //obtain transform
+            Transform currentParent;
+            Component testComponent = value as Component;
+            if (testComponent != null)
+                currentParent = testComponent.transform;
+            else
+                currentParent = ((GameObject)value).transform;
             String[] parentNames = autolinkInfo.childPath.Split(new char[] {'/'});
             for (int i = parentNames.Length - 1; i >= 0; i--) //iterate backwards, since it's a path down the hierarchy tree
             {
@@ -401,7 +422,7 @@ public class CanBeDefaultOrNullAttribute : Attribute
 {}
 
 [AttributeUsage(AttributeTargets.Field, AllowMultiple = true)]
-public class AutoLinkAttribute : Attribute
+public class AutoLinkAttribute : PropertyAttribute
 {
     public string parentName;
     public string parentTag;
@@ -413,4 +434,31 @@ public class AutoLinkAttribute : Attribute
         parentName = parentTag = childPath = string.Empty;
     }
 }
+
+[CustomPropertyDrawer(typeof(AutoLinkAttribute))]
+public class AutoLinkDrawer : DecoratorDrawer
+{
+    // Used to calculate the height of the box
+    public static Texture2D lineTex = null;
+
+
+    AutoLinkAttribute divider { get { return ((AutoLinkAttribute)attribute); } }
+
+
+    // Get the height of the element
+    public override float GetHeight()
+    {
+        return base.GetHeight();
+    }
+
+
+    // Override the GUI drawing for this attribute
+    public override void OnGUI(Rect position)
+    {
+        Rect pos = new Rect(position.x + position.width * (2f / 5f), position.y, position.width * (2f / 5f), position.height * 0.5f);
+
+        EditorGUI.PrefixLabel(pos, new GUIContent("[AutoLink]"));
+    }
+}
+
 #endif

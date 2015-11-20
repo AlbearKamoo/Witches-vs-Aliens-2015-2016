@@ -485,6 +485,7 @@ MonoBehaviour:
   initMaxSpeed: 15
   initAccel: 5
   rotationLerpValue: .200000003
+  rotating: {fileID: 462682}
 --- !u!114 &11429366
 MonoBehaviour:
   m_ObjectHideFlags: 1

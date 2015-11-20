@@ -5,12 +5,13 @@ using UnityEngine.UI;
 [ExecuteInEditMode]
 public class SliderBehaviour : MonoBehaviour {
     public string optionString;
-    private Text SliderPercentLabel;
+    [SerializeField]
+    [AutoLink(childPath = "Handle Slide Area/Handle/Text")]
+    protected Text SliderPercentLabel;
     private Slider slider;
     
 	// Use this for initialization
 	void Start () {
-        SliderPercentLabel = transform.Find("Handle Slide Area/Handle/Text").GetComponent<Text>();
         slider = GetComponent<Slider>();
         if (PlayerPrefs.HasKey(optionString))
             slider.value = PlayerPrefs.GetInt(optionString) / 100.0f;

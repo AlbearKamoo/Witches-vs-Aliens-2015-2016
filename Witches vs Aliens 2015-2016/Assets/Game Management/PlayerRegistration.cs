@@ -27,8 +27,11 @@ public class PlayerRegistration : MonoBehaviour {
     [SerializeField]
     protected PlayerRegisters[] possiblePlayers;
 
+    [SerializeField]
+    [AutoLink(parentTag = Tags.canvas, childPath = "RegisteredPlayers")]
+    protected Transform UIParent;
+
     SetupData data;
-    Transform UIParent;
     CharacterSelector[] playerSelections;
     RegisteredPlayerUIView[] playerUI;
     RegistrationState[] registrationStates;
@@ -47,11 +50,6 @@ public class PlayerRegistration : MonoBehaviour {
             registrationStates[i] = RegistrationState.NOTREGISTERED;
         }
 	}
-
-    void Start()
-    {
-        UIParent = GameObject.FindGameObjectWithTag(Tags.canvas).transform.Find("RegisteredPlayers");
-    }
 
     void Update()
     {
