@@ -436,7 +436,7 @@ public class AutoLinkAttribute : PropertyAttribute
 }
 
 [CustomPropertyDrawer(typeof(AutoLinkAttribute))]
-public class AutoLinkDrawer : DecoratorDrawer
+public class AutoLinkDrawer : PropertyDrawer
 {
     // Used to calculate the height of the box
     public static Texture2D lineTex = null;
@@ -445,19 +445,14 @@ public class AutoLinkDrawer : DecoratorDrawer
     AutoLinkAttribute divider { get { return ((AutoLinkAttribute)attribute); } }
 
 
-    // Get the height of the element
-    public override float GetHeight()
-    {
-        return base.GetHeight();
-    }
-
-
     // Override the GUI drawing for this attribute
-    public override void OnGUI(Rect position)
+    public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
     {
-        Rect pos = new Rect(position.x + position.width * (2f / 5f), position.y, position.width * (2f / 5f), position.height * 0.5f);
+        EditorGUI.BeginProperty(position, label, property);
 
-        EditorGUI.PrefixLabel(pos, new GUIContent("[AutoLink]"));
+        EditorGUI.PropertyField(position, property, new GUIContent(property.name + " [AutoLink]"));
+
+        EditorGUI.EndProperty();
     }
 }
 
