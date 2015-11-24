@@ -350,19 +350,19 @@ ParticleSystem:
   SizeModule:
     enabled: 1
     curve:
-      scalar: 40
+      scalar: 9
       maxCurve:
         serializedVersion: 2
         m_Curve:
-        - time: .00409836043
-          value: 0
-          inSlope: 2
-          outSlope: 2
+        - time: 0
+          value: .260273993
+          inSlope: 4.79737425
+          outSlope: 4.79737425
           tangentMode: 0
-        - time: 1
-          value: 1
-          inSlope: 0
-          outSlope: 0
+        - time: .502439022
+          value: .972602785
+          inSlope: .0597496405
+          outSlope: .0597496405
           tangentMode: 0
         m_PreInfinity: 2
         m_PostInfinity: 2
@@ -1106,7 +1106,7 @@ ParticleSystemRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_Materials:
-  - {fileID: 2100000, guid: 2feed9e747a902d4887580850156b212, type: 2}
+  - {fileID: 2100000, guid: b82816cd62ce8a649867e3484c7051f7, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 1
@@ -1120,7 +1120,7 @@ ParticleSystemRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 0
-  m_RenderMode: 0
+  m_RenderMode: 4
   m_MaxParticleSize: .5
   m_CameraVelocityScale: 0
   m_VelocityScale: 0
@@ -1128,7 +1128,7 @@ ParticleSystemRenderer:
   m_SortingFudge: 0
   m_NormalDirection: 1
   m_SortMode: 0
-  m_Mesh: {fileID: 0}
+  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
   m_Mesh1: {fileID: 0}
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
@@ -1173,7 +1173,7 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 2100000, guid: b82816cd62ce8a649867e3484c7051f7, type: 2}
     - target: {fileID: 0}
       propertyPath: EmissionModule.rate.scalar
       value: 1
@@ -1208,19 +1208,19 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: SizeModule.curve.scalar
-      value: 40
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[0].value
-      value: 0
+      value: .260273993
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[0].inSlope
-      value: 2
+      value: 4.79737425
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[0].outSlope
-      value: 2
+      value: 4.79737425
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[0].tangentMode
@@ -1228,11 +1228,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[1].inSlope
-      value: 0
+      value: .0597496405
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[1].outSlope
-      value: 0
+      value: .0597496405
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[1].tangentMode
@@ -1260,7 +1260,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[0].time
-      value: .00409836043
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: InitialModule.startSize.minMaxState
@@ -1274,6 +1274,22 @@ Prefab:
       propertyPath: cooldownTime
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[1].time
+      value: .502439022
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[1].value
+      value: .972602785
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_RenderMode
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 151458}

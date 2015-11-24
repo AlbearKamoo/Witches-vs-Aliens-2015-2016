@@ -40,15 +40,11 @@ public class PushAbilityCone : GenericAbility {
 	{
 		StartCoroutine(UpdateCharge());
 		
-		float angle = Mathf.Atan2 ( direction.y, direction.x );
-		print (direction.ToString ());
+		float angle = Mathf.Atan2 ( direction.normalized.y, direction.normalized.x );
+        
 		coll.transform.rotation = Quaternion.Euler (0f, 0f, 0f);
-		coll.transform.Rotate(new Vector3 (0f,0f,angle * Mathf.Rad2Deg ));
-		print (coll.transform.rotation.ToString());
-		/*if (direction.x > 0) {
-			float angle = Mathf.Atan(direction.normalized.x/direction.normalized.y);
-		}*/
-	}
+        coll.transform.Rotate(new Vector3 (0f,0f,angle * Mathf.Rad2Deg ));
+    }
 	
 	public override void StopFire()
 	{
