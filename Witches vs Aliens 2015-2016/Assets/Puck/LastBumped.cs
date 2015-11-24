@@ -15,13 +15,17 @@ public class LastBumped : MonoBehaviour, IObservable<BumpedSideChangedMessage>
     {
         if (other.collider.CompareTag(Tags.player))
         {
-            if (other.transform != _player) 
-            {
-                //then it's someone new
-                _player = other.transform;
-                _side = other.transform.GetComponent<Stats>().side;
-                _bumpedSideChangedObservable.Post(new BumpedSideChangedMessage(_side, _player));
-            }
+            setLastBumped(other.transform);
+        }
+    }
+
+    public void setLastBumped(Transform player)
+    {
+        if (player != _player)
+        {
+            _player = player;
+            _side = player.GetComponent<Stats>().side;
+            _bumpedSideChangedObservable.Post(new BumpedSideChangedMessage(_side, _player));
         }
     }
 }

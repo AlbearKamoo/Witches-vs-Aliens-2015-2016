@@ -62,6 +62,14 @@ public class DistortionAbility : GenericAbility {
         base.StopFire();
     }
 
+    void OnTriggerStay2D(Collider2D other)
+    {
+        if (other.CompareTag(Tags.puck))
+        {
+            other.GetComponent<LastBumped>().setLastBumped(rigid.transform);
+        }
+    }
+
     private IEnumerator UpdateCharge()
     {
         active = true;

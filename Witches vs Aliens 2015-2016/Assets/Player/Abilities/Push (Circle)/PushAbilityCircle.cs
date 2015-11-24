@@ -49,6 +49,14 @@ public class PushAbilityCircle : GenericAbility {
 		active = false;
 		base.StopFire();
 	}
+
+    void OnTriggerStay2D(Collider2D other)
+    {
+        if (other.CompareTag(Tags.puck))
+        {
+            other.GetComponent<LastBumped>().setLastBumped(this.transform.parent);
+        }
+    }
 	
 	private IEnumerator UpdateCharge()
 	{

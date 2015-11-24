@@ -206,7 +206,6 @@ public class CheckEditorLinks : MonoBehaviour {
                 //check if autolinking is valid first
                 if(checkExistingLinkValid(field, script, autolinkInfo))
                     return;
-                var value = field.GetValue(script);
 
                 Transform[] parentNodes;
 

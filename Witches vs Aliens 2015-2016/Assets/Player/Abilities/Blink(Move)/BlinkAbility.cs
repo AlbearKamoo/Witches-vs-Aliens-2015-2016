@@ -5,7 +5,6 @@ public class BlinkAbility : MovementAbility {
 
     CircleCollider2D bounds;
     LayerMask stageMask;
-    InputToAction action;
     [SerializeField]
     protected float distance = 6f;
     [SerializeField]
@@ -17,7 +16,6 @@ public class BlinkAbility : MovementAbility {
         base.Start();
         bounds = transform.parent.GetComponentInChildren<CircleCollider2D>();
         stageMask = LayerMask.GetMask(new string[]{Tags.Layers.stage});
-        action = GetComponentInParent<InputToAction>();
 	}
 
     protected override void onFire(Vector2 direction)
