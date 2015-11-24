@@ -39,14 +39,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b90624a8d39182345a8a7dbf35bc494c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stunVisualsPrefab: {fileID: 123358, guid: e405a4524a77fed458b0b7b66b58ed71, type: 2}
   duration: 20
+  visualsLerpTime: 0
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: stunVisualsPrefab
+      value: 
+      objectReference: {fileID: 123358, guid: e405a4524a77fed458b0b7b66b58ed71, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 134116}
