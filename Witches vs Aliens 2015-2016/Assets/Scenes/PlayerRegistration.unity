@@ -128,10 +128,10 @@ MonoBehaviour:
     color: {r: 1, g: 0, b: 0, a: 1}
     bindings:
       inputMode: 0
-      verticalMovementAxisName: Vertical
-      horizontalMovementAxisName: Horizontal
-      verticalAimingAxisName: Vertical
-      horizontalAimingAxisName: Horizontal
+      verticalMovementAxisName: VerticalKeyboard
+      horizontalMovementAxisName: HorizontalKeyboard
+      verticalAimingAxisName: VerticalKeyboard
+      horizontalAimingAxisName: HorizontalKeyboard
       movementAbilityAxis: 
       genericAbilityAxis: 
       superAbilityAxis: 
@@ -378,7 +378,7 @@ RectTransform:
   m_Children:
   - {fileID: 351718218}
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 9
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
@@ -940,7 +940,7 @@ MonoBehaviour:
     basePlayer: {fileID: 146214, guid: a8095cd9d9bc36f4e87d6eeda567d5fa, type: 2}
     visuals: {fileID: 134630, guid: 4af836bb28ddc8e41acdfd7407227704, type: 2}
     movementAbility: {fileID: 123882, guid: 21b4b94fb80128a42b3c5c473d839bbe, type: 2}
-    genericAbility: {fileID: 151458, guid: 62991535b17bd214283bee1c6a865af0, type: 2}
+    genericAbility: {fileID: 190774, guid: aef7b0e17e7dee940b486856538a6311, type: 2}
     superAbility: {fileID: 189548, guid: 92c627e1702f90443a4a43a527a7d20d, type: 2}
     side: 0
 --- !u!61 &1149256925
@@ -1197,6 +1197,52 @@ Prefab:
     m_RemovedComponents:
     - {fileID: 11494054, guid: 486ee4196fa00d744a85e45659f38878, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 486ee4196fa00d744a85e45659f38878, type: 2}
+  m_IsPrefabParent: 0
+--- !u!1001 &1725925053
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 439754, guid: aef7b0e17e7dee940b486856538a6311, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 439754, guid: aef7b0e17e7dee940b486856538a6311, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 439754, guid: aef7b0e17e7dee940b486856538a6311, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 439754, guid: aef7b0e17e7dee940b486856538a6311, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 439754, guid: aef7b0e17e7dee940b486856538a6311, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 439754, guid: aef7b0e17e7dee940b486856538a6311, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 439754, guid: aef7b0e17e7dee940b486856538a6311, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 439754, guid: aef7b0e17e7dee940b486856538a6311, type: 2}
+      propertyPath: m_RootOrder
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 19892622, guid: aef7b0e17e7dee940b486856538a6311, type: 2}
+      propertyPath: SizeModule.curve.scalar
+      value: 5
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: aef7b0e17e7dee940b486856538a6311, type: 2}
   m_IsPrefabParent: 0
 --- !u!1 &1746792217
 GameObject:
