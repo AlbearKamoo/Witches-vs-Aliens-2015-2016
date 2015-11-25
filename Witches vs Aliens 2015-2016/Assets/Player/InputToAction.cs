@@ -13,7 +13,7 @@ public class InputToAction : MonoBehaviour {
 
     public Vector2 normalizedMovementInput { get; set; }
     bool _movementEnabled = false;
-    public bool movementEnabled { get { return _movementEnabled; } set { _movementEnabled = value; } }
+    public bool movementEnabled { get { return _movementEnabled; } set { _movementEnabled = value; if (!_movementEnabled) rigid.velocity = Vector3.zero; } }
     bool _rotationEnabled = true;
     public bool rotationEnabled { get { return _rotationEnabled; } set { _rotationEnabled = value; } }
     Vector2 _aimingInputDirection;

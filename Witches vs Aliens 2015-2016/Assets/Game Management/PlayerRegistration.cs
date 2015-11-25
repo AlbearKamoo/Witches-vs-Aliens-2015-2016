@@ -119,13 +119,15 @@ public class PlayerRegistration : MonoBehaviour {
 
         //now check if all are ready
         bool ready = registrationStates.All<RegistrationState>((RegistrationState s) => s != RegistrationState.REGISTERING) && registrationStates.Any<RegistrationState>((RegistrationState s) => s == RegistrationState.READY);
-        for (int i = 0; i < registrationStates.Length; i++)
         if (startCountdown == null)
         {
             if (ready)
             {
                 introMusic = Instantiate(introMusicPrefab);
                 startCountdown = Callback.FireAndForget(startGame, 5, this);
+                for (int i = 0; i < playerSelections.Length; i++)
+                    if (registrationStates[i] == RegistrationState.READY)
+                        playerSelections[i].GetComponent<InputToAction>().movementEnabled = false;
             }
         }
         else
@@ -135,6 +137,9 @@ public class PlayerRegistration : MonoBehaviour {
                 StopCoroutine(startCountdown);
                 startCountdown = null;
                 Destroy(introMusic);
+                for (int i = 0; i < playerSelections.Length; i++)
+                    if (registrationStates[i] != RegistrationState.NOTREGISTERED)
+                        playerSelections[i].GetComponent<InputToAction>().movementEnabled = true;
             }
         }
     }
