@@ -101,13 +101,13 @@ public class SuperGoal : MonoBehaviour {
     }
 
 	// Use this for initialization
-    void OnTriggerEnter2D(Collider2D other)
+    void OnCollisionEnter2D(Collision2D other)
     {
-        if (!other.CompareTag(Tags.puck))
+        if (!other.collider.CompareTag(Tags.puck))
             return;
 
-        other.transform.position = _mirror.transform.TransformPoint((transform.InverseTransformPoint(other.transform.position)));
-        LastBumped bumped = other.GetComponent<LastBumped>();
+        other.collider.transform.position = _mirror.transform.TransformPoint((transform.InverseTransformPoint(other.transform.position)));
+        LastBumped bumped = other.collider.GetComponent<LastBumped>();
         activateSuper(bumped);
 
         active = false;
