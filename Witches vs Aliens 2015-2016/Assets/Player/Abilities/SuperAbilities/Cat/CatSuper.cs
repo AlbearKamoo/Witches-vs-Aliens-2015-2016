@@ -18,33 +18,53 @@ public class CatSuper : SuperAbility {
     bool instantiated = false;
     InputToAction action;
     GameObject defaultAbilityUI;
+    SpriteRenderer catVisuals;
+    GameObject normalVisuals;
 
+    void Awake()
+    {
+        catVisuals = GetComponent<SpriteRenderer>();
+    }
     protected override void Start()
     {
-        base.Start();
+        
         action = GetComponentInParent<InputToAction>();
         defaultAbilityUI = transform.parent.Find("UI").gameObject;
-        //ready = true; //for easy testing
+        normalVisuals = transform.parent.GetComponentInChildren<AbstractPlayerVisuals>().gameObject;
+        base.Start();
+        ready = true; //for easy testing
+    }
+
+    protected override void OnActivate()
+    {
+        ensureInstantiation();
+        action.MoveAbility = catMove;
+        action.GenAbility = catGeneric;
+        defaultAbilityUI.SetActive(false);
+        normalVisuals.SetActive(false);
+        catVisuals.enabled = true;
+    }
+    protected override void OnDeactivate()
+    {
+        action.MoveAbility = defaultMove;
+        action.GenAbility = defaultGeneric;
+        defaultAbilityUI.SetActive(true);
+        foreach (ParticleSystem abilityUI in defaultAbilityUI.GetComponentsInChildren<ParticleSystem>())
+        {
+            abilityUI.Play();
+        }
+        catVisuals.enabled = false;
+        normalVisuals.SetActive(true);
     }
 
     protected override void onFire(Vector2 direction)
     {
         ready = false;
-        ensureInstantiation();
-
-        action.MoveAbility = catMove;
-        action.GenAbility = catGeneric;
-        defaultAbilityUI.SetActive(false);
+        active = true;
 
         Callback.FireAndForget(() =>
             {
-                action.MoveAbility = defaultMove;
-                action.GenAbility = defaultGeneric;
-                defaultAbilityUI.SetActive(true);
-                foreach (ParticleSystem abilityUI in defaultAbilityUI.GetComponentsInChildren<ParticleSystem>())
-                {
-                    abilityUI.Play();
-                }
+                active = false;
             }, duration, this);
 
     }
