@@ -16,6 +16,12 @@ public class ReverseSuper : SuperAbility, IOpponentsAbility {
     List<Transform> _opponents;
     public List<Transform> opponents { set { _opponents = value; } }
 
+    protected override void Start()
+    {
+        base.Start();
+        ready = true; //for easy testing
+    }
+
     protected override void onFire(Vector2 direction)
     {
         ready = false;
