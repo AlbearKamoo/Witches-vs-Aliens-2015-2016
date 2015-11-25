@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Audio;
 using System.Collections;
 
 [RequireComponent(typeof(Collider2D))]
@@ -10,6 +11,7 @@ public class SuperGoal : MonoBehaviour {
     ParticleSystem vfx;
     PuckFX puckFX;
     AudioSource sfx;
+    
     public SuperGoal mirror { set { _mirror = value; } }
     bool _active = false;
 
@@ -21,6 +23,12 @@ public class SuperGoal : MonoBehaviour {
 
     [SerializeField]
     protected AudioClip AliensSuperClip;
+
+    [SerializeField]
+    protected AudioMixerGroup aliensSuperOutput;
+
+    [SerializeField]
+    protected AudioMixerGroup witchesSuperOutput;
 
     public bool active
     {
@@ -108,9 +116,11 @@ public class SuperGoal : MonoBehaviour {
         {
             case Side.LEFT:
                 sfx.clip = WitchesSuperClip;
+                sfx.outputAudioMixerGroup = witchesSuperOutput;
                 break;
             case Side.RIGHT:
                 sfx.clip = AliensSuperClip;
+                sfx.outputAudioMixerGroup = aliensSuperOutput; 
                 break;
         }
         sfx.Play();

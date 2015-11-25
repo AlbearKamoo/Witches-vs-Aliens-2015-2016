@@ -140,7 +140,8 @@ AudioSource:
   m_GameObject: {fileID: 120904}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24347016, guid: eb4226b3c6c1ba14f8c34c1b2d183061,
+    type: 2}
   m_audioClip: {fileID: 8300000, guid: 695f750f1604dd340a79565b6b6e2c89, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
@@ -216,6 +217,8 @@ MonoBehaviour:
   lerpInTime: 1
   WitchesSuperClip: {fileID: 8300000, guid: 4d05647e65936a24b888620076407371, type: 3}
   AliensSuperClip: {fileID: 8300000, guid: 695f750f1604dd340a79565b6b6e2c89, type: 3}
+  aliensSuperOutput: {fileID: 24311422, guid: 12fca95c238125d44b367ec895672304, type: 2}
+  witchesSuperOutput: {fileID: 24377686, guid: 12fca95c238125d44b367ec895672304, type: 2}
 --- !u!198 &19825518
 ParticleSystem:
   m_ObjectHideFlags: 1
@@ -2361,6 +2364,39 @@ Prefab:
       propertyPath: m_PlayOnAwake
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: BypassListenerEffects
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: BypassReverbZones
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: witchesSpecialOutput
+      value: 
+      objectReference: {fileID: 24377686, guid: 12fca95c238125d44b367ec895672304,
+        type: 2}
+    - target: {fileID: 0}
+      propertyPath: aliensSpecialOutput
+      value: 
+      objectReference: {fileID: 24311422, guid: 12fca95c238125d44b367ec895672304,
+        type: 2}
+    - target: {fileID: 0}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: 24347016, guid: eb4226b3c6c1ba14f8c34c1b2d183061,
+        type: 2}
+    - target: {fileID: 0}
+      propertyPath: aliensSuperOutput
+      value: 
+      objectReference: {fileID: 24311422, guid: 12fca95c238125d44b367ec895672304,
+        type: 2}
+    - target: {fileID: 0}
+      propertyPath: witchesSuperOutput
+      value: 
+      objectReference: {fileID: 24377686, guid: 12fca95c238125d44b367ec895672304,
+        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 120904}

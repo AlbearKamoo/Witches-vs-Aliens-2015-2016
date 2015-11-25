@@ -22,7 +22,7 @@ public class SuperGoalSpawner : MonoBehaviour {
         SuperGoal2 = Instantiate(SuperGoalPrefab).GetComponent<SuperGoal>();
         SuperGoal1.mirror = SuperGoal2;
         SuperGoal2.mirror = SuperGoal1;
-
+      
         children = new Transform[transform.childCount];
         int i = 0;
         foreach (Transform child in transform)
