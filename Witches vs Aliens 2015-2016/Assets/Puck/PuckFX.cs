@@ -14,9 +14,15 @@ public class PuckFX : MonoBehaviour, IObserver<BumpedSideChangedMessage> {
     Rigidbody2D rigid;
     LastBumped bumped;
     Collider2D coll;
+
     [SerializeField]
     [AutoLink(parentTag = Tags.puck, parentName = "AlienSideVFX")]
     protected SpriteRenderer alienSideVFX;
+
+    [SerializeField]
+    [AutoLink(parentTag = Tags.puck, parentName = "WitchSideVFX")]
+    protected GameObject witchSideVFX;
+
     bool _perSideEffectsActive = false;
     public bool perSideEffectsActive
     {
@@ -37,6 +43,7 @@ public class PuckFX : MonoBehaviour, IObserver<BumpedSideChangedMessage> {
             {
                 //deactivate per side effects
                 alienSideVFX.enabled = false;
+                witchSideVFX.SetActive(false);// = false;
             }
             _perSideEffectsActive = value;
         }
@@ -83,9 +90,11 @@ public class PuckFX : MonoBehaviour, IObserver<BumpedSideChangedMessage> {
         {
             case Side.LEFT:
                 alienSideVFX.enabled = false;
+                witchSideVFX.SetActive(true);
                 break;
             case Side.RIGHT:
                 alienSideVFX.enabled = true;
+                witchSideVFX.SetActive(false);
                 break;
         }
     }

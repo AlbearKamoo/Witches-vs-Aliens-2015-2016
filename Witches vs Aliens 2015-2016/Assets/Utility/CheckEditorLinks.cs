@@ -333,7 +333,12 @@ public class CheckEditorLinks : MonoBehaviour {
             }
 
             //if not we're at least dealing only with the local parent
-            Transform valueTransfrom = ((Component)value).transform;
+            Transform valueTransfrom;
+            Component testComponent = value as Component;
+            if (testComponent != null)
+                valueTransfrom = testComponent.transform;
+            else
+                valueTransfrom = ((GameObject)value).transform;
             if (!String.IsNullOrEmpty(autolinkInfo.parentName) && valueTransfrom.name != autolinkInfo.parentName)
                 return false; //check parent name is the same
             if (!String.IsNullOrEmpty(autolinkInfo.parentTag) && !valueTransfrom.CompareTag(autolinkInfo.parentTag))

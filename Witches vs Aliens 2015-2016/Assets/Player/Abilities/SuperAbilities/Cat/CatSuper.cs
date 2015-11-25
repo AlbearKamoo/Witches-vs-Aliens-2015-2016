@@ -32,7 +32,7 @@ public class CatSuper : SuperAbility {
         defaultAbilityUI = transform.parent.Find("UI").gameObject;
         normalVisuals = transform.parent.GetComponentInChildren<AbstractPlayerVisuals>().gameObject;
         base.Start();
-        ready = true; //for easy testing
+        //ready = true; //for easy testing
     }
 
     protected override void OnActivate()
