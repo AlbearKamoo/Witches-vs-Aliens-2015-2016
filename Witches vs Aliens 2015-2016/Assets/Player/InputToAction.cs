@@ -48,6 +48,9 @@ public class InputToAction : MonoBehaviour {
         return _direction;
     } }
 
+    private List<Callback.CallbackMethod> preFixedUpdateDelegates = new List<Callback.CallbackMethod>();
+    public List<Callback.CallbackMethod> PreFixedUpdateDelegates { get { return preFixedUpdateDelegates; } }
+
     //Don't change the rigidbody mass from 1 to change speed/agility; change accel and maxSpeed instead
     //the rigidbody mass(es) generally only affect how collisions happen
 	// Use this for initialization
@@ -66,6 +69,10 @@ public class InputToAction : MonoBehaviour {
 	
 	// Update is called once per frame
 	void FixedUpdate () {
+        for (int i = 0; i < preFixedUpdateDelegates.Count; i++)
+        {
+            preFixedUpdateDelegates[i]();
+        }
         if (_movementEnabled)
             rigid.velocity = Vector2.ClampMagnitude(Vector2.MoveTowards(rigid.velocity, _maxSpeed * normalizedMovementInput, _maxSpeed * _accel * Time.fixedDeltaTime), _maxSpeed);
 

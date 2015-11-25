@@ -25,28 +25,22 @@ public class ReverseSuper : SuperAbility, IOpponentsAbility {
     protected override void onFire(Vector2 direction)
     {
         ready = false;
-        Swap();
+        Callback.CallbackMethod[] modifiers = new Callback.CallbackMethod[_opponents.Count];
 
-        foreach (Transform opponent in _opponents)
+        for(int i = 0; i < _opponents.Count; i++)
         {
+            InputToAction input = _opponents[i].GetComponent<InputToAction>();
+            modifiers[i] = () => input.normalizedMovementInput = -input.normalizedMovementInput;
+            input.PreFixedUpdateDelegates.Add(modifiers[i]);
             GameObject visuals = SimplePool.Spawn(stunVisualsPrefab);
-            visuals.transform.SetParent(opponent, false);
+            visuals.transform.SetParent(_opponents[i], false);
             SpriteRenderer rend = visuals.GetComponent<SpriteRenderer>();
             Callback.DoLerp((float l) => rend.color.setAlphaFloat(l), visualsLerpTime, this);
             Callback.FireAndForget(() => Callback.DoLerp((float l) => rend.color.setAlphaFloat(l), visualsLerpTime, this, reverse: true), duration - visualsLerpTime, this).FollowedBy(() => SimplePool.Despawn(visuals), this);
         }
 
-        Callback.FireAndForget(Swap, duration, this);
-    }
-
-    void Swap()
-    {
-        foreach (Transform opponent in _opponents)
-        {
-            AbstractPlayerInput input = opponent.GetComponent<AbstractPlayerInput>();
-            string temp = input.bindings.horizontalMovementAxisName;
-            input.bindings.horizontalMovementAxisName = input.bindings.verticalMovementAxisName;
-            input.bindings.verticalMovementAxisName = temp;
-        }
+        Callback.FireAndForget(() => {
+            for(int i = 0; i < _opponents.Count; i++)
+                _opponents[i].GetComponent<InputToAction>().PreFixedUpdateDelegates.Remove(modifiers[i]);}, duration, this);
     }
 }
