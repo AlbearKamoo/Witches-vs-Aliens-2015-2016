@@ -35,10 +35,19 @@ public class JoystickPlayerInput : AbstractPlayerInput {
         }
 
         if (prevMovement != 0 && Input.GetAxis(bindings.movementAbilityAxis) == 0)
+        {
             action.StopFireAbility(AbilityType.MOVEMENT);
+            prevMovement = 0;
+        }
         if (prevSuper != 0 && Input.GetAxis(bindings.superAbilityAxis) == 0)
+        {
             action.StopFireAbility(AbilityType.SUPER);
+            prevSuper = 0;
+        }
         if (prevGeneric != 0 && Input.GetAxis(bindings.genericAbilityAxis) == 0)
+        {
             action.StopFireAbility(AbilityType.GENERIC);
+            prevGeneric = 0;
+        }
     }
 }

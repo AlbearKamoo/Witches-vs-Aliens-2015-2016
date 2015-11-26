@@ -40,13 +40,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameEndTime: 3
+  witchesVictoryPrefab: {fileID: 164700, guid: d6e0d36783918bd4ca36c4b9f8d36767, type: 2}
+  aliensVictoryPrefab: {fileID: 149922, guid: 376d68fbd4fcf9946b20ad6e64273c42, type: 2}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: aliensVictoryPrefab
+      value: 
+      objectReference: {fileID: 149922, guid: 376d68fbd4fcf9946b20ad6e64273c42, type: 2}
+    - target: {fileID: 0}
+      propertyPath: witchesVictoryPrefab
+      value: 
+      objectReference: {fileID: 164700, guid: d6e0d36783918bd4ca36c4b9f8d36767, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 133780}

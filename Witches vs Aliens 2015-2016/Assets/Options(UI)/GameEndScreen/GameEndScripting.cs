@@ -6,16 +6,26 @@ public class GameEndScripting : MonoBehaviour {
     [SerializeField]
     protected float gameEndTime;
 
-    public float leftScore;
-    public float rightScore;
+    public GameObject witchesVictoryPrefab;
+    public GameObject aliensVictoryPrefab;
+
+    public float leftScore {get; set;}
+    public float rightScore { get; set; }
+
+    Transform canvas;
 
 	// Use this for initialization
 	void Awake () {
+        canvas = GameObject.FindGameObjectWithTag(Tags.canvas).GetComponentInParent<Canvas>().transform;
         Camera.main.gameObject.AddComponent<BlitGreyscale>().time = gameEndTime;
         Observers.Post(new GameEndMessage(this, gameEndTime));
         Observers.Clear(GameEndMessage.classMessageType, GoalScoredMessage.classMessageType);
         Pause.pause();
         Callback.FireAndForgetRealtime(() => { Application.LoadLevel(Tags.Scenes.select); Pause.unPause(); Destroy(this); }, gameEndTime, this);
+        if (leftScore > rightScore)
+            Instantiate(witchesVictoryPrefab).transform.SetParent(canvas, false);
+        else
+            Instantiate(aliensVictoryPrefab).transform.SetParent(canvas, false);
 	}
 
 }
