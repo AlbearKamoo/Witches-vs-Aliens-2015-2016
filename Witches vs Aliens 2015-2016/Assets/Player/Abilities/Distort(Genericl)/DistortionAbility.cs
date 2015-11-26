@@ -58,7 +58,7 @@ public class DistortionAbility : GenericAbility {
 
     public override void StopFire()
     {
-        active = false;
+        //active = false; lasts for full duration
         base.StopFire();
     }
 
