@@ -7,7 +7,7 @@ public class CharacterSelector : MonoBehaviour {
     public CharacterComponents selectedCharacter { get { return _selectedCharacter; } }
     void OnTriggerEnter2D(Collider2D other)
     {
-        if(!other.CompareTag(Tags.player))
+        if(other.CompareTag(Tags.gameController))
             _selectedCharacter = other.GetComponent<CharacterHolder>().character;
     }
 }
