@@ -138,6 +138,6 @@ public class SpringMesh : MonoBehaviour {
 
     static Color PerlinColor(Vector2 seed, Vector2 pos)
     {
-        return HSVColor.HSVToRGB(Mathf.PerlinNoise(seed.x + pos.x / 17, seed.y + pos.y / 17), 0.75f, 1);
+        return HSVColor.HSVToRGB((Mathf.PerlinNoise(seed.x + pos.x / 17, seed.y + pos.y / 17) + seed.y/ 100) % 1, 0.75f, 1);
     }
 }
