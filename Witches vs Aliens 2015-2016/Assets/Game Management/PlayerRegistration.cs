@@ -80,8 +80,7 @@ public class PlayerRegistration : MonoBehaviour {
                         action.movementEnabled = true;
                         playerUI[i].inputMode = possiblePlayers[i].bindings.inputMode;
                         playerUI[i].ready = false;
-                        spawnedPlayerRegistationPuck.GetComponentInChildren<Image>().color = possiblePlayers[i].color;
-                        playerUI[i].playerColor = possiblePlayers[i].color;
+                        playerUI[i].playerColor = spawnedPlayerRegistationPuck.GetComponentInChildren<Image>().color = spawnedPlayerRegistationPuck.GetComponent<ParticleSystem>().startColor = possiblePlayers[i].color;
                         spawnedPlayerRegistationPuck.GetComponentInChildren<Text>().text = possiblePlayers[i].abbreviation;
                         playerUI[i].playerName = possiblePlayers[i].name;
 
