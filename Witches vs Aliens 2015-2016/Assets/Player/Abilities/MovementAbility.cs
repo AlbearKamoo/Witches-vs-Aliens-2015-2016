@@ -8,6 +8,6 @@ public class MovementAbility : NotSuperAbility
 
     protected override void onFire(Vector2 direction) 
     {
-        Debug.Log("MOVE!"); //override and remove this
+        //Debug.Log("MOVE!"); //override and remove this
     } 
 }

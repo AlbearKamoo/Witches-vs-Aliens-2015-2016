@@ -25,6 +25,7 @@ public class JoystickPlayerInput : AbstractPlayerInput {
         }
         if (Input.GetAxis(bindings.superAbilityAxis) != 0)
         {
+            Debug.Log(Input.GetAxis(bindings.superAbilityAxis));
             action.FireAbility(AbilityType.SUPER);
             prevSuper = Input.GetAxis(bindings.superAbilityAxis);
         }

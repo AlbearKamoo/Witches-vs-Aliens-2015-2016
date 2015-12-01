@@ -12,6 +12,10 @@ public class BoostAbility : MovementAbility, IObserver<ResetMessage> {
     ParticleSystem vfx;
     Rigidbody2D rigid;
 
+    float rigidMass;
+
+    const float massCoefficient = 3f;
+
     protected override void OnActivate()
     {
         base.OnActivate();
@@ -46,6 +50,7 @@ public class BoostAbility : MovementAbility, IObserver<ResetMessage> {
         vfx.startSize = 2*transform.parent.GetComponentInChildren<CircleCollider2D>().radius;
         rigid = GetComponentInParent<Rigidbody2D>();
         GetComponentInParent<IObservable<ResetMessage>>().Observable().Subscribe(this);
+        rigidMass = rigid.mass;
     }
 
     protected override void onFire(Vector2 direction)
@@ -72,6 +77,7 @@ public class BoostAbility : MovementAbility, IObserver<ResetMessage> {
             accelMod.value = baseAccelDebuff;
 
         rigid.velocity = action.maxSpeed * direction.normalized;
+        rigid.mass = rigidMass * massCoefficient;
 
         active = true;
         float duration = 0;
@@ -94,7 +100,9 @@ public class BoostAbility : MovementAbility, IObserver<ResetMessage> {
         while (!active)
         {
             time += Time.fixedDeltaTime;
-            speedMod.value = Mathf.Lerp(speedMultiplier, 1, time / boostDecayTime);
+            float lerpValue = time / boostDecayTime;
+            speedMod.value = Mathf.Lerp(speedMultiplier, 1, lerpValue);
+            rigid.mass = Mathf.Lerp(rigidMass * massCoefficient, rigidMass, lerpValue);
             if (time > boostDecayTime)
             {
                 action.maxSpeed.removeModifier(speedMod);
