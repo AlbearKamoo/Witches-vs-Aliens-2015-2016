@@ -22,7 +22,7 @@ public class GameEndScripting : MonoBehaviour {
         Observers.Clear(GameEndMessage.classMessageType, GoalScoredMessage.classMessageType);
         Pause.pause();
         Callback.FireAndForgetRealtime(() => { Application.LoadLevel(Tags.Scenes.select); Pause.unPause(); Destroy(this); }, gameEndTime, this);
-        if (leftScore > rightScore)
+        if (leftScore < rightScore)
             Instantiate(witchesVictoryPrefab).transform.SetParent(canvas, false);
         else
             Instantiate(aliensVictoryPrefab).transform.SetParent(canvas, false);
