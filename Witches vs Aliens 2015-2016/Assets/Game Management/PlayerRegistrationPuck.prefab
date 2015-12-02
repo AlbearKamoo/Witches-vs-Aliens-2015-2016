@@ -61,6 +61,7 @@ GameObject:
   - 4: {fileID: 432628}
   - 58: {fileID: 5840722}
   - 250: {fileID: 25078428}
+  - 114: {fileID: 11427130}
   m_Layer: 0
   m_Name: Rotating
   m_TagString: Untagged
@@ -213,6 +214,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41a7d661d156b2f49ab31d73ba016d4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AbilityUIPrefab: {fileID: 172952, guid: 8a0dac2bb75bc8343920ccf8eeff93fd, type: 2}
   cooldownTime: 0
 --- !u!114 &11404926
 MonoBehaviour:
@@ -261,6 +263,18 @@ MonoBehaviour:
   initAccel: 999
   rotationLerpValue: .5
   rotating: {fileID: 432628}
+--- !u!114 &11427130
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 148938}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5e8649c0929b904fa84021592ce0fd9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  angularSpeed: 0
 --- !u!114 &11428312
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -347,6 +361,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d62cfc420e421f49a5a63bd083b15d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AbilityUIPrefab: {fileID: 172952, guid: 8a0dac2bb75bc8343920ccf8eeff93fd, type: 2}
   cooldownTime: 0
 --- !u!198 &19893070
 ParticleSystem:
@@ -1419,9 +1434,7 @@ ParticleSystemRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
   m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_MinimumChartSize: 4
   m_AutoUVMaxDistance: .5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
@@ -1571,6 +1584,10 @@ Prefab:
       propertyPath: m_ColliderMask.m_Bits
       value: 32768
       objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: AbilityUIPrefab
+      value: 
+      objectReference: {fileID: 172952, guid: 8a0dac2bb75bc8343920ccf8eeff93fd, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 171078}

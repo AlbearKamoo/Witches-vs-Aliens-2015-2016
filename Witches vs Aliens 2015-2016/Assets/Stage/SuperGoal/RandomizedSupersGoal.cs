@@ -36,7 +36,7 @@ public class RandomizedSupersGoal : SuperGoal {
         }
         newAbility.transform.SetParent(bumped.player, false);
         SuperAbility ability = newAbility.GetComponent<SuperAbility>();
-        Callback.FireForNextFrame(() => ability.ready = true, this); //allow it to set up via start
+        Callback.FireForUpdate(() => ability.ready = true, this); //allow it to set up via start
         bumped.player.GetComponent<InputToAction>().SuperAbility = ability;
 
         if (ability is IAlliesAbility)

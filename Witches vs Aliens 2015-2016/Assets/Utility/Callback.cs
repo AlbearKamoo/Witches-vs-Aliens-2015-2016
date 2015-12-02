@@ -18,31 +18,38 @@ public static class Callback {
     public static class Routines
     {
         //basically Invoke
-        public static IEnumerator FireAndForgetRoutine(CallbackMethod code, float time)
+        public static IEnumerator FireAndForgetRoutine(CallbackMethod code, float time, MonoBehaviour callingScript, Mode mode = Mode.UPDATE)
         {
-            yield return new WaitForSeconds(time);
+            switch(mode)
+            {
+                case Mode.UPDATE:
+                case Mode.FIXEDUPDATE:
+                    yield return new WaitForSeconds(time);
+                    break;
+                case Mode.REALTIME:
+                    yield return callingScript.StartCoroutine(WaitForRealSecondsRoutine(time));
+                    break;
+            }
             code();
         }
 
-        public static IEnumerator FireAndForgetRealtimeRoutine(CallbackMethod code, float time, MonoBehaviour callingScript)
+        //Fires the code on the next update/fixed update. Lazy way to keep the code from affecting what you're doing right now
+        public static IEnumerator FireForUpdateRoutine(CallbackMethod code, Mode mode = Mode.UPDATE)
         {
-            yield return callingScript.StartCoroutine(WaitForRealSecondsRoutine(time));
+            switch(mode)
+            {
+                case Mode.UPDATE:
+                case Mode.REALTIME:
+                    yield return null;
+                    break;
+                case Mode.FIXEDUPDATE:
+                    yield return new WaitForFixedUpdate();
+                    break;
+            }
             code();
         }
 
-        //Fires the code on the next fixed update. Lazy way to keep the code from affecting what you're doing right now
-        public static IEnumerator FireForFixedUpdateRoutine(CallbackMethod code)
-        {
-            yield return new WaitForFixedUpdate();
-            code();
-        }
-
-        // same, but for the normal update instead of fixed update
-        public static IEnumerator FireForNextFrameRoutine(CallbackMethod code)
-        {
-            yield return 0;
-            code();
-        }
+        // TODO : replace with a YieldInstruction override
 
         //same as WaitForSeconds(), but is not affected by timewarping
         public static IEnumerator WaitForRealSecondsRoutine(float seconds)
@@ -57,7 +64,26 @@ public static class Callback {
         }
 
         //does a standard coroutine Lerp on a bit of code, from zero to one by default.
-        public static IEnumerator DoLerpRoutine(Lerpable code, float time, bool reverse = false)
+        public static IEnumerator DoLerpRoutine(Lerpable code, float time, MonoBehaviour callingScript, bool reverse = false, Mode mode = Mode.UPDATE)
+        {
+            IEnumerator routine = null;
+            switch (mode)
+            {
+                case Mode.UPDATE:
+                    routine = DoLerpUpdateTimeRoutine(code, time, reverse);
+                    break;
+                case Mode.FIXEDUPDATE:
+                    routine = DoLerpFixedTimeRoutine(code, time, reverse);
+                    break;
+                case Mode.REALTIME:
+                    routine = DoLerpRealtimeRoutine(code, time, reverse);
+                    break;
+            }
+            yield return callingScript.StartCoroutine(routine);
+            code(reverse?0:1);
+        }
+
+        public static IEnumerator DoLerpUpdateTimeRoutine(Lerpable code, float time, bool reverse = false)
         {
             if (!reverse)
             {
@@ -79,19 +105,18 @@ public static class Callback {
                     timeRemaining -= Time.deltaTime;
                 }
             }
-            code(reverse?0:1);
         }
 
         //same, but run the lerp code independent of any timewarping
-        public static IEnumerator DoLerpRealtimeRoutine(Lerpable code, float lerpTime, bool reverse = false)
+        public static IEnumerator DoLerpRealtimeRoutine(Lerpable code, float time, bool reverse = false)
         {
             float realStartTime = Time.realtimeSinceStartup;
-            float realEndTime = realStartTime + lerpTime;
+            float realEndTime = realStartTime + time;
             if (!reverse)
             {
                 while (Time.realtimeSinceStartup < realEndTime)
                 {
-                    code((Time.realtimeSinceStartup - realStartTime) / lerpTime);
+                    code((Time.realtimeSinceStartup - realStartTime) / time);
                     yield return null;
                 }
             }
@@ -99,16 +124,14 @@ public static class Callback {
             {
                 while (Time.realtimeSinceStartup < realEndTime)
                 {
-                    code((realEndTime - Time.realtimeSinceStartup) / lerpTime);
+                    code((realEndTime - Time.realtimeSinceStartup) / time);
                     yield return null;
                 }
             }
-
-            code(reverse ? 0 : 1);
         }
 
         //used Time.FixedDeltaTime instead of delta time (for important physics/gameplay things)
-        public static IEnumerator DoLerpFixedtimeRoutine(Lerpable code, float time, bool reverse = false)
+        public static IEnumerator DoLerpFixedTimeRoutine(Lerpable code, float time, bool reverse = false)
         {
             if (!reverse)
             {
@@ -150,24 +173,14 @@ public static class Callback {
     }
 
     //wrappers for the routines in the Routines class so that we don't need to call StartCoroutine()
-    public static Coroutine FireAndForget(this CallbackMethod code, float time, MonoBehaviour callingScript)
+    public static Coroutine FireAndForget(this CallbackMethod code, float time, MonoBehaviour callingScript, Mode mode = Mode.UPDATE)
     {
-        return RunIfActiveAndEnabled(callingScript, Routines.FireAndForgetRoutine(code, time));
+        return RunIfActiveAndEnabled(callingScript, Routines.FireAndForgetRoutine(code, time, callingScript, mode));
     }
 
-    public static Coroutine FireAndForgetRealtime(this CallbackMethod code, float time, MonoBehaviour callingScript)
+    public static Coroutine FireForUpdate(this CallbackMethod code, MonoBehaviour callingScript, Mode mode = Mode.UPDATE)
     {
-        return RunIfActiveAndEnabled(callingScript, Routines.FireAndForgetRealtimeRoutine(code, time, callingScript));
-    }
-
-    public static Coroutine FireForFixedUpdate(this CallbackMethod code, MonoBehaviour callingScript)
-    {
-        return RunIfActiveAndEnabled(callingScript, Routines.FireForFixedUpdateRoutine(code));
-    }
-
-    public static Coroutine FireForNextFrame(this CallbackMethod code, MonoBehaviour callingScript)
-    {
-        return RunIfActiveAndEnabled(callingScript, Routines.FireForNextFrameRoutine(code));
+        return RunIfActiveAndEnabled(callingScript, Routines.FireForUpdateRoutine(code, mode));
     }
 
     public static Coroutine WaitForRealSeconds(float seconds, MonoBehaviour callingScript)
@@ -175,28 +188,81 @@ public static class Callback {
         return RunIfActiveAndEnabled(callingScript, Routines.WaitForRealSecondsRoutine(seconds));
     }
 
-    public static Coroutine DoLerp(Lerpable code, float time, MonoBehaviour callingScript, bool reverse = false)
+    public static Coroutine DoLerp(Lerpable code, float time, MonoBehaviour callingScript, bool reverse = false, Mode mode = Mode.UPDATE)
     {
-        return RunIfActiveAndEnabled(callingScript, Routines.DoLerpRoutine(code, time, reverse));
-    }
-
-    public static Coroutine DoLerpRealtime(Lerpable code, float time, MonoBehaviour callingScript, bool reverse = false)
-    {
-        return RunIfActiveAndEnabled(callingScript, Routines.DoLerpRealtimeRoutine(code, time, reverse));
-    }
-
-    public static Coroutine DoLerpFixedtime(Lerpable code, float time, MonoBehaviour callingScript, bool reverse = false)
-    {
-        return RunIfActiveAndEnabled(callingScript, Routines.DoLerpFixedtimeRoutine(code, time, reverse));
-    }
-
-    public static Coroutine WaitFor(Coroutine waitFor, CallbackMethod code, MonoBehaviour callingScript)
-    {
-        return RunIfActiveAndEnabled(callingScript, Routines.WaitForRoutine(waitFor, code));
+        return RunIfActiveAndEnabled(callingScript, Routines.DoLerpRoutine(code, time, callingScript, reverse, mode));
     }
 
     public static Coroutine FollowedBy(this Coroutine toFollow, CallbackMethod code, MonoBehaviour callingScript)
     {
         return RunIfActiveAndEnabled(callingScript, Routines.WaitForRoutine(toFollow, code));
+    }
+
+    public enum Mode
+    {
+        UPDATE,
+        FIXEDUPDATE,
+        REALTIME
+    }
+}
+
+public class Countdown
+{
+    public delegate Coroutine CountdownFunction();
+    public bool active {
+        set
+        {
+            if (value)
+                Start();
+            else
+                Stop();
+        }
+        get { return countdown != null; }
+    }
+    readonly CountdownFunction routine;
+    readonly MonoBehaviour callingScript;
+    Coroutine countdown = null;
+
+    public Countdown(CountdownFunction routine, MonoBehaviour callingScript)
+    {
+        this.routine = routine;
+        this.callingScript = callingScript;
+    }
+
+    public bool Start()
+    {
+        if (countdown == null)
+        {
+            startCountdown();
+            return true;
+        }
+        return false;
+    }
+
+    public void Restart()
+    {
+        Stop();
+        startCountdown();
+    }
+
+    void startCountdown()
+    {
+        countdown = callingScript.StartCoroutine(countdownRoutine());
+    }
+
+    IEnumerator countdownRoutine()
+    {
+        yield return routine();
+        countdown = null;
+    }
+
+    public void Stop()
+    {
+        callingScript.StopCoroutine(countdown);
+    }
+
+    public static Countdown TimedCountdown(Callback.CallbackMethod code, float time, MonoBehaviour callingScript, Callback.Mode mode = Callback.Mode.UPDATE)
+    {
+        return new Countdown(() => Callback.FireAndForget(code, time, callingScript, mode), callingScript);
     }
 }

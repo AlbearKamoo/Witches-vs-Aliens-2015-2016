@@ -233,7 +233,7 @@ public class ProgrammaticSpawning : MonoBehaviour, IObserver<Message> {
             yield return null;
             timeRemaining -= Time.deltaTime;
             if(timeRemaining < countdownTimes.Peek())
-                SimplePool.Spawn(CountdownPrefab, Vector3.zero).GetComponent<Countdown>().count = countdownTimes.Dequeue().ToString();
+                SimplePool.Spawn(CountdownPrefab, Vector3.zero).GetComponent<TimerCountdown>().count = countdownTimes.Dequeue().ToString();
         }
     }
 

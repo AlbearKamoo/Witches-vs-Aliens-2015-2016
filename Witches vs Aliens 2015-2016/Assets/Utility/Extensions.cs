@@ -20,6 +20,14 @@ public static class TransformExtension
         transform.SetParent(parent);
         transform.localScale = localScale;
     }
+
+    public static Transform GetBaseParent(this Transform transform)
+    {
+        Transform result = transform;
+        while (result.parent != null)
+            result = result.parent;
+        return result;
+    }
 }
 
 //adds methods to ease conversion between world/screen space, and also with rotations

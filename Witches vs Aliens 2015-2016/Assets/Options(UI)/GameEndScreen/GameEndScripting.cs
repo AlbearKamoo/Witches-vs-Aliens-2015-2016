@@ -21,7 +21,7 @@ public class GameEndScripting : MonoBehaviour {
         Observers.Post(new GameEndMessage(this, gameEndTime));
         Observers.Clear(GameEndMessage.classMessageType, GoalScoredMessage.classMessageType);
         Pause.pause();
-        Callback.FireAndForgetRealtime(() => { Application.LoadLevel(Tags.Scenes.select); Pause.unPause(); Destroy(this); }, gameEndTime, this);
+        Callback.FireAndForget(() => { Application.LoadLevel(Tags.Scenes.select); Pause.unPause(); Destroy(this); }, gameEndTime, this, mode: Callback.Mode.REALTIME);
         if (leftScore < rightScore)
             Instantiate(witchesVictoryPrefab).transform.SetParent(canvas, false);
         else

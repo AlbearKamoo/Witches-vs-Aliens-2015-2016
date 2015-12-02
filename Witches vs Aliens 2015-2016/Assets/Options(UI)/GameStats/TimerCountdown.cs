@@ -2,7 +2,7 @@
 using UnityEngine.UI;
 using System.Collections;
 
-public class Countdown : MonoBehaviour, ISpawnable {
+public class TimerCountdown : MonoBehaviour, ISpawnable {
 
     [SerializeField]
     protected Color startTextColor;
@@ -26,9 +26,9 @@ public class Countdown : MonoBehaviour, ISpawnable {
 
     public void Create()
     {
-        Callback.DoLerpRealtime(lerpIn, 0.5f, this);
+        Callback.DoLerp(lerpIn, 0.5f, this, mode: Callback.Mode.REALTIME);
 
-        Callback.FireAndForgetRealtime(Despawn, duration, this);
+        Callback.FireAndForget(Despawn, duration, this, mode: Callback.Mode.REALTIME);
     }
 
     protected virtual void lerpIn(float l)

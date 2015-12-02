@@ -15,7 +15,7 @@ public class Blit : MonoBehaviour
         Pause.pause();
         material = new Material(Shader.Find("Hidden/Blit"));
         material.SetTexture(Tags.ShaderParams.effectTexture, tex);
-        Callback.DoLerpRealtime((float l) => intensity = l, time, this, reverse: true)
+        Callback.DoLerp((float l) => intensity = l, time, this, reverse: true, mode: Callback.Mode.REALTIME)
             .FollowedBy(() => { intensity = 0; Pause.unPause(); Destroy(this);}, this);
     }
 

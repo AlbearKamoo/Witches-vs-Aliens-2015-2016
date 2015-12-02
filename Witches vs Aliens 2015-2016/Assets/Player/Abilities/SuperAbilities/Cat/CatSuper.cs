@@ -33,7 +33,7 @@ public class CatSuper : SuperAbility {
         normalVisuals = transform.parent.GetComponentInChildren<AbstractPlayerVisuals>().gameObject;
         ensureInstantiation();
         base.Start();
-        ready = true; //for easy testing
+        //ready = true; //for easy testing
     }
 
     protected override void OnActivate()

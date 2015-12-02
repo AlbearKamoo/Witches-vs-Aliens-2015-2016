@@ -97,7 +97,7 @@ public class SuperGoal : MonoBehaviour {
 
     void Start()
     {
-        Callback.FireForNextFrame(() => puckFX = GameObject.FindGameObjectWithTag(Tags.puck).GetComponent<PuckFX>(), this);
+        Callback.FireForUpdate(() => puckFX = GameObject.FindGameObjectWithTag(Tags.puck).GetComponent<PuckFX>(), this);
     }
 
 	// Use this for initialization

@@ -14,8 +14,8 @@ public class BlitGreyscale : MonoBehaviour {
     void Awake()
     {
         material = new Material(Shader.Find("Unlit/Greyscale"));
-        Callback.DoLerpRealtime((float l) => intensity = l, time/3, this)
-            .FollowedBy(() => Callback.DoLerpRealtime((float l) => value = l, 2*time/3, this, reverse: true), this);
+        Callback.DoLerp((float l) => intensity = l, time / 3, this, mode: Callback.Mode.REALTIME)
+            .FollowedBy(() => Callback.DoLerp((float l) => value = l, 2 * time / 3, this, reverse: true, mode : Callback.Mode.REALTIME), this);
     }
 
     // Postprocess the image

@@ -14,10 +14,6 @@ public abstract class NotSuperAbility : AbstractAbility, IObservable<AbilityStat
 
     public override bool ready
     {
-        get
-        {
-            return base.ready;
-        }
         set
         {
             base.ready = value;
@@ -30,11 +26,10 @@ public abstract class NotSuperAbility : AbstractAbility, IObservable<AbilityStat
         return new AbilityStateChangedMessage(ready);
     }
 
-    protected override void Start()
+    protected virtual void Start()
     {
-        base.Start();
         GameObject UI = Instantiate(AbilityUIPrefab);
-        UI.transform.SetParent(transform.parent.GetComponentInChildren<AutoRotate>().transform, false);
+        UI.transform.SetParent(transform.GetBaseParent().GetComponentInChildren<AutoRotate>().transform, false);
         UI.GetComponent<AbstractAbilityUI>().Construct(constructorInfo());
         ready = true;
     }
@@ -47,6 +42,11 @@ public abstract class NotSuperAbility : AbstractAbility, IObservable<AbilityStat
     protected override void OnDeactivate()
     {
         base.OnDeactivate();
+        StartCooldown();
+    }
+
+    protected virtual void StartCooldown()
+    {
         Callback.FireAndForget(() => ready = true, cooldownTime, this);
     }
 

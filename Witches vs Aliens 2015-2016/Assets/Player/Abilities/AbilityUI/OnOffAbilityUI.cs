@@ -12,7 +12,6 @@ public class OnOffAbilityUI : AbstractAbilityUI {
 
     public override void Notify(AbilityStateChangedMessage m) //update our display state
     {
-        Debug.Log(m.ready);
         if (m.ready)
         {
             vfx.Play();
@@ -30,7 +29,7 @@ public class OnOffAbilityUI : AbstractAbilityUI {
         {
             vfx.Pause();
             vfx.Clear();
-            Callback.FireForNextFrame(() => vfx.Play(), this);
+            Callback.FireForUpdate(() => vfx.Play(), this);
         }
     }
 

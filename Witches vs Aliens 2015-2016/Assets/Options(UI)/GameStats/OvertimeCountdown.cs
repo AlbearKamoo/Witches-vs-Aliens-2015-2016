@@ -2,7 +2,7 @@
 using UnityEngine.UI;
 using System.Collections;
 
-public class OvertimeCountdown : Countdown {
+public class OvertimeCountdown : TimerCountdown {
 
     Image backgroundImg;
     Material background;

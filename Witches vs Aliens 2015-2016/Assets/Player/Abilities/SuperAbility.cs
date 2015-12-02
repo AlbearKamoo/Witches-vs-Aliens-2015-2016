@@ -26,10 +26,8 @@ public class SuperAbility : AbstractAbility
 
     SpriteRenderer rend;
 
-    protected override void Start()
+    protected virtual void Start()
     {
-        base.Start();
-
         if(transform.parent != null)
             rend = transform.parent.Find("SuperUI").GetComponent<SpriteRenderer>();
     }

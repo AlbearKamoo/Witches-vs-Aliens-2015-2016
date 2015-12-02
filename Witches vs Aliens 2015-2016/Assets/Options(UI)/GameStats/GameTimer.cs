@@ -24,26 +24,12 @@ public class GameTimer : MonoBehaviour {
     Outline timeOutline;
     Image backgroundImg;
     Material background;
-    Coroutine timer;
+    Countdown timer;
     Queue<float> countdownTimes = new Queue<float>(new float[] { 5, 4, 3, 2, 1, -1 }); //-1 to ensure that Peek() does not fail
     public bool running
     {
-        get { return timer != null; }
-        set
-        {
-            if (timer == null)
-            {
-                if (value)
-                    timer = StartCoroutine(countdown());
-            }
-            else if (!value)
-            {
-                StopCoroutine(timer);
-                timer = null;
-            }
-
-
-        }
+        get { return timer.active; }
+        set { timer.active = value; }
     }
     IEnumerator countdown()
     {
@@ -52,7 +38,7 @@ public class GameTimer : MonoBehaviour {
             yield return null;
             if (timeRemainingSec < countdownTimes.Peek())
             {
-                SimplePool.Spawn(CountdownPrefab, Vector3.zero).GetComponent<Countdown>().count = countdownTimes.Dequeue().ToString();
+                SimplePool.Spawn(CountdownPrefab, Vector3.zero).GetComponent<TimerCountdown>().count = countdownTimes.Dequeue().ToString();
             }
             timeRemainingSec -= Time.deltaTime;
             if (timeRemainingSec < 0)
@@ -65,10 +51,10 @@ public class GameTimer : MonoBehaviour {
                     //overtime!
                     UITimer.text = overtime;
                     UITimer.alignment = TextAnchor.MiddleCenter;
-                    SimplePool.Spawn(OvertimeCountdownPrefab, Vector3.zero).GetComponent<Countdown>().count = overtime;
+                    SimplePool.Spawn(OvertimeCountdownPrefab, Vector3.zero).GetComponent<TimerCountdown>().count = overtime;
                     //and VFX
                 }
-                timer = null;
+                timer.Stop();
                 yield break;
             }
             else
@@ -82,6 +68,7 @@ public class GameTimer : MonoBehaviour {
         timeOutline = GetComponent<Outline>();
         normalOutlineColor = timeOutline.effectColor;
         setTime();
+        timer = new Countdown(() => this.StartCoroutine(countdown()), this);
 	}
 
     void Start()

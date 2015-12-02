@@ -3,6 +3,8 @@ using System.Collections;
 
 public class NullAbilityUI : AbstractAbilityUI
 {
+    public override void Construct(AbilityUIConstructorInfo info)
+    { }
     public override void Notify(AbilityStateChangedMessage m) //update our display state
     { }
 

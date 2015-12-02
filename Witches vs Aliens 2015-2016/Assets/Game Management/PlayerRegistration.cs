@@ -36,7 +36,7 @@ public class PlayerRegistration : MonoBehaviour {
     RegisteredPlayerUIView[] playerUI;
     RegistrationState[] registrationStates;
 
-    Coroutine startCountdown;
+    Countdown startCountdown;
 	void Awake ()
     {
         data = GetComponent<SetupData>();
@@ -49,6 +49,8 @@ public class PlayerRegistration : MonoBehaviour {
         {
             registrationStates[i] = RegistrationState.NOTREGISTERED;
         }
+
+        startCountdown = Countdown.TimedCountdown(startGame, 5, this);
 	}
 
     void Update()
@@ -118,12 +120,12 @@ public class PlayerRegistration : MonoBehaviour {
 
         //now check if all are ready
         bool ready = registrationStates.All<RegistrationState>((RegistrationState s) => s != RegistrationState.REGISTERING) && registrationStates.Any<RegistrationState>((RegistrationState s) => s == RegistrationState.READY);
-        if (startCountdown == null)
+        if (!startCountdown.active)
         {
             if (ready)
             {
                 introMusic = Instantiate(introMusicPrefab);
-                startCountdown = Callback.FireAndForget(startGame, 5, this);
+                startCountdown.Start();
                 for (int i = 0; i < playerSelections.Length; i++)
                     if (registrationStates[i] == RegistrationState.READY)
                         playerSelections[i].GetComponent<InputToAction>().movementEnabled = false;
@@ -133,7 +135,7 @@ public class PlayerRegistration : MonoBehaviour {
         {
             if (!ready)
             {
-                StopCoroutine(startCountdown);
+                startCountdown.Stop();
                 startCountdown = null;
                 Destroy(introMusic);
                 for (int i = 0; i < playerSelections.Length; i++)

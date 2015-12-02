@@ -16,7 +16,7 @@ public class ScreenFlash : MonoBehaviour {
     private IEnumerator FlashRoutine(float durationRealSeconds, float startAlpha = 0.5f)
     {
         //this effect is likely to be called alongside time-warp effects, so we'll use real time
-        yield return Callback.DoLerpRealtime((float x) => { group.alpha = (Mathf.Lerp(startAlpha, 0, (x))); }, durationRealSeconds, this);
+        yield return Callback.DoLerp((float x) => { group.alpha = (Mathf.Lerp(startAlpha, 0, (x))); }, durationRealSeconds, this, mode: Callback.Mode.REALTIME);
         flash = null;
     }
 

@@ -35,11 +35,6 @@ public abstract class AbstractAbility : MonoBehaviour {
 
     public abstract AbilityType type { get; }
 
-    protected virtual void Start()
-    {
-        OnDeactivate();
-    }
-
     public bool Fire(Vector2 direction) //not virtual to encourage you to put your stuff in OnFire
     {
         if (ready)
