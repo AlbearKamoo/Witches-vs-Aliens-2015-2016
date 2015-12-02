@@ -39,6 +39,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95e70b2fb85a85942802a128e11002cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AbilityUIPrefab: {fileID: 174334, guid: fa4c3179737403447a9bbfd85931d9fb, type: 2}
   cooldownTime: 3
   distance: 6
   numFXBolts: 3
@@ -66,6 +67,10 @@ Prefab:
       propertyPath: numFXBolts
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: AbilityUIPrefab
+      value: 
+      objectReference: {fileID: 174334, guid: fa4c3179737403447a9bbfd85931d9fb, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 123882}

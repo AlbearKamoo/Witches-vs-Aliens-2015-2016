@@ -114,6 +114,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e13d56536cc11c42a78b0ee5338ccf4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PlayOnAwake: 0
   actions:
   - {fileID: 11432040}
   sound: {fileID: 8278238}
@@ -145,6 +146,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21c9b8f96f375644c8c2ad69ea98aa61, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AbilityUIPrefab: {fileID: 172952, guid: 8a0dac2bb75bc8343920ccf8eeff93fd, type: 2}
   cooldownTime: .5
   speedMultiplier: 2.5
   maxDuration: .333333343
@@ -1324,6 +1326,10 @@ Prefab:
       propertyPath: ShapeModule.randomDirection
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: AbilityUIPrefab
+      value: 
+      objectReference: {fileID: 172952, guid: 8a0dac2bb75bc8343920ccf8eeff93fd, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 176148}

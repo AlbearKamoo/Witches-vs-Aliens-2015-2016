@@ -29,11 +29,11 @@ public class CatSuper : SuperAbility {
     {
         
         action = GetComponentInParent<InputToAction>();
-        defaultAbilityUI = transform.parent.Find("UI").gameObject;
+        defaultAbilityUI = transform.parent.GetComponentInChildren<AutoRotate>().gameObject;
         normalVisuals = transform.parent.GetComponentInChildren<AbstractPlayerVisuals>().gameObject;
         ensureInstantiation();
         base.Start();
-        //ready = true; //for easy testing
+        ready = true; //for easy testing
     }
 
     protected override void OnActivate()
@@ -49,17 +49,14 @@ public class CatSuper : SuperAbility {
         action.MoveAbility = defaultMove;
         action.GenAbility = defaultGeneric;
         defaultAbilityUI.SetActive(true);
-        foreach (ParticleSystem abilityUI in defaultAbilityUI.GetComponentsInChildren<ParticleSystem>())
-        {
-            abilityUI.Play();
-        }
         catVisuals.enabled = false;
         normalVisuals.SetActive(true);
+        defaultMove.ready = true;
+        defaultGeneric.ready = true;
     }
 
     protected override void onFire(Vector2 direction)
     {
-        ready = false;
         active = true;
 
         Callback.FireAndForget(() =>

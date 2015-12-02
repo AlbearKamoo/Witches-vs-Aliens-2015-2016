@@ -3,6 +3,8 @@ using System.Collections;
 
 public abstract class NotSuperAbility : AbstractAbility, IObservable<AbilityStateChangedMessage>
 {
+    [SerializeField]
+    protected GameObject AbilityUIPrefab;
 
     Observable<AbilityStateChangedMessage> _stateChangedObservable = new Observable<AbilityStateChangedMessage>();
     public Observable<AbilityStateChangedMessage> Observable()
@@ -19,14 +21,27 @@ public abstract class NotSuperAbility : AbstractAbility, IObservable<AbilityStat
         set
         {
             base.ready = value;
-            _stateChangedObservable.Post(new AbilityStateChangedMessage(value, type));
+            _stateChangedObservable.Post(stateMessage());
         }
+    }
+
+    protected virtual AbilityStateChangedMessage stateMessage()
+    {
+        return new AbilityStateChangedMessage(ready);
     }
 
     protected override void Start()
     {
         base.Start();
+        GameObject UI = Instantiate(AbilityUIPrefab);
+        UI.transform.SetParent(transform.parent.GetComponentInChildren<AutoRotate>().transform, false);
+        UI.GetComponent<AbstractAbilityUI>().Construct(constructorInfo());
         ready = true;
+    }
+
+    protected virtual AbilityUIConstructorInfo constructorInfo()
+    {
+        return new AbilityUIConstructorInfo(this);
     }
 
     protected override void OnDeactivate()
@@ -42,10 +57,8 @@ public abstract class NotSuperAbility : AbstractAbility, IObservable<AbilityStat
 public class AbilityStateChangedMessage
 {
     public readonly bool ready;
-    public readonly AbilityType type;
-    public AbilityStateChangedMessage(bool ready, AbilityType type)
+    public AbilityStateChangedMessage(bool ready)
     {
         this.ready = ready;
-        this.type = type;
     }
 }

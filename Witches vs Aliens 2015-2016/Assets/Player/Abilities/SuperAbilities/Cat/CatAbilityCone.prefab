@@ -61,6 +61,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9da727fe67722c44180958afda06ab6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AbilityUIPrefab: {fileID: 172952, guid: 8a0dac2bb75bc8343920ccf8eeff93fd, type: 2}
   cooldownTime: 0
   maxDuration: .100000001
 --- !u!198 &19829234
@@ -1162,6 +1163,10 @@ Prefab:
       propertyPath: cooldownTime
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: AbilityUIPrefab
+      value: 
+      objectReference: {fileID: 172952, guid: 8a0dac2bb75bc8343920ccf8eeff93fd, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 119870}
