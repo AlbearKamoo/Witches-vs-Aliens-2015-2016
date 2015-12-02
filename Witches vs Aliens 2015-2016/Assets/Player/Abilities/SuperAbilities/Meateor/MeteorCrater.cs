@@ -52,7 +52,7 @@ public class MeteorCrater : MonoBehaviour, ISpawnable {
                 InputToAction otherController = other.GetComponentInParent<InputToAction>();
                 if (!modifiers.ContainsKey(otherController))
                 {
-                    modifiers[otherController] = otherController.maxSpeed.addModifier(speedNerf);
+                    modifiers[otherController] = otherController.maxSpeedTracker.addModifier(speedNerf);
                 }
             }
         }
@@ -65,7 +65,7 @@ public class MeteorCrater : MonoBehaviour, ISpawnable {
             InputToAction otherController = other.GetComponentInParent<InputToAction>();
             if (modifiers.ContainsKey(otherController))
             {
-                otherController.maxSpeed.removeModifier(modifiers[otherController]);
+                otherController.maxSpeedTracker.removeModifier(modifiers[otherController]);
                 modifiers.Remove(otherController);
             }
         }
@@ -75,7 +75,7 @@ public class MeteorCrater : MonoBehaviour, ISpawnable {
     {
         foreach (var element in modifiers)
         {
-            element.Key.maxSpeed.removeModifier(element.Value);
+            element.Key.maxSpeedTracker.removeModifier(element.Value);
         }
         coll.enabled = false;
         float startingGlowCutoff = glowMat.GetFloat(Tags.ShaderParams.cutoff);

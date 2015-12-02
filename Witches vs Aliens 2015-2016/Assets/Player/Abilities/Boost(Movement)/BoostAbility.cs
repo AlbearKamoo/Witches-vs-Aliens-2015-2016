@@ -67,7 +67,7 @@ public class BoostAbility : MovementAbility, IObserver<ResetMessage> {
     IEnumerator Boost(Vector2 direction)
     {
         if (speedMod == null)
-            speedMod = action.maxSpeed.addModifier(speedMultiplier);
+            speedMod = action.maxSpeedTracker.addModifier(speedMultiplier);
         else
             speedMod.value = speedMultiplier;
 
@@ -76,7 +76,7 @@ public class BoostAbility : MovementAbility, IObserver<ResetMessage> {
         else
             accelMod.value = baseAccelDebuff;
 
-        rigid.velocity = action.maxSpeed * direction.normalized;
+        rigid.velocity = action.maxSpeedTracker * direction.normalized;
         rigid.mass = rigidMass * massCoefficient;
 
         active = true;
@@ -105,7 +105,7 @@ public class BoostAbility : MovementAbility, IObserver<ResetMessage> {
             rigid.mass = Mathf.Lerp(rigidMass * massCoefficient, rigidMass, lerpValue);
             if (time > boostDecayTime)
             {
-                action.maxSpeed.removeModifier(speedMod);
+                action.maxSpeedTracker.removeModifier(speedMod);
                 speedMod = null;
                 yield break;
             }

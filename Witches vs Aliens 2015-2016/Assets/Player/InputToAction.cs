@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 [RequireComponent(typeof(Rigidbody2D))]
-public class InputToAction : MonoBehaviour {
+public class InputToAction : MonoBehaviour, ISpeedLimiter
+{
 
     Rigidbody2D rigid;
     MovementAbility moveAbility;
@@ -29,7 +30,8 @@ public class InputToAction : MonoBehaviour {
     [SerializeField]
     protected float initMaxSpeed;
     private FloatStatTracker _maxSpeed;
-    public FloatStatTracker maxSpeed { get { return _maxSpeed; } }
+    public FloatStatTracker maxSpeedTracker { get { return _maxSpeed; } }
+    public float maxSpeed { get { return _maxSpeed.value; } }
 
     [SerializeField]
     protected float initAccel;
