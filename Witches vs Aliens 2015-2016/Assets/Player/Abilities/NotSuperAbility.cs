@@ -29,7 +29,7 @@ public abstract class NotSuperAbility : AbstractAbility, IObservable<AbilityStat
     protected virtual void Start()
     {
         GameObject UI = Instantiate(AbilityUIPrefab);
-        UI.transform.SetParent(transform.GetBaseParent().GetComponentInChildren<AutoRotate>().transform, false);
+        UI.transform.SetParent(transform.GetBaseParent().GetComponentInChildren<AbilityUIParent>().transform, false);
         UI.GetComponent<AbstractAbilityUI>().Construct(constructorInfo());
         ready = true;
     }

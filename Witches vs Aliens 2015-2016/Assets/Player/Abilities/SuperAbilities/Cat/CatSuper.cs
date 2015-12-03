@@ -29,7 +29,7 @@ public class CatSuper : SuperAbility {
     {
         
         action = GetComponentInParent<InputToAction>();
-        defaultAbilityUI = transform.parent.GetComponentInChildren<AutoRotate>().gameObject;
+        defaultAbilityUI = transform.parent.GetComponentInChildren<AbilityUIParent>().gameObject;
         normalVisuals = transform.parent.GetComponentInChildren<AbstractPlayerVisuals>().gameObject;
         ensureInstantiation();
         base.Start();
