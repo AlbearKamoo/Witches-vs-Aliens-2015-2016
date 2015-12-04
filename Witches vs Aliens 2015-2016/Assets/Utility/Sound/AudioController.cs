@@ -30,7 +30,7 @@ public class AudioController : MonoBehaviour, ISpawnable {
     }
 }
 
-public abstract class AudioAction : MonoBehaviour
+public interface AudioAction
 {
-    public abstract void ApplyAudioAction(AudioSource target);
+    void ApplyAudioAction(AudioSource target);
 }

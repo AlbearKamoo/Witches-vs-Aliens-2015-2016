@@ -1,14 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class RandomizePitchAudioAction : AudioAction {
+public class RandomizePitchAudioAction : MonoBehaviour, AudioAction {
     [SerializeField]
     protected float minPitch;
 
     [SerializeField]
     protected float maxPitch;
 
-    public override void ApplyAudioAction(AudioSource target)
+    public void ApplyAudioAction(AudioSource target)
     {
         target.pitch = Random.Range(minPitch, maxPitch);
     }

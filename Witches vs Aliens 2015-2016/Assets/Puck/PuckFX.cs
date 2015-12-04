@@ -54,7 +54,7 @@ public class PuckFX : MonoBehaviour, IObserver<BumpedSideChangedMessage> {
         vfx = GetComponent<VisualAnimate>();
         coll = GetComponent<Collider2D>();
         bumped = GetComponent<LastBumped>();
-        bumped.Observable().Subscribe(this);
+        bumped.Subscribe(this);
 	}
     public void Hide() //called after a goal is scored
     {

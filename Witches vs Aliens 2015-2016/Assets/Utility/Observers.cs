@@ -65,6 +65,21 @@ public static class IObservableExtension
     {
         return self.Observable(self);
     }
+
+    public static void Subscribe<T>(this IObservable<T> self, IObserver<T> subscriber)
+    {
+        self.Observable().Subscribe(subscriber);
+    }
+
+    public static void Unsubscribe<T>(this IObservable<T> self, IObserver<T> subscriber)
+    {
+        self.Observable().Unsubscribe(subscriber);
+    }
+
+    public static void Post<T>(this IObservable<T> self, T message)
+    {
+        self.Post(message);
+    }
 }
 
 //base message; child classes can be used to carry data

@@ -49,7 +49,7 @@ public class BoostAbility : MovementAbility, IObserver<ResetMessage> {
         action = GetComponentInParent<InputToAction>();
         vfx.startSize = 2*transform.parent.GetComponentInChildren<CircleCollider2D>().radius;
         rigid = GetComponentInParent<Rigidbody2D>();
-        GetComponentInParent<IObservable<ResetMessage>>().Observable().Subscribe(this);
+        GetComponentInParent<IObservable<ResetMessage>>().Subscribe(this);
         rigidMass = rigid.mass;
     }
 
