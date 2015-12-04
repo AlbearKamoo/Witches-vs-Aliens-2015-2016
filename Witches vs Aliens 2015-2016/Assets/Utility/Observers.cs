@@ -55,8 +55,16 @@ public interface IObserver<T>
 //interface to indicate that a monobehaviour has an observable on it
 public interface IObservable<T>
 {
-    Observable<T> Observable();
+    Observable<T> Observable(IObservable<T> self); // self isJustHereForFunctionOverloading
     //  { return <*your observable here*>; }
+}
+
+public static class IObservableExtension
+{
+    public static Observable<T> Observable<T>(this IObservable<T> self)
+    {
+        return self.Observable(self);
+    }
 }
 
 //base message; child classes can be used to carry data

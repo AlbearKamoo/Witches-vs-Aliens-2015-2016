@@ -4,7 +4,7 @@ using System.Collections;
 public class LastBumped : MonoBehaviour, IObservable<BumpedSideChangedMessage>
 {
     Observable<BumpedSideChangedMessage> _bumpedSideChangedObservable = new Observable<BumpedSideChangedMessage>();
-    public Observable<BumpedSideChangedMessage> Observable() { return _bumpedSideChangedObservable; }
+    public Observable<BumpedSideChangedMessage> Observable(IObservable<BumpedSideChangedMessage> self) { return _bumpedSideChangedObservable; }
     //keeps track of who bumped the puck last
     Side _side;
     public Side side { get { return _side; } }

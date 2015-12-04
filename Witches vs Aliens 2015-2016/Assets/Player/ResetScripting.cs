@@ -3,7 +3,7 @@ using System.Collections;
 
 public class ResetScripting : MonoBehaviour, IObservable<ResetMessage> {
 
-    Observable<ResetMessage> resetMessageObservable = new Observable<ResetMessage>(); public Observable<ResetMessage> Observable() { return resetMessageObservable; }
+    Observable<ResetMessage> resetMessageObservable = new Observable<ResetMessage>(); public Observable<ResetMessage> Observable(IObservable<ResetMessage> self) { return resetMessageObservable; }
     InputToAction action;
     MovementAbility movementAbility;
     GenericAbility genericAbility;

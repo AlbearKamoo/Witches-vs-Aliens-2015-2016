@@ -7,9 +7,9 @@ public abstract class NotSuperAbility : AbstractAbility, IObservable<AbilityStat
     protected GameObject AbilityUIPrefab;
 
     Observable<AbilityStateChangedMessage> _stateChangedObservable = new Observable<AbilityStateChangedMessage>();
-    public Observable<AbilityStateChangedMessage> Observable()
+    public Observable<AbilityStateChangedMessage> Observable(IObservable<AbilityStateChangedMessage> self)
     {
-        return _stateChangedObservable;
+        return (Observable<AbilityStateChangedMessage>)_stateChangedObservable;
     }
 
     public override bool ready
