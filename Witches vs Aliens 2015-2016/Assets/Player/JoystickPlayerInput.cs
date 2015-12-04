@@ -23,7 +23,7 @@ public class JoystickPlayerInput : AbstractPlayerInput {
             action.FireAbility(AbilityType.MOVEMENT);
             prevMovement = Input.GetAxis(bindings.movementAbilityAxis);
         }
-        if (Input.GetAxis(bindings.superAbilityAxis) != 0)
+        if (Input.GetAxis(bindings.superAbilityAxis) != prevSuper)
         {
             Debug.Log(Input.GetAxis(bindings.superAbilityAxis));
             action.FireAbility(AbilityType.SUPER);
@@ -40,10 +40,9 @@ public class JoystickPlayerInput : AbstractPlayerInput {
             action.StopFireAbility(AbilityType.MOVEMENT);
             prevMovement = 0;
         }
-        if (prevSuper != 0 && Input.GetAxis(bindings.superAbilityAxis) == 0)
+        if (prevSuper == Input.GetAxis(bindings.superAbilityAxis))
         {
             action.StopFireAbility(AbilityType.SUPER);
-            prevSuper = 0;
         }
         if (prevGeneric != 0 && Input.GetAxis(bindings.genericAbilityAxis) == 0)
         {
