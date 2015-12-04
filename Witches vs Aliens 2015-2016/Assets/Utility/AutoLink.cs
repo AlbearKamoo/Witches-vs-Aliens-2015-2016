@@ -6,15 +6,16 @@ using System.Reflection;
 using System.Linq;
 using System;
 using UnityEngine.Assertions;
-
-//detects if any publicly accessible fields haven't been set via inspector
-//currently requires [System.Serializable] classes to have a default constructor and extended from Object
-//you can use the [CanBeDefaultOrNull] attribute if you want this script to ignore a field
-//currently buggy in that it will also detect non-inspector classes (i.e. dictionary), but for 99.99% the 'proper' style would be to make those properties
-//there is AutoLink functionality; for example, [AutoLink(parentTag="Player")] would set the field to the nearest appropriate component on a player-tagged gameobject
-
+//<summary>
+//Detects if any publicly accessible fields haven't been set via inspector, and sets them automatically if they have the [AutoLink] attribute.
+//</summary> <remarks>
+//Currently requires [System.Serializable] classes to have a default constructor and extended from Object to detect if they are empty.
+//You can use the [CanBeDefaultOrNull] attribute if you want this script to ignore a field.
+//Currently buggy in that it will also detect non-inspector-serializable classes (i.e. dictionary), but for 99.99% the 'proper' style would be to make those properties.
+//There is AutoLink functionality; for example, [AutoLink(parentTag="Player")] would set the field to the nearest appropriate component on a player-tagged gameobject.
+//</remarks>
 [ExecuteInEditMode]
-public class CheckEditorLinks : MonoBehaviour {
+public class AutoLink : MonoBehaviour {
 #if UNITY_EDITOR
     /*
     //tests
@@ -142,17 +143,20 @@ public class CheckEditorLinks : MonoBehaviour {
     [AutoLink(parentTag=Tags.untagged, parentName="EnableToCheckEditorLinks")]
     public Transform testPublicTransformAutoLinkByNameAndTag;
      * */
-
-    // Use this for initialization
+    ///<summary>Called when inspector is loaded.</summary>
     void Awake()
     {
         if (UnityEditor.EditorApplication.isPlayingOrWillChangePlaymode)
             Destroy(this.gameObject); //don't run in play mode
     }
+
+    //<summary>Called when anything is changed in the inspector.</summary>
 	void Update () {
         CheckAllLinks();
 	}
-
+    /// <summary>
+    /// Uses Reflection to check all inspector-accessible fields to determine that they have been linked.
+    /// </summary>
     void CheckAllLinks()
     {
         foreach (MonoBehaviour m in GameObject.FindObjectsOfType(typeof(MonoBehaviour))) //for every monobehaviour
@@ -192,7 +196,11 @@ public class CheckEditorLinks : MonoBehaviour {
             }
         }
     }
-
+    /// <summary>
+    /// Links a inspector-accessible field to the appropriate value, if possible.
+    /// </summary>
+    /// <param name="field">The field to set.</param>
+    /// <param name="script">The script on which to set the field.</param>
     void RunAutolinking(FieldInfo field, MonoBehaviour script)
     {
         foreach (Attribute a in System.Attribute.GetCustomAttributes(field))
@@ -312,7 +320,13 @@ public class CheckEditorLinks : MonoBehaviour {
         }
         //if nothing gets autolinked, then the checkNull/Empty functionality will catch it
     }
-
+    /// <summary>
+    /// Determines if an autolinked attribute has a valid link.
+    /// </summary>
+    /// <param name="field">The field to check.</param>
+    /// <param name="script">The script on which to check the field.</param>
+    /// <param name="autolinkInfo">The data included in the field's [AutoLink].</param>
+    /// <returns><c>True</c> if the link is valid; otherwise, <c>False</c>.</returns>
     bool checkExistingLinkValid(FieldInfo field, MonoBehaviour script, AutoLinkAttribute autolinkInfo)
     {
         var value = field.GetValue(script);
@@ -382,7 +396,12 @@ public class CheckEditorLinks : MonoBehaviour {
             }
         }
     }
-
+    /// <summary>
+    /// Determines if a field is null or empty.
+    /// </summary>
+    /// <param name="f">The field to check.</param>
+    /// <param name="m">The script on which to check the field.</param>
+    /// <returns><c>True</c> if the field is null or empty; otherwise, <c>False</c>.</returns>
     bool isNullOrEmpty(FieldInfo f, MonoBehaviour m)
     {
         var value = f.GetValue(m);
@@ -421,34 +440,46 @@ public class CheckEditorLinks : MonoBehaviour {
 }
 
 #if UNITY_EDITOR
+/// <summary>
+/// Marks the field to be ignored by AutoLink's null or empty checking.
+/// </summary>
 [AttributeUsage(AttributeTargets.Field)]
 public class CanBeDefaultOrNullAttribute : Attribute
 {}
 
+/// <summary>
+/// Marks the field to be linked automatically.
+/// </summary>
 [AttributeUsage(AttributeTargets.Field, AllowMultiple = true)]
 public class AutoLinkAttribute : PropertyAttribute
 {
+    /// <summary>
+    /// Name of the link target's parent object
+    /// </summary>
     public string parentName;
+    /// <summary>
+    /// Tag of the link target's parent object
+    /// </summary>
     public string parentTag;
+    /// <summary>
+    /// Path between the parent object set from <see cref="parentName"/> and <see cref="parentTag"/> to the link target's direct parent
+    /// </summary>
     public string childPath;
-
+    /// <summary>
+    /// Default Constructor.
+    /// </summary>
     public AutoLinkAttribute() //default constructor
     {
         //set default values for the optional fields
         parentName = parentTag = childPath = string.Empty;
     }
 }
-
+/// <summary>
+/// Custom PropertyDrawer for AutoLinked fields.
+/// </summary>
 [CustomPropertyDrawer(typeof(AutoLinkAttribute))]
 public class AutoLinkDrawer : PropertyDrawer
 {
-    // Used to calculate the height of the box
-    public static Texture2D lineTex = null;
-
-
-    AutoLinkAttribute divider { get { return ((AutoLinkAttribute)attribute); } }
-
-
     // Override the GUI drawing for this attribute
     public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
     {
