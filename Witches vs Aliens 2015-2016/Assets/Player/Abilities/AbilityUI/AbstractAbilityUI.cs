@@ -15,7 +15,7 @@ public abstract class AbstractAbilityUI : MonoBehaviour, IObserver<AbilityStateC
     public virtual void Construct(AbilityUIConstructorInfo info)
     {
         ability = info.ability;
-        ability.Observable(ability).Subscribe(this);
+        ability.Observable().Subscribe(this);
         GetComponentInParent<IObservable<ResetMessage>>().Observable<ResetMessage>().Subscribe(this);
         radius = radiusMultiplier * ability.transform.parent.GetComponentInChildren<CircleCollider2D>().radius;
         switch (type)
