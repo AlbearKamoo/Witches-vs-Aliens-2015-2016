@@ -76,7 +76,7 @@ public class SpringMesh : MonoBehaviour {
     void Update()
     {
         seed += new Vector2(0, Time.deltaTime);
-        CreateMesh();
+        UpdateMesh();
     }
 
     void CreateMesh()
@@ -86,47 +86,45 @@ public class SpringMesh : MonoBehaviour {
         List<Vector2> uvs = new List<Vector2>();
         List<int> tris = new List<int>();
 
-        int t = 0;  // number of tris
         for (int x = 1; x < width; x++)
         {
             for (int y = 1; y < height; y++)
             {
-
-                float x1 = nodes[x - 1, y].transform.position.x;
-                float y1 = nodes[x, y].transform.position.y;
-                float x2 = nodes[x, y].transform.position.x;
-                float y2 = nodes[x, y].transform.position.y;
-
                 Vector3 v1 = nodes[x - 1, y - 1].transform.position;//new Vector3(x1, y1, 0);
                 Vector3 v2 = nodes[x - 1, y].transform.position;//new Vector3(x1, y2, 0);
                 Vector3 v3 = nodes[x, y].transform.position;//new Vector3(x2, y2, 0);
                 Vector3 v4 = nodes[x, y - 1].transform.position;//new Vector3(x2, y1, 0);
 
+                int v = verts.Count; //future index of v1
+
                 verts.Add(v1);
                 cols.Add(PerlinColor(seed, v1));
+                uvs.Add(new Vector2(0.0f, 0.0f));
+
                 verts.Add(v2);
                 cols.Add(PerlinColor(seed, v2));
+                uvs.Add(new Vector2(0.0f, 1.0f));
+
                 verts.Add(v3);
                 cols.Add(PerlinColor(seed, v3));
-                verts.Add(v3);
-                cols.Add(PerlinColor(seed, v3));
+                uvs.Add(new Vector2(1.0f, 1.0f));
+
                 verts.Add(v4);
                 cols.Add(PerlinColor(seed, v4));
-                verts.Add(v1);
-                cols.Add(PerlinColor(seed, v1));
-
-                // main texture uvs
-                uvs.Add(new Vector2(0.0f, 0.0f));
                 uvs.Add(new Vector2(0.0f, 1.0f));
-                uvs.Add(new Vector2(1.0f, 1.0f));
-                uvs.Add(new Vector2(1.0f, 1.0f));
-                uvs.Add(new Vector2(0.0f, 1.0f));
-                uvs.Add(new Vector2(0.0f, 0.0f));
 
-                for (int i = 0; i < 6; i++)
-                    tris.Add(t++);
+                //upper left triangle
+                tris.Add(v);
+                tris.Add(v + 1);
+                tris.Add(v + 2);
+
+                //bottom right triangle
+                tris.Add(v + 2);
+                tris.Add(v + 3);
+                tris.Add(v);
             }
         }
+
         Mesh m = new Mesh();
         m.vertices = verts.ToArray();
         m.colors32 = cols.ToArray();
@@ -134,6 +132,38 @@ public class SpringMesh : MonoBehaviour {
         m.triangles = tris.ToArray();
         m.RecalculateBounds();
         filter.mesh = m;
+    }
+
+    void UpdateMesh()
+    {
+        Vector3[] verts = new Vector3[filter.mesh.vertexCount];
+        Color32[] cols = new Color32[filter.mesh.vertexCount];
+        int index = 0;
+
+        for (int x = 1; x < width; x++)
+        {
+            for (int y = 1; y < height; y++)
+            {
+                Vector3 v1 = nodes[x - 1, y - 1].transform.position;//new Vector3(x1, y1, 0);
+                Vector3 v2 = nodes[x - 1, y].transform.position;//new Vector3(x1, y2, 0);
+                Vector3 v3 = nodes[x, y].transform.position;//new Vector3(x2, y2, 0);
+                Vector3 v4 = nodes[x, y - 1].transform.position;//new Vector3(x2, y1, 0);
+
+                verts[index] = v1;
+                cols[index++] = PerlinColor(seed, v1);
+
+                verts[index] = v2;
+                cols[index++] = PerlinColor(seed, v2);
+
+                verts[index] = v3;
+                cols[index++] = PerlinColor(seed, v3);
+
+                verts[index] = v4;
+                cols[index++] = PerlinColor(seed, v4);
+            }
+        }
+        filter.mesh.vertices = verts;
+        filter.mesh.colors32 = cols;
     }
 
     static Color PerlinColor(Vector2 seed, Vector2 pos)
