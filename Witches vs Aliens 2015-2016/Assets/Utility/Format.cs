@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Net;
+using System.Net.Sockets;
 
 //a class to assist with formatting
 
@@ -69,5 +71,21 @@ public static class Format{
         numSeconds = (numSeconds % 1f) / 0.001f;
         result.Append(((int)numSeconds).ToString("000"));
         return result.ToString();
+    }
+
+    public static string localIPAddress()
+    {
+        IPHostEntry host;
+        string localIP = "";
+        host = Dns.GetHostEntry(Dns.GetHostName());
+        foreach (IPAddress ip in host.AddressList)
+        {
+            if (ip.AddressFamily == AddressFamily.InterNetwork)
+            {
+                localIP = ip.ToString();
+                break;
+            }
+        }
+        return localIP;
     }
 }

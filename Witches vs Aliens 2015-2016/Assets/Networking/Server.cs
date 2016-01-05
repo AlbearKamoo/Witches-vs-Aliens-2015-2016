@@ -35,6 +35,7 @@ public class Server : MonoBehaviour
         StartCoroutine(SpawnRandomCoroutine());
         // Send sphere data every so often to those connected
         StartCoroutine(SendCoroutine());
+        Debug.Log(Format.localIPAddress());
     }
 
     // Send sphere data every so often to those connected
