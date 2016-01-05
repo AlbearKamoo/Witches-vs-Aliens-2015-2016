@@ -10,7 +10,7 @@ public class AudioController : MonoBehaviour, ISpawnable {
     protected bool PlayOnAwake;
 
     [SerializeField]
-    protected AudioAction[] actions;
+    public AudioAction[] actions;
 
     [SerializeField]
     protected AudioSource sound;
@@ -30,7 +30,7 @@ public class AudioController : MonoBehaviour, ISpawnable {
     }
 }
 
-public interface AudioAction
+public abstract class AudioAction : MonoBehaviour
 {
-    void ApplyAudioAction(AudioSource target);
+    public abstract void ApplyAudioAction(AudioSource target);
 }
