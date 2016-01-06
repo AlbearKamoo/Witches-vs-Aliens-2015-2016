@@ -517,7 +517,7 @@ MonoBehaviour:
   - character:
       basePlayer: {fileID: 146214, guid: a8095cd9d9bc36f4e87d6eeda567d5fa, type: 2}
       visuals: {fileID: 134630, guid: 4af836bb28ddc8e41acdfd7407227704, type: 2}
-      movementAbility: {fileID: 177582, guid: b3ffc9938492a984a8513ab58c226585, type: 2}
+      movementAbility: {fileID: 186010, guid: 999ab97c110d5bc4baa999b79b3005e9, type: 2}
       genericAbility: {fileID: 181508, guid: 38f5e53ae2e43cb4594bd8c48ea20f7a, type: 2}
       superAbility: {fileID: 134116, guid: c6aa7c745294ea644aeb195c211fc58e, type: 2}
       side: 0
