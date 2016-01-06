@@ -23,16 +23,22 @@ public class Goal : MonoBehaviour {
 	void OnCollisionEnter2D (Collision2D other) {
         if (!other.collider.CompareTag(Tags.puck))
             return;
-        Debug.Log("GOOOOOOOOOOOOOOOOOOOOOOAL!");
+        
         other.gameObject.GetComponent<PuckFX>().Hide();
+        PlayGoalFX();
+        Observers.Post(new GoalScoredMessage(mySide));
+	}
+
+    public void PlayGoalFX()
+    {
+        Debug.Log("GOOOOOOOOOOOOOOOOOOOOOOAL!");
         vfx.Play();
         sfx.spread = 0;
         sfx.clip = goalSound;
         sfx.Play();
         Callback.FireAndForget(() => { sfx.spread = 360; sfx.clip = crySound; sfx.Play(); }, sfx.clip.length / 2, this);
         ScreenShake.RandomShake(this, 0.1f, 0.25f);
-        Observers.Post(new GoalScoredMessage(mySide));
-	}
+    }
 }
 
 public enum Side

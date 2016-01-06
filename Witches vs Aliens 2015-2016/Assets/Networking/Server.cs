@@ -1,19 +1,25 @@
 ﻿using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.Networking.Types;
+using System;
 using System.IO;
 using System.Net;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 public class Server : MonoBehaviour
 {
     byte reliableChannel;
     int m_hostId = -1;
-    List<int> connectList = new List<int>();
 
-    // Remeber all spheres we spawned
-    List<GameObject> sphereList = new List<GameObject>();
+    class ClientData
+    {
+        public int connectionId;
+        public string name;
+        public GameObject obj;
+    }
+    List<ClientData> clientList = new List<ClientData>();
 
     void Start()
     {
@@ -24,80 +30,19 @@ public class Server : MonoBehaviour
         reliableChannel = config.AddChannel(QosType.Reliable);
         HostTopology topology = new HostTopology(config, 5);
 #if UNITY_EDITOR
+        // Listen on port 25000
         m_hostId = NetworkTransport.AddHostWithSimulator(topology, 200, 400, 25000);
 #else
         m_hostId = NetworkTransport.AddHost(topology, 25000);
 #endif
 
-        Physics.gravity = new Vector3(); // No gravity
-
-        // Spawn a sphere every so often
-        StartCoroutine(SpawnRandomCoroutine());
-        // Send sphere data every so often to those connected
-        StartCoroutine(SendCoroutine());
+        // Send client position data every so often to those connected
+        StartCoroutine(SendPositionCoroutine());
         Debug.Log(Format.localIPAddress());
-    }
-
-    // Send sphere data every so often to those connected
-    IEnumerator SendCoroutine()
-    {
-        // Serialize list
-        MemoryStream stream = new MemoryStream();
-        // Don't use BinaryFormatter as this stores meta data!!
-        BinaryWriter bw = new BinaryWriter(stream);
-        Renderer rend;
-
-        while (true)
-        {
-            yield return new WaitForSeconds(0.1f);
-
-            // Anything to do?
-            if (connectList.Count == 0 || sphereList.Count == 0)
-                continue;
-
-            // Reset stream
-            stream.SetLength(0);
-            foreach (var item in sphereList)
-            {
-                bw.Write(item.GetInstanceID());
-                bw.Write(item.transform.position.x);
-                bw.Write(item.transform.position.y);
-                bw.Write(item.transform.position.z);
-                rend = item.GetComponent<Renderer>();
-                bw.Write(rend.material.color.r);
-                bw.Write(rend.material.color.g);
-                bw.Write(rend.material.color.b);
-
-                // Don't pack too much
-                // Fix me! Send more than one packet instead
-                if (stream.Position > 1300)
-                    break;
-            }
-
-            // Send data out
-            byte[] buffer = stream.ToArray();
-            byte error;
-            //Debug.Log(string.Format("Sending data size {0}", buffer.Length));
-            foreach (var item in connectList)
-            {
-                NetworkTransport.Send(m_hostId, item, reliableChannel, buffer, buffer.Length, out error);
-            }
-        }
-    }
-
-    void OnGUI()
-    {
-        GUI.Label(new Rect(10, 10, 100, 20), string.Format("{0} Spheres", sphereList.Count));
     }
 
     void Update()
     {
-        // Let user spawn a sphere if they want
-        if (Input.GetKey(KeyCode.Space))
-        {
-            StartCoroutine(SpawnCoroutine());
-        }
-
         // Remember who's connecting and disconnecting to us
         if (m_hostId == -1)
             return;
@@ -112,69 +57,192 @@ public class Server : MonoBehaviour
             case NetworkEventType.Nothing:
                 break;
             case NetworkEventType.ConnectEvent:
-                string address;
-                int port;
-                NetworkID network;
-                NodeID dstNode;
-                NetworkTransport.GetConnectionInfo(m_hostId, connectionId, out address, out port, out network, out dstNode, out error);
-                connectList.Add(connectionId);
-                Debug.Log(string.Format("Client {0} connected", new IPEndPoint(IPAddress.Parse(address), port).ToString()));
+                ClientConnected(connectionId);
                 break;
             case NetworkEventType.DisconnectEvent:
-                connectList.Remove(connectionId);
-                Debug.Log("Client disconnected");
+                ClientData cd = clientList.FirstOrDefault(item => item.connectionId == connectionId);
+                if (cd != null)
+                {
+                    Destroy(cd.obj);
+                    clientList.Remove(cd);
+                    Debug.Log("Client disconnected");
+                    // Send all clients new info
+                    SendClientInformation();
+                }
+                else
+                {
+                    Debug.Log("Client disconnected that we didn't know about!?");
+                }
                 break;
             case NetworkEventType.DataEvent:
-                Debug.Log(string.Format("Got data size {0}", receivedSize));
+                //Debug.Log(string.Format("Got data size {0}", receivedSize));
+                Array.Resize(ref buffer, receivedSize);
+                ProcessClientInput(connectionId, buffer);
                 break;
         }
     }
 
-    IEnumerator SpawnCoroutine()
+    // Client connected so create cube for them
+    void ClientConnected(int connectionId)
     {
-        if (sphereList.Count > 50)
-        {
-            Debug.Log("Spawning too many spheres to send over the network");
-            yield break;
-        }
+        string address;
+        int port;
+        NetworkID network;
+        NodeID dstNode;
+        byte error;
+        NetworkTransport.GetConnectionInfo(m_hostId, connectionId, out address, out port, out network, out dstNode, out error);
 
         // Create new object
-        GameObject sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-        sphere.AddComponent<Rigidbody>();
-        //sphere.GetComponent<Rigidbody>().velocity = new Vector3(UnityEngine.Random.Range(-1.0f, 1.0f), UnityEngine.Random.Range(-1.0f, 1.0f), UnityEngine.Random.Range(-1.0f, 1.0f));
+        GameObject obj = GameObject.CreatePrimitive(PrimitiveType.Cube);
+        obj.AddComponent<CharacterController>();
         // Set position
-        sphere.transform.position = new Vector3(UnityEngine.Random.Range(-1.0f, 1.0f), UnityEngine.Random.Range(-1.0f, 1.0f), UnityEngine.Random.Range(-2.0f, 2.0f));
+        obj.transform.position = new Vector3(UnityEngine.Random.Range(-5.0f, 5.0f), 0, UnityEngine.Random.Range(-5.0f, 5.0f));
         // Set color
-        sphere.GetComponent<Renderer>().material.color = new Color(UnityEngine.Random.value, UnityEngine.Random.value, UnityEngine.Random.value);
+        obj.GetComponent<Renderer>().material.color = new Color(UnityEngine.Random.value, UnityEngine.Random.value, UnityEngine.Random.value);
 
-        // Save data for when we send across the net
-        sphereList.Add(sphere);
-        yield return new WaitForSeconds(5.0f);
+        ClientData cd = new ClientData();
+        cd.connectionId = connectionId;
+        cd.name = new IPEndPoint(IPAddress.Parse(address), port).ToString();
+        cd.obj = obj;
+        // Remember client
+        clientList.Add(cd);
+        Debug.Log(string.Format("Client {0} connected", cd.name));
 
-        sphereList.Remove(sphere);
-        Destroy(sphere);
+        // Send all clients new info
+        SendClientInformation();
     }
 
-    // Spawn a sphere every so often
-    IEnumerator SpawnRandomCoroutine()
+    enum PacketTypeEnum
     {
+        Unknown = (1 << 0),
+        Position = (1 << 1),
+        Information = (1 << 2)
+    }
+
+    // Send client data to all clients whenever someone connects or disconnects
+    void SendClientInformation()
+    {
+        MemoryStream stream = new MemoryStream();
+        BinaryWriter bw = new BinaryWriter(stream);
+        Renderer rend;
+
+        bw.Write((byte)PacketTypeEnum.Information);
+        foreach (var item in clientList)
+        {
+            bw.Write(item.obj.GetInstanceID());
+            bw.Write(item.name);
+            bw.Write(item.obj.transform.position.x);
+            bw.Write(item.obj.transform.position.y);
+            bw.Write(item.obj.transform.position.z);
+            rend = item.obj.GetComponent<Renderer>();
+            bw.Write(rend.material.color.r);
+            bw.Write(rend.material.color.g);
+            bw.Write(rend.material.color.b);
+
+            // Don't pack too much
+            // Fix me! Send more than one packet instead
+            if (stream.Position > 1300)
+                break;
+        }
+
+        // Send data out
+        byte[] buffer = stream.ToArray();
+        byte error;
+        //Debug.Log(string.Format("Sending data size {0}", buffer.Length));
+        foreach (var item in clientList)
+        {
+            NetworkTransport.Send(m_hostId, item.connectionId, reliableChannel, buffer, buffer.Length, out error);
+        }
+    }
+
+    enum InputTypeEnum
+    {
+        KeyNone = (1 << 0),
+        KeyUp = (1 << 1),
+        KeyDown = (1 << 2),
+        KeyLeft = (1 << 3),
+        KeyRight = (1 << 4),
+        KeyJump = (1 << 5)
+    }
+
+    void ProcessClientInput(int connectionId, byte[] buffer)
+    {
+        ClientData cd = clientList.FirstOrDefault(item => item.connectionId == connectionId);
+        if (cd == null)
+        {
+            Debug.Log("Client that we didn't know about!?");
+            return;
+        }
+
+        InputTypeEnum input = (InputTypeEnum)buffer[0];
+        float deltaX = 0.0f;
+        float deltaZ = 0.0f;
+        if ((input & InputTypeEnum.KeyUp) == InputTypeEnum.KeyUp)
+            deltaX = 1.0f;
+        if ((input & InputTypeEnum.KeyDown) == InputTypeEnum.KeyDown)
+            deltaX = -1.0f;
+        if ((input & InputTypeEnum.KeyRight) == InputTypeEnum.KeyRight)
+            deltaZ = 1.0f;
+        if ((input & InputTypeEnum.KeyLeft) == InputTypeEnum.KeyLeft)
+            deltaZ = -1.0f;
+        Vector3 movement = new Vector3(deltaX, 0, deltaZ);
+        movement = transform.TransformDirection(movement);
+        movement *= 10.0f;
+        cd.obj.GetComponent<CharacterController>().Move(movement * Time.deltaTime);
+    }
+
+    // Send client position data every so often to those connected
+    IEnumerator SendPositionCoroutine()
+    {
+        MemoryStream stream = new MemoryStream();
+        BinaryWriter bw = new BinaryWriter(stream);
+
         while (true)
         {
-            yield return new WaitForSeconds(UnityEngine.Random.value);
-            StartCoroutine(SpawnCoroutine());
+            yield return new WaitForSeconds(0.1f);
+
+            // Anything to do?
+            if (clientList.Count == 0)
+                continue;
+
+            // Reset stream
+            stream.SetLength(0);
+
+            bw.Write((byte)PacketTypeEnum.Position);
+            foreach (var item in clientList)
+            {
+                bw.Write(item.obj.GetInstanceID());
+                bw.Write(item.obj.transform.position.x);
+                bw.Write(item.obj.transform.position.y);
+                bw.Write(item.obj.transform.position.z);
+
+                // Don't pack too much
+                // Fix me! Send more than one packet instead
+                if (stream.Position > 1300)
+                    break;
+            }
+
+            // Send data out
+            byte[] buffer = stream.ToArray();
+            byte error;
+            //Debug.Log(string.Format("Sending data size {0}", buffer.Length));
+            foreach (var item in clientList)
+            {
+                NetworkTransport.Send(m_hostId, item.connectionId, reliableChannel, buffer, buffer.Length, out error);
+            }
         }
     }
 
     void OnApplicationQuit()
     {
         // Gracefully disconnect
-        if (m_hostId != -1 && connectList.Count > 0)
+        if (m_hostId != -1 && clientList.Count > 0)
         {
             byte error;
 
-            foreach (var item in connectList)
+            foreach (var item in clientList)
             {
-                NetworkTransport.Disconnect(m_hostId, item, out error);
+                NetworkTransport.Disconnect(m_hostId, item.connectionId, out error);
             }
         }
     }
