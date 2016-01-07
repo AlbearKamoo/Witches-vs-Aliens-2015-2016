@@ -14,6 +14,9 @@ public class DistortionAbility : GenericAbility {
     [SerializeField]
     protected float maxDuration;
 
+    [SerializeField]
+    protected bool affectsPlayers;
+
     protected override void OnActivate()
     {
         base.OnActivate();
@@ -67,6 +70,14 @@ public class DistortionAbility : GenericAbility {
         if (other.CompareTag(Tags.puck))
         {
             other.GetComponent<LastBumped>().setLastBumped(rigid.transform);
+        }
+    }
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (!affectsPlayers && other.CompareTag(Tags.player))
+        {
+            Physics2D.IgnoreCollision(other, coll);
         }
     }
 

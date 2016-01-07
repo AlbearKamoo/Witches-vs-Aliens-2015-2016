@@ -24,6 +24,9 @@ public class ShockwaveAbility : GenericAbility
     [AutoLink(childPath = "Charging/Background")]
     protected Transform background;
 
+    [SerializeField]
+    protected bool affectsPlayers;
+
     // Use this for initialization
     void Awake()
     {
@@ -57,6 +60,9 @@ public class ShockwaveAbility : GenericAbility
                 ISpeedLimiter limiter = hit.GetComponentInParent<ISpeedLimiter>();
                 if (limiter != null)
                 {
+                    if (!affectsPlayers && hit.CompareTag(Tags.player))
+                        continue;
+
                     Vector2 displacement = ((Vector2)(hit.transform.position)) - thisPosition;
                     if (displacement != Vector2.zero)
                     {
@@ -71,7 +77,7 @@ public class ShockwaveAbility : GenericAbility
             active = false;
         }, this);
     }
-
+    /*
     void OnTriggerStay2D(Collider2D other)
     {
         if (other.CompareTag(Tags.puck))
@@ -79,4 +85,5 @@ public class ShockwaveAbility : GenericAbility
             other.GetComponent<LastBumped>().setLastBumped(this.transform.parent);
         }
     }
+     * */
 }
