@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 using System.Collections.Generic;
 using System.Collections;
 using System.Reflection;
@@ -439,7 +441,7 @@ public class AutoLink : MonoBehaviour {
 #endif
 }
 
-#if UNITY_EDITOR
+
 /// <summary>
 /// Marks the field to be ignored by AutoLink's null or empty checking.
 /// </summary>
@@ -474,6 +476,7 @@ public class AutoLinkAttribute : PropertyAttribute
         parentName = parentTag = childPath = string.Empty;
     }
 }
+#if UNITY_EDITOR
 /// <summary>
 /// Custom PropertyDrawer for AutoLinked fields.
 /// </summary>

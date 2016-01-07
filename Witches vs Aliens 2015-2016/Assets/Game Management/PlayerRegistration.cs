@@ -5,14 +5,13 @@ using System.Linq;
 
 [RequireComponent(typeof(SetupData))]
 public class PlayerRegistration : MonoBehaviour {
-
-#if UNITY_EDITOR
     [SerializeField]
     protected GameObject introMusicPrefab;
     GameObject introMusic;
 
     [SerializeField]
     protected AudioClip[] mainScenePlaylist;
+#if UNITY_EDITOR
     [SerializeField]
     protected string mainGameSceneName;
 #else

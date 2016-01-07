@@ -52,6 +52,7 @@ public class Server : MonoBehaviour
         byte error;
         byte[] buffer = new byte[1500];
         NetworkEventType networkEvent = NetworkTransport.ReceiveFromHost(m_hostId, out connectionId, out channelId, buffer, buffer.Length, out receivedSize, out error);
+        Debug.Log(channelId);
         switch (networkEvent)
         {
             case NetworkEventType.Nothing:

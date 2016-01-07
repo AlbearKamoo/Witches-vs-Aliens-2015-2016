@@ -4,7 +4,7 @@ using System.Collections;
 public class MusicManagerOnEnd : MusicManager {
     protected override void Awake()
     {
-        DontDestroyOnLoad(this.gameObject);
+        //DontDestroyOnLoad(this.gameObject);
         source = GetComponent<AudioSource>();
         _self = this;
     }
