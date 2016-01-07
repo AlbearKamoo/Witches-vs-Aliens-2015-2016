@@ -4,6 +4,8 @@ using System.Collections.Generic;
 
 public class FogSuper : SuperAbility, IAlliesAbility, IPuckAbility {
 
+    AudioSource sfx;
+
     [SerializeField]
     protected GameObject FogOverlay;
 
@@ -22,6 +24,11 @@ public class FogSuper : SuperAbility, IAlliesAbility, IPuckAbility {
     private static int[] witchPos;
     private static int puckPos = Shader.PropertyToID("_PuckPos");
 
+    protected void Awake()
+    {
+        sfx = GetComponent<AudioSource>();
+    }
+
     protected override void Start()
     {
         base.Start();
@@ -36,6 +43,9 @@ public class FogSuper : SuperAbility, IAlliesAbility, IPuckAbility {
     {
         ready = false;
         active = true;
+
+        sfx.Play();
+
         GameObject spawnedOverlay = SimplePool.Spawn(FogOverlay, Vector2.zero);
         Material FogMat = spawnedOverlay.GetComponent<MeshRenderer>().material;
         float baseRangeMin = FogMat.GetFloat(Tags.ShaderParams.rangeMin);

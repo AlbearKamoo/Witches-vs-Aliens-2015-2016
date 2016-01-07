@@ -503,7 +503,7 @@ MonoBehaviour:
       visuals: {fileID: 150354, guid: 058f7aebb890ee84da8f76c6487c8e55, type: 2}
       movementAbility: {fileID: 186010, guid: 999ab97c110d5bc4baa999b79b3005e9, type: 2}
       genericAbility: {fileID: 110450, guid: bc177a2768bd39946866f5ebcbe5d375, type: 2}
-      superAbility: {fileID: 137540, guid: 8de3d20bd26c7bb42963e0dee2a0e721, type: 2}
+      superAbility: {fileID: 143026, guid: 9f0bc11609a97544496b9a6170fe50f5, type: 2}
       side: 1
     bindings:
       inputMode: 0
