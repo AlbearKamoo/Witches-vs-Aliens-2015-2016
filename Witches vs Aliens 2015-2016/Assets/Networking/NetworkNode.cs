@@ -1,0 +1,60 @@
+﻿using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine.Networking;
+using System.IO;
+
+public abstract class NetworkNode : AbstractNetworkNode, IObservable<OutgoingNetworkStreamReaderMessage>
+{
+    Observable<OutgoingNetworkStreamReaderMessage> stateSyncObjectsObservable = new Observable<OutgoingNetworkStreamReaderMessage>();
+    public Observable<OutgoingNetworkStreamReaderMessage> Observable(IObservable<OutgoingNetworkStreamReaderMessage> self) { return stateSyncObjectsObservable; }
+
+    int reliableChannel;
+
+    protected override void Start()
+    {
+        base.Start();
+        StartCoroutine(SendStateDataCoroutine());
+    }
+
+    protected override void ConfigureChannels()
+    {
+        ConnectionConfig config = new ConnectionConfig();
+        reliableChannel = config.AddChannel(QosType.StateUpdate);
+    }
+
+    IEnumerator SendStateDataCoroutine()
+    {
+        MemoryStream stream = new MemoryStream();
+        BinaryWriter bw = new BinaryWriter(stream);
+
+        for (; ; )
+        {
+            yield return new WaitForSeconds(packetPeriod);
+
+            // Anything to do?
+            if (!active)
+                continue;
+
+            // Reset stream
+            stream.SetLength(0);
+
+            //scripts subscribed to this write their data to the writer
+            stateSyncObjectsObservable.Post(new OutgoingNetworkStreamReaderMessage(bw));
+
+            // Send data out
+            byte[] buffer = stream.ToArray();
+            byte error;
+            //Debug.Log(string.Format("Sending data size {0}", buffer.Length));
+            foreach (int connectionID in connectionIDs)
+            {
+                NetworkTransport.Send(hostID, connectionID, reliableChannel, buffer, buffer.Length, out error);
+            }
+        }
+    }
+}
+
+public enum PacketType
+{
+    UNKNOWN,
+}
