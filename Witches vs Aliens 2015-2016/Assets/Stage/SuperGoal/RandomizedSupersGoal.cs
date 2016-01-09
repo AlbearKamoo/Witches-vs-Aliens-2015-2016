@@ -14,12 +14,7 @@ public class RandomizedSupersGoal : SuperGoal {
     protected override void Awake()
     {
         base.Awake();
-        foreach (GameObject controller in GameObject.FindGameObjectsWithTag(Tags.gameController))
-        {
-            spawning = controller.GetComponent<ProgrammaticSpawning>();
-            if (spawning != null)
-                break; //we've found it
-        }
+        spawning = GameObjectExtension.GetComponentWithTag<ProgrammaticSpawning>(Tags.gameController);
     }
 
     protected override void activateSuper(LastBumped bumped)

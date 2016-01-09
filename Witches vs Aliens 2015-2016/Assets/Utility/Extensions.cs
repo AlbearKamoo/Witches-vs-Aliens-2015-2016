@@ -7,7 +7,6 @@ using System.Collections;
 
 public static class TransformExtension
 {
-
     public static void SetParent(this Transform transform, Transform parent, Vector3 newScale, bool worldPositionStays = false)
     {
         transform.SetParent(parent, worldPositionStays);
@@ -27,6 +26,20 @@ public static class TransformExtension
         while (result.parent != null)
             result = result.parent;
         return result;
+    }
+}
+
+public static class GameObjectExtension
+{
+    public static T GetComponentWithTag<T>(string tag)
+    {
+        foreach (GameObject g in GameObject.FindGameObjectsWithTag(tag))
+        {
+            T result = g.GetComponent<T>();
+            if (result != null)
+                return result; //we've found it
+        }
+        return default(T);
     }
 }
 

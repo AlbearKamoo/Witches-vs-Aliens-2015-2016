@@ -1,11 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
 [RequireComponent(typeof(Rigidbody2D))]
-public class PuckSpeedLimiter : MonoBehaviour, ISpeedLimiter
+public class PuckSpeedLimiter : MonoBehaviour, ISpeedLimiter, INetworkable
 {
     [SerializeField]
     protected float initialMaxSpeed;
     Rigidbody2D rigid;
+    NetworkNode node;
 
     public float maxSpeed { get; set; }
     // Use this for initialization
@@ -15,11 +16,47 @@ public class PuckSpeedLimiter : MonoBehaviour, ISpeedLimiter
         maxSpeed = initialMaxSpeed;
     }
 
+    void Start()
+    {
+        node = GameObjectExtension.GetComponentWithTag<NetworkNode>(Tags.gameController);
+        if (node is Client)
+        {
+            node.Subscribe(this, packetTypes);
+        }
+        else if (node is Server)
+        {
+            node.Subscribe<OutgoingNetworkStreamReaderMessage>(this);
+        }
+    }
+
     // Update is called once per frame
     void OnCollisionEnter2D()
     {
         //limit velocity
         rigid.velocity = Vector2.ClampMagnitude(rigid.velocity, maxSpeed);
+    }
+
+    public PacketType[] packetTypes { get { return new PacketType[] { PacketType.PUCKLOCATION }; } }
+
+    public void Notify(OutgoingNetworkStreamReaderMessage m)
+    {
+        m.writer.Write((byte)(PacketType.PUCKLOCATION));
+        m.writer.Write((Vector2)(this.transform.position));
+        m.writer.Write(rigid.velocity);
+    }
+
+    public void Notify(IncomingNetworkStreamReaderMessage m)
+    {
+        switch (m.packetType)
+        {
+            case PacketType.PUCKLOCATION:
+                this.transform.position = m.reader.ReadVector2();
+                rigid.velocity = m.reader.ReadVector2();
+                break;
+            default:
+                Debug.LogError("Invalid Message Type");
+                break;
+        }
     }
 }
 

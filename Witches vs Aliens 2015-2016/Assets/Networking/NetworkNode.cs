@@ -9,7 +9,7 @@ public abstract class NetworkNode : AbstractNetworkNode, IObservable<OutgoingNet
     Observable<OutgoingNetworkStreamReaderMessage> stateSyncObjectsObservable = new Observable<OutgoingNetworkStreamReaderMessage>();
     public Observable<OutgoingNetworkStreamReaderMessage> Observable(IObservable<OutgoingNetworkStreamReaderMessage> self) { return stateSyncObjectsObservable; }
 
-    int reliableChannel;
+    byte reliableChannel;
 
     protected override void Start()
     {
@@ -52,9 +52,24 @@ public abstract class NetworkNode : AbstractNetworkNode, IObservable<OutgoingNet
             }
         }
     }
+
+    /*
+    public void Subscribe(INetworkable observer) //subscribes for self-to-self communication. //do NOT use if you are sending messages to be recieved by a different script
+    {
+        if (this is Server)
+        {
+            this.Subscribe<OutgoingNetworkStreamReaderMessage>(observer);
+        }
+        else if (this is Client)
+        {
+            this.Subscribe(observer, observer.packetTypes);
+        }
+    }
+     * */
 }
 
 public enum PacketType
 {
     UNKNOWN,
+    PUCKLOCATION,
 }
