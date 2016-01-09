@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Assertions;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.Networking;
@@ -18,12 +19,22 @@ public abstract class AbstractNetworkNode : MonoBehaviour {
 
     protected int hostID = -1;
 
-    Dictionary<PacketType, IObserver<IncomingNetworkStreamReaderMessage>> Networkidentities = new Dictionary<PacketType, IObserver<IncomingNetworkStreamReaderMessage>>();
+    protected MemoryStream stream;
+    protected BinaryWriter binaryWriter; //shared stream resources to avoid having to construct a new one every time
+    public BinaryWriter BinaryWriter { get { return binaryWriter; } } //so other scripts can write
+
+    Dictionary<PacketType, IObserver<IncomingNetworkStreamMessage>> NetworkIdentities = new Dictionary<PacketType, IObserver<IncomingNetworkStreamMessage>>(); //dictates which script handles which messages
+
     //each int is a different message type. If there are multiple possible destinations (i.e. syncing player positions), the IObserver's Observe method will use statics to determine the proper recipient
+
+    
 
     protected virtual void Awake()
     {
+        Assert.IsNull(self);
         self = this;
+        stream = new MemoryStream();
+        binaryWriter = new BinaryWriter(stream);
     }
 
     protected virtual void Start()
@@ -39,12 +50,18 @@ public abstract class AbstractNetworkNode : MonoBehaviour {
     protected abstract void ConfigureChannels(ConnectionConfig config);
     protected abstract void ConfigureHosts(ConnectionConfig config);
 
-    public void Subscribe(IObserver<IncomingNetworkStreamReaderMessage> observer, params PacketType[] types)
+    public void Subscribe(INetworkable observer, params PacketType[] types)
     {
         for (int i = 0; i < types.Length; i++)
         {
-            Networkidentities[types[i]] = observer;
+            Assert.IsFalse(NetworkIdentities.ContainsKey(types[i])); //ensure we aren't overwriting some other script
+            NetworkIdentities[types[i]] = observer;
         }
+    }
+
+    public void Subscribe(INetworkable observer)
+    {
+        Subscribe(observer, observer.packetTypes);
     }
 
     protected virtual void Update()
@@ -75,6 +92,32 @@ public abstract class AbstractNetworkNode : MonoBehaviour {
         }
     }
 
+    public void Send(IEnumerable<int> connections, byte channelID)
+    {
+        Assert.IsTrue(hostID != -1);
+        // Sends the data in binaryWriter out onto the network
+        byte[] buffer = stream.ToArray();
+        byte error;
+        Debug.Log(string.Format("Sending data size {0}", buffer.Length));
+        Assert.IsTrue(buffer.Length > 0);
+        foreach (int connectionID in connections)
+        {
+            Assert.IsTrue(connectionIDs.Contains(connectionID));
+#if UNITY_EDITOR
+            if (NetworkTransport.Send(hostID, connectionID, channelID, buffer, buffer.Length, out error))
+            {
+                Debug.Log("Networking Error");
+                Debug.Log(error);
+            }
+#else
+            NetworkTransport.Send(hostID, connectionID, channelID, buffer, buffer.Length, out error);
+#endif
+        }
+
+        // Reset stream
+        stream.SetLength(0);
+    }
+
     protected virtual void OnConnection(int connectionID)
     {
         Debug.Log(connectionID);
@@ -102,7 +145,7 @@ public abstract class AbstractNetworkNode : MonoBehaviour {
         while (stream.Position != buffer.Length)
         {
             PacketType packetType = (PacketType)reader.ReadByte();
-            Networkidentities[packetType].Notify(new IncomingNetworkStreamReaderMessage(reader, connectionID, packetType));
+            NetworkIdentities[packetType].Notify(new IncomingNetworkStreamMessage(reader, connectionID, packetType));
         }
     }
 
@@ -121,23 +164,23 @@ public abstract class AbstractNetworkNode : MonoBehaviour {
     }
 }
 
-public class OutgoingNetworkStreamReaderMessage
+public class OutgoingNetworkStreamMessage //used for regularly scheduled state syncronization updates
 {
     public readonly BinaryWriter writer; //observers write their set of data (format will vary) in order, starting with a PacketType (the enum) as a byte
 
-    public OutgoingNetworkStreamReaderMessage(BinaryWriter writer)
+    public OutgoingNetworkStreamMessage(BinaryWriter writer)
     {
         this.writer = writer;
     }
 }
 
-public class IncomingNetworkStreamReaderMessage
+public class IncomingNetworkStreamMessage
 {
     public readonly BinaryReader reader; //observers read their set of data (format will vary), which moves the stream to the next set of data
     public readonly int connectionID;
     public readonly PacketType packetType;
 
-    public IncomingNetworkStreamReaderMessage(BinaryReader reader, int connectionID, PacketType packetType)
+    public IncomingNetworkStreamMessage(BinaryReader reader, int connectionID, PacketType packetType)
     {
         this.reader = reader;
         this.connectionID = connectionID;
@@ -145,7 +188,7 @@ public class IncomingNetworkStreamReaderMessage
     }
 }
 
-public interface INetworkable : IObserver<OutgoingNetworkStreamReaderMessage>, IObserver<IncomingNetworkStreamReaderMessage>
+public interface INetworkable : IObserver<IncomingNetworkStreamMessage>
 {
     PacketType[] packetTypes { get; } //ensure that the programmer has assigned packet types
     //these should be unique per class/format/purpose, for hopefully obvious reasons

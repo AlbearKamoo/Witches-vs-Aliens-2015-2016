@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 [RequireComponent(typeof(Rigidbody2D))]
-public class PuckSpeedLimiter : MonoBehaviour, ISpeedLimiter, INetworkable
+public class PuckSpeedLimiter : MonoBehaviour, ISpeedLimiter, INetworkable, IObserver<OutgoingNetworkStreamMessage>
 {
     [SerializeField]
     protected float initialMaxSpeed;
@@ -23,12 +23,12 @@ public class PuckSpeedLimiter : MonoBehaviour, ISpeedLimiter, INetworkable
         if (node is Client)
         {
             Debug.Log("Subscribed to Client");
-            node.Subscribe(this, packetTypes);
+            node.Subscribe(this);
         }
         else if (node is Server)
         {
             Debug.Log("Subscribed to Server");
-            node.Subscribe<OutgoingNetworkStreamReaderMessage>(this);
+            node.Subscribe<OutgoingNetworkStreamMessage>(this);
         }
     }
 
@@ -41,7 +41,7 @@ public class PuckSpeedLimiter : MonoBehaviour, ISpeedLimiter, INetworkable
 
     public PacketType[] packetTypes { get { return new PacketType[] { PacketType.PUCKLOCATION }; } }
 
-    public void Notify(OutgoingNetworkStreamReaderMessage m)
+    public void Notify(OutgoingNetworkStreamMessage m)
     {
         Debug.Log("writing data");
         m.writer.Write((byte)(PacketType.PUCKLOCATION));
@@ -49,7 +49,7 @@ public class PuckSpeedLimiter : MonoBehaviour, ISpeedLimiter, INetworkable
         m.writer.Write(rigid.velocity);
     }
 
-    public void Notify(IncomingNetworkStreamReaderMessage m)
+    public void Notify(IncomingNetworkStreamMessage m)
     {
         switch (m.packetType)
         {

@@ -41,6 +41,7 @@ public abstract class AbstractPlayerInput : MonoBehaviour
 public class InputConfiguration
 {
     public PlayerInputType inputMode;
+    public NetworkMode networkMode;
 
     public string verticalMovementAxisName;
     public string horizontalMovementAxisName;

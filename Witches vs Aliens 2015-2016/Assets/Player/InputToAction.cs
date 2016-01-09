@@ -1,7 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using System;
+
 [RequireComponent(typeof(Rigidbody2D))]
-public class InputToAction : MonoBehaviour, ISpeedLimiter
+public class InputToAction : MonoBehaviour, ISpeedLimiter, INetworkable, IObserver<OutgoingNetworkStreamMessage>
 {
 
     Rigidbody2D rigid;
@@ -53,6 +55,30 @@ public class InputToAction : MonoBehaviour, ISpeedLimiter
     private List<Callback.CallbackMethod> preFixedUpdateDelegates = new List<Callback.CallbackMethod>();
     public List<Callback.CallbackMethod> PreFixedUpdateDelegates { get { return preFixedUpdateDelegates; } }
 
+    NetworkNode node;
+    Stats stats; //used only for playerID in networking
+
+    class NetworkPlayerIdentity : IComparable<NetworkPlayerIdentity>
+    {
+        public readonly int playerID;
+        public readonly NetworkMode networkState;
+        public readonly InputToAction inputToAction;
+        public NetworkPlayerIdentity(int playerID, NetworkMode networkState, InputToAction inputToAction)
+        {
+            this.playerID = playerID;
+            this.networkState = networkState;
+            this.inputToAction = inputToAction;
+        }
+        public int CompareTo(NetworkPlayerIdentity other)
+        {
+            return this.playerID.CompareTo(other.playerID);
+        }
+    }
+
+    //Static collection of all players for networking
+    static List<NetworkPlayerIdentity> players = new List<NetworkPlayerIdentity>();
+    //the first element should be subscribed to the network node for incoming messages, then use this static collection to direct it to the correct script
+
     //Don't change the rigidbody mass from 1 to change speed/agility; change accel and maxSpeed instead
     //the rigidbody mass(es) generally only affect how collisions happen
 	// Use this for initialization
@@ -67,6 +93,21 @@ public class InputToAction : MonoBehaviour, ISpeedLimiter
         moveAbility = GetComponentInChildren<MovementAbility>();
         superAbility = GetComponentInChildren<SuperAbility>();
         genAbility = GetComponentInChildren<GenericAbility>();
+
+        stats = GetComponent<Stats>();
+
+        node = GameObjectExtension.GetComponentWithTag<NetworkNode>(Tags.gameController);
+        if (node is Client)
+        {
+            if(players.Count == 0)
+                node.Subscribe(this); //only the first element should be subscribed to the node
+            players.Add(new NetworkPlayerIdentity(stats.playerID, stats.networkState, this));
+            
+        }
+        else if (node is Server)
+        {
+            node.Subscribe<OutgoingNetworkStreamMessage>(this);
+        }
     }
 	
 	// Update is called once per frame
@@ -129,5 +170,44 @@ public class InputToAction : MonoBehaviour, ISpeedLimiter
         _movementEnabled = false;
         rigid.velocity = Vector2.zero;
         Callback.FireAndForget(() => _movementEnabled = true, duration, this);
+    }
+
+    public PacketType[] packetTypes { get { return new PacketType[] { PacketType.PLAYERLOCATION }; } }
+
+    public void Notify(OutgoingNetworkStreamMessage m)
+    {
+        m.writer.Write((byte)(PacketType.PLAYERLOCATION));
+        m.writer.Write((byte)(stats.playerID));
+        m.writer.Write((Vector2)(this.transform.position));
+        m.writer.Write(rigid.velocity);
+    }
+
+    public void Notify(IncomingNetworkStreamMessage m)
+    {
+        switch (m.packetType)
+        {
+            case PacketType.PLAYERLOCATION:
+                Debug.Log("reading data");
+                int playerID = m.reader.ReadByte();
+                int index = players.BinarySearch(new NetworkPlayerIdentity(playerID, NetworkMode.UNKNOWN, null));
+                if (index < 0)
+                {
+                    Debug.Log("Unknown Player");
+                    m.reader.ReadVector2(); m.reader.ReadVector2(); //move the stream for the next data element
+                }
+                players[index].inputToAction.transform.position = m.reader.ReadVector2();
+                Vector2 velocity = m.reader.ReadVector2();
+                players[index].inputToAction.rigid.velocity = velocity;
+                Debug.Log(players[index].networkState);
+                if (players[index].networkState == NetworkMode.REMOTECLIENT)
+                {
+                    players[index].inputToAction.normalizedMovementInput = velocity.normalized;
+                    Debug.Log(players[index].inputToAction.normalizedMovementInput);
+                }
+                break;
+            default:
+                Debug.LogError("Invalid Message Type");
+                break;
+        }
     }
 }

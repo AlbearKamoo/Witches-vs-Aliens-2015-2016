@@ -499,6 +499,7 @@ MonoBehaviour:
       side: 1
     bindings:
       inputMode: 0
+      networkMode: 2
       verticalMovementAxisName: VerticalWASD
       horizontalMovementAxisName: HorizontalWASD
       verticalAimingAxisName: VerticalAim_J1
@@ -515,6 +516,7 @@ MonoBehaviour:
       side: 0
     bindings:
       inputMode: 0
+      networkMode: 2
       verticalMovementAxisName: VerticalArrow
       horizontalMovementAxisName: HorizontalArrow
       verticalAimingAxisName: VerticalAim_J2
@@ -620,3 +622,44 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 244a2caf881d9a240aa864c1994d4fb3, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &2066126296
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 2066126298}
+  - 114: {fileID: 2066126297}
+  m_Layer: 0
+  m_Name: Networking
+  m_TagString: GameController
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2066126297
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2066126296}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ea94b7050808b841bd0c8aee8c04ac7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  packetPeriod: 0.1
+  serverIP: 127.0.0.1
+--- !u!4 &2066126298
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2066126296}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 7

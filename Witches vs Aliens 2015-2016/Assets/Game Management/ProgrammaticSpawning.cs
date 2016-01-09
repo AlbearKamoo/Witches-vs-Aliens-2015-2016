@@ -84,14 +84,30 @@ public class ProgrammaticSpawning : MonoBehaviour, IObserver<Message> {
         for (int i = 0; i < data.playerComponentPrefabs.Length; i++)
         {
             GameObject spawnedPlayer = (GameObject)Instantiate(data.playerComponentPrefabs[i].character.basePlayer, new Vector2((i+1) * 200, 0), Quaternion.identity); //the positions are temporary
-            spawnedPlayer.AddComponent<Stats>().side = data.playerComponentPrefabs[i].character.side;
+            Stats spawnedStats = spawnedPlayer.AddComponent<Stats>();
+            spawnedStats.side = data.playerComponentPrefabs[i].character.side;
+            spawnedStats.playerID = Stats.nextPlayerID();
+            spawnedStats.networkState = data.playerComponentPrefabs[i].bindings.networkMode;
+            
             switch (data.playerComponentPrefabs[i].bindings.inputMode)
             {
                 case InputConfiguration.PlayerInputType.MOUSE:
-                    spawnedPlayer.AddComponent<MousePlayerInput>().bindings = data.playerComponentPrefabs[i].bindings;
+                    switch (data.playerComponentPrefabs[i].bindings.networkMode)
+                    {
+                        case NetworkMode.LOCALCLIENT:
+                        case NetworkMode.LOCALSERVER:
+                            spawnedPlayer.AddComponent<MousePlayerInput>().bindings = data.playerComponentPrefabs[i].bindings;
+                            break;
+                    }
                     break;
                 case InputConfiguration.PlayerInputType.JOYSTICK:
-                    spawnedPlayer.AddComponent<JoystickCustomDeadZoneInput>().bindings = data.playerComponentPrefabs[i].bindings;
+                    switch (data.playerComponentPrefabs[i].bindings.networkMode)
+                    {
+                        case NetworkMode.LOCALCLIENT:
+                        case NetworkMode.LOCALSERVER:
+                            spawnedPlayer.AddComponent<JoystickCustomDeadZoneInput>().bindings = data.playerComponentPrefabs[i].bindings;
+                            break;
+                    }
                     break;
                 case InputConfiguration.PlayerInputType.CRAPAI:
                     spawnedPlayer.AddComponent<CrappyAIInput>().bindings = data.playerComponentPrefabs[i].bindings; //don't really need the bindings; it's an AI

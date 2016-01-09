@@ -1,15 +1,17 @@
 ﻿using UnityEngine;
+using UnityEngine.Assertions;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.Networking;
 using System.IO;
 
-public abstract class NetworkNode : AbstractNetworkNode, IObservable<OutgoingNetworkStreamReaderMessage>
+public abstract class NetworkNode : AbstractNetworkNode, IObservable<OutgoingNetworkStreamMessage>
 {
-    Observable<OutgoingNetworkStreamReaderMessage> stateSyncObjectsObservable = new Observable<OutgoingNetworkStreamReaderMessage>();
-    public Observable<OutgoingNetworkStreamReaderMessage> Observable(IObservable<OutgoingNetworkStreamReaderMessage> self) { return stateSyncObjectsObservable; }
+    Observable<OutgoingNetworkStreamMessage> stateSyncObjectsObservable = new Observable<OutgoingNetworkStreamMessage>();
+    public Observable<OutgoingNetworkStreamMessage> Observable(IObservable<OutgoingNetworkStreamMessage> self) { return stateSyncObjectsObservable; }
 
     byte reliableChannel;
+    public byte ReliableChannel { get { return reliableChannel; } }
 
     protected override void Start()
     {
@@ -24,9 +26,6 @@ public abstract class NetworkNode : AbstractNetworkNode, IObservable<OutgoingNet
 
     IEnumerator SendStateDataCoroutine()
     {
-        MemoryStream stream = new MemoryStream();
-        BinaryWriter bw = new BinaryWriter(stream);
-
         for (; ; )
         {
             yield return new WaitForSeconds(packetPeriod);
@@ -35,23 +34,11 @@ public abstract class NetworkNode : AbstractNetworkNode, IObservable<OutgoingNet
             if (!active)
                 continue;
 
-            // Reset stream
-            stream.SetLength(0);
-
             //scripts subscribed to this write their data to the writer
-            stateSyncObjectsObservable.Post(new OutgoingNetworkStreamReaderMessage(bw));
+            stateSyncObjectsObservable.Post(new OutgoingNetworkStreamMessage(binaryWriter));
 
-            // Send data out
-            byte[] buffer = stream.ToArray();
-            byte error;
-            Debug.Log(string.Format("Sending data size {0}", buffer.Length));
-            if (buffer.Length > 0)
-            {
-                foreach (int connectionID in connectionIDs)
-                {
-                    NetworkTransport.Send(hostID, connectionID, reliableChannel, buffer, buffer.Length, out error);
-                }
-            }
+            if(stream.Length != 0)
+                Send(connectionIDs, reliableChannel); // Send data out
         }
     }
 
@@ -74,4 +61,5 @@ public enum PacketType
 {
     UNKNOWN,
     PUCKLOCATION,
+    PLAYERLOCATION,
 }
