@@ -17,9 +17,8 @@ public abstract class NetworkNode : AbstractNetworkNode, IObservable<OutgoingNet
         StartCoroutine(SendStateDataCoroutine());
     }
 
-    protected override void ConfigureChannels()
+    protected override void ConfigureChannels(ConnectionConfig config)
     {
-        ConnectionConfig config = new ConnectionConfig();
         reliableChannel = config.AddChannel(QosType.StateUpdate);
     }
 
@@ -45,10 +44,13 @@ public abstract class NetworkNode : AbstractNetworkNode, IObservable<OutgoingNet
             // Send data out
             byte[] buffer = stream.ToArray();
             byte error;
-            //Debug.Log(string.Format("Sending data size {0}", buffer.Length));
-            foreach (int connectionID in connectionIDs)
+            Debug.Log(string.Format("Sending data size {0}", buffer.Length));
+            if (buffer.Length > 0)
             {
-                NetworkTransport.Send(hostID, connectionID, reliableChannel, buffer, buffer.Length, out error);
+                foreach (int connectionID in connectionIDs)
+                {
+                    NetworkTransport.Send(hostID, connectionID, reliableChannel, buffer, buffer.Length, out error);
+                }
             }
         }
     }

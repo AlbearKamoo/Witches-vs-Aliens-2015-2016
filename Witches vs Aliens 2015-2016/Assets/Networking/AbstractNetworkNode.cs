@@ -32,12 +32,12 @@ public abstract class AbstractNetworkNode : MonoBehaviour {
         NetworkTransport.Init();
 
         ConnectionConfig config = new ConnectionConfig();
-        ConfigureChannels();
-        ConfigureHosts();
+        ConfigureChannels(config);
+        ConfigureHosts(config);
     }
 
-    protected abstract void ConfigureChannels();
-    protected abstract void ConfigureHosts();
+    protected abstract void ConfigureChannels(ConnectionConfig config);
+    protected abstract void ConfigureHosts(ConnectionConfig config);
 
     public void Subscribe(IObserver<IncomingNetworkStreamReaderMessage> observer, params PacketType[] types)
     {
@@ -57,7 +57,6 @@ public abstract class AbstractNetworkNode : MonoBehaviour {
         byte error;
         byte[] buffer = new byte[1500];
         NetworkEventType networkEvent = NetworkTransport.ReceiveFromHost(hostID, out connectionID, out channelID, buffer, buffer.Length, out receivedSize, out error);
-        //Debug.Log(channelId);
         switch (networkEvent)
         {
             case NetworkEventType.Nothing:
@@ -69,7 +68,7 @@ public abstract class AbstractNetworkNode : MonoBehaviour {
                 OnDisconnection(connectionID);
                 break;
             case NetworkEventType.DataEvent:
-                //Debug.Log(string.Format("Got data size {0}", receivedSize));
+                Debug.Log(string.Format("Got data size {0}", receivedSize));
                 Array.Resize(ref buffer, receivedSize);
                 ProcessNetworkData(connectionID, buffer);
                 break;
@@ -78,6 +77,7 @@ public abstract class AbstractNetworkNode : MonoBehaviour {
 
     protected virtual void OnConnection(int connectionID)
     {
+        Debug.Log(connectionID);
         bool added = connectionIDs.Add(connectionID);
         if (!added)
         {

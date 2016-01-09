@@ -19,12 +19,15 @@ public class PuckSpeedLimiter : MonoBehaviour, ISpeedLimiter, INetworkable
     void Start()
     {
         node = GameObjectExtension.GetComponentWithTag<NetworkNode>(Tags.gameController);
+        Debug.Log(node);
         if (node is Client)
         {
+            Debug.Log("Subscribed to Client");
             node.Subscribe(this, packetTypes);
         }
         else if (node is Server)
         {
+            Debug.Log("Subscribed to Server");
             node.Subscribe<OutgoingNetworkStreamReaderMessage>(this);
         }
     }
@@ -40,6 +43,7 @@ public class PuckSpeedLimiter : MonoBehaviour, ISpeedLimiter, INetworkable
 
     public void Notify(OutgoingNetworkStreamReaderMessage m)
     {
+        Debug.Log("writing data");
         m.writer.Write((byte)(PacketType.PUCKLOCATION));
         m.writer.Write((Vector2)(this.transform.position));
         m.writer.Write(rigid.velocity);
@@ -50,6 +54,7 @@ public class PuckSpeedLimiter : MonoBehaviour, ISpeedLimiter, INetworkable
         switch (m.packetType)
         {
             case PacketType.PUCKLOCATION:
+                Debug.Log("reading data");
                 this.transform.position = m.reader.ReadVector2();
                 rigid.velocity = m.reader.ReadVector2();
                 break;
