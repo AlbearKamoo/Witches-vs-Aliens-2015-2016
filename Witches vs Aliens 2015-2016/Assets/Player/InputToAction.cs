@@ -133,18 +133,43 @@ public class InputToAction : MonoBehaviour, ISpeedLimiter, INetworkable, IObserv
 
     public void FireAbility(AbilityType t)
     {
-        switch (t)
+        switch (stats.networkMode)
         {
-            case AbilityType.MOVEMENT:
-                moveAbility.Fire(direction);
+            case NetworkMode.LOCALCLIENT:
+                switch (t)
+                {
+                    case AbilityType.MOVEMENT:
+                        node.BinaryWriter.Write((byte)(PacketType.PLAYERMOVEMENTABILITY));
+                        break;
+                    case AbilityType.GENERIC:
+                        node.BinaryWriter.Write((byte)(PacketType.PLAYERGENERICABILITY));
+                        break;
+                    case AbilityType.SUPER:
+                    default:
+                        node.BinaryWriter.Write((byte)(PacketType.PLAYERSUPERABILITY));
+                        break;
+                }
+                node.BinaryWriter.Write((byte)(stats.playerID));
+                node.BinaryWriter.Write(direction);
+                node.Send(node.ConnectionIDs, node.AllCostChannel);
                 break;
-            case AbilityType.GENERIC:
-                genAbility.Fire(direction);
-                break;
-            case AbilityType.SUPER:
-                superAbility.Fire(direction);
+                //add ability.LocalFire, for immediate feedback awaiting server validation
+            default:
+                switch (t)
+                {
+                    case AbilityType.MOVEMENT:
+                        moveAbility.Fire(direction);
+                        break;
+                    case AbilityType.GENERIC:
+                        genAbility.Fire(direction);
+                        break;
+                    case AbilityType.SUPER:
+                        superAbility.Fire(direction);
+                        break;
+                }
                 break;
         }
+        
     }
 
     public void StopFireAbility(AbilityType t)
@@ -170,7 +195,7 @@ public class InputToAction : MonoBehaviour, ISpeedLimiter, INetworkable, IObserv
         Callback.FireAndForget(() => _movementEnabled = true, duration, this);
     }
 
-    public PacketType[] packetTypes { get { return new PacketType[] { PacketType.PLAYERLOCATION, PacketType.PLAYERINPUT }; } }
+    public PacketType[] packetTypes { get { return new PacketType[] { PacketType.PLAYERLOCATION, PacketType.PLAYERINPUT, PacketType.PLAYERMOVEMENTABILITY, PacketType.PLAYERGENERICABILITY, PacketType.PLAYERSUPERABILITY }; } }
 
     public void Notify(OutgoingNetworkStreamMessage m)
     {
@@ -194,39 +219,97 @@ public class InputToAction : MonoBehaviour, ISpeedLimiter, INetworkable, IObserv
 
     public void Notify(IncomingNetworkStreamMessage m)
     {
-        int index;
+        int index = findPlayer(m.reader);
         switch (m.packetType)
         {  
             case PacketType.PLAYERLOCATION:
-                index = findPlayer(m.reader);
-                if (index < 0)
+                if (checkValidPlayer(m, index, 2))
                 {
-                    Debug.Log("Unknown Player");
-                    m.reader.ReadVector2(); m.reader.ReadVector2(); //move the stream for the next data element
-                }
-                players[index].inputToAction.transform.position = m.reader.ReadVector2();
-                Vector2 velocity = m.reader.ReadVector2();
-                players[index].inputToAction.rigid.velocity = velocity;
-                if (players[index].networkMode == NetworkMode.REMOTECLIENT)
-                {
-                    players[index].inputToAction.normalizedMovementInput = velocity.normalized;
+                    players[index].inputToAction.transform.position = m.reader.ReadVector2();
+                    Vector2 velocity = m.reader.ReadVector2();
+                    players[index].inputToAction.rigid.velocity = velocity;
+                    if (players[index].networkMode == NetworkMode.REMOTECLIENT)
+                    {
+                        players[index].inputToAction.normalizedMovementInput = velocity.normalized;
+                    }
                 }
                 break;
             case PacketType.PLAYERINPUT:
-                index = findPlayer(m.reader);
-                if (index < 0)
+                if (checkValidPlayer(m, index))
                 {
-                    Debug.Log("Unknown Player");
-                    m.reader.ReadVector2(); //move the stream for the next data element
+                    Assert.IsTrue(players[index].networkMode == NetworkMode.REMOTESERVER);
+                    players[index].inputToAction.normalizedMovementInput = m.reader.ReadVector2();
                 }
-                Assert.IsTrue(players[index].networkMode == NetworkMode.REMOTESERVER);
-                players[index].inputToAction.normalizedMovementInput = m.reader.ReadVector2();
                 break;
+            case PacketType.PLAYERMOVEMENTABILITY:
+                if (checkValidPlayer(m, index))
+                {
+                    handleNetworkedAbilityInput(m, index, players[index].inputToAction.moveAbility);
+                }
+                break;
+            case PacketType.PLAYERGENERICABILITY:
+                if (checkValidPlayer(m, index))
+                {
+                    handleNetworkedAbilityInput(m, index, players[index].inputToAction.genAbility);
+                }
+                break;
+            case PacketType.PLAYERSUPERABILITY:
+                if (checkValidPlayer(m, index))
+                {
+                    handleNetworkedAbilityInput(m, index, players[index].inputToAction.superAbility);
+                }
+                break;
+                
+                
             default:
                 Debug.LogError("Invalid Message Type");
                 break;
         }
     }
+
+    void handleNetworkedAbilityInput(IncomingNetworkStreamMessage m, int index, AbstractAbility ability)
+    {
+        switch (players[index].networkMode)
+        {
+            case NetworkMode.REMOTESERVER:
+                {
+                    Vector2 direction = m.reader.ReadVector2();
+                    bool activated = ability.Fire(direction);
+                    if (activated)
+                    {
+                        node.BinaryWriter.Write((byte)(m.packetType));
+                        node.BinaryWriter.Write((byte)(players[index].playerID));
+                        node.BinaryWriter.Write(direction);
+                        node.Send(node.ConnectionIDs, node.AllCostChannel);
+                    }
+                    //no response when failed; client uses RTT to realize this
+                    break;
+                }
+            case NetworkMode.LOCALCLIENT:
+            case NetworkMode.REMOTECLIENT:
+                {
+                    bool activated = ability.Fire(m.reader.ReadVector2()); //maybe call a ForceFire?
+                    Assert.IsTrue(activated);
+                    break;
+                }
+            default:
+                Debug.Log("Unauthorized ability input");
+                break;
+        }
+    }
+
+    bool checkValidPlayer(IncomingNetworkStreamMessage m, int index, int numVector2s = 1)
+    {
+        if (index < 0)
+        {
+            Debug.Log("Unknown Player");
+            for (int i = 0; i < numVector2s; i++ )
+                m.reader.ReadVector2(); //move the stream for the next data element
+            return false;
+        }
+        return true;
+    }
+
     int findPlayer(BinaryReader reader)
     {
         return players.BinarySearch(new NetworkPlayerIdentity(reader.ReadByte(), NetworkMode.UNKNOWN, null));

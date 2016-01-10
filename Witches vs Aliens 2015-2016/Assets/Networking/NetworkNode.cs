@@ -14,6 +14,8 @@ public abstract class NetworkNode : AbstractNetworkNode, IObservable<OutgoingNet
 
     byte reliableChannel;
     public byte ReliableChannel { get { return reliableChannel; } }
+    byte allCostChannel;
+    public byte AllCostChannel { get { return allCostChannel; } }
 
     protected override void Start()
     {
@@ -24,6 +26,7 @@ public abstract class NetworkNode : AbstractNetworkNode, IObservable<OutgoingNet
     protected override void ConfigureChannels(ConnectionConfig config)
     {
         reliableChannel = config.AddChannel(QosType.StateUpdate);
+        allCostChannel = config.AddChannel(QosType.Reliable);
     }
 
     IEnumerator SendStateDataCoroutine()
@@ -65,4 +68,7 @@ public enum PacketType
     PUCKLOCATION,
     PLAYERLOCATION,
     PLAYERINPUT,
+    PLAYERMOVEMENTABILITY,
+    PLAYERGENERICABILITY,
+    PLAYERSUPERABILITY,
 }

@@ -16,6 +16,7 @@ public abstract class AbstractNetworkNode : MonoBehaviour {
     public static AbstractNetworkNode self; //there can only be one
 
     protected HashSet<int> connectionIDs = new HashSet<int>();
+    public HashSet<int> ConnectionIDs { get { return connectionIDs; } }
 
     protected int hostID = -1;
 
