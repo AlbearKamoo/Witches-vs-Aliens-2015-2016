@@ -317,7 +317,7 @@ public class InputToAction : MonoBehaviour, ISpeedLimiter, INetworkable, IObserv
                     }
                     else
                     {
-                        activated = ability.Fire(m.reader.ReadVector2());
+                        activated = ability.Fire(direction);
                     }
                     //maybe call a ForceFire method?
                     Assert.IsTrue(activated);
