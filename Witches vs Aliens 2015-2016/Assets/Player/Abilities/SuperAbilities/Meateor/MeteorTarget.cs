@@ -51,7 +51,7 @@ public class MeteorTarget : MonoBehaviour, ISpawnable {
                             child.localPosition = initialPositions[i2];
                             i2++;
                         }
-                        SimplePool.Spawn(MeteorCraterPrefab, this.transform.position, this.transform.rotation).GetComponent<MeteorCrater>().side = side; ;
+                        SimplePool.Spawn(MeteorCraterPrefab, this.transform.position, this.transform.rotation).GetComponent<MeteorCrater>().side = side;
                         SimplePool.Despawn(this.gameObject);
                     }, this);
             }, Random.value * delayMax, this);

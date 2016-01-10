@@ -241,6 +241,7 @@ public class InputToAction : MonoBehaviour, ISpeedLimiter, INetworkable, IObserv
                     players[index].inputToAction.normalizedMovementInput = m.reader.ReadVector2();
                 }
                 break;
+
             case PacketType.PLAYERMOVEMENTABILITY:
                 if (checkValidPlayer(m, index))
                 {
@@ -274,12 +275,32 @@ public class InputToAction : MonoBehaviour, ISpeedLimiter, INetworkable, IObserv
             case NetworkMode.REMOTESERVER:
                 {
                     Vector2 direction = m.reader.ReadVector2();
-                    bool activated = ability.Fire(direction);
+                    int seed = -1;
+                    bool activated;
+                    if (ability is IRandomAbility)
+                    {
+                        seed = RandomLib.Seed();
+                        activated = ((IRandomAbility)ability).Fire(direction, seed);
+                    }
+                    else
+                    {
+                        activated = ability.Fire(direction);
+                    }
+
                     if (activated)
                     {
                         node.BinaryWriter.Write((byte)(m.packetType));
                         node.BinaryWriter.Write((byte)(players[index].playerID));
                         node.BinaryWriter.Write(direction);
+                        if (ability is IRandomAbility)
+                        {
+                            node.BinaryWriter.Write(true);
+                            node.BinaryWriter.Write(seed);
+                        }
+                        else
+                        {
+                            node.BinaryWriter.Write(false);
+                        }
                         node.Send(node.ConnectionIDs, node.AllCostChannel);
                     }
                     //no response when failed; client uses RTT to realize this
@@ -288,7 +309,17 @@ public class InputToAction : MonoBehaviour, ISpeedLimiter, INetworkable, IObserv
             case NetworkMode.LOCALCLIENT:
             case NetworkMode.REMOTECLIENT:
                 {
-                    bool activated = ability.Fire(m.reader.ReadVector2()); //maybe call a ForceFire?
+                    Vector2 direction = m.reader.ReadVector2();
+                    bool activated;
+                    if (m.reader.ReadBoolean()) //if it is a IRandomAbility
+                    {
+                        activated = ((IRandomAbility)ability).Fire(direction, m.reader.ReadInt32());
+                    }
+                    else
+                    {
+                        activated = ability.Fire(m.reader.ReadVector2());
+                    }
+                    //maybe call a ForceFire method?
                     Assert.IsTrue(activated);
                     break;
                 }

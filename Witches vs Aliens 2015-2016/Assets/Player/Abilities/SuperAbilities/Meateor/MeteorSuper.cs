@@ -2,8 +2,8 @@
 using System.Collections;
 
 [RequireComponent(typeof(AudioSource))]
-public class MeteorSuper : SuperAbility {
-
+public class MeteorSuper : SuperAbility, IRandomAbility
+{
     [SerializeField]
     protected int numMeteors;
 
@@ -30,7 +30,7 @@ public class MeteorSuper : SuperAbility {
     {
         base.Start();
         side = GetComponentInParent<Stats>().side;
-        //ready = true; //for easy testing
+        ready = true; //for easy testing
     }
 
     protected override void onFire(Vector2 direction)

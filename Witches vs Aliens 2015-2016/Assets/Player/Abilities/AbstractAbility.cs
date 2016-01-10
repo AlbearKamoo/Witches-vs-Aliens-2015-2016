@@ -80,3 +80,21 @@ public interface IPuckAbility
 {
     Transform puck { set; }
 }
+/// <summary>
+/// Indicates that the ability uses random generation (important when syncing states over the network).
+/// </summary>
+public interface IRandomAbility
+{
+    bool Fire(Vector2 direction);
+}
+
+public static class RandomAbilityExtension
+{
+    public static bool Fire(this IRandomAbility ability, Vector2 direction, int seed)
+    {
+        Random.seed = seed;
+        bool result = ability.Fire(direction);
+        RandomLib.ReSeed();
+        return result;
+    }
+}

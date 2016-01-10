@@ -22,4 +22,20 @@ public static class RandomLib {
         }
         return originalArray;
     }
+    /// <summary>
+    /// Uses System.DateTime.Now.Ticks to generate a seed.
+    /// </summary>
+    /// <returns>Returns a random seed for use in Unity's Random library.</returns>
+    public static int Seed()
+    {
+        return (int)(System.DateTime.Now.Ticks);
+    }
+
+    /// <summary>
+    /// Undo's any seeding of Unity's Random library
+    /// </summary>
+    public static int ReSeed()
+    {
+        return (UnityEngine.Random.seed = Seed());
+    }
 }
