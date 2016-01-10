@@ -104,7 +104,7 @@ public abstract class AbstractNetworkNode : MonoBehaviour {
         {
             Assert.IsTrue(connectionIDs.Contains(connectionID));
 #if UNITY_EDITOR
-            if (NetworkTransport.Send(hostID, connectionID, channelID, buffer, buffer.Length, out error))
+            if (!NetworkTransport.Send(hostID, connectionID, channelID, buffer, buffer.Length, out error))
             {
                 Debug.Log("Networking Error");
                 Debug.Log(error);
@@ -145,6 +145,7 @@ public abstract class AbstractNetworkNode : MonoBehaviour {
         while (stream.Position != buffer.Length)
         {
             PacketType packetType = (PacketType)reader.ReadByte();
+            Assert.IsTrue(NetworkIdentities.ContainsKey(packetType));
             NetworkIdentities[packetType].Notify(new IncomingNetworkStreamMessage(reader, connectionID, packetType));
         }
     }
@@ -206,4 +207,21 @@ public static class BinaryReadWriteExtension
     {
         return new Vector2(reader.ReadSingle(), reader.ReadSingle());
     }
+}
+
+public enum NetworkMode
+{
+    UNKNOWN, //no networking
+    LOCALSERVER, //being controlled locally on the server, broadcasting info to clients
+    LOCALCLIENT, //controlled locally on the client, passing input and recieving state from server
+    REMOTESERVER, //being run on the server using data from a remote client via networking
+    REMOTECLIENT, //being run on the client using data from the server
+}
+
+//we shouldn't use open polymorphism for networking stuff, because we would either need to create 3-5 prefabs for each case, or have a spawner script with AddComponent<>() to spawn the correct script during awake
+//we can instead have a set of internal classes, one for each case.
+
+public interface IInternalNetworkingPolymorphism
+{
+    NetworkMode networkMode { get; }
 }

@@ -43,7 +43,6 @@ public class PuckSpeedLimiter : MonoBehaviour, ISpeedLimiter, INetworkable, IObs
 
     public void Notify(OutgoingNetworkStreamMessage m)
     {
-        Debug.Log("writing data");
         m.writer.Write((byte)(PacketType.PUCKLOCATION));
         m.writer.Write((Vector2)(this.transform.position));
         m.writer.Write(rigid.velocity);

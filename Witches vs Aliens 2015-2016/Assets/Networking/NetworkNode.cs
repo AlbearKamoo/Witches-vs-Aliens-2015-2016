@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using UnityEngine.Networking;
 using System.IO;
 
+//contains game-specific networking stuff
+
 public abstract class NetworkNode : AbstractNetworkNode, IObservable<OutgoingNetworkStreamMessage>
 {
     Observable<OutgoingNetworkStreamMessage> stateSyncObjectsObservable = new Observable<OutgoingNetworkStreamMessage>();
@@ -62,4 +64,5 @@ public enum PacketType
     UNKNOWN,
     PUCKLOCATION,
     PLAYERLOCATION,
+    PLAYERINPUT,
 }

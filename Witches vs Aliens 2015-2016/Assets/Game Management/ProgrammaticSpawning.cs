@@ -87,7 +87,7 @@ public class ProgrammaticSpawning : MonoBehaviour, IObserver<Message> {
             Stats spawnedStats = spawnedPlayer.AddComponent<Stats>();
             spawnedStats.side = data.playerComponentPrefabs[i].character.side;
             spawnedStats.playerID = Stats.nextPlayerID();
-            spawnedStats.networkState = data.playerComponentPrefabs[i].bindings.networkMode;
+            spawnedStats.networkMode = data.playerComponentPrefabs[i].bindings.networkMode;
             
             switch (data.playerComponentPrefabs[i].bindings.inputMode)
             {
