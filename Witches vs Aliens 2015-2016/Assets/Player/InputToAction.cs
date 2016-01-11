@@ -97,7 +97,7 @@ public class InputToAction : MonoBehaviour, ISpeedLimiter, INetworkable, IObserv
 
         stats = GetComponent<Stats>();
 
-        node = GameObjectExtension.GetComponentWithTag<NetworkNode>(Tags.gameController);
+        node = NetworkNode.node;
         if (node is Client || node is Server)
         {
             if(players.Count == 0)

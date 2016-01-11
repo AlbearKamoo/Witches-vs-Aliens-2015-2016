@@ -13,8 +13,6 @@ public abstract class AbstractNetworkNode : MonoBehaviour {
     public bool active { get { return connectionIDs.Count != 0; } }
     //contains the non-project-specific stuff from network node
 
-    public static AbstractNetworkNode self; //there can only be one
-
     protected HashSet<int> connectionIDs = new HashSet<int>();
     public HashSet<int> ConnectionIDs { get { return connectionIDs; } }
 
@@ -32,8 +30,6 @@ public abstract class AbstractNetworkNode : MonoBehaviour {
 
     protected virtual void Awake()
     {
-        Assert.IsNull(self);
-        self = this;
         stream = new MemoryStream();
         binaryWriter = new BinaryWriter(stream);
     }
@@ -117,6 +113,11 @@ public abstract class AbstractNetworkNode : MonoBehaviour {
 
         // Reset stream
         stream.SetLength(0);
+    }
+
+    public void Send(byte channelID)
+    {
+        Send(connectionIDs, channelID);
     }
 
     protected virtual void OnConnection(int connectionID)

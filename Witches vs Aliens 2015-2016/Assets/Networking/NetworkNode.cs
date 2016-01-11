@@ -9,6 +9,9 @@ using System.IO;
 
 public abstract class NetworkNode : AbstractNetworkNode, IObservable<OutgoingNetworkStreamMessage>
 {
+    public static NetworkNode self; //there should only be one
+    public static NetworkNode node { get { return self; } }
+
     Observable<OutgoingNetworkStreamMessage> stateSyncObjectsObservable = new Observable<OutgoingNetworkStreamMessage>();
     public Observable<OutgoingNetworkStreamMessage> Observable(IObservable<OutgoingNetworkStreamMessage> self) { return stateSyncObjectsObservable; }
 
@@ -16,6 +19,13 @@ public abstract class NetworkNode : AbstractNetworkNode, IObservable<OutgoingNet
     public byte ReliableChannel { get { return reliableChannel; } }
     byte allCostChannel;
     public byte AllCostChannel { get { return allCostChannel; } }
+
+    protected override void Awake()
+    {
+        base.Awake();
+        Assert.IsNull(self);
+        self = this;
+    }
 
     protected override void Start()
     {
@@ -71,4 +81,5 @@ public enum PacketType
     PLAYERMOVEMENTABILITY,
     PLAYERGENERICABILITY,
     PLAYERSUPERABILITY,
+    SUPERGOALSPAWNING,
 }

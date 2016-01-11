@@ -1,11 +1,15 @@
 ﻿using UnityEngine;
+using UnityEngine.Assertions;
 using System.Collections;
 
 //should be placed on the parent of all the supergoal spawn pairs
 
-public class SuperGoalSpawner : MonoBehaviour {
+public class SuperGoalSpawner : MonoBehaviour, INetworkable {
     [SerializeField]
     protected GameObject SuperGoalPrefab;
+
+    [SerializeField]
+    protected Transform[] spawnPositions;
 
     [SerializeField]
     protected float spawnTime;
@@ -15,43 +19,82 @@ public class SuperGoalSpawner : MonoBehaviour {
     protected float superGoalDuration;
     SuperGoal SuperGoal1;
     SuperGoal SuperGoal2;
-    Transform[] children;
+    NetworkNode node;
+
 	// Use this for initialization
 	void Awake () {
+        Assert.IsTrue(spawnPositions.Length != 0);
         SuperGoal1 = Instantiate(SuperGoalPrefab).GetComponent<SuperGoal>();
         SuperGoal2 = Instantiate(SuperGoalPrefab).GetComponent<SuperGoal>();
         SuperGoal1.mirror = SuperGoal2;
         SuperGoal2.mirror = SuperGoal1;
-      
-        children = new Transform[transform.childCount];
-        int i = 0;
-        foreach (Transform child in transform)
-        {
-            children[i++] = child;
-        }
+    }
 
-        StartCoroutine(GoalSpawning());
+    void Start()
+    {
+        node = NetworkNode.node;
+        if (node == null) //if null, no networking, server controls it if there is networking
+        {
+            StartCoroutine(LocalGoalSpawning());
+        }
+        else if(node is Server)
+        {
+            StartCoroutine(ServerGoalSpawning());
+        }
+        else if (node is Client)
+        {
+            node.Subscribe(this);
+        }
 	}
 
-    void spawnSuperGoal()
+    void spawnSuperGoals(int spawnPointIndex)
     {
-        //randomly chose a spawn point
-        int childNum = Random.Range(0, transform.childCount);
+        Debug.Log(spawnPositions[spawnPointIndex].gameObject.name);
 
-        SuperGoal1.transform.SetParent(children[childNum], false);
-        SuperGoal2.transform.SetParent(children[childNum].Find("Mirror"), false);
+        SuperGoal1.transform.SetParent(spawnPositions[spawnPointIndex], false);
+        SuperGoal2.transform.SetParent(spawnPositions[spawnPointIndex].Find("Mirror"), false);
 
         SuperGoal1.active = true;
         SuperGoal2.active = true;
+
+        Callback.FireAndForget(() => { SuperGoal1.active = false; SuperGoal2.active = false; }, superGoalDuration, this);
     }
 
-    IEnumerator GoalSpawning()
+    IEnumerator LocalGoalSpawning()
     {
-        while (true)
+        for (; ; )
         {
             yield return new WaitForSeconds(RandomLib.RandFloatRange(spawnTime, spawnTimeVariance));
-            spawnSuperGoal();
-            Callback.FireAndForget(() => { SuperGoal1.active = false; SuperGoal2.active = false; }, superGoalDuration, this);
+            spawnSuperGoals(Random.Range(0, spawnPositions.Length));
+        }
+    }
+
+    IEnumerator ServerGoalSpawning()
+    {
+        for (; ; )
+        {
+            yield return new WaitForSeconds(RandomLib.RandFloatRange(spawnTime, spawnTimeVariance));
+            node.BinaryWriter.Write((byte)(PacketType.SUPERGOALSPAWNING));
+            byte spawnPointIndex = (byte)Random.Range(0, spawnPositions.Length);
+            node.BinaryWriter.Write(spawnPointIndex);
+            node.Send(node.AllCostChannel);
+            spawnSuperGoals(spawnPointIndex);
+        }
+    }
+
+    public PacketType[] packetTypes { get { return new PacketType[] { PacketType.SUPERGOALSPAWNING}; } }
+
+    public void Notify(IncomingNetworkStreamMessage m)
+    {
+        switch (m.packetType)
+        {
+            case PacketType.SUPERGOALSPAWNING:
+                int spawnPointIndex = m.reader.ReadByte();
+                spawnSuperGoals(spawnPointIndex);
+                break;
+            default:
+                Debug.LogError("Invalid Message Type");
+                break;
         }
     }
 }

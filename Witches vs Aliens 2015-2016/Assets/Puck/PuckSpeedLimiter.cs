@@ -18,16 +18,13 @@ public class PuckSpeedLimiter : MonoBehaviour, ISpeedLimiter, INetworkable, IObs
 
     void Start()
     {
-        node = GameObjectExtension.GetComponentWithTag<NetworkNode>(Tags.gameController);
-        Debug.Log(node);
+        node = NetworkNode.node;
         if (node is Client)
         {
-            Debug.Log("Subscribed to Client");
             node.Subscribe(this);
         }
         else if (node is Server)
         {
-            Debug.Log("Subscribed to Server");
             node.Subscribe<OutgoingNetworkStreamMessage>(this);
         }
     }
