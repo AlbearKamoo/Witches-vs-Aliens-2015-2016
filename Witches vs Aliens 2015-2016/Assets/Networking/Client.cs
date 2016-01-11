@@ -11,6 +11,9 @@ using System.Linq;
 public class Client : NetworkNode
 {
     [SerializeField]
+    protected bool simulatedNetworking = false;
+
+    [SerializeField]
     protected string serverIP = "127.0.0.1";
 
     void OnGUI()
@@ -24,12 +27,15 @@ public class Client : NetworkNode
     {
         HostTopology topology = new HostTopology(config, 1);
         #if UNITY_EDITOR
+        if(simulatedNetworking)
             hostID = NetworkTransport.AddHostWithSimulator(topology, 200, 400);
-        #else
+        else
+            hostID = NetworkTransport.AddHost(topology);
+#else
             hostID = NetworkTransport.AddHost(topology);
 #endif
 
-            byte error;
+        byte error;
         // Cannot tell we're connected until we receive the event at later time
             NetworkTransport.Connect(hostID, serverIP, 25000, 0, out error);
     }
