@@ -49,8 +49,6 @@ public class SuperGoalSpawner : MonoBehaviour, INetworkable {
 
     void spawnSuperGoals(int spawnPointIndex)
     {
-        Debug.Log(spawnPositions[spawnPointIndex].gameObject.name);
-
         SuperGoal1.transform.SetParent(spawnPositions[spawnPointIndex], false);
         SuperGoal2.transform.SetParent(spawnPositions[spawnPointIndex].Find("Mirror"), false);
 

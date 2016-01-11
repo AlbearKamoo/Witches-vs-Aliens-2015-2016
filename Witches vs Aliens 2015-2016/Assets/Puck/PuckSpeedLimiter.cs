@@ -50,7 +50,6 @@ public class PuckSpeedLimiter : MonoBehaviour, ISpeedLimiter, INetworkable, IObs
         switch (m.packetType)
         {
             case PacketType.PUCKLOCATION:
-                Debug.Log("reading data");
                 this.transform.position = m.reader.ReadVector2();
                 rigid.velocity = m.reader.ReadVector2();
                 break;

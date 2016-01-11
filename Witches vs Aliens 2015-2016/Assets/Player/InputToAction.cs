@@ -153,7 +153,22 @@ public class InputToAction : MonoBehaviour, ISpeedLimiter, INetworkable, IObserv
                 node.BinaryWriter.Write(direction);
                 node.Send(node.ConnectionIDs, node.AllCostChannel);
                 break;
-                //add ability.LocalFire, for immediate feedback awaiting server validation
+            //add ability.LocalFire, for immediate feedback awaiting server validation
+            case NetworkMode.LOCALSERVER:
+                switch (t)
+                {
+                    case AbilityType.MOVEMENT:
+                        activateAndSend(PacketType.PLAYERMOVEMENTABILITY, direction, (byte)(stats.playerID), moveAbility);
+                        break;
+                    case AbilityType.GENERIC:
+                        activateAndSend(PacketType.PLAYERGENERICABILITY, direction, (byte)(stats.playerID), genAbility);
+                        break;
+                    case AbilityType.SUPER:
+                        activateAndSend(PacketType.PLAYERSUPERABILITY, direction, (byte)(stats.playerID), superAbility);
+                        break;
+                }
+                
+                break;
             default:
                 switch (t)
                 {
@@ -270,39 +285,13 @@ public class InputToAction : MonoBehaviour, ISpeedLimiter, INetworkable, IObserv
 
     void handleNetworkedAbilityInput(IncomingNetworkStreamMessage m, int index, AbstractAbility ability)
     {
+        Debug.Log(ability);
         switch (players[index].networkMode)
         {
             case NetworkMode.REMOTESERVER:
                 {
                     Vector2 direction = m.reader.ReadVector2();
-                    int seed = -1;
-                    bool activated;
-                    if (ability is IRandomAbility)
-                    {
-                        seed = RandomLib.Seed();
-                        activated = ((IRandomAbility)ability).Fire(direction, seed);
-                    }
-                    else
-                    {
-                        activated = ability.Fire(direction);
-                    }
-
-                    if (activated)
-                    {
-                        node.BinaryWriter.Write((byte)(m.packetType));
-                        node.BinaryWriter.Write((byte)(players[index].playerID));
-                        node.BinaryWriter.Write(direction);
-                        if (ability is IRandomAbility)
-                        {
-                            node.BinaryWriter.Write(true);
-                            node.BinaryWriter.Write(seed);
-                        }
-                        else
-                        {
-                            node.BinaryWriter.Write(false);
-                        }
-                        node.Send(node.ConnectionIDs, node.AllCostChannel);
-                    }
+                    activateAndSend(m.packetType, direction, (byte)(players[index].playerID), ability);
                     //no response when failed; client uses RTT to realize this
                     break;
                 }
@@ -326,6 +315,38 @@ public class InputToAction : MonoBehaviour, ISpeedLimiter, INetworkable, IObserv
             default:
                 Debug.Log("Unauthorized ability input");
                 break;
+        }
+    }
+
+    void activateAndSend(PacketType packetType, Vector2 direction, byte playerID, AbstractAbility ability)
+    {
+        int seed = -1;
+        bool activated;
+        if (ability is IRandomAbility)
+        {
+            seed = RandomLib.Seed();
+            activated = ((IRandomAbility)ability).Fire(direction, seed);
+        }
+        else
+        {
+            activated = ability.Fire(direction);
+        }
+
+        if (activated)
+        {
+            node.BinaryWriter.Write((byte)(packetType));
+            node.BinaryWriter.Write(playerID);
+            node.BinaryWriter.Write(direction);
+            if (ability is IRandomAbility)
+            {
+                node.BinaryWriter.Write(true);
+                node.BinaryWriter.Write(seed);
+            }
+            else
+            {
+                node.BinaryWriter.Write(false);
+            }
+            node.Send(node.ConnectionIDs, node.AllCostChannel);
         }
     }
 
