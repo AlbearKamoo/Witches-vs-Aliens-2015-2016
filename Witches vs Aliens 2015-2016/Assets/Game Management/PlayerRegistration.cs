@@ -62,6 +62,10 @@ public class PlayerRegistration : MonoBehaviour {
                     if (pressedAccept(i)) //register
                     {
                         GameObject spawnedPlayerRegistationPuck = (GameObject)Instantiate(playerRegistrationPrefab, Vector2.zero, Quaternion.identity); //the positions are temporary
+                        Stats spawnedStats = spawnedPlayerRegistationPuck.AddComponent<Stats>();
+                        spawnedStats.playerID = Stats.nextPlayerID();
+                        spawnedStats.networkMode = NetworkMode.UNKNOWN; //TODO : change when we add networking to registration
+
                         switch (possiblePlayers[i].bindings.inputMode)
                         {
                             case InputConfiguration.PlayerInputType.MOUSE:
