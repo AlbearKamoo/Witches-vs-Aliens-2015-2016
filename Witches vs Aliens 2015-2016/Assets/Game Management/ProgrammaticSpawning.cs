@@ -96,6 +96,7 @@ public class ProgrammaticSpawning : MonoBehaviour, IObserver<Message> {
                     {
                         case NetworkMode.LOCALCLIENT:
                         case NetworkMode.LOCALSERVER:
+                        case NetworkMode.UNKNOWN:
                             spawnedPlayer.AddComponent<MousePlayerInput>().bindings = data.playerComponentPrefabs[i].bindings;
                             break;
                     }
@@ -105,6 +106,7 @@ public class ProgrammaticSpawning : MonoBehaviour, IObserver<Message> {
                     {
                         case NetworkMode.LOCALCLIENT:
                         case NetworkMode.LOCALSERVER:
+                        case NetworkMode.UNKNOWN:
                             spawnedPlayer.AddComponent<JoystickCustomDeadZoneInput>().bindings = data.playerComponentPrefabs[i].bindings;
                             break;
                     }
