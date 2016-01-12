@@ -234,7 +234,7 @@ public class InputToAction : MonoBehaviour, ISpeedLimiter, INetworkable, IObserv
 
     public void Notify(IncomingNetworkStreamMessage m)
     {
-        int index = findPlayer(m.reader);
+        int index = findPlayerIndex(m.reader);
         switch (m.packetType)
         {  
             case PacketType.PLAYERLOCATION:
@@ -362,8 +362,26 @@ public class InputToAction : MonoBehaviour, ISpeedLimiter, INetworkable, IObserv
         return true;
     }
 
-    int findPlayer(BinaryReader reader)
+    static int findPlayerIndex(int playerID)
     {
-        return players.BinarySearch(new NetworkPlayerIdentity(reader.ReadByte(), NetworkMode.UNKNOWN, null));
+        return players.BinarySearch(new NetworkPlayerIdentity(playerID, NetworkMode.UNKNOWN, null));
+    }
+
+    static int findPlayerIndex(BinaryReader reader)
+    {
+        return findPlayerIndex(reader.ReadByte());
+    }
+    /// <summary>
+    /// Only supposed to be used when networking playerIDs. If you didn't get the ID from networking, find the InputToAction the same way you got the ID.
+    /// </summary>
+    /// <param name="playerID"></param>
+    /// <returns></returns>
+    public static InputToAction IDToInputToAction(int playerID)
+    {
+        int index = findPlayerIndex(playerID);
+        if (index < 0)
+            return null;
+        else
+            return players[index].inputToAction;
     }
 }

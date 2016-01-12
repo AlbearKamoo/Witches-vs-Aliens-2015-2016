@@ -61,6 +61,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 418106}
   - 114: {fileID: 11444978}
+  - 82: {fileID: 8255650}
   m_Layer: 15
   m_Name: SuperGoalSpawnPoints
   m_TagString: Stage
@@ -1477,6 +1478,80 @@ BoxCollider2D:
   m_Offset: {x: -1, y: 0}
   serializedVersion: 2
   m_Size: {x: 4, y: 2}
+--- !u!82 &8255650
+AudioSource:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 109344}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 695f750f1604dd340a79565b6b6e2c89, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
 --- !u!82 &8271506
 AudioSource:
   m_ObjectHideFlags: 1
@@ -1528,7 +1603,7 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
+    m_RotationOrder: 0
   spreadCustomCurve:
     serializedVersion: 2
     m_Curve:
@@ -1550,7 +1625,7 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
+    m_RotationOrder: 0
 --- !u!82 &8282008
 AudioSource:
   m_ObjectHideFlags: 1
@@ -1650,7 +1725,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 923b9dee2c28d76438e4baf8114cca53, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SuperGoalPrefab: {fileID: 198324, guid: 9fd14d893457b2c4e9fee47fe54f8819, type: 2}
+  SuperGoalPrefab: {fileID: 120904, guid: 46d89204a79b1b140b8ce20af13e09c4, type: 2}
   spawnPositions:
   - {fileID: 490662}
   - {fileID: 464358}
@@ -1658,6 +1733,10 @@ MonoBehaviour:
   spawnTime: 50
   spawnTimeVariance: 10
   superGoalDuration: 20
+  WitchesSuperClip: {fileID: 8300000, guid: 4d05647e65936a24b888620076407371, type: 3}
+  AliensSuperClip: {fileID: 8300000, guid: 695f750f1604dd340a79565b6b6e2c89, type: 3}
+  aliensSuperOutput: {fileID: 24311422, guid: 12fca95c238125d44b367ec895672304, type: 2}
+  witchesSuperOutput: {fileID: 24377686, guid: 12fca95c238125d44b367ec895672304, type: 2}
 --- !u!114 &11489474
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -3,32 +3,20 @@ using UnityEngine.Audio;
 using System.Collections;
 
 [RequireComponent(typeof(Collider2D))]
-[RequireComponent(typeof(AudioSource))]
 public class SuperGoal : MonoBehaviour {
     Collider2D coll;
     SuperGoal _mirror;
     SpriteRenderer render;
     ParticleSystem vfx;
     PuckFX puckFX;
-    AudioSource sfx;
+    SuperGoalSpawner spawner;
+    public SuperGoalSpawner Spawner { set { spawner = value; } }
     
     public SuperGoal mirror { set { _mirror = value; } }
     bool _active = false;
 
     [SerializeField]
     protected float lerpInTime;
-
-    [SerializeField]
-    protected AudioClip WitchesSuperClip;
-
-    [SerializeField]
-    protected AudioClip AliensSuperClip;
-
-    [SerializeField]
-    protected AudioMixerGroup aliensSuperOutput;
-
-    [SerializeField]
-    protected AudioMixerGroup witchesSuperOutput;
 
     public bool active
     {
@@ -92,7 +80,6 @@ public class SuperGoal : MonoBehaviour {
         coll = GetComponent<Collider2D>();
         render = GetComponentInChildren<SpriteRenderer>();
         vfx = GetComponentInChildren<ParticleSystem>();
-        sfx = GetComponent<AudioSource>();
     }
 
     void Start()
@@ -108,28 +95,7 @@ public class SuperGoal : MonoBehaviour {
 
         other.collider.transform.position = _mirror.transform.TransformPoint((transform.InverseTransformPoint(other.transform.position)));
         LastBumped bumped = other.collider.GetComponent<LastBumped>();
-        activateSuper(bumped);
-
-        active = false;
-        _mirror.active = false;
-        switch (bumped.side)
-        {
-            case Side.LEFT:
-                sfx.clip = WitchesSuperClip;
-                sfx.outputAudioMixerGroup = witchesSuperOutput;
-                break;
-            case Side.RIGHT:
-                sfx.clip = AliensSuperClip;
-                sfx.outputAudioMixerGroup = aliensSuperOutput; 
-                break;
-        }
-        sfx.Play();
-        Debug.Log("SUPERGOAL!");
-    }
-
-    protected virtual void activateSuper(LastBumped bumped)
-    {
-        bumped.player.GetComponentInChildren<SuperAbility>().ready = true;
+        spawner.OnSuperGoalScored(bumped);
     }
 
     void rotateParticlesToTransform()

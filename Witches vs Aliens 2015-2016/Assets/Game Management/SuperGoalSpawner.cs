@@ -1,9 +1,10 @@
 ﻿using UnityEngine;
 using UnityEngine.Assertions;
 using System.Collections;
+using UnityEngine.Audio;
 
 //should be placed on the parent of all the supergoal spawn pairs
-
+[RequireComponent(typeof(AudioSource))]
 public class SuperGoalSpawner : MonoBehaviour, INetworkable {
     [SerializeField]
     protected GameObject SuperGoalPrefab;
@@ -17,9 +18,23 @@ public class SuperGoalSpawner : MonoBehaviour, INetworkable {
     protected float spawnTimeVariance;
     [SerializeField]
     protected float superGoalDuration;
+
+    [SerializeField]
+    protected AudioClip WitchesSuperClip;
+    [SerializeField]
+    protected AudioClip AliensSuperClip;
+
+    [SerializeField]
+    protected AudioMixerGroup aliensSuperOutput;
+    [SerializeField]
+    protected AudioMixerGroup witchesSuperOutput;
+
     SuperGoal SuperGoal1;
     SuperGoal SuperGoal2;
+    void SetGoalsActive(bool active) { SuperGoal1.active = active; SuperGoal2.active = active; }
     NetworkNode node;
+    NetworkMode mode;
+    AudioSource sfx;
 
 	// Use this for initialization
 	void Awake () {
@@ -28,6 +43,7 @@ public class SuperGoalSpawner : MonoBehaviour, INetworkable {
         SuperGoal2 = Instantiate(SuperGoalPrefab).GetComponent<SuperGoal>();
         SuperGoal1.mirror = SuperGoal2;
         SuperGoal2.mirror = SuperGoal1;
+        sfx = GetComponent<AudioSource>();
     }
 
     void Start()
@@ -35,14 +51,17 @@ public class SuperGoalSpawner : MonoBehaviour, INetworkable {
         node = NetworkNode.node;
         if (node == null) //if null, no networking, server controls it if there is networking
         {
+            mode = NetworkMode.UNKNOWN;
             StartCoroutine(LocalGoalSpawning());
         }
         else if(node is Server)
         {
+            mode = NetworkMode.LOCALSERVER;
             StartCoroutine(ServerGoalSpawning());
         }
         else if (node is Client)
         {
+            mode = NetworkMode.REMOTECLIENT;
             node.Subscribe(this);
         }
 	}
@@ -52,10 +71,48 @@ public class SuperGoalSpawner : MonoBehaviour, INetworkable {
         SuperGoal1.transform.SetParent(spawnPositions[spawnPointIndex], false);
         SuperGoal2.transform.SetParent(spawnPositions[spawnPointIndex].Find("Mirror"), false);
 
-        SuperGoal1.active = true;
-        SuperGoal2.active = true;
+        SuperGoal1.Spawner = this;
+        SuperGoal2.Spawner = this;
 
-        Callback.FireAndForget(() => { SuperGoal1.active = false; SuperGoal2.active = false; }, superGoalDuration, this);
+        SetGoalsActive(true);
+
+        Callback.FireAndForget(() => { SetGoalsActive(false); }, superGoalDuration, this);
+    }
+
+    public void OnSuperGoalScored(LastBumped bumped)
+    {
+        switch (mode)
+        {
+            case NetworkMode.LOCALSERVER:
+                node.BinaryWriter.Write(PacketType.SUPERGOALSCORED);
+                node.BinaryWriter.Write((byte)(bumped.player.GetComponent<Stats>().playerID));
+                node.Send(node.AllCostChannel);
+                goto case NetworkMode.UNKNOWN;
+            case NetworkMode.UNKNOWN:
+                bumped.player.GetComponentInChildren<SuperAbility>().ready = true;
+                playFX(bumped.side);
+                break;
+            /*case NetworkMode.REMOTECLIENT:
+                break;*/ //wait for server's verification
+        }
+        
+    }
+
+    void playFX(Side side)
+    {
+        switch (side)
+        {
+            case Side.LEFT:
+                sfx.clip = WitchesSuperClip;
+                sfx.outputAudioMixerGroup = witchesSuperOutput;
+                break;
+            case Side.RIGHT:
+                sfx.clip = AliensSuperClip;
+                sfx.outputAudioMixerGroup = aliensSuperOutput;
+                break;
+        }
+        sfx.Play();
+        SetGoalsActive(false);
     }
 
     IEnumerator LocalGoalSpawning()
@@ -72,7 +129,7 @@ public class SuperGoalSpawner : MonoBehaviour, INetworkable {
         for (; ; )
         {
             yield return new WaitForSeconds(RandomLib.RandFloatRange(spawnTime, spawnTimeVariance));
-            node.BinaryWriter.Write((byte)(PacketType.SUPERGOALSPAWNING));
+            node.BinaryWriter.Write(PacketType.SUPERGOALSPAWNING);
             byte spawnPointIndex = (byte)Random.Range(0, spawnPositions.Length);
             node.BinaryWriter.Write(spawnPointIndex);
             node.Send(node.AllCostChannel);
@@ -80,7 +137,7 @@ public class SuperGoalSpawner : MonoBehaviour, INetworkable {
         }
     }
 
-    public PacketType[] packetTypes { get { return new PacketType[] { PacketType.SUPERGOALSPAWNING}; } }
+    public PacketType[] packetTypes { get { return new PacketType[] { PacketType.SUPERGOALSPAWNING, PacketType.SUPERGOALSCORED }; } }
 
     public void Notify(IncomingNetworkStreamMessage m)
     {
@@ -89,6 +146,12 @@ public class SuperGoalSpawner : MonoBehaviour, INetworkable {
             case PacketType.SUPERGOALSPAWNING:
                 int spawnPointIndex = m.reader.ReadByte();
                 spawnSuperGoals(spawnPointIndex);
+                break;
+            case PacketType.SUPERGOALSCORED:
+                int playerID = m.reader.ReadByte();
+                GameObject player = InputToAction.IDToInputToAction(playerID).gameObject;
+                player.GetComponentInChildren<SuperAbility>().ready = true;
+                playFX(player.GetComponent<Stats>().side);
                 break;
             default:
                 Debug.LogError("Invalid Message Type");

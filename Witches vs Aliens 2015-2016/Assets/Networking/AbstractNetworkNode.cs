@@ -205,6 +205,11 @@ public static class BinaryReadWriteExtension
         writer.Write(v.y);
     }
 
+    public static void Write(this BinaryWriter writer, PacketType packetType)
+    {
+        writer.Write((byte)(packetType));
+    }
+
     public static Vector2 ReadVector2(this BinaryReader reader)
     {
         return new Vector2(reader.ReadSingle(), reader.ReadSingle());
