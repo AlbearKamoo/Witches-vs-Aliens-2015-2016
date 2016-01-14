@@ -13,6 +13,7 @@ public class MindMergeVisuals : MonoBehaviour {
     protected float animationSpeed;
 
     public bool flowIn = false;
+    public Rigidbody2D target;
 
     MindMergeTrail[] trails;
     float time;
@@ -36,5 +37,6 @@ public class MindMergeVisuals : MonoBehaviour {
         {
             trails[i].setCycleProgress(time + ((float)i / numTrails));
         }
+        this.transform.rotation = (target.position - (Vector2)(this.transform.position)).ToRotation();
 	}
 }

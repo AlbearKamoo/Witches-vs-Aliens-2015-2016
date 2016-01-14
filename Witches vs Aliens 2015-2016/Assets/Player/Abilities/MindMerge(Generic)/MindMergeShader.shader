@@ -10,7 +10,7 @@
 	SubShader
 	{
 		Tags { "RenderType"="Transparent" "IgnoreProjector"="True" "Queue"="Transparent+1"  "PreviewType"="Plane"}
-		Blend SrcAlpha OneMinusSrcAlpha
+		Blend  SrcAlpha One
 		ZWrite Off
 		Lighting Off
 

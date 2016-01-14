@@ -22,9 +22,13 @@ public class MultiChargeBlinkAbility : BlinkAbility {
             {
                 currentCharges++;
                 if (currentCharges > maxCharges)
+                {
                     currentCharges = maxCharges;
+                }
                 else
-                    recharge.Start();
+                {
+                    recharge.Restart();
+                }
 
                 base.ready = true;
             }

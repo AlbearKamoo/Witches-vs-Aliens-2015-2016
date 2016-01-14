@@ -40,8 +40,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AbilityUIPrefab: {fileID: 156974, guid: 84971435ea446c143b8a8db9a71452e1, type: 2}
-  cooldownTime: 15
-  maxDuration: 5
+  cooldownTime: 5
+  visualsPrefab: {fileID: 192886, guid: 164f5078ff401be4b9fe5ee755358eda, type: 2}
+  maxDuration: 0.25
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
@@ -51,16 +52,20 @@ Prefab:
     m_Modifications:
     - target: {fileID: 0}
       propertyPath: cooldownTime
-      value: 15
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: maxDuration
-      value: 5
+      value: 0.25
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: AbilityUIPrefab
       value: 
       objectReference: {fileID: 156974, guid: 84971435ea446c143b8a8db9a71452e1, type: 2}
+    - target: {fileID: 0}
+      propertyPath: visualsPrefab
+      value: 
+      objectReference: {fileID: 192886, guid: 164f5078ff401be4b9fe5ee755358eda, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 140360}

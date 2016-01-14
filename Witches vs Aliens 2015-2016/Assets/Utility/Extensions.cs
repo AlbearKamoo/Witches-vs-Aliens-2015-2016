@@ -27,6 +27,11 @@ public static class TransformExtension
             result = result.parent;
         return result;
     }
+
+    public static void LookAt(this Transform self, Vector2 target)
+    {
+        self.rotation = (target - (Vector2)(self.position)).ToRotation();
+    }
 }
 
 public static class GameObjectExtension
