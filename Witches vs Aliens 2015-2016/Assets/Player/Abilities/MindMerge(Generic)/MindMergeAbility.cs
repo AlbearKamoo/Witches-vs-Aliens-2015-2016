@@ -1,13 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class MindMergeAbility : GenericAbility, IPuckAbility
+public class MindMergeAbility : TimedGenericAbility, IPuckAbility
 {
     [SerializeField]
     protected GameObject visualsPrefab;
-
-    [SerializeField]
-    protected float maxDuration;
 
     Rigidbody2D puckRigid;
     public Transform puck { set { puckRigid = value.GetComponent<Rigidbody2D>(); } }
@@ -34,8 +31,8 @@ public class MindMergeAbility : GenericAbility, IPuckAbility
         otherVisuals.target = rigid;
         otherVisuals.flowIn = true;
 
-        selfVisuals.gameObject.SetActive(false);
-        otherVisuals.gameObject.SetActive(false);
+        selfSpawnedVisuals.SetActive(false);
+        otherSpawnedVisuals.SetActive(false);
 
         base.Start();
     }
@@ -55,26 +52,5 @@ public class MindMergeAbility : GenericAbility, IPuckAbility
         joint.enabled = false;
         selfVisuals.gameObject.SetActive(false);
         otherVisuals.gameObject.SetActive(false);
-    }
-
-    protected override void onFire(Vector2 direction)
-    {
-        StartCoroutine(UpdateCharge());
-    }
-
-    IEnumerator UpdateCharge()
-    {
-        active = true;
-        float duration = 0;
-        while (active)
-        {
-            yield return new WaitForFixedUpdate();
-            duration += Time.fixedDeltaTime;
-            if (duration > maxDuration)
-            {
-                active = false;
-                yield break;
-            }
-        }
     }
 }

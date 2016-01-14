@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class DistortionAbility : GenericAbility {
+public class DistortionAbility : TimedGenericAbility
+{
 
     ParticleSystem vfx;
     CircleCollider2D coll;
@@ -10,9 +11,6 @@ public class DistortionAbility : GenericAbility {
     Rigidbody2D rigid;
 
     float rigidMass;
-
-    [SerializeField]
-    protected float maxDuration;
 
     [SerializeField]
     protected bool affectsPlayers;
@@ -54,11 +52,6 @@ public class DistortionAbility : GenericAbility {
         base.Start();
     }
 
-    protected override void onFire(Vector2 direction)
-    {
-        StartCoroutine(UpdateCharge());
-    }
-
     public override void StopFire()
     {
         //active = false; lasts for full duration
@@ -78,22 +71,6 @@ public class DistortionAbility : GenericAbility {
         if (!affectsPlayers && other.CompareTag(Tags.player))
         {
             Physics2D.IgnoreCollision(other, coll);
-        }
-    }
-
-    private IEnumerator UpdateCharge()
-    {
-        active = true;
-        float duration = 0;
-        while (active)
-        {
-            yield return new WaitForFixedUpdate();
-            duration += Time.fixedDeltaTime;
-            if (duration > maxDuration)
-            {
-                active = false;
-                yield break;
-            }
         }
     }
 }
