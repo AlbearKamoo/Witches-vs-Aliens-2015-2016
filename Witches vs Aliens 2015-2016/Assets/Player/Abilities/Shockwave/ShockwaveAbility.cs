@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+[RequireComponent(typeof(AudioSource))]
 public class ShockwaveAbility : GenericAbility
 {
     [SerializeField]
@@ -14,8 +15,14 @@ public class ShockwaveAbility : GenericAbility
     protected ParticleSystem wavevfx;
 
     [SerializeField]
+    protected AudioClip shockwaveSFX;
+
+    [SerializeField]
     [AutoLink(childPath = "Charging")]
     protected ParticleSystem chargingvfx;
+
+    [SerializeField]
+    protected AudioClip chargingSFX;
 
     [SerializeField]
     protected float backgroundMagnitude;
@@ -27,9 +34,12 @@ public class ShockwaveAbility : GenericAbility
     [SerializeField]
     protected bool affectsPlayers;
 
+    AudioSource sfx;
+
     // Use this for initialization
     void Awake()
     {
+        sfx = GetComponent<AudioSource>();
         foreach (ParticleSystem particles in GetComponentsInChildren<ParticleSystem>())
         {
             particles.startSize = 2 * radius;
@@ -42,11 +52,16 @@ public class ShockwaveAbility : GenericAbility
         chargingvfx.playbackSpeed = 1f;
         chargingvfx.Play();
 
+        sfx.PlayOneShot(chargingSFX);
+
         background.gameObject.SetActive(true);
         Vector2 initialLocalScale = background.localScale;
 
         Callback.DoLerp((float l) => background.localScale = initialLocalScale - backgroundMagnitude * Mathf.Sin(10 * Mathf.PI * l) * Vector2.one, chargeUp, this).FollowedBy(() =>
         {
+            sfx.clip = shockwaveSFX;
+            sfx.Play();
+
             background.localScale = initialLocalScale;
             background.gameObject.SetActive(false);
 
