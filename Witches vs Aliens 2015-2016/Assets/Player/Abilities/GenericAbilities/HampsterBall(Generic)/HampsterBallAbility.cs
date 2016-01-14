@@ -4,11 +4,10 @@ using System.Collections.Generic;
 
 public class HampsterBallAbility : TimedGenericAbility, IPuckAbility, IAlliesAbility
 {
-
     [SerializeField]
     protected GameObject hampsterBallPrefab;
 
-    public Transform puck { set { Physics2D.IgnoreCollision(ball.Ball, value.GetComponent<Collider2D>()); } }
+    public Transform puck { set { ball.ignoreCollider(value.GetComponent<Collider2D>()); } }
 
     HampsterBall ball;
 
@@ -16,8 +15,7 @@ public class HampsterBallAbility : TimedGenericAbility, IPuckAbility, IAlliesAbi
     {
         set {
             foreach (Transform ally in value)
-                foreach(Collider2D coll in ally.GetComponentsInChildren<Collider2D>())
-                    Physics2D.IgnoreCollision(ball.Ball, coll);
+                ball.ignoreColliders(ally.GetComponentsInChildren<Collider2D>());
         }
     }
 

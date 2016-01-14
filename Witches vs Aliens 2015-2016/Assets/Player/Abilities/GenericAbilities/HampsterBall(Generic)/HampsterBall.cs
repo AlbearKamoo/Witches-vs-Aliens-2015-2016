@@ -27,6 +27,9 @@ public class HampsterBall : MonoBehaviour, ISpeedLimiter {
         set
         {
             this.gameObject.SetActive(value);
+            if (value)
+                foreach (Collider2D coll in ignoreCollisionList)
+                    Physics2D.IgnoreCollision(ball, coll); //ignore collision gets wiped when the collider is deactivated
         }
     }
 
@@ -34,13 +37,15 @@ public class HampsterBall : MonoBehaviour, ISpeedLimiter {
     public PolygonCollider2D Ball { get { return ball; } }
 
     LineRenderer rend;
-
     Rigidbody2D rigid;
+    List<Collider2D> ignoreCollisionList;
 
     const float TwoPI = 2 * Mathf.PI;
 
 	// Use this for initialization
 	void Awake () {
+        ignoreCollisionList = new List<Collider2D>();
+
         rigid = GetComponent<Rigidbody2D>();
 
         ball = this.gameObject.AddComponent<PolygonCollider2D>();
@@ -73,6 +78,16 @@ public class HampsterBall : MonoBehaviour, ISpeedLimiter {
 
         ball.points = points;
 	}
+
+    public void ignoreColliders(IEnumerable<Collider2D> colliders)
+    {
+        ignoreCollisionList.AddRange(colliders);
+    }
+
+    public void ignoreCollider(Collider2D collider)
+    {
+        ignoreCollisionList.Add(collider);
+    }
 
     void OnCollisionEnter2D()
     {
