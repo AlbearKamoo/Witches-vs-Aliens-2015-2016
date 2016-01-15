@@ -8,6 +8,10 @@ public class Contagion : MonoBehaviour {
     Countdown startCountdown;
     ContagionAbility origin;
     ContagionEffects effects;
+    InputToAction action;
+    FloatStat massMod;
+
+    float massNerf;
 
     public bool active
     {
@@ -21,6 +25,12 @@ public class Contagion : MonoBehaviour {
             if (value)
             {
                 startCountdown.Start();
+                massMod = action.mass.addModifier(massNerf);
+            }
+            else
+            {
+                action.mass.removeModifier(massMod);
+                massMod = null;
             }
             effects.active = value;
         }
@@ -34,11 +44,13 @@ public class Contagion : MonoBehaviour {
         }
     }
 
-    public void Initialize(float duration, ContagionAbility origin, ContagionEffects effects)
+    public void Initialize(float duration, float massNerf, ContagionAbility origin, ContagionEffects effects)
     {
         startCountdown = Countdown.TimedCountdown(() => active = false, duration, this);
         this.origin = origin;
         this.effects = effects;
+        this.massNerf = massNerf;
+        action = GetComponent<InputToAction>();
     }
 
 }

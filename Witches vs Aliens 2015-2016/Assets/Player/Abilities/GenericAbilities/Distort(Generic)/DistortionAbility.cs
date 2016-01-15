@@ -8,9 +8,8 @@ public class DistortionAbility : TimedGenericAbility
     CircleCollider2D coll;
     PointEffector2D effector;
     MeshRenderer render;
-    Rigidbody2D rigid;
-
-    float rigidMass;
+    InputToAction action;
+    FloatStat massMod;
 
     [SerializeField]
     protected bool affectsPlayers;
@@ -22,7 +21,7 @@ public class DistortionAbility : TimedGenericAbility
         coll.enabled = true;
         effector.enabled = true;
         render.enabled = true;
-        rigid.mass = 99999f;
+        massMod = action.mass.addModifier(99999f);
     }
 
     protected override void OnDeactivate()
@@ -33,7 +32,8 @@ public class DistortionAbility : TimedGenericAbility
         coll.enabled = false;
         effector.enabled = false;
         render.enabled = false;
-        rigid.mass = rigidMass;
+        action.mass.removeModifier(massMod);
+        massMod = null;
     }
 
     // Use this for initialization
@@ -47,8 +47,7 @@ public class DistortionAbility : TimedGenericAbility
 
     protected override void Start()
     {
-        rigid = GetComponentInParent<Rigidbody2D>();
-        rigidMass = rigid.mass;
+        action = GetComponentInParent<InputToAction>();
         base.Start();
     }
 
@@ -62,7 +61,7 @@ public class DistortionAbility : TimedGenericAbility
     {
         if (other.CompareTag(Tags.puck))
         {
-            other.GetComponent<LastBumped>().setLastBumped(rigid.transform);
+            other.GetComponent<LastBumped>().setLastBumped(transform.root);
         }
     }
 

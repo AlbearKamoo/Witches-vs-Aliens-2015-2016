@@ -8,13 +8,10 @@ public class BoostAbility : MovementAbility, IObserver<ResetMessage> {
     InputToAction action;
     FloatStat speedMod;
     FloatStat accelMod;
+    FloatStat massMod;
     AudioController sfx;
     ParticleSystem vfx;
     Rigidbody2D rigid;
-
-    float rigidMass;
-
-    const float massCoefficient = 3f;
 
     protected override void OnActivate()
     {
@@ -23,7 +20,6 @@ public class BoostAbility : MovementAbility, IObserver<ResetMessage> {
         StartCoroutine(playFX());
     }
 
-    //may want to turn these into protected [SerializeField]s if the stats are going to be different for each char
     [SerializeField]
     protected float speedMultiplier = 2.5f;
     [SerializeField]
@@ -32,6 +28,8 @@ public class BoostAbility : MovementAbility, IObserver<ResetMessage> {
     protected float boostDecayTime = 1f;
     [SerializeField]
     protected float baseAccelDebuff = 0.066f;
+    [SerializeField]
+    protected float massBuff = 3f;
     [SerializeField]
     protected float accelNerfDecayTime = 1f;
     [SerializeField]
@@ -50,7 +48,6 @@ public class BoostAbility : MovementAbility, IObserver<ResetMessage> {
         vfx.startSize = 2*transform.parent.GetComponentInChildren<CircleCollider2D>().radius;
         rigid = GetComponentInParent<Rigidbody2D>();
         GetComponentInParent<IObservable<ResetMessage>>().Subscribe(this);
-        rigidMass = rigid.mass;
     }
 
     protected override void onFire(Vector2 direction)
@@ -76,8 +73,12 @@ public class BoostAbility : MovementAbility, IObserver<ResetMessage> {
         else
             accelMod.value = baseAccelDebuff;
 
+        if (massMod == null)
+            massMod = action.mass.addModifier(massBuff);
+        else
+            massMod.value = massBuff;
+
         rigid.velocity = action.maxSpeedTracker * direction.normalized;
-        rigid.mass = rigidMass * massCoefficient;
 
         active = true;
         float duration = 0;
@@ -102,11 +103,13 @@ public class BoostAbility : MovementAbility, IObserver<ResetMessage> {
             time += Time.fixedDeltaTime;
             float lerpValue = time / boostDecayTime;
             speedMod.value = Mathf.Lerp(speedMultiplier, 1, lerpValue);
-            rigid.mass = Mathf.Lerp(rigidMass * massCoefficient, rigidMass, lerpValue);
+            massMod.value = Mathf.Lerp(massBuff, 1, lerpValue);
             if (time > boostDecayTime)
             {
                 action.maxSpeedTracker.removeModifier(speedMod);
+                action.mass.removeModifier(massMod);
                 speedMod = null;
+                massMod = null;
                 yield break;
             }
 

@@ -20,14 +20,6 @@ public static class TransformExtension
         transform.localScale = localScale;
     }
 
-    public static Transform GetBaseParent(this Transform transform)
-    {
-        Transform result = transform;
-        while (result.parent != null)
-            result = result.parent;
-        return result;
-    }
-
     public static void LookAt(this Transform self, Vector2 target)
     {
         self.rotation = (target - (Vector2)(self.position)).ToRotation();

@@ -22,6 +22,7 @@ public class InputToAction : MonoBehaviour, ISpeedLimiter, INetworkable, IObserv
     public vectorPercent vectorToPercent { set { _vectorPercent = value; } }
     public Vector2 aimingInputDisplacement(float maxDistanceForScale) { return _vectorQuantified(aimingInputDirection, maxDistanceForScale); }
     public float aimingInputPercentDistance(float maxDistanceForScale) { return _vectorPercent(aimingInputDirection, maxDistanceForScale); }
+
     [SerializeField]
     protected float initMaxSpeed;
     private FloatStatTracker _maxSpeed;
@@ -32,6 +33,9 @@ public class InputToAction : MonoBehaviour, ISpeedLimiter, INetworkable, IObserv
     protected float initAccel;
     private FloatStatTracker _accel;
     public FloatStatTracker accel { get { return _accel; } }
+
+    private FloatStatTracker _mass;
+    public FloatStatTracker mass { get { return _mass; } }
 
     [Range(0,1)]
     public float rotationLerpValue;
@@ -87,6 +91,7 @@ public class InputToAction : MonoBehaviour, ISpeedLimiter, INetworkable, IObserv
          rigid = GetComponent<Rigidbody2D>();
          _maxSpeed = new FloatStatTracker(initMaxSpeed);
          _accel = new FloatStatTracker(initAccel);
+         _mass = new FloatStatTracker(rigid.mass, () => rigid.mass = _mass.value);
 	}
 
     void Start()

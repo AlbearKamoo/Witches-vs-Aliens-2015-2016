@@ -43,13 +43,18 @@ MonoBehaviour:
   cooldownTime: 10
   contagionPrefab: {fileID: 159258, guid: db7aa34639a4b6e41a0f7dfe60708b66, type: 2}
   duration: 5
+  massNerf: 0.33
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: massNerf
+      value: 0.33
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 148762}

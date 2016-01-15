@@ -9,6 +9,9 @@ public class ContagionAbility : GenericAbility {
     [SerializeField]
     protected float duration;
 
+    [SerializeField]
+    protected float massNerf;
+
     Stats stats;
     Contagion localContagion;
 
@@ -21,7 +24,7 @@ public class ContagionAbility : GenericAbility {
 
     public Contagion TryAddContagion(Transform target)
     {
-        GameObject root = target.GetBaseParent().gameObject;
+        GameObject root = target.root.gameObject;
         Stats targetStats = root.GetComponent<Stats>();
         if (targetStats && targetStats.side != stats.side)
         {
@@ -36,7 +39,7 @@ public class ContagionAbility : GenericAbility {
             }
             else
             {
-                result = AddContagion(root);
+                result = AddContagion(root, massNerf);
                 result.active = true;
                 return result;
             }
@@ -45,12 +48,12 @@ public class ContagionAbility : GenericAbility {
         return null;
     }
 
-    Contagion AddContagion(GameObject targetRoot)
+    Contagion AddContagion(GameObject targetRoot, float massNerf = 1)
     {
         Contagion result = targetRoot.gameObject.AddComponent<Contagion>();
         GameObject effects = SimplePool.Spawn(contagionPrefab);
         effects.transform.SetParent(targetRoot.transform, false);
-        result.Initialize(duration, this, effects.GetComponent<ContagionEffects>());
+        result.Initialize(duration, massNerf, this, effects.GetComponent<ContagionEffects>());
         return result;
     }
 
