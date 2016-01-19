@@ -5,6 +5,8 @@ using System.Collections;
 public class CharacterHolder : MonoBehaviour {
 
     public CharacterComponents character;
+
+    public int characterID { get; set; }
 }
 [System.Serializable]
 public class CharacterComponents

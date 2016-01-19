@@ -27,6 +27,9 @@ public class PlayerRegistration : MonoBehaviour {
     protected PlayerRegisters[] possiblePlayers;
 
     [SerializeField]
+    protected CharacterHolder[] charactersData; //this array maps the characters to ints, for networking.
+
+    [SerializeField]
     [AutoLink(parentTag = Tags.canvas, childPath = "RegisteredPlayers")]
     protected Transform UIParent;
 
@@ -51,6 +54,14 @@ public class PlayerRegistration : MonoBehaviour {
 
         startCountdown = Countdown.TimedCountdown(startGame, 5, this);
 	}
+
+    void Start()
+    {
+        for (int i = 0; i < charactersData.Length; i++)
+        {
+            charactersData[i].characterID = i;
+        }
+    }
 
     void Update()
     {
