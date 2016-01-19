@@ -114,7 +114,7 @@ public class PlayerRegistration : MonoBehaviour {
                         playerUI[i] = null;
                         registrationStates[i] = RegistrationState.NOTREGISTERED;
                     }
-                    else if (playerSelections[i].selectedCharacter != null //if they've made a choice
+                    else if (validCharacterID(playerSelections[i].SelectedCharacterID) //if they've made a choice
                     && pressedAccept(i)) //ready
                     {
                         registrationStates[i] = RegistrationState.READY;
@@ -285,7 +285,7 @@ public class PlayerRegistration : MonoBehaviour {
         int count = 0;
         for(int i = 0; i < playerSelections.Length; i++)
         {
-            if (playerSelections[i] != null && playerSelections[i].selectedCharacter != null)
+            if (playerSelections[i] != null && validCharacterID(playerSelections[i].SelectedCharacterID))
                 count++;
         }
         //if count == 0 do something to reset
@@ -294,11 +294,16 @@ public class PlayerRegistration : MonoBehaviour {
         count = 0;
         for (int i = 0; i < playerSelections.Length; i++)
         {
-            if (playerSelections[i] != null && playerSelections[i].selectedCharacter != null)
-                data.playerComponentPrefabs[count++] = new PlayerComponents(playerSelections[i].selectedCharacter, possiblePlayers[i].bindings);
+            if (playerSelections[i] != null && validCharacterID(playerSelections[i].SelectedCharacterID))
+                data.playerComponentPrefabs[count++] = new PlayerComponents(charactersData[playerSelections[i].SelectedCharacterID].character, possiblePlayers[i].bindings);
         }
         Application.LoadLevel(mainGameSceneName);
         Destroy(this);
+    }
+
+    public bool validCharacterID(int characterID)
+    {
+        return characterID >= 0 && characterID < charactersData.Length;
     }
 
     enum RegistrationState

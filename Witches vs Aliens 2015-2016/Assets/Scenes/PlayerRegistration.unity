@@ -115,8 +115,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   introMusicPrefab: {fileID: 129924, guid: c11a39805b0734f40bae483a2f720505, type: 2}
   mainScenePlaylist:
-  - {fileID: 8300000, guid: be780e3e9d1b8ec4c84c7078e3c479c0, type: 3}
-  - {fileID: 8300000, guid: 530fe8bdec66d204fbdb0219139b2e81, type: 3}
+  - {fileID: 0}
+  - {fileID: 0}
   mainGameSceneName: Derek
   playerRegistrationPrefab: {fileID: 171078, guid: df99a46226850ad4194db9a6272820ae,
     type: 2}
@@ -128,6 +128,7 @@ MonoBehaviour:
     color: {r: 1, g: 0, b: 0, a: 1}
     bindings:
       inputMode: 0
+      networkMode: 0
       verticalMovementAxisName: VerticalKeyboard
       horizontalMovementAxisName: HorizontalKeyboard
       verticalAimingAxisName: VerticalKeyboard
@@ -140,6 +141,7 @@ MonoBehaviour:
     color: {r: 0, g: 1, b: 0.6275861, a: 1}
     bindings:
       inputMode: 1
+      networkMode: 0
       verticalMovementAxisName: VerticalMovement_J1
       horizontalMovementAxisName: HorizontalMovement_J1
       verticalAimingAxisName: VerticalAim_J1
@@ -152,6 +154,7 @@ MonoBehaviour:
     color: {r: 0.86206913, g: 0, b: 1, a: 1}
     bindings:
       inputMode: 1
+      networkMode: 0
       verticalMovementAxisName: VerticalMovement_J2
       horizontalMovementAxisName: HorizontalMovement_J2
       verticalAimingAxisName: VerticalAim_J2
@@ -164,6 +167,7 @@ MonoBehaviour:
     color: {r: 0.77931035, g: 1, b: 0, a: 1}
     bindings:
       inputMode: 1
+      networkMode: 0
       verticalMovementAxisName: VerticalMovement_J3
       horizontalMovementAxisName: HorizontalMovement_J3
       verticalAimingAxisName: VerticalAim_J3
@@ -176,6 +180,7 @@ MonoBehaviour:
     color: {r: 0.15862083, g: 0, b: 1, a: 1}
     bindings:
       inputMode: 1
+      networkMode: 0
       verticalMovementAxisName: VerticalMovement_J4
       horizontalMovementAxisName: HorizontalMovement_J4
       verticalAimingAxisName: VerticalAim_J4
@@ -183,6 +188,11 @@ MonoBehaviour:
       movementAbilityAxis: J4_Move
       genericAbilityAxis: J4_Generic
       superAbilityAxis: J4_Super
+  charactersData:
+  - {fileID: 1149256924}
+  - {fileID: 1220282583}
+  - {fileID: 470944701}
+  - {fileID: 69739546}
   UIParent: {fileID: 351718218}
 --- !u!114 &21640696
 MonoBehaviour:
@@ -471,7 +481,7 @@ RectTransform:
   m_Children:
   - {fileID: 351718218}
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 8
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
@@ -1198,7 +1208,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 6
 --- !u!1 &952268015
 GameObject:
   m_ObjectHideFlags: 0
@@ -1302,7 +1312,7 @@ Transform:
   m_LocalScale: {x: 2, y: 2, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 9
 --- !u!212 &1149256927
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1468,7 +1478,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 10
 --- !u!212 &1220282586
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1841,7 +1851,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
 --- !u!1 &1956892957
 GameObject:
   m_ObjectHideFlags: 0
