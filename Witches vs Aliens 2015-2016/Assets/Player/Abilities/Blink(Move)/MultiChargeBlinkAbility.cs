@@ -6,11 +6,10 @@ public class MultiChargeBlinkAbility : BlinkAbility {
     protected int maxCharges;
 
     int currentCharges;
-    Countdown recharge;
+    IEnumerator recharge;
 
     protected void Awake()
     {
-        recharge = Countdown.TimedCountdown(() => ready = true, cooldownTime, this);
         currentCharges = maxCharges;
     }
 
@@ -27,7 +26,12 @@ public class MultiChargeBlinkAbility : BlinkAbility {
                 }
                 else
                 {
-                    recharge.Restart();
+                    if (recharge != null)
+                    {
+                        StopCoroutine(recharge);
+                    }
+                    recharge = Callback.Routines.FireAndForgetRoutine(() => { ready = true; recharge = null; }, cooldownTime, this);
+                    StartCoroutine(recharge);
                 }
 
                 base.ready = true;
@@ -55,6 +59,10 @@ public class MultiChargeBlinkAbility : BlinkAbility {
 
     protected override void StartCooldown()
     {
-        recharge.Start();
+        if (recharge == null)
+        {
+            recharge = Callback.Routines.FireAndForgetRoutine(() => ready = true, cooldownTime, this);
+            StartCoroutine(recharge);
+        }
     }
 }

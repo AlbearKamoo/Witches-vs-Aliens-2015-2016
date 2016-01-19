@@ -38,7 +38,7 @@ public class PlayerRegistration : MonoBehaviour {
     RegisteredPlayerUIView[] playerUI;
     RegistrationState[] registrationStates;
 
-    Countdown startCountdown;
+    IEnumerator startCountdown;
 	void Awake ()
     {
         data = GetComponent<SetupData>();
@@ -51,8 +51,6 @@ public class PlayerRegistration : MonoBehaviour {
         {
             registrationStates[i] = RegistrationState.NOTREGISTERED;
         }
-
-        startCountdown = Countdown.TimedCountdown(startGame, 5, this);
 	}
 
     void Start()
@@ -65,81 +63,120 @@ public class PlayerRegistration : MonoBehaviour {
 
     void Update()
     {
-        for (int i = 0; i < possiblePlayers.Length; i++)
-        {
-            switch (registrationStates[i])
-            {
-                case RegistrationState.NOTREGISTERED:
-                    if (pressedAccept(i)) //register
-                    {
-                        GameObject spawnedPlayerRegistationPuck = (GameObject)Instantiate(playerRegistrationPrefab, Vector2.zero, Quaternion.identity); //the positions are temporary
-                        Stats spawnedStats = spawnedPlayerRegistationPuck.AddComponent<Stats>();
-                        spawnedStats.playerID = Stats.nextPlayerID();
-                        spawnedStats.networkMode = NetworkMode.UNKNOWN; //TODO : change when we add networking to registration
-
-                        switch (possiblePlayers[i].bindings.inputMode)
-                        {
-                            case InputConfiguration.PlayerInputType.MOUSE:
-                                spawnedPlayerRegistationPuck.AddComponent<MousePlayerInput>().bindings = possiblePlayers[i].bindings;
-                                break;
-                            case InputConfiguration.PlayerInputType.JOYSTICK:
-                                spawnedPlayerRegistationPuck.AddComponent<JoystickCustomDeadZoneInput>().bindings = possiblePlayers[i].bindings;
-                                break;
-                        }
-
-                        //spawn them
-                        playerSelections[i] = spawnedPlayerRegistationPuck.AddComponent<CharacterSelector>();
-                        playerUI[i] = SimplePool.Spawn(playerRegistrationUIPrefab).GetComponent<RegisteredPlayerUIView>();
-                        playerUI[i].transform.SetParent(UIParent, Vector3.one, false);
-                        InputToAction action = spawnedPlayerRegistationPuck.GetComponent<InputToAction>();
-                        action.rotationEnabled = false;
-                        action.movementEnabled = true;
-                        playerUI[i].inputMode = possiblePlayers[i].bindings.inputMode;
-                        playerUI[i].ready = false;
-                        playerUI[i].playerColor = spawnedPlayerRegistationPuck.GetComponentInChildren<Image>().color = spawnedPlayerRegistationPuck.GetComponent<ParticleSystem>().startColor = possiblePlayers[i].color;
-                        spawnedPlayerRegistationPuck.GetComponentInChildren<Text>().text = possiblePlayers[i].abbreviation;
-                        playerUI[i].playerName = possiblePlayers[i].name;
-
-                        registrationStates[i] = RegistrationState.REGISTERING;
-                    }
-                    break;
-
-                case RegistrationState.REGISTERING:
-                    //check deregistration
-                    if ( pressedBack(i)) //deregister
-                    {
-                        Destroy(playerSelections[i].gameObject);
-                        playerSelections[i] = null;
-                        playerUI[i].Despawn();
-                        playerUI[i] = null;
-                        registrationStates[i] = RegistrationState.NOTREGISTERED;
-                    }
-                    else if (validCharacterID(playerSelections[i].SelectedCharacterID) //if they've made a choice
-                    && pressedAccept(i)) //ready
-                    {
-                        registrationStates[i] = RegistrationState.READY;
-                        playerUI[i].ready = true;
-                    }
-                    break;
-
-                case RegistrationState.READY:
-                    if (pressedBack(i)) //not ready
-                    {
-                        registrationStates[i] = RegistrationState.REGISTERING;
-                        playerUI[i].ready = false;
-                    }
-                    break;
-            }
-        }
+        checkInput();
 
         //now check if all are ready
+        checkReady();
+    }
+
+    void checkInput()
+    {
+        for (int i = 0; i < possiblePlayers.Length; i++)
+        {
+            if (pressedAccept(i)) //register
+            {
+                OnPressedAccept(i);
+            }
+            else if (pressedBack(i)) //deregister
+            {
+                OnPressedBack(i);
+            }
+        }
+    }
+
+    void OnPressedAccept(int playerIndex)
+    {
+        switch (registrationStates[playerIndex])
+        {
+            case RegistrationState.NOTREGISTERED:
+                spawnPlayerRegistrationPuck(playerIndex);
+                break;
+            case RegistrationState.REGISTERING:
+                if (validCharacterID(playerSelections[playerIndex].SelectedCharacterID))
+                    setPlayerReady(playerIndex);
+                break;
+            //case RegistrationState.READY: //don't need to do anything
+        }
+    }
+
+    void spawnPlayerRegistrationPuck(int playerIndex)
+    {
+        GameObject spawnedPlayerRegistationPuck = (GameObject)Instantiate(playerRegistrationPrefab, Vector2.zero, Quaternion.identity); //the positions are temporary
+        Stats spawnedStats = spawnedPlayerRegistationPuck.AddComponent<Stats>();
+        spawnedStats.playerID = Stats.nextPlayerID();
+        spawnedStats.networkMode = NetworkMode.UNKNOWN; //TODO : change when we add networking to registration
+
+        switch (possiblePlayers[playerIndex].bindings.inputMode)
+        {
+            case InputConfiguration.PlayerInputType.MOUSE:
+                spawnedPlayerRegistationPuck.AddComponent<MousePlayerInput>().bindings = possiblePlayers[playerIndex].bindings;
+                break;
+            case InputConfiguration.PlayerInputType.JOYSTICK:
+                spawnedPlayerRegistationPuck.AddComponent<JoystickCustomDeadZoneInput>().bindings = possiblePlayers[playerIndex].bindings;
+                break;
+        }
+
+        //spawn them
+        playerSelections[playerIndex] = spawnedPlayerRegistationPuck.AddComponent<CharacterSelector>();
+        playerUI[playerIndex] = SimplePool.Spawn(playerRegistrationUIPrefab).GetComponent<RegisteredPlayerUIView>();
+        playerUI[playerIndex].transform.SetParent(UIParent, Vector3.one, false);
+        InputToAction action = spawnedPlayerRegistationPuck.GetComponent<InputToAction>();
+        action.rotationEnabled = false;
+        action.movementEnabled = true;
+        playerUI[playerIndex].inputMode = possiblePlayers[playerIndex].bindings.inputMode;
+        playerUI[playerIndex].ready = false;
+        playerUI[playerIndex].playerColor = spawnedPlayerRegistationPuck.GetComponentInChildren<Image>().color = spawnedPlayerRegistationPuck.GetComponent<ParticleSystem>().startColor = possiblePlayers[playerIndex].color;
+        spawnedPlayerRegistationPuck.GetComponentInChildren<Text>().text = possiblePlayers[playerIndex].abbreviation;
+        playerUI[playerIndex].playerName = possiblePlayers[playerIndex].name;
+
+        registrationStates[playerIndex] = RegistrationState.REGISTERING;
+    }
+
+    void setPlayerReady(int playerIndex)
+    {
+        registrationStates[playerIndex] = RegistrationState.READY;
+        playerUI[playerIndex].ready = true;
+    }
+
+    void OnPressedBack(int playerIndex)
+    {
+        switch (registrationStates[playerIndex])
+        {
+            //case RegistrationState.NOTREGISTERED: //don't need to do anything
+            case RegistrationState.REGISTERING:
+                despawnPlayerRegistrationPuck(playerIndex);
+                break;
+            case RegistrationState.READY:
+                setPlayerRegistering(playerIndex);
+                break;
+        }
+    }
+
+    void despawnPlayerRegistrationPuck(int playerIndex)
+    {
+        Destroy(playerSelections[playerIndex].gameObject);
+        playerSelections[playerIndex] = null;
+        playerUI[playerIndex].Despawn();
+        playerUI[playerIndex] = null;
+        registrationStates[playerIndex] = RegistrationState.NOTREGISTERED;
+    }
+
+    void setPlayerRegistering(int playerIndex)
+    {
+        registrationStates[playerIndex] = RegistrationState.REGISTERING;
+        playerUI[playerIndex].ready = false;
+    }
+
+    void checkReady()
+    {
         bool ready = registrationStates.All<RegistrationState>((RegistrationState s) => s != RegistrationState.REGISTERING) && registrationStates.Any<RegistrationState>((RegistrationState s) => s == RegistrationState.READY);
-        if (!startCountdown.active)
+        if (startCountdown == null)
         {
             if (ready)
             {
                 introMusic = Instantiate(introMusicPrefab);
-                startCountdown.Start();
+                startCountdown = Callback.Routines.FireAndForgetRoutine(() => startGame(), 5, this);
+                StartCoroutine(startCountdown);
                 for (int i = 0; i < playerSelections.Length; i++)
                     if (registrationStates[i] == RegistrationState.READY)
                         playerSelections[i].GetComponent<InputToAction>().movementEnabled = false;
@@ -149,8 +186,11 @@ public class PlayerRegistration : MonoBehaviour {
         {
             if (!ready)
             {
-                startCountdown.Stop();
-                startCountdown = null;
+                if (startCountdown != null)
+                {
+                    StopCoroutine(startCountdown);
+                    startCountdown = null;
+                }
                 Destroy(introMusic);
                 for (int i = 0; i < playerSelections.Length; i++)
                     if (registrationStates[i] != RegistrationState.NOTREGISTERED)

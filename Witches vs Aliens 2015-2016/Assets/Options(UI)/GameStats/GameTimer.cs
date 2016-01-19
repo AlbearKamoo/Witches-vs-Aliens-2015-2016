@@ -24,12 +24,26 @@ public class GameTimer : MonoBehaviour {
     Outline timeOutline;
     Image backgroundImg;
     Material background;
-    Countdown timer;
+    IEnumerator timer;
     Queue<float> countdownTimes = new Queue<float>(new float[] { 5, 4, 3, 2, 1, -1 }); //-1 to ensure that Peek() does not fail
     public bool running
     {
-        get { return timer.active; }
-        set { timer.active = value; }
+        get { return timer != null; }
+        set {
+            if (value)
+            {
+                if (timer == null)
+                {
+                    timer = countdown();
+                    StartCoroutine(timer);
+                }
+            }
+            else if(timer != null)
+            {
+                StopCoroutine(timer);
+                timer = null;
+            }
+        }
     }
     IEnumerator countdown()
     {
@@ -54,7 +68,7 @@ public class GameTimer : MonoBehaviour {
                     SimplePool.Spawn(OvertimeCountdownPrefab, Vector3.zero).GetComponent<TimerCountdown>().count = overtime;
                     //and VFX
                 }
-                timer.Stop();
+                running = false;
                 yield break;
             }
             else
@@ -68,7 +82,6 @@ public class GameTimer : MonoBehaviour {
         timeOutline = GetComponent<Outline>();
         normalOutlineColor = timeOutline.effectColor;
         setTime();
-        timer = new Countdown(() => this.StartCoroutine(countdown()), this);
 	}
 
     void Start()

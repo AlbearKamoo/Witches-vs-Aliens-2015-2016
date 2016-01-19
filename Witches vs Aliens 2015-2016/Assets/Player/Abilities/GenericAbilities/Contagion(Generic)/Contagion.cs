@@ -5,26 +5,31 @@ using System.Collections;
 
 public class Contagion : MonoBehaviour {
 
-    Countdown startCountdown;
+    IEnumerator startCountdown;
     ContagionAbility origin;
     ContagionEffects effects;
     InputToAction action;
     FloatStat massMod;
 
     float massNerf;
+    float duration;
 
     public bool active
     {
         get
         {
-            return startCountdown.active;
+            return startCountdown != null;
         }
         set
         {
             this.enabled = value;
             if (value)
             {
-                startCountdown.Start();
+                if (startCountdown == null)
+                {
+                    startCountdown = Callback.Routines.FireAndForgetRoutine(() => {active = false; startCountdown = null;}, duration, this);
+                    StartCoroutine(startCountdown);
+                }
                 massMod = action.mass.addModifier(massNerf);
             }
             else
@@ -46,7 +51,7 @@ public class Contagion : MonoBehaviour {
 
     public void Initialize(float duration, float massNerf, ContagionAbility origin, ContagionEffects effects)
     {
-        startCountdown = Countdown.TimedCountdown(() => active = false, duration, this);
+        this.duration = duration;
         this.origin = origin;
         this.effects = effects;
         this.massNerf = massNerf;
