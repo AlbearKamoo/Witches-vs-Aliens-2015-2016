@@ -5,6 +5,15 @@ public class PuckSpeedLimiter : MonoBehaviour, ISpeedLimiter, INetworkable, IObs
 {
     [SerializeField]
     protected float initialMaxSpeed;
+
+    [SerializeField]
+    protected float dragCutoff;
+
+    [SerializeField]
+    protected float dragSpeedMultiplier;
+
+    [SerializeField]
+    protected float dragMin = 0.25f;
     Rigidbody2D rigid;
     NetworkNode node;
 
@@ -27,6 +36,7 @@ public class PuckSpeedLimiter : MonoBehaviour, ISpeedLimiter, INetworkable, IObs
         {
             node.Subscribe<OutgoingNetworkStreamMessage>(this);
         }
+        updateDrag();
     }
 
     // Update is called once per frame
@@ -34,6 +44,17 @@ public class PuckSpeedLimiter : MonoBehaviour, ISpeedLimiter, INetworkable, IObs
     {
         //limit velocity
         rigid.velocity = Vector2.ClampMagnitude(rigid.velocity, maxSpeed);
+        updateDrag();
+    }
+
+    void FixedUpdate()
+    {
+        updateDrag();
+    }
+
+    void updateDrag()
+    {
+        rigid.drag = dragMin + (dragSpeedMultiplier * Mathf.Max(0, rigid.velocity.magnitude - dragCutoff));
     }
 
     public PacketType[] packetTypes { get { return new PacketType[] { PacketType.PUCKLOCATION }; } }
@@ -52,6 +73,7 @@ public class PuckSpeedLimiter : MonoBehaviour, ISpeedLimiter, INetworkable, IObs
             case PacketType.PUCKLOCATION:
                 this.transform.position = m.reader.ReadVector2();
                 rigid.velocity = m.reader.ReadVector2();
+                updateDrag();
                 break;
             default:
                 Debug.LogError("Invalid Message Type");
