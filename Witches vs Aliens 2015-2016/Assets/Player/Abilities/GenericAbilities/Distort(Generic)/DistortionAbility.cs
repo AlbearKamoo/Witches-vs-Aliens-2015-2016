@@ -37,8 +37,9 @@ public class DistortionAbility : TimedGenericAbility
     }
 
     // Use this for initialization
-    void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         vfx = GetComponent<ParticleSystem>();
         coll = GetComponent<CircleCollider2D>();
         effector = GetComponent<PointEffector2D>();

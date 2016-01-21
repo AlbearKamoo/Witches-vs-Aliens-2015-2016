@@ -19,8 +19,9 @@ public class HampsterBallAbility : TimedGenericAbility, IPuckAbility, IAlliesAbi
         }
     }
 
-    protected void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         ball = SimplePool.Spawn(hampsterBallPrefab).GetComponent<HampsterBall>();
         ball.active = false;
     }

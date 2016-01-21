@@ -29,8 +29,9 @@ public class PushAbilityCone : GenericAbility {
 	}
 	
 	// Use this for initialization
-	void Awake()
-	{
+    protected override void Awake()
+    {
+        base.Awake();
 		vfx = GetComponent<ParticleSystem>();
 		coll = GetComponent<PolygonCollider2D>();
 		effector = GetComponent<PointEffector2D>();
@@ -67,4 +68,9 @@ public class PushAbilityCone : GenericAbility {
 			}
 		}
 	}
+
+    protected override void Reset()
+    {
+        active = false;
+    }
 }

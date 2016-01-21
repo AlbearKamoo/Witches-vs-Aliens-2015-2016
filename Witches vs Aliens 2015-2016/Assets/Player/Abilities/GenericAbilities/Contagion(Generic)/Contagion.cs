@@ -27,13 +27,15 @@ public class Contagion : MonoBehaviour {
             {
                 if (startCountdown == null)
                 {
-                    startCountdown = Callback.Routines.FireAndForgetRoutine(() => {active = false; startCountdown = null;}, duration, this);
+                    startCountdown = Callback.Routines.FireAndForgetRoutine(() => active = false, duration, this);
                     StartCoroutine(startCountdown);
                 }
                 massMod = action.mass.addModifier(massNerf);
             }
-            else
+            else if(startCountdown != null)
             {
+                StopCoroutine(startCountdown);
+                startCountdown = null;
                 action.mass.removeModifier(massMod);
                 massMod = null;
             }

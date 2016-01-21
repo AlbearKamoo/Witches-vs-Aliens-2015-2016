@@ -8,8 +8,9 @@ public class MultiChargeBlinkAbility : BlinkAbility {
     int currentCharges;
     IEnumerator recharge;
 
-    protected void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         currentCharges = maxCharges;
     }
 

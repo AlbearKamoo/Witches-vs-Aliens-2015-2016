@@ -35,8 +35,9 @@ public class BoostAbility : MovementAbility, IObserver<ResetMessage> {
     [SerializeField]
     protected float FXDurationExtend = 0.5f;
 
-    void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         sfx = GetComponent<AudioController>();
         vfx = GetComponent<ParticleSystem>();
     }
@@ -47,7 +48,6 @@ public class BoostAbility : MovementAbility, IObserver<ResetMessage> {
         action = GetComponentInParent<InputToAction>();
         vfx.startSize = 2*transform.parent.GetComponentInChildren<CircleCollider2D>().radius;
         rigid = GetComponentInParent<Rigidbody2D>();
-        GetComponentInParent<IObservable<ResetMessage>>().Subscribe(this);
     }
 
     protected override void onFire(Vector2 direction)
@@ -141,9 +141,8 @@ public class BoostAbility : MovementAbility, IObserver<ResetMessage> {
         Callback.FireAndForget(() => vfx.Stop(), FXDurationExtend, this);
     }
 
-    public void Notify(ResetMessage m)
+    protected override void Reset()
     {
         vfx.Stop();
     }
-
 }

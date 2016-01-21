@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class MovementAbility : NotSuperAbility
+public abstract class MovementAbility : NotSuperAbility
 {
 
     public override AbilityType type { get { return AbilityType.MOVEMENT; } }

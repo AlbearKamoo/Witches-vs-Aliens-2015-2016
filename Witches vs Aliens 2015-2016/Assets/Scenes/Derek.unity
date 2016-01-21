@@ -463,7 +463,7 @@ MonoBehaviour:
   timer: {fileID: 1034567235}
   countdownTime: 3
   musicDelay: 1
-  resetDuration: 1
+  resetDuration: 2
   goalToResetTime: 0.75
   data: {fileID: 819210144}
 --- !u!4 &819210143

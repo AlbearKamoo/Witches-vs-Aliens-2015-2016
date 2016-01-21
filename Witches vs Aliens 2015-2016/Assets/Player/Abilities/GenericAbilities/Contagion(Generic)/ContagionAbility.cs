@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class ContagionAbility : GenericAbility {
 
@@ -14,6 +15,7 @@ public class ContagionAbility : GenericAbility {
 
     Stats stats;
     Contagion localContagion;
+    List<Contagion> contagions = new List<Contagion>();
 
 	// Use this for initialization
 	protected override void Start () {
@@ -54,6 +56,7 @@ public class ContagionAbility : GenericAbility {
         GameObject effects = SimplePool.Spawn(contagionPrefab);
         effects.transform.SetParent(targetRoot.transform, false);
         result.Initialize(duration, massNerf, this, effects.GetComponent<ContagionEffects>());
+        contagions.Add(result);
         return result;
     }
 
@@ -61,5 +64,13 @@ public class ContagionAbility : GenericAbility {
     {
         localContagion.active = active = true;
         active = false;
+    }
+
+    protected override void Reset()
+    {
+        for (int i = 0; i < contagions.Count; i++)
+        {
+            contagions[i].active = false;
+        }
     }
 }

@@ -498,13 +498,13 @@ MonoBehaviour:
   MainMusicPrefab: {fileID: 153826, guid: 5832ddc43d2c1f745942146631ccb697, type: 2}
   PuckPrefab: {fileID: 135402, guid: 6e5f3e0169f30de41bb5f3e1b78cbd68, type: 2}
   CountdownPrefab: {fileID: 117972, guid: dfe48462a6a6f7048acab47a282010dc, type: 2}
-  leftRespawnPointsParent: {fileID: 432936661}
-  rightRespawnPointsParent: {fileID: 432936660}
+  leftRespawnPointsParent: {fileID: 432936660}
+  rightRespawnPointsParent: {fileID: 432936661}
   puckRespawnPoint: {fileID: 1020276493}
   timer: {fileID: 1034567235}
   countdownTime: 3
   musicDelay: 1
-  resetDuration: 1
+  resetDuration: 2
   goalToResetTime: 0.75
   data: {fileID: 819210144}
 --- !u!4 &819210143
@@ -548,6 +548,7 @@ MonoBehaviour:
       movementAbilityAxis: J1_Move
       genericAbilityAxis: J1_Generic
       superAbilityAxis: J1_Super
+    playerID: 0
   - character:
       basePlayer: {fileID: 146214, guid: a8095cd9d9bc36f4e87d6eeda567d5fa, type: 2}
       visuals: {fileID: 134630, guid: 4af836bb28ddc8e41acdfd7407227704, type: 2}
@@ -565,6 +566,7 @@ MonoBehaviour:
       movementAbilityAxis: J2_Move
       genericAbilityAxis: J2_Generic
       superAbilityAxis: J2_Super
+    playerID: 0
 --- !u!4 &1020276493 stripped
 Transform:
   m_PrefabParentObject: {fileID: 422084, guid: ae276d1e363cf0c49be7db4c5b225c6b, type: 2}

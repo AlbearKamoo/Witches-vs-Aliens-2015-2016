@@ -33,4 +33,9 @@ public class BlinkAbility : MovementAbility {
         transform.parent.position = targetPos;
         active = false;
     }
+
+    protected override void Reset()
+    {
+        //don't need to do anything
+    }
 }

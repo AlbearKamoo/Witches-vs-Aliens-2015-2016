@@ -26,4 +26,9 @@ public class TimedGenericAbility : GenericAbility {
             }
         }
     }
+
+    protected override void Reset()
+    {
+        active = false;
+    }
 }

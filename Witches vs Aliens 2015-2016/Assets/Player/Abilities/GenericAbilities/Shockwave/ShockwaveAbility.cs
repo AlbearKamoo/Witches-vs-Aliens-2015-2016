@@ -37,8 +37,9 @@ public class ShockwaveAbility : GenericAbility
     AudioSource sfx;
 
     // Use this for initialization
-    void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         sfx = GetComponent<AudioSource>();
         foreach (ParticleSystem particles in GetComponentsInChildren<ParticleSystem>())
         {
@@ -59,38 +60,54 @@ public class ShockwaveAbility : GenericAbility
 
         Callback.DoLerp((float l) => background.localScale = initialLocalScale - backgroundMagnitude * Mathf.Sin(10 * Mathf.PI * l) * Vector2.one, chargeUp, this).FollowedBy(() =>
         {
-            sfx.clip = shockwaveSFX;
-            sfx.Play();
-
             background.localScale = initialLocalScale;
-            background.gameObject.SetActive(false);
 
-            chargingvfx.Stop();
-            chargingvfx.playbackSpeed = 10f; //end it gracefully
-            wavevfx.Play();
+            StopChargingFX();
 
-            Vector2 thisPosition = this.transform.position;
-            foreach (Collider2D hit in Physics2D.OverlapCircleAll(thisPosition, radius))
+            if(active)
             {
-                ISpeedLimiter limiter = hit.GetComponentInParent<ISpeedLimiter>();
-                if (limiter != null)
-                {
-                    if (!affectsPlayers && hit.CompareTag(Tags.player))
-                        continue;
+                sfx.clip = shockwaveSFX;
+                sfx.Play();
+            
+                wavevfx.Play();
 
-                    Vector2 displacement = ((Vector2)(hit.transform.position)) - thisPosition;
-                    if (displacement != Vector2.zero)
+                Vector2 thisPosition = this.transform.position;
+                foreach (Collider2D hit in Physics2D.OverlapCircleAll(thisPosition, radius))
+                {
+                    ISpeedLimiter limiter = hit.GetComponentInParent<ISpeedLimiter>();
+                    if (limiter != null)
                     {
-                        Rigidbody2D hitRigidbody = hit.GetComponentInParent<Rigidbody2D>();
-                        displacement.Normalize();
-                        hitRigidbody.velocity = limiter.maxSpeed * displacement;
-                        if (hit.CompareTag(Tags.puck))
-                            hit.GetComponent<LastBumped>().setLastBumped(this.transform.parent);
+                        if (!affectsPlayers && hit.CompareTag(Tags.player))
+                            continue;
+
+                        Vector2 displacement = ((Vector2)(hit.transform.position)) - thisPosition;
+                        if (displacement != Vector2.zero)
+                        {
+                            Rigidbody2D hitRigidbody = hit.GetComponentInParent<Rigidbody2D>();
+                            displacement.Normalize();
+                            hitRigidbody.velocity = limiter.maxSpeed * displacement;
+                            if (hit.CompareTag(Tags.puck))
+                                hit.GetComponent<LastBumped>().setLastBumped(this.transform.parent);
                     }
                 }
             }
             active = false;
+            }
         }, this);
+    }
+
+    void StopChargingFX()
+    {
+        background.gameObject.SetActive(false);
+
+        chargingvfx.Stop();
+        chargingvfx.playbackSpeed = 10f; //end it gracefully
+    }
+
+    protected override void Reset()
+    {
+        active = false;
+        StopChargingFX();
     }
     /*
     void OnTriggerStay2D(Collider2D other)

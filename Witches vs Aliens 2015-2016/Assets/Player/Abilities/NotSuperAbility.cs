@@ -1,10 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public abstract class NotSuperAbility : AbstractAbility, IObservable<AbilityStateChangedMessage>
+public abstract class NotSuperAbility : AbstractAbility, IObservable<AbilityStateChangedMessage>, IObserver<ResetMessage>
 {
     [SerializeField]
     protected GameObject AbilityUIPrefab;
+
+    [SerializeField]
+    protected float cooldownTime;
 
     Observable<AbilityStateChangedMessage> _stateChangedObservable = new Observable<AbilityStateChangedMessage>();
     public Observable<AbilityStateChangedMessage> Observable(IObservable<AbilityStateChangedMessage> self)
@@ -21,9 +24,16 @@ public abstract class NotSuperAbility : AbstractAbility, IObservable<AbilityStat
         }
     }
 
+    Countdown cooldownCountdown;
+
     protected virtual AbilityStateChangedMessage stateMessage()
     {
         return new AbilityStateChangedMessage(ready);
+    }
+
+    protected virtual void Awake()
+    {
+        cooldownCountdown = new Countdown(Cooldown, this);
     }
 
     protected virtual void Start()
@@ -31,6 +41,7 @@ public abstract class NotSuperAbility : AbstractAbility, IObservable<AbilityStat
         GameObject UI = Instantiate(AbilityUIPrefab);
         UI.transform.SetParent(transform.root.GetComponentInChildren<AbilityUIParent>().transform, false);
         UI.GetComponent<AbstractAbilityUI>().Construct(constructorInfo());
+        GetComponentInParent<IObservable<ResetMessage>>().Subscribe(this);
         ready = true;
     }
 
@@ -47,11 +58,23 @@ public abstract class NotSuperAbility : AbstractAbility, IObservable<AbilityStat
 
     protected virtual void StartCooldown()
     {
-        Callback.FireAndForget(() => ready = true, cooldownTime, this);
+        cooldownCountdown.Play();
     }
 
-    [SerializeField]
-    protected float cooldownTime;
+    protected virtual IEnumerator Cooldown()
+    {
+        yield return new WaitForSeconds(cooldownTime);
+        ready = true;
+    }
+
+    public void Notify(ResetMessage m)
+    {
+        Reset();
+        cooldownCountdown.Stop();
+        ready = true;
+    }
+
+    protected abstract void Reset();
 }
 
 public class AbilityStateChangedMessage

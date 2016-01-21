@@ -31,8 +31,9 @@ public class PushAbilityCircle : GenericAbility
     }
 
     // Use this for initialization
-    void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         vfx = GetComponent<ParticleSystem>();
         coll = GetComponent<CircleCollider2D>();
         effector = GetComponent<PointEffector2D>();
@@ -71,5 +72,10 @@ public class PushAbilityCircle : GenericAbility
                 yield break;
             }
         }
+    }
+
+    protected override void Reset()
+    {
+        active = false;
     }
 }
