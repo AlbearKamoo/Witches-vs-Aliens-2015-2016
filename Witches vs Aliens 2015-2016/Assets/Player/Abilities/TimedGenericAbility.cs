@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class TimedGenericAbility : GenericAbility {
+public class TimedGenericAbility : AbstractGenericAbility {
 
     [SerializeField]
     protected float maxDuration;

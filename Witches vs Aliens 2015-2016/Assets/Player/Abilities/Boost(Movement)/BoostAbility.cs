@@ -3,7 +3,7 @@ using System.Collections;
 
 [RequireComponent(typeof(AudioController))]
 [RequireComponent(typeof(ParticleSystem))]
-public class BoostAbility : MovementAbility, IObserver<ResetMessage> {
+public class BoostAbility : AbstractMovementAbility, IObserver<ResetMessage> {
 
     InputToAction action;
     FloatStat speedMod;

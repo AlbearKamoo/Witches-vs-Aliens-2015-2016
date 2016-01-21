@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class BlinkAbility : MovementAbility {
+public class BlinkAbility : AbstractMovementAbility {
 
     CircleCollider2D bounds;
     LayerMask stageMask;

@@ -2,7 +2,7 @@
 using System.Collections;
 
 [RequireComponent(typeof(AudioSource))]
-public class ShockwaveAbility : GenericAbility
+public class ShockwaveAbility : AbstractGenericAbility
 {
     [SerializeField]
     protected float chargeUp;

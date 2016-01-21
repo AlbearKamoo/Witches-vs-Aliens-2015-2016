@@ -53,10 +53,10 @@ public class InputToAction : MonoBehaviour, ISpeedLimiter, INetworkable, IObserv
     public List<Callback.CallbackMethod> PreFixedUpdateDelegates { get { return preFixedUpdateDelegates; } }
 
     Rigidbody2D rigid;
-    MovementAbility moveAbility;
-    public MovementAbility MoveAbility { set { moveAbility = value; } }
-    GenericAbility genAbility;
-    public GenericAbility GenAbility { set { genAbility = value; } }
+    AbstractMovementAbility moveAbility;
+    public AbstractMovementAbility MoveAbility { set { moveAbility = value; } }
+    AbstractGenericAbility genAbility;
+    public AbstractGenericAbility GenAbility { set { genAbility = value; } }
     SuperAbility superAbility;
     public SuperAbility SuperAbility { set { superAbility = value; } }
 
@@ -96,9 +96,9 @@ public class InputToAction : MonoBehaviour, ISpeedLimiter, INetworkable, IObserv
 
     void Start()
     {
-        moveAbility = GetComponentInChildren<MovementAbility>();
+        moveAbility = GetComponentInChildren<AbstractMovementAbility>();
         superAbility = GetComponentInChildren<SuperAbility>();
-        genAbility = GetComponentInChildren<GenericAbility>();
+        genAbility = GetComponentInChildren<AbstractGenericAbility>();
 
         stats = GetComponent<Stats>();
 

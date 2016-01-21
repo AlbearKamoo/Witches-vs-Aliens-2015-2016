@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class ContagionAbility : GenericAbility {
+public class ContagionAbility : AbstractGenericAbility {
 
     [SerializeField]
     protected GameObject contagionPrefab;

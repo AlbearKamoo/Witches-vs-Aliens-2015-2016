@@ -2,7 +2,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class PushAbilityCircle : GenericAbility
+public class PushAbilityCircle : AbstractGenericAbility
 {
 
     ParticleSystem vfx;

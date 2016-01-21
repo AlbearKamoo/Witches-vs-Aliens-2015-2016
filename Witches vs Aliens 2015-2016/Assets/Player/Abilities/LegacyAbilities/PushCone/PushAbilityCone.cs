@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PushAbilityCone : GenericAbility {
+public class PushAbilityCone : AbstractGenericAbility {
 	
 	ParticleSystem vfx;
 	PolygonCollider2D coll;

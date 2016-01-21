@@ -5,8 +5,8 @@ public class ResetScripting : MonoBehaviour, IObservable<ResetMessage> {
 
     Observable<ResetMessage> resetMessageObservable = new Observable<ResetMessage>(); public Observable<ResetMessage> Observable(IObservable<ResetMessage> self) { return resetMessageObservable; }
     InputToAction action;
-    MovementAbility movementAbility;
-    GenericAbility genericAbility;
+    AbstractMovementAbility movementAbility;
+    AbstractGenericAbility genericAbility;
     VisualAnimate vfx;
 	// Use this for initialization
 	void Awake () {
@@ -15,8 +15,8 @@ public class ResetScripting : MonoBehaviour, IObservable<ResetMessage> {
 	}
 
     void Start() {
-        movementAbility = GetComponentInChildren<MovementAbility>();
-        genericAbility = GetComponentInChildren<GenericAbility>();
+        movementAbility = GetComponentInChildren<AbstractMovementAbility>();
+        genericAbility = GetComponentInChildren<AbstractGenericAbility>();
     }
 
     public void Reset(Vector2 newPos, float disabledTime)

@@ -7,13 +7,13 @@ public class CatSuper : SuperAbility {
 
     [SerializeField]
     protected GameObject PounceAbilityprefab;
-    MovementAbility defaultMove;
-    MovementAbility catMove;
+    AbstractMovementAbility defaultMove;
+    AbstractMovementAbility catMove;
 
     [SerializeField]
     protected GameObject BatAbilityprefab;
-    GenericAbility defaultGeneric;
-    GenericAbility catGeneric;
+    AbstractGenericAbility defaultGeneric;
+    AbstractGenericAbility catGeneric;
 
     bool instantiated = false;
     InputToAction action;
@@ -71,13 +71,13 @@ public class CatSuper : SuperAbility {
         if (instantiated)
             return;
 
-        defaultMove = transform.parent.GetComponentInChildren<MovementAbility>();
-        defaultGeneric = transform.parent.GetComponentInChildren<GenericAbility>();
+        defaultMove = transform.parent.GetComponentInChildren<AbstractMovementAbility>();
+        defaultGeneric = transform.parent.GetComponentInChildren<AbstractGenericAbility>();
 
-        catMove = GameObject.Instantiate(PounceAbilityprefab).GetComponent<MovementAbility>();
+        catMove = GameObject.Instantiate(PounceAbilityprefab).GetComponent<AbstractMovementAbility>();
         catMove.transform.SetParent(transform.parent, false);
 
-        catGeneric = GameObject.Instantiate(BatAbilityprefab).GetComponent<GenericAbility>();
+        catGeneric = GameObject.Instantiate(BatAbilityprefab).GetComponent<AbstractGenericAbility>();
         catGeneric.transform.SetParent(transform.parent, false);
 
         instantiated = true;
