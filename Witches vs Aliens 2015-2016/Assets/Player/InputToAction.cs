@@ -290,7 +290,6 @@ public class InputToAction : MonoBehaviour, ISpeedLimiter, INetworkable, IObserv
 
     void handleNetworkedAbilityInput(IncomingNetworkStreamMessage m, int index, AbstractAbility ability)
     {
-        Debug.Log(ability);
         switch (players[index].networkMode)
         {
             case NetworkMode.REMOTESERVER:
@@ -375,6 +374,21 @@ public class InputToAction : MonoBehaviour, ISpeedLimiter, INetworkable, IObserv
     static int findPlayerIndex(BinaryReader reader)
     {
         return findPlayerIndex(reader.ReadByte());
+    }
+
+    void OnDestroy()
+    {
+        int myIndex = findPlayerIndex(stats.playerID);
+        if(myIndex != -1)
+        {
+            players.RemoveAt(myIndex);
+            if (node != null && myIndex == 0 && players.Count != 0)
+            {
+                node.Subscribe(players[0].inputToAction); //have someone else subscribe to the networked node
+            }
+        }
+        if (node != null)
+            node.Unsubscribe<OutgoingNetworkStreamMessage>(this);
     }
     /// <summary>
     /// Only supposed to be used when networking playerIDs. If you didn't get the ID from networking, find the InputToAction the same way you got the ID.

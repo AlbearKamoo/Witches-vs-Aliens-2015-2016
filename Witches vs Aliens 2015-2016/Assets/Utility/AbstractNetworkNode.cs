@@ -51,7 +51,10 @@ public abstract class AbstractNetworkNode : MonoBehaviour {
     {
         for (int i = 0; i < types.Length; i++)
         {
-            Assert.IsFalse(NetworkIdentities.ContainsKey(types[i])); //ensure we aren't overwriting some other script
+#if UNITY_EDITOR
+            if(NetworkIdentities.ContainsKey(types[i]))
+                Debug.Log(NetworkIdentities[types[i]]);
+#endif
             NetworkIdentities[types[i]] = observer;
         }
     }
@@ -59,6 +62,22 @@ public abstract class AbstractNetworkNode : MonoBehaviour {
     public void Subscribe(INetworkable observer)
     {
         Subscribe(observer, observer.packetTypes);
+    }
+
+    public void Unsubscribe(INetworkable observer, params PacketType[] types)
+    {
+        for (int i = 0; i < types.Length; i++)
+            NetworkIdentities.Remove(types[i]);
+    }
+
+    public void Unsubscribe(INetworkable observer)
+    {
+        Unsubscribe(observer, observer.packetTypes);
+    }
+
+    public virtual void Clear()
+    {
+        NetworkIdentities.Clear();
     }
 
     protected virtual void Update()
@@ -82,7 +101,7 @@ public abstract class AbstractNetworkNode : MonoBehaviour {
                 OnDisconnection(connectionID);
                 break;
             case NetworkEventType.DataEvent:
-                Debug.Log(string.Format("Got data size {0}", receivedSize));
+                //Debug.Log(string.Format("Got data size {0}", receivedSize));
                 Array.Resize(ref buffer, receivedSize);
                 ProcessNetworkData(connectionID, buffer);
                 break;
@@ -95,7 +114,7 @@ public abstract class AbstractNetworkNode : MonoBehaviour {
         // Sends the data in binaryWriter out onto the network
         byte[] buffer = stream.ToArray();
         byte error;
-        Debug.Log(string.Format("Sending data size {0}", buffer.Length));
+        //Debug.Log(string.Format("Sending data size {0}", buffer.Length));
         Assert.IsTrue(buffer.Length > 0);
         foreach (int connectionID in connections)
         {
@@ -147,6 +166,7 @@ public abstract class AbstractNetworkNode : MonoBehaviour {
         while (stream.Position != buffer.Length)
         {
             PacketType packetType = (PacketType)reader.ReadByte();
+            //Debug.Log(packetType);
             Assert.IsTrue(NetworkIdentities.ContainsKey(packetType));
             NetworkIdentities[packetType].Notify(new IncomingNetworkStreamMessage(reader, connectionID, packetType));
         }

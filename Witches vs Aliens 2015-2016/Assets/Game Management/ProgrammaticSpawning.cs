@@ -86,7 +86,7 @@ public class ProgrammaticSpawning : MonoBehaviour, IObserver<Message> {
             GameObject spawnedPlayer = (GameObject)Instantiate(data.playerComponentPrefabs[i].character.basePlayer, new Vector2((i+1) * 200, 0), Quaternion.identity); //the positions are temporary
             Stats spawnedStats = spawnedPlayer.AddComponent<Stats>();
             spawnedStats.side = data.playerComponentPrefabs[i].character.side;
-            spawnedStats.playerID = Stats.nextPlayerID();
+            spawnedStats.playerID = data.playerComponentPrefabs[i].playerID;
             spawnedStats.networkMode = data.playerComponentPrefabs[i].bindings.networkMode;
             
             switch (data.playerComponentPrefabs[i].bindings.inputMode)

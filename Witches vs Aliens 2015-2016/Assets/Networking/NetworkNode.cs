@@ -23,14 +23,29 @@ public abstract class NetworkNode : AbstractNetworkNode, IObservable<OutgoingNet
     protected override void Awake()
     {
         base.Awake();
-        Assert.IsNull(self);
-        self = this;
+        if (self != null && self != this)
+        {
+            Debug.Log("Destroy");
+            Destroy(this.gameObject);
+        }
+        else
+        {
+            DontDestroyOnLoad(this.gameObject);
+            self = this;
+        }
     }
 
     protected override void Start()
     {
+        Debug.Log("Start");
         base.Start();
         StartCoroutine(SendStateDataCoroutine());
+    }
+
+    public override void Clear()
+    {
+        base.Clear();
+        stateSyncObjectsObservable.Clear();
     }
 
     protected override void ConfigureChannels(ConnectionConfig config)
@@ -83,4 +98,7 @@ public enum PacketType
     PLAYERSUPERABILITY,
     SUPERGOALSPAWNING,
     SUPERGOALSCORED,
+    REGISTRATIONREQUEST,
+    PLAYERREGISTER,
+    PLAYERDEREGISTER,
 }

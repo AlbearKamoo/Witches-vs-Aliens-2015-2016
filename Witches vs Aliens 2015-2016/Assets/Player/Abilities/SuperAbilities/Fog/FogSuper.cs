@@ -19,7 +19,7 @@ public class FogSuper : SuperAbility, IAlliesAbility, IPuckAbility {
     public List<Transform> allies { set { _allies = value; } }
 
     Transform _puck;
-    public Transform puck { set { _puck = value; Debug.Log(_puck); } }
+    public Transform puck { set { _puck = value; } }
 
     private static int[] witchPos;
     private static int puckPos = Shader.PropertyToID("_PuckPos");

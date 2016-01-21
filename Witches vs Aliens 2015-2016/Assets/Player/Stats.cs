@@ -7,7 +7,7 @@ public class Stats : MonoBehaviour {
     public NetworkMode networkMode { get; set; }
     
     static int nextID = 0;
-    public static int nextPlayerID()
+    public static int nextPlayerID() //note: may want to add looping because these are sent over the network as bytes [0-255]
     {
         return nextID++;
     }

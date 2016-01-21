@@ -353,75 +353,75 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22488076, guid: 493d0645e9344de4ca9a6bc5d6b2510a, type: 2}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22488076, guid: 493d0645e9344de4ca9a6bc5d6b2510a, type: 2}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22488076, guid: 493d0645e9344de4ca9a6bc5d6b2510a, type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 129
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22488076, guid: 493d0645e9344de4ca9a6bc5d6b2510a, type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -32.25
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22488076, guid: 493d0645e9344de4ca9a6bc5d6b2510a, type: 2}
       propertyPath: m_SizeDelta.x
-      value: 72
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22488076, guid: 493d0645e9344de4ca9a6bc5d6b2510a, type: 2}
       propertyPath: m_SizeDelta.y
-      value: 64.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22416658, guid: 493d0645e9344de4ca9a6bc5d6b2510a, type: 2}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22416658, guid: 493d0645e9344de4ca9a6bc5d6b2510a, type: 2}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22416658, guid: 493d0645e9344de4ca9a6bc5d6b2510a, type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 250
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22416658, guid: 493d0645e9344de4ca9a6bc5d6b2510a, type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -16.25
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22416658, guid: 493d0645e9344de4ca9a6bc5d6b2510a, type: 2}
       propertyPath: m_SizeDelta.x
-      value: 140
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22416658, guid: 493d0645e9344de4ca9a6bc5d6b2510a, type: 2}
       propertyPath: m_SizeDelta.y
-      value: 32.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22416476, guid: 493d0645e9344de4ca9a6bc5d6b2510a, type: 2}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22416476, guid: 493d0645e9344de4ca9a6bc5d6b2510a, type: 2}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22416476, guid: 493d0645e9344de4ca9a6bc5d6b2510a, type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 371
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22416476, guid: 493d0645e9344de4ca9a6bc5d6b2510a, type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -32.25
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22416476, guid: 493d0645e9344de4ca9a6bc5d6b2510a, type: 2}
       propertyPath: m_SizeDelta.x
-      value: 72
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22416476, guid: 493d0645e9344de4ca9a6bc5d6b2510a, type: 2}
       propertyPath: m_SizeDelta.y
-      value: 64.5
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 493d0645e9344de4ca9a6bc5d6b2510a, type: 2}
@@ -494,7 +494,7 @@ MonoBehaviour:
       basePlayer: {fileID: 146214, guid: a8095cd9d9bc36f4e87d6eeda567d5fa, type: 2}
       visuals: {fileID: 150354, guid: 058f7aebb890ee84da8f76c6487c8e55, type: 2}
       movementAbility: {fileID: 186010, guid: 999ab97c110d5bc4baa999b79b3005e9, type: 2}
-      genericAbility: {fileID: 110450, guid: bc177a2768bd39946866f5ebcbe5d375, type: 2}
+      genericAbility: {fileID: 131936, guid: 5482342c52daef942b26c1a86bf9d017, type: 2}
       superAbility: {fileID: 143026, guid: 9f0bc11609a97544496b9a6170fe50f5, type: 2}
       side: 1
     bindings:
@@ -517,6 +517,23 @@ MonoBehaviour:
     bindings:
       inputMode: 0
       networkMode: 2
+      verticalMovementAxisName: VerticalArrow
+      horizontalMovementAxisName: HorizontalArrow
+      verticalAimingAxisName: VerticalAim_J2
+      horizontalAimingAxisName: HorizontalAim_J2
+      movementAbilityAxis: J2_Move
+      genericAbilityAxis: J2_Generic
+      superAbilityAxis: J2_Super
+  - character:
+      basePlayer: {fileID: 146214, guid: a8095cd9d9bc36f4e87d6eeda567d5fa, type: 2}
+      visuals: {fileID: 134630, guid: 4af836bb28ddc8e41acdfd7407227704, type: 2}
+      movementAbility: {fileID: 186010, guid: 999ab97c110d5bc4baa999b79b3005e9, type: 2}
+      genericAbility: {fileID: 148762, guid: d49329671f68d514593c4b367bfda4cf, type: 2}
+      superAbility: {fileID: 134116, guid: c6aa7c745294ea644aeb195c211fc58e, type: 2}
+      side: 1
+    bindings:
+      inputMode: 0
+      networkMode: 4
       verticalMovementAxisName: VerticalArrow
       horizontalMovementAxisName: HorizontalArrow
       verticalAimingAxisName: VerticalAim_J2
@@ -651,7 +668,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   packetPeriod: 0.1
   simulatedNetworking: 0
-  serverIP: 192.168.0.100
+  serverIP: 128.195.51.236
 --- !u!4 &2066126298
 Transform:
   m_ObjectHideFlags: 0

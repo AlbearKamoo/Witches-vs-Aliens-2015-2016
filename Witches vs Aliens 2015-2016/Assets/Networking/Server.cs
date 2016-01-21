@@ -16,7 +16,8 @@ public class Server : NetworkNode
     protected override void ConfigureHosts(ConnectionConfig config)
     {
         HostTopology topology = new HostTopology(config, 5);
-
+        if (hostID != -1)
+            return;
 #if UNITY_EDITOR
         // Listen on port 25000
         if(simulatedNetworking)

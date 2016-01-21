@@ -26,6 +26,8 @@ public class Client : NetworkNode
     protected override void ConfigureHosts(ConnectionConfig config)
     {
         HostTopology topology = new HostTopology(config, 1);
+        if (hostID != -1)
+            return;
         #if UNITY_EDITOR
         if(simulatedNetworking)
             hostID = NetworkTransport.AddHostWithSimulator(topology, 200, 400);

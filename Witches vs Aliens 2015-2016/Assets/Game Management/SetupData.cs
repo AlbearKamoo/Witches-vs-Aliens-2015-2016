@@ -25,10 +25,12 @@ public class PlayerComponents
 {
     public CharacterComponents character;
     public InputConfiguration bindings;
+    public int playerID;
     public PlayerComponents() { }
-    public PlayerComponents(CharacterComponents character, InputConfiguration bindings)
+    public PlayerComponents(CharacterComponents character, InputConfiguration bindings, int playerID)
     {
         this.character = character;
         this.bindings = bindings;
+        this.playerID = playerID;
     }
 }
