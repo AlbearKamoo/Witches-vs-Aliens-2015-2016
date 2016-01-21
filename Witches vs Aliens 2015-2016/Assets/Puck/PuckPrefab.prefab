@@ -128,9 +128,10 @@ Rigidbody2D:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 135402}
+  m_UseAutoMass: 0
   m_Mass: 4
-  m_LinearDrag: .0250000004
-  m_AngularDrag: .75
+  m_LinearDrag: 0.025
+  m_AngularDrag: 0.75
   m_GravityScale: 0
   m_IsKinematic: 0
   m_Interpolate: 0
@@ -144,6 +145,7 @@ CircleCollider2D:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 135402}
   m_Enabled: 1
+  m_Density: 1
   m_Material: {fileID: 6200000, guid: ba110187c84da0f448b148acba8b978d, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
@@ -184,7 +186,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc8cbe6089354fa4984e7ff70deaec69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialMaxSpeed: 20
+  initialMaxSpeed: 50
 --- !u!114 &11449428
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -232,14 +234,18 @@ SpriteRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
   m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_AutoUVMaxDistance: .5
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1441101375
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 0c8c07da32362af4aab012bce8a7d1aa, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
 --- !u!212 &21267026
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -258,14 +264,18 @@ SpriteRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
   m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_AutoUVMaxDistance: .5
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1441101375
   m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: b58654a722e89cd47adece71a36565d4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
 --- !u!212 &21280558
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -284,14 +294,18 @@ SpriteRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
   m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_AutoUVMaxDistance: .5
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1441101375
   m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: 5a638ae57a4d0084f8b4a312c0131b02, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
@@ -317,7 +331,7 @@ Prefab:
       objectReference: {fileID: 21239072}
     - target: {fileID: 0}
       propertyPath: initialMaxSpeed
-      value: 20
+      value: 50
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
