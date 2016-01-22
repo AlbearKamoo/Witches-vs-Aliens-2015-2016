@@ -41,7 +41,9 @@ public abstract class NotSuperAbility : AbstractAbility, IObservable<AbilityStat
         GameObject UI = Instantiate(AbilityUIPrefab);
         UI.transform.SetParent(transform.root.GetComponentInChildren<AbilityUIParent>().transform, false);
         UI.GetComponent<AbstractAbilityUI>().Construct(constructorInfo());
-        GetComponentInParent<IObservable<ResetMessage>>().Subscribe(this);
+        IObservable<ResetMessage> resetObservable = GetComponentInParent<IObservable<ResetMessage>>();
+        if(resetObservable != null)
+            resetObservable.Subscribe(this);
         ready = true;
     }
 

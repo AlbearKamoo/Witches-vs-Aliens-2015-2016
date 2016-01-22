@@ -114,9 +114,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   introMusicPrefab: {fileID: 129924, guid: c11a39805b0734f40bae483a2f720505, type: 2}
-  mainScenePlaylist:
-  - {fileID: 0}
-  - {fileID: 0}
   mainGameSceneName: Derek
   playerRegistrationPrefab: {fileID: 171078, guid: df99a46226850ad4194db9a6272820ae,
     type: 2}
@@ -858,6 +855,10 @@ Prefab:
     - target: {fileID: 8250790, guid: c11a39805b0734f40bae483a2f720505, type: 2}
       propertyPath: Loop
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8250790, guid: c11a39805b0734f40bae483a2f720505, type: 2}
+      propertyPath: spreadCustomCurve.m_RotationOrder
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 11409060, guid: c11a39805b0734f40bae483a2f720505, type: 2}

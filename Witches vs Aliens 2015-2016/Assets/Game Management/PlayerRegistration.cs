@@ -11,8 +11,6 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
     protected GameObject introMusicPrefab;
     GameObject introMusic;
 
-    [SerializeField]
-    protected AudioClip[] mainScenePlaylist;
 //#if UNITY_EDITOR
     [SerializeField]
     protected string mainGameSceneName;
@@ -43,6 +41,9 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
     NetworkMode mode;
 
     IEnumerator startCountdown;
+
+    AudioSource registrationMusic;
+
 	void Awake ()
     {
         data = GetComponent<SetupData>();
@@ -50,6 +51,8 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
         localIDToPlayerID = new int[possiblePlayers.Length];
         for (int i = 0; i < localIDToPlayerID.Length; i++)
             localIDToPlayerID[i] = -1;
+
+        registrationMusic = GameObject.Find("BackGroundMusic").GetComponent<AudioSource>();
 	}
 
     void Start()
@@ -396,6 +399,7 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
         if (startCountdown == null && isReady())
         {
             introMusic = Instantiate(introMusicPrefab);
+            registrationMusic.Pause();
             startCountdown = Callback.Routines.FireAndForgetRoutine(() => startGame(), 5, this);
             StartCoroutine(startCountdown);
         }
@@ -408,6 +412,7 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
             StopCoroutine(startCountdown);
             startCountdown = null;
             Destroy(introMusic);
+            registrationMusic.UnPause();
         }
     }
 

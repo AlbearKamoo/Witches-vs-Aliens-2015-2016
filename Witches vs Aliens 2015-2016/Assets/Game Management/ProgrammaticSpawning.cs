@@ -6,6 +6,11 @@ using System.Linq;
 public class ProgrammaticSpawning : MonoBehaviour, IObserver<Message> {
     [SerializeField]
     protected GameObject MainMusicPrefab;
+    GameObject spawnedMainMusicPrefab;
+
+    [SerializeField]
+    protected AudioClip overtimeClip;
+
     [SerializeField]
     protected GameObject PuckPrefab;
 
@@ -60,7 +65,7 @@ public class ProgrammaticSpawning : MonoBehaviour, IObserver<Message> {
         if (SetupData.self != null) //workaround for unity level-loading method order
             data = SetupData.self;
 
-        Observers.Subscribe(this, GoalScoredMessage.classMessageType, GameEndMessage.classMessageType);
+        Observers.Subscribe(this, GoalScoredMessage.classMessageType, GameEndMessage.classMessageType, OvertimeMessage.classMessageType);
 
         leftPoints = new Vector2[leftRespawnPointsParent.childCount];
         int index = 0;
@@ -244,7 +249,7 @@ public class ProgrammaticSpawning : MonoBehaviour, IObserver<Message> {
         float timeRemaining = countdownTime;
 
         Callback.FireAndForget(resetPositions, timeRemaining - resetDuration, this);
-        Callback.FireAndForget(() => Instantiate(MainMusicPrefab), musicDelay, this);
+        Callback.FireAndForget(() => spawnedMainMusicPrefab = Instantiate(MainMusicPrefab), musicDelay, this);
 
         while (timeRemaining > 0)
         {
@@ -291,7 +296,11 @@ public class ProgrammaticSpawning : MonoBehaviour, IObserver<Message> {
             case GameEndMessage.classMessageType:
                 //add player stats data to the endData, once we figure out what stats to use
                 data.Destruct();
-                
+                break;
+            case OvertimeMessage.classMessageType:
+                AudioSource mainMusic = spawnedMainMusicPrefab.GetComponent<AudioSource>();
+                mainMusic.clip = overtimeClip;
+                mainMusic.Play();
                 break;
         }
     }

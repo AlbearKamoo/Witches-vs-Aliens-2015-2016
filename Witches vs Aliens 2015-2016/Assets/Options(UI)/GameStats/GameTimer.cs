@@ -20,6 +20,7 @@ public class GameTimer : MonoBehaviour {
     Color normalOutlineColor;
 
     public float timeRemainingSec;
+
     Text UITimer;
     Outline timeOutline;
     Image backgroundImg;
@@ -66,6 +67,7 @@ public class GameTimer : MonoBehaviour {
                     UITimer.text = overtime;
                     UITimer.alignment = TextAnchor.MiddleCenter;
                     SimplePool.Spawn(OvertimeCountdownPrefab, Vector3.zero).GetComponent<TimerCountdown>().count = overtime;
+                    Observers.Post(new OvertimeMessage());
                     //and VFX
                 }
                 running = false;
@@ -109,5 +111,14 @@ public class GameTimer : MonoBehaviour {
             background.SetFloat(Tags.ShaderParams.alpha, lerpValue);
         }
         UITimer.text = Format.formatMilliseconds(timeRemainingSec);
+    }
+}
+
+public class OvertimeMessage : Message
+{
+    public const string classMessageType = "OvertimeMessage";
+    public OvertimeMessage()
+        : base(classMessageType)
+    {
     }
 }
