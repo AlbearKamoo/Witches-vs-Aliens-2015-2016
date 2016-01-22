@@ -264,7 +264,7 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
         action.rotationEnabled = false;
         action.movementEnabled = true;
 
-        registeredPlayers[playerID] = new Registration(selector, ui, RegistrationState.REGISTERING);
+        registeredPlayers[playerID] = new Registration(selector, ui, RegistrationState.REGISTERING, selector.GetComponentInChildren<PlayerRegistrationVisuals>());
 
         selector.registration = registeredPlayers[playerID];
     }
@@ -286,9 +286,7 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
 
     void setPlayerReady(int playerID)
     {
-        registeredPlayers[playerID].registrationState = RegistrationState.READY;
-        registeredPlayers[playerID].ui.ready = true;
-        registeredPlayers[playerID].selector.gameObject.GetComponent<InputToAction>().movementEnabled = false;
+        registeredPlayers[playerID].ready = true;
         checkReady();
     }
 
@@ -375,9 +373,7 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
 
     void setPlayerNotReady(int playerID)
     {
-        registeredPlayers[playerID].registrationState = RegistrationState.REGISTERING;
-        registeredPlayers[playerID].ui.ready = false;
-        registeredPlayers[playerID].selector.gameObject.GetComponent<InputToAction>().movementEnabled = true;
+        registeredPlayers[playerID].ready = false;
         checkNotReady();
     }
 
@@ -573,11 +569,34 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
         public CharacterSelector selector;
         public RegisteredPlayerUIView ui;
         public RegistrationState registrationState;
-        public Registration(CharacterSelector selector, RegisteredPlayerUIView ui, RegistrationState registrationState)
+        public PlayerRegistrationVisuals visuals;
+        public Registration(CharacterSelector selector, RegisteredPlayerUIView ui, RegistrationState registrationState, PlayerRegistrationVisuals visuals)
         {
             this.selector = selector;
             this.ui = ui;
             this.registrationState = registrationState;
+            this.visuals = visuals;
+        }
+
+        public bool ready
+        {
+            set
+            {
+                if (value)
+                {
+                    registrationState = RegistrationState.READY;
+                    ui.ready = true;
+                    selector.gameObject.GetComponent<InputToAction>().movementEnabled = false;
+                    visuals.Active = true;
+                }
+                else
+                {
+                    registrationState = RegistrationState.REGISTERING;
+                    ui.ready = false;
+                    selector.gameObject.GetComponent<InputToAction>().movementEnabled = true;
+                    visuals.Active = false;
+                }
+            }
         }
     }
 
