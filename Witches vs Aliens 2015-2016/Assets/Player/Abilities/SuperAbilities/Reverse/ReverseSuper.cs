@@ -34,6 +34,7 @@ public class ReverseSuper : SuperAbility, IOpponentsAbility {
             input.PreFixedUpdateDelegates.Add(modifiers[i]);
             GameObject visuals = SimplePool.Spawn(stunVisualsPrefab);
             visuals.transform.SetParent(_opponents[i], false);
+            visuals.transform.localPosition = Vector3.zero;
             SpriteRenderer rend = visuals.GetComponent<SpriteRenderer>();
             Callback.DoLerp((float l) => rend.color.setAlphaFloat(l), visualsLerpTime, this);
             Callback.FireAndForget(() => Callback.DoLerp((float l) => rend.color.setAlphaFloat(l), visualsLerpTime, this, reverse: true), duration - visualsLerpTime, this).FollowedBy(() => SimplePool.Despawn(visuals), this);

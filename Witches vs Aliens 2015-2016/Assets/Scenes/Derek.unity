@@ -252,12 +252,7 @@ Prefab:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 2087710, guid: 486ee4196fa00d744a85e45659f38878, type: 2}
-      propertyPath: m_CullingMask.m_Bits
-      value: 4294966783
-      objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 11434222, guid: 486ee4196fa00d744a85e45659f38878, type: 2}
+    m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 486ee4196fa00d744a85e45659f38878, type: 2}
   m_IsPrefabParent: 0
 --- !u!4 &432936660 stripped

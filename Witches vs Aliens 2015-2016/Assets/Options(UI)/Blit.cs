@@ -4,20 +4,8 @@ using System.Collections;
 public class Blit : MonoBehaviour
 {
     [SerializeField]
-    protected Texture tex;
-    float intensity = 0;
-    public float time;
-    Material material;
-
-    // Creates a private material used to the effect
-    void Awake()
-    {
-        Pause.pause();
-        material = new Material(Shader.Find("Hidden/Blit"));
-        material.SetTexture(Tags.ShaderParams.effectTexture, tex);
-        Callback.DoLerp((float l) => intensity = l, time, this, reverse: true, mode: Callback.Mode.REALTIME)
-            .FollowedBy(() => { intensity = 0; Pause.unPause(); Destroy(this);}, this);
-    }
+    protected Material material;
+    public float intensity = 0;
 
     // Postprocess the image
     void OnRenderImage(RenderTexture source, RenderTexture destination)
