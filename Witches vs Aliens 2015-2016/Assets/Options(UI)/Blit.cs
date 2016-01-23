@@ -7,6 +7,11 @@ public class Blit : MonoBehaviour
     protected Material material;
     public float intensity = 0;
 
+    void Awake()
+    {
+        material = Instantiate(material);
+    }
+
     // Postprocess the image
     void OnRenderImage(RenderTexture source, RenderTexture destination)
     {

@@ -11,12 +11,12 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
     protected GameObject introMusicPrefab;
     GameObject introMusic;
 
-//#if UNITY_EDITOR
+#if UNITY_EDITOR
     [SerializeField]
     protected string mainGameSceneName;
-/*#else
+#else
     const string mainGameSceneName = Tags.Scenes.root;
-#endif */
+#endif 
     [SerializeField]
     protected GameObject playerRegistrationPrefab;
 
