@@ -6,12 +6,15 @@ public class PuckSpeedLimiter : MonoBehaviour, ISpeedLimiter, INetworkable, IObs
     [SerializeField]
     protected float initialMaxSpeed;
 
+    [Tooltip("Speed at which drag starts increasing")]
     [SerializeField]
     protected float dragCutoff;
 
+    [Tooltip("How much the drag increases per unit of speed")]
     [SerializeField]
-    protected float dragSpeedMultiplier;
+    protected float dragScaleFactor;
 
+    [Tooltip("Minimum amount of drag")]
     [SerializeField]
     protected float dragMin = 0.25f;
     Rigidbody2D rigid;
@@ -54,7 +57,7 @@ public class PuckSpeedLimiter : MonoBehaviour, ISpeedLimiter, INetworkable, IObs
 
     void updateDrag()
     {
-        rigid.drag = dragMin + (dragSpeedMultiplier * Mathf.Max(0, rigid.velocity.magnitude - dragCutoff));
+        rigid.drag = dragMin + (dragScaleFactor * Mathf.Max(0, rigid.velocity.magnitude - dragCutoff));
     }
 
     public PacketType[] packetTypes { get { return new PacketType[] { PacketType.PUCKLOCATION }; } }
