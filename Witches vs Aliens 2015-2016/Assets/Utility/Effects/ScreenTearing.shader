@@ -47,13 +47,17 @@
 				effectUV.x += 0.5;
 				fixed chromaticMagnitudeBlue = _Cutoff * _ChromaticAbberation * tex2D(_AbberationTex, effectUV).r;
 
+				fixed chromaticMagnitude = tex2D(_EffectTex, effectUV).r;
+
+
+
 				effectUV.x = i.uv.x + tearingMagnitude;
 				fixed4 col = tex2D(_MainTex, effectUV);
 
-				effectUV.x -= chromaticMagnitudeRed;
+				effectUV.x -= chromaticMagnitudeRed * chromaticMagnitude;
 				col.r = tex2D(_MainTex, effectUV).r;
 
-				effectUV.x += chromaticMagnitudeRed + chromaticMagnitudeBlue;
+				effectUV.x += chromaticMagnitude * (chromaticMagnitudeRed + chromaticMagnitudeBlue);
 				col.b = tex2D(_MainTex, effectUV).b;
 							
 				return col;

@@ -45,6 +45,13 @@ Material:
           m_Offset: {x: 0, y: 0}
       data:
         first:
+          name: _AbberationTex
+        second:
+          m_Texture: {fileID: 2800000, guid: 5ae8fa8c7db40bb41a5e5828e4def5c1, type: 3}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
           name: _ParallaxMap
         second:
           m_Texture: {fileID: 0}
@@ -85,13 +92,6 @@ Material:
           m_Texture: {fileID: 0}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
-      data:
-        first:
-          name: _AbberationTex
-        second:
-          m_Texture: {fileID: 2800000, guid: 5ae8fa8c7db40bb41a5e5828e4def5c1, type: 3}
-          m_Scale: {x: 1, y: 1}
-          m_Offset: {x: 0, y: 0}
     m_Floats:
       data:
         first:
@@ -105,6 +105,22 @@ Material:
         first:
           name: _Cutoff
         second: 0.000000022749251
+      data:
+        first:
+          name: _NumTears
+        second: 80
+      data:
+        first:
+          name: _NoiseSpeed
+        second: 0.3
+      data:
+        first:
+          name: _MinTearing
+        second: 0
+      data:
+        first:
+          name: _ChromaticAbberation
+        second: 3
       data:
         first:
           name: _Parallax
@@ -147,24 +163,8 @@ Material:
         second: 0.852
       data:
         first:
-          name: _NoiseSpeed
-        second: 0.3
-      data:
-        first:
           name: _NoiseDistortion
         second: 1
-      data:
-        first:
-          name: _NumTears
-        second: 80
-      data:
-        first:
-          name: _MinTearing
-        second: 0
-      data:
-        first:
-          name: _ChromaticAbberation
-        second: 3
     m_Colors:
       data:
         first:

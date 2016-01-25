@@ -9,6 +9,7 @@ public class PuckFX : MonoBehaviour, IObserver<BumpedSideChangedMessage> {
     const float fxTime = 1f;
     const float ssfxTime = 0.05f;
     const float ssfxIntensityMultiplier = 0.00025f;
+    const float tearIntensityMultiplier = 0.000001f;
 
     VisualAnimate vfx;
     Rigidbody2D rigid;
@@ -74,6 +75,7 @@ public class PuckFX : MonoBehaviour, IObserver<BumpedSideChangedMessage> {
 
     void OnCollisionEnter2D(Collision2D other)
     {
+        GoalScreenTearing.self.doTear(ssfxTime, other.relativeVelocity.sqrMagnitude * tearIntensityMultiplier);
         ScreenShake.RandomShake(this, ssfxTime, other.relativeVelocity.sqrMagnitude * ssfxIntensityMultiplier);
         SimplePool.Spawn(impactVFXPrefab, (Vector3)(other.contacts[0].point) + Vector3.back);
     }
