@@ -188,7 +188,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   initialMaxSpeed: 50
   dragCutoff: 20
-  dragSpeedMultiplier: 0.015
+  dragScaleFactor: 0.015
   dragMin: 0.025
 --- !u!114 &11449428
 MonoBehaviour:
@@ -347,6 +347,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: dragMin
       value: 0.025
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: dragScaleFactor
+      value: 0.015
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
