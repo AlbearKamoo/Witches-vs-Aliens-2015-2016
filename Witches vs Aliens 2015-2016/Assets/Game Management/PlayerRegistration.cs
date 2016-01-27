@@ -547,7 +547,8 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
         data.playerComponentPrefabs = results.ToArray();
 
         Debug.Log(mainGameSceneName);
-        node.Clear();
+        if(node != null)
+            node.Clear();
         Application.LoadLevel(mainGameSceneName);
         Destroy(this);
     }

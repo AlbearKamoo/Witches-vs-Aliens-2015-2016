@@ -11,6 +11,7 @@ public class Countdown {
 
     GetIEnumerator source;
     IEnumerator countdown;
+    IEnumerator countdownWrapper;
     MonoBehaviour script;
 
     public bool active
@@ -38,13 +39,14 @@ public class Countdown {
         if (paused)
         {
             script.StartCoroutine(countdown);
+            script.StartCoroutine(countdownWrapper);
             paused = false;
             return true;
         }
         else if (countdown == null)
         {
-            countdown = source();
-            script.StartCoroutine(countdown);
+            countdownWrapper = CountdownWrapper();
+            script.StartCoroutine(countdownWrapper);
             return true;
         }
         return false;
@@ -56,8 +58,9 @@ public class Countdown {
         {
             paused = false; //the if to check if it's true is redundant
             script.StopCoroutine(countdown);
+            script.StopCoroutine(countdownWrapper);
         }
-        countdown = source();
+        countdownWrapper = CountdownWrapper();
         script.StartCoroutine(countdown);
     }
 
@@ -66,6 +69,7 @@ public class Countdown {
         if (active)
         {
             script.StopCoroutine(countdown);
+            script.StopCoroutine(countdownWrapper);
             paused = true;
             return true;
         }
@@ -78,9 +82,18 @@ public class Countdown {
         {
             paused = false; //the if to check if it's true is redundant
             script.StopCoroutine(countdown);
+            script.StopCoroutine(countdownWrapper);
             countdown = null;
+            countdownWrapper = null;
             return true;
         }
         return false;
+    }
+
+    public IEnumerator CountdownWrapper()
+    {
+        countdown = source();
+        yield return script.StartCoroutine(countdown);
+        countdown = null;
     }
 }
