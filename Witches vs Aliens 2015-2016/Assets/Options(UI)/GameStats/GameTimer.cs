@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 public class GameTimer : MonoBehaviour {
 
-    const string overtime = "OVERTIME!";
+    const string overtime = "OVRTME";
 
     [SerializeField]
     protected GameObject CountdownPrefab;
@@ -110,7 +110,7 @@ public class GameTimer : MonoBehaviour {
             background.SetFloat(Tags.ShaderParams.imageStrength, lerpValue);
             background.SetFloat(Tags.ShaderParams.alpha, lerpValue);
         }
-        UITimer.text = Format.formatMilliseconds(timeRemainingSec);
+        UITimer.text = Format.formatSeconds(timeRemainingSec);
     }
 }
 

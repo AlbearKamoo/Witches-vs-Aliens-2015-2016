@@ -4,6 +4,7 @@ using System.Collections;
 public class Blit : MonoBehaviour
 {
     [SerializeField]
+    [CanBeDefaultOrNull]
     protected Material material;
     public float intensity = 0;
 

@@ -66,10 +66,20 @@ public static class Format{
         result.Append(':');
 
         numSeconds = Mathf.Abs(numSeconds % 60f);
-        result.Append(((int)numSeconds).ToString("00"));
+        result.Append(Mathf.FloorToInt(numSeconds).ToString("00"));
         result.Append(':');
         numSeconds = (numSeconds % 1f) / 0.001f;
-        result.Append(((int)numSeconds).ToString("000"));
+        result.Append(Mathf.FloorToInt(numSeconds).ToString("000"));
+        return result.ToString();
+    }
+
+    public static string formatSeconds(float numSeconds)
+    {
+        System.Text.StringBuilder result = new System.Text.StringBuilder(Mathf.FloorToInt(numSeconds / 60f).ToString("00"));
+        result.Append(':');
+
+        numSeconds = Mathf.Abs(numSeconds % 60f);
+        result.Append(Mathf.FloorToInt(numSeconds).ToString("00"));
         return result.ToString();
     }
 

@@ -121,6 +121,8 @@ public class InputToAction : MonoBehaviour, ISpeedLimiter, INetworkable, IObserv
 
         if (_movementEnabled)
             rigid.velocity = Vector2.ClampMagnitude(Vector2.MoveTowards(rigid.velocity, _maxSpeed * normalizedMovementInput, _maxSpeed * _accel * Time.fixedDeltaTime), _maxSpeed);
+        else
+            rigid.velocity = Vector2.ClampMagnitude(Vector2.MoveTowards(rigid.velocity, Vector2.zero, _maxSpeed * _accel * Time.fixedDeltaTime), _maxSpeed);
 
         //rotation
         if (aimingInputDirection.sqrMagnitude == 0 && normalizedMovementInput.sqrMagnitude != 0) //aimingInput rotation is handled when the aiming input is set
