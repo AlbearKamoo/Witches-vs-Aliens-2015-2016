@@ -189,18 +189,6 @@ public class ProgrammaticSpawning : MonoBehaviour, IObserver<Message> {
 
             foreach (AbstractAbility ability in players[i].GetComponentsInChildren<AbstractAbility>())
             {
-                if (ability is IAlliesAbility)
-                {
-                    switch (data.playerComponentPrefabs[i].character.side)
-                    {
-                        case Side.LEFT:
-                            (ability as IAlliesAbility).allies = leftPlayers;
-                            break;
-                        case Side.RIGHT:
-                            (ability as IAlliesAbility).allies = rightPlayers;
-                            break;
-                    }
-                }
                 if (ability is IOpponentsAbility)
                 {
                     switch (data.playerComponentPrefabs[i].character.side)
@@ -210,6 +198,18 @@ public class ProgrammaticSpawning : MonoBehaviour, IObserver<Message> {
                             break;
                         case Side.RIGHT:
                             (ability as IOpponentsAbility).opponents = leftPlayers;
+                            break;
+                    }
+                }
+                if (ability is IAlliesAbility)
+                {
+                    switch (data.playerComponentPrefabs[i].character.side)
+                    {
+                        case Side.LEFT:
+                            (ability as IAlliesAbility).allies = leftPlayers;
+                            break;
+                        case Side.RIGHT:
+                            (ability as IAlliesAbility).allies = rightPlayers;
                             break;
                     }
                 }
