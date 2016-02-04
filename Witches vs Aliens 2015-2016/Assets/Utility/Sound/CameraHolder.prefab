@@ -133,7 +133,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50fff4e3f8b101d4198aa2a2e91042a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  time: 8
+  time: 5
   initialMagnitude: 0.01
 --- !u!124 &12418254
 Behaviour:
