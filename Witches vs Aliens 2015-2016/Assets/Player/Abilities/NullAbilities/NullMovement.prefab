@@ -99,7 +99,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41a7d661d156b2f49ab31d73ba016d4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AbilityUIPrefab: {fileID: 174334, guid: fa4c3179737403447a9bbfd85931d9fb, type: 2}
+  AbilityUIPrefab: {fileID: 172952, guid: 8a0dac2bb75bc8343920ccf8eeff93fd, type: 2}
   cooldownTime: 0
 --- !u!198 &19823198
 ParticleSystem:
@@ -3147,7 +3147,11 @@ Prefab:
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: AbilityUIPrefab
+      value: 
+      objectReference: {fileID: 172952, guid: 8a0dac2bb75bc8343920ccf8eeff93fd, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 165124}

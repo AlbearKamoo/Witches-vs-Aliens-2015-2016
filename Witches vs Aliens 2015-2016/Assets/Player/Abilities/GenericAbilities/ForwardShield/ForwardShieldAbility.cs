@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class ForwardShieldAbility : TimedGenericAbility
+public class ForwardShieldAbility : TimedGenericAbility, IObserver<MovementAbilityFiredMessage>
 {
     [SerializeField]
     protected GameObject forwardShieldPrefab;
@@ -19,6 +19,17 @@ public class ForwardShieldAbility : TimedGenericAbility
     {
         base.Start();
         forwardShield.transform.SetParent(transform.root.Find("Rotating"), false);
+        GetComponentInParent<IObservable<MovementAbilityFiredMessage>>().Subscribe<MovementAbilityFiredMessage>(this);
+    }
+
+    protected override void onFire(Vector2 direction)
+    {
+        //this ability activates when the movement ability activates
+    }
+
+    public void Notify(MovementAbilityFiredMessage m)
+    {
+        base.onFire(m.direction);
     }
 
     protected override void OnActivate()

@@ -39,7 +39,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c812eceff3ea8fd43996a49f63d2bb38, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AbilityUIPrefab: {fileID: 156974, guid: 84971435ea446c143b8a8db9a71452e1, type: 2}
+  AbilityUIPrefab: {fileID: 172952, guid: 8a0dac2bb75bc8343920ccf8eeff93fd, type: 2}
   cooldownTime: 3
   maxDuration: 1
   forwardShieldPrefab: {fileID: 134422, guid: 9b9391f9cd26f6247bdf0c74ca570d56, type: 2}
@@ -54,6 +54,10 @@ Prefab:
       propertyPath: cooldownTime
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: AbilityUIPrefab
+      value: 
+      objectReference: {fileID: 172952, guid: 8a0dac2bb75bc8343920ccf8eeff93fd, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 130184}

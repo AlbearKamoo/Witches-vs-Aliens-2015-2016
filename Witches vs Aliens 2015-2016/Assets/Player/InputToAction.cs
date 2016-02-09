@@ -5,7 +5,7 @@ using System;
 using System.IO;
 
 [RequireComponent(typeof(Rigidbody2D))]
-public class InputToAction : MonoBehaviour, ISpeedLimiter, INetworkable, IObserver<OutgoingNetworkStreamMessage>
+public class InputToAction : MonoBehaviour, ISpeedLimiter, INetworkable, IObserver<OutgoingNetworkStreamMessage>, IObservable<GenericAbilityFiredMessage>, IObservable<MovementAbilityFiredMessage>, IObservable<SuperAbilityFiredMessage>
 {
     public Vector2 normalizedMovementInput { get; set; }
     bool _movementEnabled = false;
@@ -48,6 +48,15 @@ public class InputToAction : MonoBehaviour, ISpeedLimiter, INetworkable, IObserv
     public Vector2 direction { get {
         return _direction;
     } }
+
+    Observable<GenericAbilityFiredMessage> genericAbilityObservable = new Observable<GenericAbilityFiredMessage>();
+    public Observable<GenericAbilityFiredMessage> Observable(IObservable<GenericAbilityFiredMessage> self) { return genericAbilityObservable; }
+
+    Observable<MovementAbilityFiredMessage> movementAbilityObservable = new Observable<MovementAbilityFiredMessage>();
+    public Observable<MovementAbilityFiredMessage> Observable(IObservable<MovementAbilityFiredMessage> self) { return movementAbilityObservable; }
+
+    Observable<SuperAbilityFiredMessage> superAbilityObservable = new Observable<SuperAbilityFiredMessage>();
+    public Observable<SuperAbilityFiredMessage> Observable(IObservable<SuperAbilityFiredMessage> self) { return superAbilityObservable; }
 
     private List<Callback.CallbackMethod> preFixedUpdateDelegates = new List<Callback.CallbackMethod>();
     public List<Callback.CallbackMethod> PreFixedUpdateDelegates { get { return preFixedUpdateDelegates; } }
@@ -165,13 +174,16 @@ public class InputToAction : MonoBehaviour, ISpeedLimiter, INetworkable, IObserv
                 switch (t)
                 {
                     case AbilityType.MOVEMENT:
-                        activateAndSend(PacketType.PLAYERMOVEMENTABILITY, direction, (byte)(stats.playerID), moveAbility);
+                        if(activateAndSend(PacketType.PLAYERMOVEMENTABILITY, direction, (byte)(stats.playerID), moveAbility))
+                            movementAbilityObservable.Post(new MovementAbilityFiredMessage(direction));
                         break;
                     case AbilityType.GENERIC:
-                        activateAndSend(PacketType.PLAYERGENERICABILITY, direction, (byte)(stats.playerID), genAbility);
+                        if(activateAndSend(PacketType.PLAYERGENERICABILITY, direction, (byte)(stats.playerID), genAbility))
+                            genericAbilityObservable.Post(new GenericAbilityFiredMessage(direction));
                         break;
                     case AbilityType.SUPER:
-                        activateAndSend(PacketType.PLAYERSUPERABILITY, direction, (byte)(stats.playerID), superAbility);
+                        if(activateAndSend(PacketType.PLAYERSUPERABILITY, direction, (byte)(stats.playerID), superAbility))
+                            superAbilityObservable.Post(new SuperAbilityFiredMessage());
                         break;
                 }
                 
@@ -180,13 +192,16 @@ public class InputToAction : MonoBehaviour, ISpeedLimiter, INetworkable, IObserv
                 switch (t)
                 {
                     case AbilityType.MOVEMENT:
-                        moveAbility.Fire(direction);
+                        if(moveAbility.Fire(direction))
+                            movementAbilityObservable.Post(new MovementAbilityFiredMessage(direction));
                         break;
                     case AbilityType.GENERIC:
-                        genAbility.Fire(direction);
+                        if(genAbility.Fire(direction))
+                            genericAbilityObservable.Post(new GenericAbilityFiredMessage(direction));
                         break;
                     case AbilityType.SUPER:
-                        superAbility.Fire(direction);
+                        if(superAbility.Fire(direction))
+                            superAbilityObservable.Post(new SuperAbilityFiredMessage());
                         break;
                 }
                 break;
@@ -324,7 +339,7 @@ public class InputToAction : MonoBehaviour, ISpeedLimiter, INetworkable, IObserv
         }
     }
 
-    void activateAndSend(PacketType packetType, Vector2 direction, byte playerID, AbstractAbility ability)
+    bool activateAndSend(PacketType packetType, Vector2 direction, byte playerID, AbstractAbility ability)
     {
         int seed = -1;
         bool activated;
@@ -354,6 +369,8 @@ public class InputToAction : MonoBehaviour, ISpeedLimiter, INetworkable, IObserv
             }
             node.Send(node.ConnectionIDs, node.AllCostChannel);
         }
+
+        return activated;
     }
 
     bool checkValidPlayer(IncomingNetworkStreamMessage m, int index, int numVector2s = 1)
@@ -405,4 +422,26 @@ public class InputToAction : MonoBehaviour, ISpeedLimiter, INetworkable, IObserv
         else
             return players[index].inputToAction;
     }
+}
+
+public class GenericAbilityFiredMessage
+{
+    public readonly Vector2 direction;
+    public GenericAbilityFiredMessage(Vector2 direction)
+    {
+        this.direction = direction;
+    }
+}
+
+public class MovementAbilityFiredMessage
+{
+    public readonly Vector2 direction;
+    public MovementAbilityFiredMessage(Vector2 direction)
+    {
+        this.direction = direction;
+    }
+}
+
+public class SuperAbilityFiredMessage
+{
 }
