@@ -6,6 +6,8 @@ public class Blit : MonoBehaviour
     [SerializeField]
     [CanBeDefaultOrNull]
     protected Material material;
+
+    [CanBeDefaultOrNull]
     public float intensity = 0;
 
     void Awake()
