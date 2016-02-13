@@ -20,16 +20,16 @@ TextureImporter:
   bumpmap:
     convertToNormalMap: 0
     externalNormalMap: 0
-    heightScale: .25
+    heightScale: 0.25
     normalMapFilter: 0
-  isReadable: 0
+  isReadable: 1
   grayScaleToAlpha: 0
   generateCubemap: 0
   cubemapConvolution: 0
   cubemapConvolutionSteps: 8
   cubemapConvolutionExponent: 1.5
   seamlessCubemap: 0
-  textureFormat: -1
+  textureFormat: 4
   maxTextureSize: 2048
   textureSettings:
     filterMode: -1
@@ -45,11 +45,11 @@ TextureImporter:
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
-  spritePivot: {x: .5, y: .5}
+  spritePivot: {x: 0.5, y: 0.5}
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spritePixelsToUnits: 100
   alphaIsTransparency: 1
-  textureType: 8
+  textureType: 5
   buildTargetSettings: []
   spriteSheet:
     sprites:
@@ -63,6 +63,17 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 111, y: 128}
+        - {x: 26, y: 123}
+        - {x: -125, y: 33}
+        - {x: -125, y: -80}
+        - {x: -93, y: -128}
+        - {x: 4, y: -128}
+        - {x: 48, y: -115}
+        - {x: 116, y: -128}
+        - {x: 128, y: -128}
+        - {x: 128, y: 128}
     - name: AlieBackSprite_1
       rect:
         serializedVersion: 2
@@ -73,6 +84,16 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 124, y: 128}
+        - {x: 63, y: 46}
+        - {x: 1, y: 106}
+        - {x: -125, y: -7}
+        - {x: -125, y: -53}
+        - {x: -43, y: -123}
+        - {x: -8, y: -128}
+        - {x: 128, y: -128}
+        - {x: 128, y: 128}
     - name: AlieBackSprite_2
       rect:
         serializedVersion: 2
@@ -83,6 +104,20 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 121, y: 128}
+        - {x: 7, y: 102}
+        - {x: -125, y: -13}
+        - {x: -125, y: -58}
+        - {x: -41, y: -127}
+        - {x: -19, y: -122}
+        - {x: 21, y: -123}
+        - {x: 42, y: -122}
+        - {x: 47, y: -120}
+        - {x: 111, y: -128}
+        - {x: 128, y: -128}
+        - {x: 128, y: 128}
+    outline: []
   spritePackingTag: 
   userData: 
   assetBundleName: 

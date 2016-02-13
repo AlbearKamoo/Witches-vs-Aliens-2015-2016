@@ -23,7 +23,8 @@ public class HueShiftedAnimation : AnimatedFourWayPlayerVisuals, IHueShiftableVi
             flipSpriteArray(rightSprites);
         }
 
-        //shift = 0.5f;
+        //TODO : replace with user-choice of color
+        shift = Random.value;
 	}
 
     void flipSpriteArray(Sprite[] sprites)
@@ -48,7 +49,6 @@ public class HueShiftedAnimation : AnimatedFourWayPlayerVisuals, IHueShiftableVi
             output.Apply();
             sprites[i] = Sprite.Create(output, Rect.MinMaxRect(0,0,output.width, output.height), Vector2.one / 2, sprites[i].pixelsPerUnit);
         }
-
     }
 
     void setHue(float oldHue, float newHue)
@@ -57,25 +57,31 @@ public class HueShiftedAnimation : AnimatedFourWayPlayerVisuals, IHueShiftableVi
         setHueArray(oldHue, newHue, leftSprites);
         setHueArray(oldHue, newHue, rightSprites);
         setHueArray(oldHue, newHue, downSprites);
+        Debug.Log(newHue);
     }
 
     void setHueArray(float oldHue, float newHue, Sprite[] sprites)
     {
         for (int i = 0; i < sprites.Length; i++)
         {
+            Rect bounds = sprites[i].rect;
             Texture2D tex = Instantiate(sprites[i].texture);
-            for (int y = 0; y < tex.height; y++)
+            Texture2D output = new Texture2D(Mathf.RoundToInt(bounds.width), Mathf.RoundToInt(bounds.height));
+
+            for (int y = Mathf.RoundToInt(bounds.yMin); y < Mathf.RoundToInt(bounds.yMax); y++)
             {
-                for (int x = 0; x < tex.width; x++)
+                int xMin = Mathf.RoundToInt(bounds.xMin), xMax = Mathf.RoundToInt(bounds.xMax);
+                for (int x = xMin; x < xMax; x++)
                 {
                     Color temp = tex.GetPixel(x, y);
                     float hue, saturation, value;
                     HSVColor.RGBToHSV(temp, out hue, out saturation, out value);
-                    temp = HSVColor.HSVToRGB((hue + (newHue = oldHue)) % 1, saturation, value);
-                    tex.SetPixel(x, y, temp);
+                    temp = HSVColor.HSVToRGB((hue + (newHue - oldHue)) % 1, saturation, value, temp.a);
+                    output.SetPixel(x, y, temp);
                 }
             }
-            sprites[i] = Sprite.Create(tex, Rect.MinMaxRect(0, 0, tex.width, tex.height), new Vector2(tex.width / 2, tex.height / 2), sprites[i].pixelsPerUnit);
+            output.Apply();
+            sprites[i] = Sprite.Create(output, Rect.MinMaxRect(0, 0, output.width, output.height), Vector2.one / 2, sprites[i].pixelsPerUnit);
         }
     }
 }

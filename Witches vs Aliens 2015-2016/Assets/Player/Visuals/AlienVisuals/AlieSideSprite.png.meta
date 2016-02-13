@@ -20,16 +20,16 @@ TextureImporter:
   bumpmap:
     convertToNormalMap: 0
     externalNormalMap: 0
-    heightScale: .25
+    heightScale: 0.25
     normalMapFilter: 0
-  isReadable: 0
+  isReadable: 1
   grayScaleToAlpha: 0
   generateCubemap: 0
   cubemapConvolution: 0
   cubemapConvolutionSteps: 8
   cubemapConvolutionExponent: 1.5
   seamlessCubemap: 0
-  textureFormat: -1
+  textureFormat: 4
   maxTextureSize: 2048
   textureSettings:
     filterMode: -1
@@ -45,11 +45,11 @@ TextureImporter:
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
-  spritePivot: {x: .5, y: .5}
+  spritePivot: {x: 0.5, y: 0.5}
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spritePixelsToUnits: 100
   alphaIsTransparency: 1
-  textureType: 8
+  textureType: 5
   buildTargetSettings: []
   spriteSheet:
     sprites:
@@ -63,6 +63,19 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 127, y: -75}
+        - {x: 127, y: -30}
+        - {x: 78, y: 32}
+        - {x: 8, y: 90}
+        - {x: -6, y: 90}
+        - {x: -125, y: 10}
+        - {x: -125, y: -61}
+        - {x: -80, y: -118}
+        - {x: -20, y: -118}
+        - {x: -24, y: -111}
+        - {x: -13, y: -118}
+        - {x: 60, y: -118}
     - name: AlieSideSprite_1
       rect:
         serializedVersion: 2
@@ -73,6 +86,17 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 17, y: 88}
+        - {x: -10, y: 88}
+        - {x: -85, y: 30}
+        - {x: -125, y: -26}
+        - {x: -125, y: -54}
+        - {x: -45, y: -119}
+        - {x: 76, y: -119}
+        - {x: 127, y: -52}
+        - {x: 127, y: -26}
+        - {x: 61, y: 44}
     - name: AlieSideSprite_2
       rect:
         serializedVersion: 2
@@ -83,6 +107,19 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -4, y: 84}
+        - {x: -9, y: 75}
+        - {x: -6, y: 70}
+        - {x: -56, y: 50}
+        - {x: -125, y: -22}
+        - {x: -125, y: -71}
+        - {x: -89, y: -123}
+        - {x: 87, y: -123}
+        - {x: 127, y: -106}
+        - {x: 127, y: -20}
+        - {x: 16, y: 84}
+    outline: []
   spritePackingTag: 
   userData: 
   assetBundleName: 

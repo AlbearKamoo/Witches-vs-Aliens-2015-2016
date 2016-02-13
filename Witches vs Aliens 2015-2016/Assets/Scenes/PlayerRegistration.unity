@@ -278,7 +278,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   character:
     basePlayer: {fileID: 146214, guid: a8095cd9d9bc36f4e87d6eeda567d5fa, type: 2}
-    visuals: {fileID: 150354, guid: 058f7aebb890ee84da8f76c6487c8e55, type: 2}
+    visuals: {fileID: 106104, guid: 652446bdc4c4752479d5d092a4ee1f0f, type: 2}
     movementAbility: {fileID: 186010, guid: 999ab97c110d5bc4baa999b79b3005e9, type: 2}
     genericAbility: {fileID: 137066, guid: acd35d6a36124ef4d8cc2af602a9a8dd, type: 2}
     superAbility: {fileID: 143026, guid: 9f0bc11609a97544496b9a6170fe50f5, type: 2}
@@ -682,7 +682,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   character:
     basePlayer: {fileID: 146214, guid: a8095cd9d9bc36f4e87d6eeda567d5fa, type: 2}
-    visuals: {fileID: 150354, guid: 058f7aebb890ee84da8f76c6487c8e55, type: 2}
+    visuals: {fileID: 106104, guid: 652446bdc4c4752479d5d092a4ee1f0f, type: 2}
     movementAbility: {fileID: 186010, guid: 999ab97c110d5bc4baa999b79b3005e9, type: 2}
     genericAbility: {fileID: 134422, guid: 9b9391f9cd26f6247bdf0c74ca570d56, type: 2}
     superAbility: {fileID: 134116, guid: c6aa7c745294ea644aeb195c211fc58e, type: 2}
@@ -774,7 +774,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   character:
     basePlayer: {fileID: 146214, guid: a8095cd9d9bc36f4e87d6eeda567d5fa, type: 2}
-    visuals: {fileID: 134630, guid: 4af836bb28ddc8e41acdfd7407227704, type: 2}
+    visuals: {fileID: 186382, guid: d58cb17b4ddacef4aaabf2fc8656265a, type: 2}
     movementAbility: {fileID: 116816, guid: 24f9725c0345564498ac1b6243018210, type: 2}
     genericAbility: {fileID: 137066, guid: acd35d6a36124ef4d8cc2af602a9a8dd, type: 2}
     superAbility: {fileID: 189548, guid: 92c627e1702f90443a4a43a527a7d20d, type: 2}
@@ -1377,7 +1377,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   character:
     basePlayer: {fileID: 146214, guid: a8095cd9d9bc36f4e87d6eeda567d5fa, type: 2}
-    visuals: {fileID: 134630, guid: 4af836bb28ddc8e41acdfd7407227704, type: 2}
+    visuals: {fileID: 186382, guid: d58cb17b4ddacef4aaabf2fc8656265a, type: 2}
     movementAbility: {fileID: 116816, guid: 24f9725c0345564498ac1b6243018210, type: 2}
     genericAbility: {fileID: 181508, guid: 38f5e53ae2e43cb4594bd8c48ea20f7a, type: 2}
     superAbility: {fileID: 189548, guid: 92c627e1702f90443a4a43a527a7d20d, type: 2}
@@ -1543,7 +1543,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   character:
     basePlayer: {fileID: 146214, guid: a8095cd9d9bc36f4e87d6eeda567d5fa, type: 2}
-    visuals: {fileID: 150354, guid: 058f7aebb890ee84da8f76c6487c8e55, type: 2}
+    visuals: {fileID: 106104, guid: 652446bdc4c4752479d5d092a4ee1f0f, type: 2}
     movementAbility: {fileID: 186010, guid: 999ab97c110d5bc4baa999b79b3005e9, type: 2}
     genericAbility: {fileID: 110450, guid: bc177a2768bd39946866f5ebcbe5d375, type: 2}
     superAbility: {fileID: 143026, guid: 9f0bc11609a97544496b9a6170fe50f5, type: 2}
@@ -1870,7 +1870,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   character:
     basePlayer: {fileID: 146214, guid: a8095cd9d9bc36f4e87d6eeda567d5fa, type: 2}
-    visuals: {fileID: 134630, guid: 4af836bb28ddc8e41acdfd7407227704, type: 2}
+    visuals: {fileID: 186382, guid: d58cb17b4ddacef4aaabf2fc8656265a, type: 2}
     movementAbility: {fileID: 116816, guid: 24f9725c0345564498ac1b6243018210, type: 2}
     genericAbility: {fileID: 140360, guid: e5ad39205b3e26f4594963fd6fa1f81d, type: 2}
     superAbility: {fileID: 146254, guid: 945ebe4e0d22b4146a49b6bf1ff9a33b, type: 2}

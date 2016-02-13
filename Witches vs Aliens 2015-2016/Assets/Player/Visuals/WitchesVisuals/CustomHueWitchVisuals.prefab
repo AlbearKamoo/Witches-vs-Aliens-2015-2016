@@ -1,43 +1,43 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &149260
+--- !u!1 &186382
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 4
   m_Component:
-  - 4: {fileID: 477600}
-  - 212: {fileID: 21293178}
-  - 114: {fileID: 11475176}
+  - 4: {fileID: 437398}
+  - 212: {fileID: 21270198}
+  - 114: {fileID: 11443058}
   m_Layer: 13
-  m_Name: CustomAlienVisuals
+  m_Name: CustomHueWitchVisuals
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &477600
+--- !u!4 &437398
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 149260}
+  m_GameObject: {fileID: 186382}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
---- !u!114 &11475176
+--- !u!114 &11443058
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 149260}
+  m_GameObject: {fileID: 186382}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 709f39670b82fee439dd7e9652e778ce, type: 3}
+  m_Script: {fileID: 11500000, guid: 3819d590154ab674db674b1ae4ad0ddf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   upSprites:
@@ -53,12 +53,14 @@ MonoBehaviour:
   - {fileID: 21300000, guid: a529b1c9dfb9c724f9551a8a5f4c6533, type: 3}
   - {fileID: 21300002, guid: a529b1c9dfb9c724f9551a8a5f4c6533, type: 3}
   timePerLoop: 0.25
---- !u!212 &21293178
+  flipLeftSprites: 1
+  flipRightSprites: 0
+--- !u!212 &21270198
 SpriteRenderer:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 149260}
+  m_GameObject: {fileID: 186382}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -89,8 +91,12 @@ Prefab:
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: m_Name
+      value: CustomHueWitchVisuals
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 149260}
+  m_RootGameObject: {fileID: 186382}
   m_IsPrefabParent: 1
