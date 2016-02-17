@@ -54,7 +54,6 @@ public abstract class NotSuperAbility : AbstractAbility, IObservable<AbilityStat
 
     protected override void OnDeactivate()
     {
-        Debug.Log("start recharge");
         base.OnDeactivate();
         StartCooldown();
     }
