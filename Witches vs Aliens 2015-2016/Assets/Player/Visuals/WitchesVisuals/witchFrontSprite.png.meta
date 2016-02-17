@@ -19,16 +19,16 @@ TextureImporter:
   bumpmap:
     convertToNormalMap: 0
     externalNormalMap: 0
-    heightScale: .25
+    heightScale: 0.25
     normalMapFilter: 0
-  isReadable: 0
+  isReadable: 1
   grayScaleToAlpha: 0
   generateCubemap: 0
   cubemapConvolution: 0
   cubemapConvolutionSteps: 8
   cubemapConvolutionExponent: 1.5
   seamlessCubemap: 0
-  textureFormat: -1
+  textureFormat: 4
   maxTextureSize: 2048
   textureSettings:
     filterMode: -1
@@ -44,11 +44,11 @@ TextureImporter:
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
-  spritePivot: {x: .5, y: .5}
+  spritePivot: {x: 0.5, y: 0.5}
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spritePixelsToUnits: 100
   alphaIsTransparency: 1
-  textureType: 8
+  textureType: 5
   buildTargetSettings: []
   spriteSheet:
     sprites:
@@ -62,6 +62,37 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -128, y: -128}
+        - {x: -123, y: -128}
+        - {x: -123, y: 127}
+        - {x: -124, y: 128}
+        - {x: -128, y: 128}
+      - - {x: 121, y: -15}
+        - {x: 121, y: 3}
+        - {x: 67, y: 54}
+        - {x: 72, y: 78}
+        - {x: 7, y: 123}
+        - {x: -22, y: 123}
+        - {x: -36, y: 116}
+        - {x: -120, y: 6}
+        - {x: -120, y: -13}
+        - {x: -84, y: -54}
+        - {x: -117, y: -65}
+        - {x: -120, y: -71}
+        - {x: -120, y: -105}
+        - {x: -68, y: -128}
+        - {x: 65, y: -128}
+        - {x: 100, y: -119}
+        - {x: 121, y: -100}
+        - {x: 121, y: -57}
+        - {x: 98, y: -27}
+      - - {x: 85, y: -64}
+        - {x: 86, y: -67}
+        - {x: 89, y: -67}
+        - {x: 91, y: -65}
+        - {x: 90, y: -62}
+        - {x: 87, y: -62}
     - name: witchFrontSprite_1
       rect:
         serializedVersion: 2
@@ -72,6 +103,34 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -128, y: -128}
+        - {x: -123, y: -128}
+        - {x: -123, y: 127}
+        - {x: -124, y: 128}
+        - {x: -128, y: 128}
+      - - {x: 43, y: 58}
+        - {x: 31, y: 73}
+        - {x: 51, y: 53}
+        - {x: 72, y: 62}
+        - {x: 66, y: 82}
+        - {x: -6, y: 125}
+        - {x: -20, y: 125}
+        - {x: -23, y: 124}
+        - {x: -33, y: 113}
+        - {x: -120, y: 5}
+        - {x: -120, y: -2}
+        - {x: -107, y: -8}
+        - {x: -118, y: -70}
+        - {x: -119, y: -104}
+        - {x: -79, y: -120}
+        - {x: -21, y: -128}
+        - {x: 46, y: -128}
+        - {x: 102, y: -116}
+        - {x: 121, y: -85}
+        - {x: 121, y: -1}
+        - {x: 120, y: 5}
+    outline: []
   spritePackingTag: 
   userData: 
   assetBundleName: 
