@@ -190,8 +190,8 @@ MonoBehaviour:
   - {fileID: 1220282583}
   - {fileID: 470944701}
   - {fileID: 69739546}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 1847882280}
+  - {fileID: 428674989}
   UIParent: {fileID: 351718218}
 --- !u!114 &21640696
 MonoBehaviour:
@@ -684,7 +684,7 @@ MonoBehaviour:
     basePlayer: {fileID: 146214, guid: a8095cd9d9bc36f4e87d6eeda567d5fa, type: 2}
     visuals: {fileID: 106104, guid: 652446bdc4c4752479d5d092a4ee1f0f, type: 2}
     movementAbility: {fileID: 186010, guid: 999ab97c110d5bc4baa999b79b3005e9, type: 2}
-    genericAbility: {fileID: 134422, guid: 9b9391f9cd26f6247bdf0c74ca570d56, type: 2}
+    genericAbility: {fileID: 130184, guid: 60c30ec1a94193146929d39c4fde233c, type: 2}
     superAbility: {fileID: 134116, guid: c6aa7c745294ea644aeb195c211fc58e, type: 2}
     side: 1
 --- !u!61 &428674990
@@ -1872,7 +1872,7 @@ MonoBehaviour:
     basePlayer: {fileID: 146214, guid: a8095cd9d9bc36f4e87d6eeda567d5fa, type: 2}
     visuals: {fileID: 186382, guid: d58cb17b4ddacef4aaabf2fc8656265a, type: 2}
     movementAbility: {fileID: 116816, guid: 24f9725c0345564498ac1b6243018210, type: 2}
-    genericAbility: {fileID: 140360, guid: e5ad39205b3e26f4594963fd6fa1f81d, type: 2}
+    genericAbility: {fileID: 166162, guid: 86aa63429b3c295489a40a37f5b4d258, type: 2}
     superAbility: {fileID: 146254, guid: 945ebe4e0d22b4146a49b6bf1ff9a33b, type: 2}
     side: 0
 --- !u!61 &1847882281
