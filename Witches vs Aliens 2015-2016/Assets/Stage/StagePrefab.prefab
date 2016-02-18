@@ -552,7 +552,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 443210}
   - 61: {fileID: 6112314}
-  m_Layer: 19
+  m_Layer: 20
   m_Name: PlayerOnlyCollider
   m_TagString: Stage
   m_Icon: {fileID: 0}
@@ -668,7 +668,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 420960}
   - 61: {fileID: 6133750}
-  m_Layer: 19
+  m_Layer: 20
   m_Name: PlayerOnlyCollider
   m_TagString: Stage
   m_Icon: {fileID: 0}
@@ -1509,9 +1509,9 @@ BoxCollider2D:
   m_Material: {fileID: 6200000, guid: 9659893ae3ba66a4eb87f8545f0ece76, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
-  m_Offset: {x: -0.10920143, y: 0}
+  m_Offset: {x: 1, y: 0}
   serializedVersion: 2
-  m_Size: {x: 1.7815962, y: 12}
+  m_Size: {x: 2, y: 12}
 --- !u!61 &6121894
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -1537,9 +1537,9 @@ BoxCollider2D:
   m_Material: {fileID: 6200000, guid: 9659893ae3ba66a4eb87f8545f0ece76, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
-  m_Offset: {x: 0.27101707, y: 0}
+  m_Offset: {x: -1, y: 0}
   serializedVersion: 2
-  m_Size: {x: 1.4579687, y: 12}
+  m_Size: {x: 2, y: 12}
 --- !u!61 &6138878
 BoxCollider2D:
   m_ObjectHideFlags: 1
