@@ -22,6 +22,7 @@ public class MindMergePayload : SkillShotPayload {
         Rigidbody2D rigid = bullet.Source.GetComponentInParent<Rigidbody2D>();
         joint = rigid.gameObject.AddComponent<DistanceJoint2D>();
         joint.enabled = false;
+        joint.maxDistanceOnly = true;
         //joint.connectedBody = puckRigid;
 
         GameObject selfSpawnedVisuals = SimplePool.Spawn(visualsPrefab);
