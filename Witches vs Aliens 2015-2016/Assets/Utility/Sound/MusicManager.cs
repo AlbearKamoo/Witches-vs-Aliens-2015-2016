@@ -18,6 +18,6 @@ public class MusicManager : MonoBehaviour
         DontDestroyOnLoad(this.gameObject);
         source = GetComponent<AudioSource>();
         _self = this;
-        Callback.FireAndForget(() => Destroy(this.gameObject), source.clip.length, this, mode: Callback.Mode.REALTIME);
+        Callback.FireAndForget(() => Destroy(this.gameObject), source.clip.length + 5.0f, this, mode: Callback.Mode.REALTIME);
     }
 }

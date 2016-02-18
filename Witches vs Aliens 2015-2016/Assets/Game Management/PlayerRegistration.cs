@@ -9,6 +9,9 @@ using UnityEngine.Assertions;
 public class PlayerRegistration : MonoBehaviour, INetworkable {
     [SerializeField]
     protected GameObject introMusicPrefab;
+
+    [SerializeField]
+    protected AudioClip countdownVoice;
     GameObject introMusic;
 
 #if UNITY_EDITOR
@@ -396,9 +399,28 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
         {
             introMusic = Instantiate(introMusicPrefab);
             registrationMusic.Pause();
-            startCountdown = Callback.Routines.FireAndForgetRoutine(() => startGame(), 5, this);
+            startCountdown = startGameCountdown();
             StartCoroutine(startCountdown);
         }
+    }
+
+    IEnumerator startGameCountdown()
+    {
+        float timeRemaining = 5f;
+        while (timeRemaining > 1.5f)
+        {
+            timeRemaining -= Time.deltaTime;
+            yield return null;
+        }
+
+        introMusic.GetComponent<AudioSource>().PlayOneShot(countdownVoice);
+
+        while (timeRemaining > 0f)
+        {
+            timeRemaining -= Time.deltaTime;
+            yield return null;
+        }
+        startGame();
     }
 
     void checkNotReady()

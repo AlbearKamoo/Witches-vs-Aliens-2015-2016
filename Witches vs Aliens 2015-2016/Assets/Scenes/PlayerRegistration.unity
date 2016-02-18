@@ -114,6 +114,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   introMusicPrefab: {fileID: 129924, guid: c11a39805b0734f40bae483a2f720505, type: 2}
+  countdownVoice: {fileID: 8300000, guid: 5b84ac5bf89c31e4ab422295910ef143, type: 3}
   mainGameSceneName: Derek
   playerRegistrationPrefab: {fileID: 171078, guid: df99a46226850ad4194db9a6272820ae,
     type: 2}
