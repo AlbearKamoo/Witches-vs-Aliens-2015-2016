@@ -14,9 +14,11 @@ public class CircularWall : MonoBehaviour {
     protected float radius;
 
     [SerializeField]
+    [CanBeDefaultOrNull]
     protected float startAngle;
 
     [SerializeField]
+    [CanBeDefaultOrNull]
     protected float endAngle;
 
     PolygonCollider2D col;

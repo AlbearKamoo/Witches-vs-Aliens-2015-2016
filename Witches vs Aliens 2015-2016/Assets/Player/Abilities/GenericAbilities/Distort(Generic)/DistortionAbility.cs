@@ -10,6 +10,7 @@ public class DistortionAbility : TimedGenericAbility
     MeshRenderer render;
     InputToAction action;
     FloatStat massMod;
+    AudioSource source;
 
     [SerializeField]
     protected bool affectsPlayers;
@@ -44,12 +45,19 @@ public class DistortionAbility : TimedGenericAbility
         coll = GetComponent<CircleCollider2D>();
         effector = GetComponent<PointEffector2D>();
         render = GetComponent<MeshRenderer>();
+        source = GetComponent<AudioSource>();
 	}
 
     protected override void Start()
     {
         action = GetComponentInParent<InputToAction>();
         base.Start();
+    }
+
+    protected override void onFire(Vector2 direction)
+    {
+        base.onFire(direction);
+        source.Play();
     }
 
     public override void StopFire()
