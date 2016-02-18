@@ -9,7 +9,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 423316}
   - 212: {fileID: 21267026}
-  m_Layer: 11
+  m_Layer: 10
   m_Name: AlienSideVFX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -30,7 +30,7 @@ GameObject:
   - 114: {fileID: 11470504}
   - 114: {fileID: 11449428}
   - 114: {fileID: 11412818}
-  m_Layer: 11
+  m_Layer: 10
   m_Name: PuckPrefab
   m_TagString: Puck
   m_Icon: {fileID: 0}
@@ -46,7 +46,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 436464}
   - 212: {fileID: 21239072}
-  m_Layer: 11
+  m_Layer: 10
   m_Name: PuckVisuals
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -63,7 +63,7 @@ GameObject:
   - 4: {fileID: 435240}
   - 212: {fileID: 21280558}
   - 114: {fileID: 11415272}
-  m_Layer: 11
+  m_Layer: 10
   m_Name: WitchSideVFX
   m_TagString: Puck
   m_Icon: {fileID: 0}
@@ -351,6 +351,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: dragScaleFactor
       value: 0.015
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
