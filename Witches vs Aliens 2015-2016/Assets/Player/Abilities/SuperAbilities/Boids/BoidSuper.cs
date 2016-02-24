@@ -45,6 +45,7 @@ public class BoidSuper : TimedSuperAbility, IPuckAbility, IAlliesAbility, IOppon
     protected override void OnActivate()
     {
         base.OnActivate();
+        List<Collider2D> boidColliders = new List<Collider2D>();
         for (int i = 0; i < numBoids; i++)
         {
             GameObject instantiatedBoid = Instantiate(boidPrefab);
@@ -53,6 +54,9 @@ public class BoidSuper : TimedSuperAbility, IPuckAbility, IAlliesAbility, IOppon
 
             newBoid.ignoreCollision(puckCollider);
             newBoid.ignoreCollisions(allyColliders);
+            newBoid.ignoreCollisions(boidColliders);
+
+            boidColliders.Add(newBoid.Coll);
         }
     }
 

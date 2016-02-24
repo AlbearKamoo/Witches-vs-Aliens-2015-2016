@@ -39,6 +39,7 @@ public class Boid : MonoBehaviour, IBoid {
     public Vector2 velocity { get { return rigid.velocity; } }
 
     CircleCollider2D coll;
+    public CircleCollider2D Coll { get { return coll; } }
     Collider2D trigger;
 
     List<IBoid> neighbors = new List<IBoid>();
