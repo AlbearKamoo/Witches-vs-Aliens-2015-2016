@@ -157,6 +157,7 @@ GameObject:
   - 4: {fileID: 439002}
   - 60: {fileID: 6006672}
   - 114: {fileID: 11415118}
+  - 114: {fileID: 11420148}
   m_Layer: 15
   m_Name: BottomRightCorner
   m_TagString: Stage
@@ -220,6 +221,7 @@ GameObject:
   - 4: {fileID: 405332}
   - 60: {fileID: 6014790}
   - 114: {fileID: 11474106}
+  - 114: {fileID: 11420504}
   m_Layer: 15
   m_Name: TopLeftCorner
   m_TagString: Stage
@@ -396,6 +398,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 478258}
   - 61: {fileID: 6121894}
+  - 114: {fileID: 11404854}
   m_Layer: 15
   m_Name: TopWall
   m_TagString: Stage
@@ -412,6 +415,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 468110}
   - 61: {fileID: 6155534}
+  - 114: {fileID: 11490986}
   m_Layer: 15
   m_Name: BottomWall
   m_TagString: Stage
@@ -519,6 +523,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 479752}
+  - 114: {fileID: 11419340}
   m_Layer: 15
   m_Name: RightWall
   m_TagString: Stage
@@ -569,6 +574,7 @@ GameObject:
   - 4: {fileID: 411902}
   - 60: {fileID: 6011044}
   - 114: {fileID: 11488362}
+  - 114: {fileID: 11453414}
   m_Layer: 15
   m_Name: BottomLeftCorner
   m_TagString: Stage
@@ -652,6 +658,7 @@ GameObject:
   - 4: {fileID: 461880}
   - 60: {fileID: 6004152}
   - 114: {fileID: 11489316}
+  - 114: {fileID: 11419826}
   m_Layer: 15
   m_Name: TopRightCorner
   m_TagString: Stage
@@ -728,6 +735,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 432642}
+  - 114: {fileID: 11465916}
   m_Layer: 15
   m_Name: LeftWall
   m_TagString: Stage
@@ -1902,6 +1910,18 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
+--- !u!114 &11404854
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 149110}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 398454d298a36ef4db298323ea380566, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _direction: {x: 0, y: -1}
 --- !u!114 &11415118
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1918,6 +1938,54 @@ MonoBehaviour:
   radius: 8
   startAngle: 90
   endAngle: 180
+--- !u!114 &11419340
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 169696}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 398454d298a36ef4db298323ea380566, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _direction: {x: -1, y: 0}
+--- !u!114 &11419826
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 191740}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 398454d298a36ef4db298323ea380566, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _direction: {x: -1, y: -1}
+--- !u!114 &11420148
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 120930}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 398454d298a36ef4db298323ea380566, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _direction: {x: -1, y: 1}
+--- !u!114 &11420504
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 132944}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 398454d298a36ef4db298323ea380566, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _direction: {x: 1, y: -1}
 --- !u!114 &11436776
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1955,6 +2023,30 @@ MonoBehaviour:
   AliensSuperClip: {fileID: 8300000, guid: 695f750f1604dd340a79565b6b6e2c89, type: 3}
   aliensSuperOutput: {fileID: 24311422, guid: 12fca95c238125d44b367ec895672304, type: 2}
   witchesSuperOutput: {fileID: 24377686, guid: 12fca95c238125d44b367ec895672304, type: 2}
+--- !u!114 &11453414
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 178304}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 398454d298a36ef4db298323ea380566, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _direction: {x: 1, y: 1}
+--- !u!114 &11465916
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 198176}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 398454d298a36ef4db298323ea380566, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _direction: {x: 1, y: 0}
 --- !u!114 &11474106
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2017,6 +2109,18 @@ MonoBehaviour:
   mySide: 0
   goalSound: {fileID: 8300000, guid: 44c46b86b8e70f74bbbaa71096fa4cd1, type: 3}
   crySound: {fileID: 8300000, guid: 9fe7fce397c749643bef0d862cd8cf5f, type: 3}
+--- !u!114 &11490986
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 149920}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 398454d298a36ef4db298323ea380566, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _direction: {x: 0, y: 1}
 --- !u!198 &19821280
 ParticleSystem:
   m_ObjectHideFlags: 1

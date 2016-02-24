@@ -2,14 +2,10 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class HampsterBallSuper : SuperAbility, IPuckAbility, IAlliesAbility, IOpponentsAbility
+public class HampsterBallSuper : TimedSuperAbility, IPuckAbility, IAlliesAbility, IOpponentsAbility
 {
-
     [SerializeField]
     protected GameObject hampsterBallPrefab;
-
-    [SerializeField]
-    protected float duration;
 
     HampsterBall[] balls;
 
@@ -38,15 +34,7 @@ public class HampsterBallSuper : SuperAbility, IPuckAbility, IAlliesAbility, IOp
             balls[i].active = false;
         }
 
-        ready = true; //for easy testing
-    }
-
-    protected override void onFire(Vector2 direction)
-    {
-        ready = false;
-        active = true;
-
-        Callback.FireAndForget(() => active = false, duration, this);
+        //ready = true; //for easy testing
     }
 
     protected override void OnActivate()

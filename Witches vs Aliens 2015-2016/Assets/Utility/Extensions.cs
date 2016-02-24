@@ -73,4 +73,15 @@ public static class VectorExtension
     {
         return new Vector2(-dir.y, dir.x);
     }
+
+    public static Vector2 DegreeToVector2(this float angle)
+    {
+        float angleRad = Mathf.Deg2Rad * angle;
+        return angleRad.RadToVector2();
+    }
+
+    public static Vector2 RadToVector2(this float angleRad)
+    {
+        return new Vector2(Mathf.Sin(angleRad), Mathf.Cos(angleRad));
+    }
 }

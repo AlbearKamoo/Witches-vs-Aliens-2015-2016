@@ -2,14 +2,11 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class TurbineSuper : SuperAbility, IAlliesAbility
+public class TurbineSuper : TimedSuperAbility, IAlliesAbility
 {
 
     [SerializeField]
     protected GameObject turbinePrefab;
-
-    [SerializeField]
-    protected float duration;
 
     List<Collider2D> allyColliders;
     public List<Transform> allies 
@@ -34,14 +31,16 @@ public class TurbineSuper : SuperAbility, IAlliesAbility
         turbine.active = false;
     }
 
-    protected override void onFire(Vector2 direction)
+    protected override void OnActivate()
     {
-        ready = false;
-
+        base.OnActivate();
         turbine.active = true;
-
         turbine.ignoreCollisions(allyColliders);
+    }
 
-        Callback.FireAndForget(() => turbine.active = false, duration, this);
+    protected override void OnDeactivate()
+    {
+        base.OnDeactivate();
+        turbine.active = false;
     }
 }
