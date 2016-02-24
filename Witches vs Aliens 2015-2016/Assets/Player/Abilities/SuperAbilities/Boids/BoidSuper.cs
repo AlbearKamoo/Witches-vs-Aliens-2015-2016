@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class BoidSuper : TimedSuperAbility, IPuckAbility, IAlliesAbility, IOpponentsAbility
+public class BoidSuper : TimedSuperAbility, IPuckAbility, IAlliesAbility, IOpponentsAbility, IRandomAbility
 {
     [SerializeField]
     protected GameObject boidPrefab;

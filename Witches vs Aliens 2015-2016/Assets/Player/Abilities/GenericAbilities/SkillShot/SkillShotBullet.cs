@@ -11,7 +11,6 @@ public class SkillShotBullet : MonoBehaviour {
 
     SkillShotAbility source;
     public SkillShotAbility Source { get { return source; } }
-    List<Collider2D> ignoreCollisionList = new List<Collider2D>();
     Rigidbody2D rigid;
     SkillShotPayload payload;
 
@@ -24,6 +23,10 @@ public class SkillShotBullet : MonoBehaviour {
 
     public bool Active
     {
+        get
+        {
+            return active;
+        }
         set
         {
             interactables.gameObject.SetActive(value);
