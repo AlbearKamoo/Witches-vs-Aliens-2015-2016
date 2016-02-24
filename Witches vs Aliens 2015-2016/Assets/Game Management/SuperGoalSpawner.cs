@@ -31,7 +31,7 @@ public class SuperGoalSpawner : MonoBehaviour, INetworkable {
 
     SuperGoal SuperGoal1;
     SuperGoal SuperGoal2;
-    void SetGoalsActive(bool active) { SuperGoal1.active = active; SuperGoal2.active = active; }
+    void SetGoalsActive(bool active) { SuperGoal1.active = active; SuperGoal2.active = active; } //setting a supergoal to false will destroy it
     NetworkNode node;
     NetworkMode mode;
     AudioSource sfx;
@@ -39,10 +39,6 @@ public class SuperGoalSpawner : MonoBehaviour, INetworkable {
 	// Use this for initialization
 	void Awake () {
         Assert.IsTrue(spawnPositions.Length != 0);
-        SuperGoal1 = Instantiate(SuperGoalPrefab).GetComponent<SuperGoal>();
-        SuperGoal2 = Instantiate(SuperGoalPrefab).GetComponent<SuperGoal>();
-        SuperGoal1.mirror = SuperGoal2;
-        SuperGoal2.mirror = SuperGoal1;
         sfx = GetComponent<AudioSource>();
     }
 
@@ -68,11 +64,15 @@ public class SuperGoalSpawner : MonoBehaviour, INetworkable {
 
     void spawnSuperGoals(int spawnPointIndex)
     {
-        SuperGoal1.transform.SetParent(spawnPositions[spawnPointIndex], false);
-        SuperGoal2.transform.SetParent(spawnPositions[spawnPointIndex].Find("Mirror"), false);
-
+        SuperGoal1 = Instantiate(SuperGoalPrefab).GetComponent<SuperGoal>();
+        SuperGoal2 = Instantiate(SuperGoalPrefab).GetComponent<SuperGoal>();
+        SuperGoal1.mirror = SuperGoal2;
+        SuperGoal2.mirror = SuperGoal1;
         SuperGoal1.Spawner = this;
         SuperGoal2.Spawner = this;
+
+        SuperGoal1.transform.SetParent(spawnPositions[spawnPointIndex], false);
+        SuperGoal2.transform.SetParent(spawnPositions[spawnPointIndex].Find("Mirror"), false);
 
         SetGoalsActive(true);
 

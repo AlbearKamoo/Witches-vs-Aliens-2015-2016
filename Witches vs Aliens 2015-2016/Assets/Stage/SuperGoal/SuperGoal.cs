@@ -30,7 +30,7 @@ public class SuperGoal : MonoBehaviour {
             {
                 if (!_active)
                 {
-                    puckFX.perSideEffectsActive = true;
+                    //puckFX.perSideEffectsActive = true;
                     render.enabled = true;
                     rotateParticlesToTransform();
                     vfx.playbackSpeed = 1.5f;
@@ -45,6 +45,7 @@ public class SuperGoal : MonoBehaviour {
                             render.transform.localScale = Vector2.one;
                             coll.enabled = true;
                         }, this);
+                     
                 }
             }
             else if (_active)
@@ -62,12 +63,8 @@ public class SuperGoal : MonoBehaviour {
                     render.transform.localPosition = new Vector2(0f, originalLocalPosition.y + 3 * f * (originalLocalPosition.y - 1));
                     render.color = Color.Lerp(mainRenderColor, Color.white, f);
                 }, 1f, this).FollowedBy(() => 
-                { 
-                    render.transform.localScale = Vector2.one;
-                    render.transform.localPosition = originalLocalPosition;
-                    render.color = mainRenderColor;
-                    render.enabled = false;
-                    vfx.playbackSpeed = 1;
+                {
+                    Destroy(this.gameObject);
 
                 }, this); 
             }
@@ -79,12 +76,14 @@ public class SuperGoal : MonoBehaviour {
     {
         coll = GetComponent<Collider2D>();
         render = GetComponentInChildren<SpriteRenderer>();
-        vfx = GetComponentInChildren<ParticleSystem>();
+        vfx = transform.Find("LightShafts").GetComponent<ParticleSystem>();
+        //vfx.Play();
     }
 
     void Start()
     {
-        Callback.FireForUpdate(() => puckFX = GameObject.FindGameObjectWithTag(Tags.puck).GetComponent<PuckFX>(), this);
+        Callback.FireForUpdate(() => {puckFX = GameObject.FindGameObjectWithTag(Tags.puck).GetComponent<PuckFX>();}, this);
+        
     }
 
 	// Use this for initialization

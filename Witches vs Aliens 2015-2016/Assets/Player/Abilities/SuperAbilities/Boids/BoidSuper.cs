@@ -44,7 +44,6 @@ public class BoidSuper : TimedSuperAbility, IPuckAbility, IAlliesAbility, IOppon
 
     protected override void OnActivate()
     {
-        Debug.Log("activate");
         base.OnActivate();
         for (int i = 0; i < numBoids; i++)
         {
