@@ -49,6 +49,7 @@ public class BoidSuper : TimedSuperAbility, IPuckAbility, IAlliesAbility, IOppon
         for (int i = 0; i < numBoids; i++)
         {
             GameObject instantiatedBoid = Instantiate(boidPrefab);
+            instantiatedBoid.transform.position = Random.insideUnitCircle;
             Boid newBoid = instantiatedBoid.GetComponent<Boid>();
             boids.Add(newBoid);
 

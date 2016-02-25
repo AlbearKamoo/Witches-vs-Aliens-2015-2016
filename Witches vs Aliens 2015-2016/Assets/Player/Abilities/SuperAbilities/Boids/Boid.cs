@@ -143,7 +143,7 @@ public class Boid : MonoBehaviour, IBoid {
             float distance = displacement.magnitude;
             if (distance < boid.seperation)
             {
-                seperationForce += (displacement / distance) / ((distance - coll.radius) / boid.seperation); //normalize, then weight by distance; (small distance = larger vector)
+                seperationForce += displacement / distance; //normalize, then weight by distance; (small distance = larger vector)
                 seperationCount++;
             }
         }
