@@ -3,10 +3,11 @@ using System.Collections;
 
 [RequireComponent(typeof(AudioSource))]
 [RequireComponent(typeof(Collider2D))]
-public class ForwardShield : MonoBehaviour {
+public class ForwardShield : MonoBehaviour, IIgnorePuckVFX
+{
 
     [SerializeField]
-    protected AudioClip onHitClip;
+    protected GameObject impactVFXPrefab;
 
     AudioSource source;
 
@@ -20,7 +21,7 @@ public class ForwardShield : MonoBehaviour {
         PuckSpeedLimiter puck = other.transform.GetComponentInParent<PuckSpeedLimiter>();
         if (puck != null)
         {
-            source.PlayOneShot(onHitClip);
+            SimplePool.Spawn(impactVFXPrefab, (Vector3)(other.contacts[0].point) + Vector3.back);
         }
     }
 }

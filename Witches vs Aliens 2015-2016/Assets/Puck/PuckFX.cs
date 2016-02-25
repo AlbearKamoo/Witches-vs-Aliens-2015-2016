@@ -77,7 +77,11 @@ public class PuckFX : MonoBehaviour, IObserver<BumpedSideChangedMessage> {
     {
         GoalScreenTearing.self.doTear(ssfxTime, other.relativeVelocity.sqrMagnitude * tearIntensityMultiplier);
         ScreenShake.RandomShake(this, ssfxTime, other.relativeVelocity.sqrMagnitude * ssfxIntensityMultiplier);
-        SimplePool.Spawn(impactVFXPrefab, (Vector3)(other.contacts[0].point) + Vector3.back);
+        IIgnorePuckVFX ignore = other.collider.GetComponent<IIgnorePuckVFX>();
+        if (ignore == null) //if ignore exists, then we don't spawn FX, and the ignorepuckVFX spawns them
+        {
+            SimplePool.Spawn(impactVFXPrefab, (Vector3)(other.contacts[0].point) + Vector3.back);
+        }
     }
 
     public void Notify(BumpedSideChangedMessage message)
@@ -100,4 +104,9 @@ public class PuckFX : MonoBehaviour, IObserver<BumpedSideChangedMessage> {
                 break;
         }
     }
+}
+
+//indicates that the puck should let the object spawn the VFX
+public interface IIgnorePuckVFX
+{
 }
