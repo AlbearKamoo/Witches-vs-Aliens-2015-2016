@@ -98,6 +98,11 @@ public class Score : MonoBehaviour, IObserver<Message> {
             .FollowedBy(() => background.SetFloat(Tags.ShaderParams.noiseStrength, baseNoiseStrength), this);
     }
 
+    public void EndTheGame()
+    {
+        Instantiate(GameEndPrefab);
+    }
+
     public bool GameEnd()
     {
         if (leftScore == rightScore)
@@ -108,7 +113,7 @@ public class Score : MonoBehaviour, IObserver<Message> {
         else
         {
             //end the game
-            Instantiate(GameEndPrefab);
+            EndTheGame();
             return true;
         }
     }

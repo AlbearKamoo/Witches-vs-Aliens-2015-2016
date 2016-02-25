@@ -24,7 +24,7 @@ public class GameEndScripting : MonoBehaviour {
         Callback.FireAndForget(() => { Application.LoadLevel(Tags.Scenes.select); Pause.unPause(); Destroy(this); }, gameEndTime, this, mode: Callback.Mode.REALTIME);
         if (leftScore < rightScore)
             Instantiate(witchesVictoryPrefab).transform.SetParent(canvas, false);
-        else
+        else if(leftScore > rightScore)
             Instantiate(aliensVictoryPrefab).transform.SetParent(canvas, false);
 	}
 
