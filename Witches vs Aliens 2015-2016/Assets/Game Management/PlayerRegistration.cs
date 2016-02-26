@@ -45,7 +45,7 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
 
     IEnumerator startCountdown;
 
-    AudioSource registrationMusic;
+    GameObject pressStart;
 
 	void Awake ()
     {
@@ -55,7 +55,8 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
         for (int i = 0; i < localIDToPlayerID.Length; i++)
             localIDToPlayerID[i] = -1;
 
-        registrationMusic = GameObject.Find("BackGroundMusic").GetComponent<AudioSource>();
+        pressStart = GetComponentInChildren<Canvas>().gameObject;
+        pressStart.SetActive(false);
 	}
 
     void Start()
@@ -397,8 +398,7 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
     {
         if (startCountdown == null && isReady())
         {
-            introMusic = Instantiate(introMusicPrefab);
-            registrationMusic.Pause();
+            pressStart.SetActive(true);
             startCountdown = startGameCountdown();
             StartCoroutine(startCountdown);
         }
@@ -406,21 +406,19 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
 
     IEnumerator startGameCountdown()
     {
-        float timeRemaining = 5f;
-        while (timeRemaining > 1.5f)
+        for (; ; )
         {
-            timeRemaining -= Time.deltaTime;
             yield return null;
-        }
 
-        introMusic.GetComponent<AudioSource>().PlayOneShot(countdownVoice);
-
-        while (timeRemaining > 0f)
-        {
-            timeRemaining -= Time.deltaTime;
-            yield return null;
+            for (int i = 0; i < possiblePlayers.Length; i++)
+            {
+                if (pressedAccept(i)) //register
+                {
+                    startGame();
+                    break;
+                }
+            }
         }
-        startGame();
     }
 
     void checkNotReady()
@@ -429,8 +427,7 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
         {
             StopCoroutine(startCountdown);
             startCountdown = null;
-            Destroy(introMusic);
-            registrationMusic.UnPause();
+            pressStart.SetActive(false);
         }
     }
 
@@ -573,6 +570,7 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
             node.Clear();
         Application.LoadLevel(mainGameSceneName);
         Destroy(this);
+        Destroy(pressStart.gameObject);
     }
 
     public bool validCharacterID(int characterID)
