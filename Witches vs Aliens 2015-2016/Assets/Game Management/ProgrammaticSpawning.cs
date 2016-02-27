@@ -9,6 +9,12 @@ public class ProgrammaticSpawning : MonoBehaviour, IObserver<Message> {
     GameObject spawnedMainMusicPrefab;
 
     [SerializeField]
+    protected GameObject IntroMusicPrefab;
+
+    [SerializeField]
+    protected GameObject IntroCountdownPrefab;
+
+    [SerializeField]
     protected AudioClip overtimeClip;
 
     [SerializeField]
@@ -33,16 +39,22 @@ public class ProgrammaticSpawning : MonoBehaviour, IObserver<Message> {
     protected GameTimer timer;
 
     [SerializeField]
-    protected int countdownTime;
+    protected float introDuration;
 
     [SerializeField]
-    protected float musicDelay;
+    protected float introCountdownVoiceDelay;
 
     [SerializeField]
-    protected float resetDuration;
+    protected float introPlayerSpawnDelay;
 
     [SerializeField]
-    protected float goalToResetTime;
+    protected int firstIntroCountdownNumber;
+
+    [SerializeField]
+    protected float goalResetDuration;
+
+    [SerializeField]
+    protected float goalToPlayerResetTime;
 
     public SetupData data;
     Vector2[] leftPoints;
@@ -233,23 +245,26 @@ public class ProgrammaticSpawning : MonoBehaviour, IObserver<Message> {
                 }
             }
         }
-        StartCoroutine(Countdown());
+        StartCoroutine(IntroCountdown());
 	}
 
-    IEnumerator Countdown()
+    IEnumerator IntroCountdown()
     {
-        Queue<float> countdownTimes = new Queue<float>(countdownTime);
-        for (int i = countdownTime; i > 0; i--)
+        Queue<float> countdownTimes = new Queue<float>(firstIntroCountdownNumber);
+        for (int i = firstIntroCountdownNumber; i > 0; i--)
         {
             countdownTimes.Enqueue(i);
         }
         countdownTimes.Enqueue(-1); //ensure there is always something to Peek();
         yield return null;
 
-        float timeRemaining = countdownTime;
+        GameObject introMusic = Instantiate(IntroMusicPrefab);
 
-        Callback.FireAndForget(resetPositions, timeRemaining - resetDuration, this);
-        Callback.FireAndForget(() => spawnedMainMusicPrefab = Instantiate(MainMusicPrefab), musicDelay, this);
+        Callback.FireAndForget(() => Instantiate(IntroCountdownPrefab), introCountdownVoiceDelay, this);
+
+        float timeRemaining = introDuration;
+
+        Callback.FireAndForget(() => resetPositions(introPlayerSpawnDelay), introPlayerSpawnDelay, this);
 
         while (timeRemaining > 0)
         {
@@ -258,10 +273,13 @@ public class ProgrammaticSpawning : MonoBehaviour, IObserver<Message> {
             if(timeRemaining < countdownTimes.Peek())
                 SimplePool.Spawn(CountdownPrefab, Vector3.zero).GetComponent<TimerCountdown>().count = countdownTimes.Dequeue().ToString();
         }
+
+        spawnedMainMusicPrefab = Instantiate(MainMusicPrefab);
     }
 
-    void resetPositions()
+    void resetPositions(float duration = -1)
     {
+        duration = (duration == -1) ? goalResetDuration : duration; //use goalResetDuration as the default
         leftPoints.Shuffle<Vector2>();
         rightPoints.Shuffle<Vector2>();
         int leftPointsIndex = 0;
@@ -271,17 +289,17 @@ public class ProgrammaticSpawning : MonoBehaviour, IObserver<Message> {
             switch (t.GetComponent<Stats>().side)
             {
                 case Side.LEFT:
-                    t.GetComponent<ResetScripting>().Reset(leftPoints[leftPointsIndex], resetDuration);
+                    t.GetComponent<ResetScripting>().Reset(leftPoints[leftPointsIndex], duration);
                     leftPointsIndex++;
                     break;
                 case Side.RIGHT:
-                    t.GetComponent<ResetScripting>().Reset(rightPoints[rightPointsIndex], resetDuration);
+                    t.GetComponent<ResetScripting>().Reset(rightPoints[rightPointsIndex], duration);
                     rightPointsIndex++;
                     break;
             }
         }
         puck.Respawn(puckRespawnPoint.position);
-        Callback.FireAndForget(() => timer.running = true, resetDuration, this);
+        Callback.FireAndForget(() => timer.running = true, duration, this);
     }
 
     public void Notify(Message m)
@@ -290,7 +308,7 @@ public class ProgrammaticSpawning : MonoBehaviour, IObserver<Message> {
         {
             case GoalScoredMessage.classMessageType:
                 timer.running = false;
-                Callback.FireAndForget(() => resetPositions(), goalToResetTime, this);
+                Callback.FireAndForget(() => resetPositions(), goalToPlayerResetTime, this);
                 break;
 
             case GameEndMessage.classMessageType:

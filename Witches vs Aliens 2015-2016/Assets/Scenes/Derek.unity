@@ -450,6 +450,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MainMusicPrefab: {fileID: 153826, guid: 5832ddc43d2c1f745942146631ccb697, type: 2}
+  IntroMusicPrefab: {fileID: 110878, guid: 04084b1fe79de5d4fa3490f1dd8b2ea9, type: 2}
+  IntroCountdownPrefab: {fileID: 166216, guid: 38b534ebe4155bb4f96b5b55f693d95b, type: 2}
   overtimeClip: {fileID: 8300000, guid: dcb29bb7f9b62b74c89faed2a1ac12bc, type: 3}
   PuckPrefab: {fileID: 135402, guid: 6e5f3e0169f30de41bb5f3e1b78cbd68, type: 2}
   CountdownPrefab: {fileID: 117972, guid: dfe48462a6a6f7048acab47a282010dc, type: 2}
@@ -457,10 +459,12 @@ MonoBehaviour:
   rightRespawnPointsParent: {fileID: 432936661}
   puckRespawnPoint: {fileID: 1020276493}
   timer: {fileID: 1034567235}
-  countdownTime: 3
-  musicDelay: 1
-  resetDuration: 2
-  goalToResetTime: 0.75
+  introDuration: 6.5
+  introCountdownVoiceDelay: 1.25
+  introPlayerSpawnDelay: 3
+  firstIntroCountdownNumber: 6
+  goalResetDuration: 2
+  goalToPlayerResetTime: 0.75
   data: {fileID: 819210144}
 --- !u!4 &819210143
 Transform:

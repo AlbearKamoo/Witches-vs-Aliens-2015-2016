@@ -8,9 +8,8 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 429484}
-  - 114: {fileID: 11413624}
   - 82: {fileID: 8202080}
-  - 114: {fileID: 11483854}
+  - 114: {fileID: 11494704}
   m_Layer: 0
   m_Name: IntroMusic
   m_TagString: Untagged
@@ -105,7 +104,7 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
---- !u!114 &11413624
+--- !u!114 &11494704
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -113,18 +112,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 110878}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 407356598484bca4594a448b4c71945a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &11483854
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 110878}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 647bf210f3074fc4a94fefa336df675e, type: 3}
+  m_Script: {fileID: 11500000, guid: f43a22522d9eee84aa0787b73ad6e464, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &100100000
