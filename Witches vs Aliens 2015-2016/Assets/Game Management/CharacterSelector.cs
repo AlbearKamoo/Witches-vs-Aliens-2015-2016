@@ -2,17 +2,8 @@
 using System.Collections;
 
 [RequireComponent(typeof(Collider2D))]
-public class CharacterSelector : MonoBehaviour, IObservable<CharacterSelection>
+public class CharacterSelector : MonoBehaviour
 {
-
-    Observable<CharacterSelection> characterSelectedObservable = new Observable<CharacterSelection>();
-    public Observable<CharacterSelection> Observable(IObservable<CharacterSelection> self)
-    {
-        return characterSelectedObservable;
-    }
-
-    int selectedCharacterID = -1;
-    public int SelectedCharacterID { get { return selectedCharacterID; } set { selectedCharacterID = value; } }
 
     public PlayerRegistration.Registration registration { get; set; }
 
@@ -20,8 +11,7 @@ public class CharacterSelector : MonoBehaviour, IObservable<CharacterSelection>
     {
         if (registration.registrationState != PlayerRegistration.RegistrationState.READY && other.CompareTag(Tags.gameController))
         {
-            selectedCharacterID = other.GetComponent<CharacterHolder>().characterID;
-            characterSelectedObservable.Post(new CharacterSelection(selectedCharacterID));
+            registration.SelectedCharacterID = other.GetComponent<CharacterHolder>().characterID;
         }
     }
 }

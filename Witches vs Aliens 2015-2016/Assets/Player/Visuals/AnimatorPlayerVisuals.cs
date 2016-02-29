@@ -1,4 +1,7 @@
-﻿using UnityEngine;
+﻿//Outdated; replaced by our own state machines
+
+/*
+using UnityEngine;
 using System.Collections;
 
 [RequireComponent(typeof(SpriteRenderer))]
@@ -45,3 +48,4 @@ public class AnimatorPlayerVisuals : AbstractPlayerVisuals
         DOWN
     }
 }
+*/

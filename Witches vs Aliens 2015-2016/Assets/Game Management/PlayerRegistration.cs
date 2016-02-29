@@ -30,7 +30,7 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
     protected PlayerRegisters[] possiblePlayers;
 
     [SerializeField]
-    protected CharacterHolder[] charactersData; //this array maps the characters to ints, for networking.
+    public CharacterHolder[] charactersData; //this array maps the characters to ints, for networking.
 
     [SerializeField]
     [AutoLink(parentTag = Tags.canvas, childPath = "RegisteredPlayers")]
@@ -143,7 +143,7 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
             case RegistrationState.REGISTERING:
                 {
                     int playerID = localIDToPlayerID[localID];
-                    if (validCharacterID(registeredPlayers[playerID].selector.SelectedCharacterID))
+                    if (validCharacterID(registeredPlayers[playerID]))
                     {
                         switch (mode)
                         {
@@ -154,7 +154,7 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
                                 node.BinaryWriter.Write(PacketType.PLAYERREGISTER);
                                 node.BinaryWriter.Write((byte)(playerID));
                                 node.BinaryWriter.Write((byte)(RegistrationState.READY));
-                                node.BinaryWriter.Write((byte)(registeredPlayers[playerID].selector.SelectedCharacterID));
+                                node.BinaryWriter.Write((byte)(registeredPlayers[playerID].SelectedCharacterID));
                                 node.Send(node.AllCostChannel);
                                 break;
                             default:
@@ -268,9 +268,10 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
         action.rotationEnabled = false;
         action.movementEnabled = true;
 
-        registeredPlayers[playerID] = new Registration(selector, ui, RegistrationState.REGISTERING, selector.GetComponentInChildren<PlayerRegistrationVisuals>());
+        registeredPlayers[playerID] = new Registration(selector, ui, RegistrationState.REGISTERING, selector.GetComponentInChildren<PlayerRegistrationVisuals>(), this);
 
         selector.registration = registeredPlayers[playerID];
+        ui.registration = registeredPlayers[playerID];
     }
 
     void SpawnPlayerRegistrationComponents(int localID, int playerID, GameObject spawnedPlayerRegistrationPuck)
@@ -296,7 +297,8 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
 
     void setPlayerReady(int playerID, int characterID)
     {
-        registeredPlayers[playerID].selector.SelectedCharacterID = characterID;
+        Assert.IsTrue(registeredPlayers[playerID].SelectedCharacterID != characterID);
+        registeredPlayers[playerID].SelectedCharacterID = characterID;
         setPlayerReady(playerID);
     }
 
@@ -560,7 +562,7 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
             AbstractPlayerInput input = entry.Value.selector.gameObject.GetComponent<AbstractPlayerInput>();
             InputConfiguration config = input != null ? input.bindings : new InputConfiguration();
             config.networkMode = entry.Value.selector.gameObject.GetComponent<Stats>().networkMode;
-            results.Add(new PlayerComponents(charactersData[entry.Value.selector.SelectedCharacterID].character, config, entry.Key));
+            results.Add(new PlayerComponents(charactersData[entry.Value.SelectedCharacterID].character, config, entry.Key));
         }
 
         data.playerComponentPrefabs = results.ToArray();
@@ -573,9 +575,9 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
         Destroy(pressStart.gameObject);
     }
 
-    public bool validCharacterID(int characterID)
+    public bool validCharacterID(Registration registration)
     {
-        return characterID >= 0 && characterID < charactersData.Length;
+        return registration.SelectedCharacterID >= 0 && registration.SelectedCharacterID < charactersData.Length;
     }
 
     public enum RegistrationState
@@ -591,12 +593,24 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
         public RegisteredPlayerUIView ui;
         public RegistrationState registrationState;
         public PlayerRegistrationVisuals visuals;
-        public Registration(CharacterSelector selector, RegisteredPlayerUIView ui, RegistrationState registrationState, PlayerRegistrationVisuals visuals)
+        public PlayerRegistration context;
+        private int selectedCharacterID = -1;
+        public int SelectedCharacterID
+        {
+            get { return selectedCharacterID; }
+            set
+            {
+                selectedCharacterID = value;
+                ui.UpdateCharacterSprite(value);
+            }
+        }
+        public Registration(CharacterSelector selector, RegisteredPlayerUIView ui, RegistrationState registrationState, PlayerRegistrationVisuals visuals, PlayerRegistration context)
         {
             this.selector = selector;
             this.ui = ui;
             this.registrationState = registrationState;
             this.visuals = visuals;
+            this.context = context;
         }
 
         public bool ready

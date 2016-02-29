@@ -29,6 +29,10 @@ public class RegisteredPlayerUIView : MonoBehaviour {
     [SerializeField]
     [AutoLink(childPath = "ReadyIcon")]
     protected GameObject ReadyIcon;
+    [SerializeField]
+    [AutoLink(childPath = "CharacterSprite")]
+    protected Image CharacterSprite;
+    public PlayerRegistration.Registration registration { get; set; }
     public Color playerColor { set { background.color = value; } }
     public string playerName { set { title.text = value; } }
     public InputConfiguration.PlayerInputType inputMode
@@ -69,5 +73,11 @@ public class RegisteredPlayerUIView : MonoBehaviour {
     public void Despawn()
     {
         SimplePool.Despawn(this.gameObject);
+    }
+
+    public void UpdateCharacterSprite(int ID)
+    {
+        CharacterSprite.enabled = true;
+        CharacterSprite.sprite = registration.context.charactersData[ID].character.visuals.GetComponent<AbstractPlayerVisuals>().selectionSprite;
     }
 }

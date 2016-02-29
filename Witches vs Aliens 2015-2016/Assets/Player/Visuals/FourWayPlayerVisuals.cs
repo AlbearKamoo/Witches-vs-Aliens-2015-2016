@@ -13,6 +13,8 @@ public class FourWayPlayerVisuals : AbstractPlayerVisuals {
     [SerializeField]
     protected Sprite downSprite;
 
+    public override Sprite selectionSprite { get { return downSprite; } }
+
     SpriteRenderer rend;
     Direction prevDirection;
 	// Use this for initialization

@@ -5,6 +5,11 @@ public class ContinuousDirectionVisuals : AbstractPlayerVisuals {
 
     Transform thisTransform;
 
+    [SerializeField]
+    protected Sprite _selectionSprite;
+
+    public override Sprite selectionSprite { get { return _selectionSprite; } }
+
     void Awake()
     {
         thisTransform = this.transform;
