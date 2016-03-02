@@ -348,75 +348,75 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22488076, guid: 493d0645e9344de4ca9a6bc5d6b2510a, type: 2}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22488076, guid: 493d0645e9344de4ca9a6bc5d6b2510a, type: 2}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22488076, guid: 493d0645e9344de4ca9a6bc5d6b2510a, type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 129
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22488076, guid: 493d0645e9344de4ca9a6bc5d6b2510a, type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -32.25
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22488076, guid: 493d0645e9344de4ca9a6bc5d6b2510a, type: 2}
       propertyPath: m_SizeDelta.x
-      value: 72
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22488076, guid: 493d0645e9344de4ca9a6bc5d6b2510a, type: 2}
       propertyPath: m_SizeDelta.y
-      value: 64.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22416658, guid: 493d0645e9344de4ca9a6bc5d6b2510a, type: 2}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22416658, guid: 493d0645e9344de4ca9a6bc5d6b2510a, type: 2}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22416658, guid: 493d0645e9344de4ca9a6bc5d6b2510a, type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 250
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22416658, guid: 493d0645e9344de4ca9a6bc5d6b2510a, type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -20
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22416658, guid: 493d0645e9344de4ca9a6bc5d6b2510a, type: 2}
       propertyPath: m_SizeDelta.x
-      value: 140
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22416658, guid: 493d0645e9344de4ca9a6bc5d6b2510a, type: 2}
       propertyPath: m_SizeDelta.y
-      value: 40
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22416476, guid: 493d0645e9344de4ca9a6bc5d6b2510a, type: 2}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22416476, guid: 493d0645e9344de4ca9a6bc5d6b2510a, type: 2}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22416476, guid: 493d0645e9344de4ca9a6bc5d6b2510a, type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 371
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22416476, guid: 493d0645e9344de4ca9a6bc5d6b2510a, type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -32.25
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22416476, guid: 493d0645e9344de4ca9a6bc5d6b2510a, type: 2}
       propertyPath: m_SizeDelta.x
-      value: 72
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22416476, guid: 493d0645e9344de4ca9a6bc5d6b2510a, type: 2}
       propertyPath: m_SizeDelta.y
-      value: 64.5
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 493d0645e9344de4ca9a6bc5d6b2510a, type: 2}
@@ -452,6 +452,7 @@ MonoBehaviour:
   MainMusicPrefab: {fileID: 153826, guid: 5832ddc43d2c1f745942146631ccb697, type: 2}
   IntroMusicPrefab: {fileID: 110878, guid: 04084b1fe79de5d4fa3490f1dd8b2ea9, type: 2}
   IntroCountdownPrefab: {fileID: 166216, guid: 38b534ebe4155bb4f96b5b55f693d95b, type: 2}
+  warmupDuration: 5
   overtimeClip: {fileID: 8300000, guid: dcb29bb7f9b62b74c89faed2a1ac12bc, type: 3}
   PuckPrefab: {fileID: 135402, guid: 6e5f3e0169f30de41bb5f3e1b78cbd68, type: 2}
   CountdownPrefab: {fileID: 117972, guid: dfe48462a6a6f7048acab47a282010dc, type: 2}
@@ -489,6 +490,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 415f7c4a0e662484b90f9f8cffef8d80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  warmupActive: 1
   playerComponentPrefabs:
   - character:
       basePlayer: {fileID: 146214, guid: a8095cd9d9bc36f4e87d6eeda567d5fa, type: 2}

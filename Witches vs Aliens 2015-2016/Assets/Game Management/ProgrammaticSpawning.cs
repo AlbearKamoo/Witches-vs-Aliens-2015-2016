@@ -15,6 +15,9 @@ public class ProgrammaticSpawning : MonoBehaviour, IObserver<Message> {
     protected GameObject IntroCountdownPrefab;
 
     [SerializeField]
+    protected float warmupDuration;
+
+    [SerializeField]
     protected AudioClip overtimeClip;
 
     [SerializeField]
@@ -245,8 +248,20 @@ public class ProgrammaticSpawning : MonoBehaviour, IObserver<Message> {
                 }
             }
         }
-        StartCoroutine(IntroCountdown());
 	}
+
+    void Start()
+    {
+        if (data.warmupActive)
+        {
+            Callback.FireForUpdate(() => resetPositions(1, false), this);
+            Callback.FireAndForget(() => StartCoroutine(IntroCountdown()), warmupDuration, this);
+        }
+        else
+        {
+            StartCoroutine(IntroCountdown());
+        }
+    }
 
     IEnumerator IntroCountdown()
     {
@@ -264,7 +279,7 @@ public class ProgrammaticSpawning : MonoBehaviour, IObserver<Message> {
 
         float timeRemaining = introDuration;
 
-        Callback.FireAndForget(() => resetPositions(introPlayerSpawnDelay), introPlayerSpawnDelay, this);
+        Callback.FireAndForget(() => resetPositions(introPlayerSpawnDelay), timeRemaining - introPlayerSpawnDelay, this);
 
         while (timeRemaining > 0)
         {
@@ -277,7 +292,7 @@ public class ProgrammaticSpawning : MonoBehaviour, IObserver<Message> {
         spawnedMainMusicPrefab = Instantiate(MainMusicPrefab);
     }
 
-    void resetPositions(float duration = -1)
+    void resetPositions(float duration = -1, bool resetTime = true)
     {
         duration = (duration == -1) ? goalResetDuration : duration; //use goalResetDuration as the default
         leftPoints.Shuffle<Vector2>();
@@ -299,7 +314,10 @@ public class ProgrammaticSpawning : MonoBehaviour, IObserver<Message> {
             }
         }
         puck.Respawn(puckRespawnPoint.position);
-        Callback.FireAndForget(() => timer.running = true, duration, this);
+        if(resetTime)
+        {
+            Callback.FireAndForget(() => timer.running = true, duration, this);
+        }
     }
 
     public void Notify(Message m)
