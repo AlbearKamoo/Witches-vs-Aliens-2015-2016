@@ -16,6 +16,8 @@ public class SkillShotBullet : MonoBehaviour {
 
     Transform interactables;
 
+    ParticleSystem vfx;
+
     Side side;
     public Side Side { get { return side; } }
 
@@ -30,6 +32,16 @@ public class SkillShotBullet : MonoBehaviour {
         set
         {
             interactables.gameObject.SetActive(value);
+            vfx.Stop();
+            if (value)
+            {
+                vfx.Pause();
+                vfx.Clear();
+                Callback.FireForUpdate(() => vfx.Play(), this, mode : Callback.Mode.FIXEDUPDATE);
+            }
+            else
+            {
+            }
             active = value;
         }
     }
@@ -37,6 +49,7 @@ public class SkillShotBullet : MonoBehaviour {
     void Awake()
     {
         interactables = transform.Find("interactables");
+        vfx = transform.Find("particles").GetComponent<ParticleSystem>();
         rigid = GetComponent<Rigidbody2D>();
         interactables.gameObject.SetActive(false);
     }
@@ -51,14 +64,16 @@ public class SkillShotBullet : MonoBehaviour {
 
     public void Fire(Vector2 origin, Vector2 direction)
     {
-        Active = true;
         rigid.position = origin;
+        Active = true;
         rigid.velocity = speed * direction.normalized;
+        
     }
 
     public void Reset()
     {
         payload.Reset();
+        Active = false;
     }
 
     protected void OnTriggerEnter2D(Collider2D other)

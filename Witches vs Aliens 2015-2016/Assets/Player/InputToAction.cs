@@ -9,9 +9,40 @@ public class InputToAction : MonoBehaviour, ISpeedLimiter, INetworkable, IObserv
 {
     public Vector2 normalizedMovementInput { get; set; }
     bool _movementEnabled = false;
-    public bool movementEnabled { get { return _movementEnabled; } set { _movementEnabled = value; if (!_movementEnabled) rigid.velocity = Vector3.zero; } }
+    public bool movementEnabled
+    {
+        get { return _movementEnabled; }
+        set
+        {
+            _movementEnabled = value;
+            if (!_movementEnabled)
+            {
+                rigid.velocity = Vector3.zero;
+                Assert.IsTrue(rigid.constraints == RigidbodyConstraints2D.FreezeRotation);
+                rigid.constraints = RigidbodyConstraints2D.FreezeAll;
+            }
+            else
+            {
+                rigid.constraints = RigidbodyConstraints2D.FreezeRotation;
+            }
+        }
+    }
     bool _rotationEnabled = true;
     public bool rotationEnabled { get { return _rotationEnabled; } set { _rotationEnabled = value; } }
+    bool _abilitiesEnabled = false;
+    public bool abilitiesEnabled
+    {
+        get { return _abilitiesEnabled; }
+        set
+        {
+            _abilitiesEnabled = value;
+            if (!value)
+            {
+                moveAbility.active = false;
+                genAbility.active = false;
+            }
+        }
+    }
     Vector2 _aimingInputDirection;
     public Vector2 aimingInputDirection { get { return _aimingInputDirection; } set { _aimingInputDirection = value; if(value.sqrMagnitude != 0) rotateTowards(_aimingInputDirection); } }
     public delegate Vector2 vectorQuantifier(Vector2 aimingInput, float maxDistance);
@@ -189,20 +220,23 @@ public class InputToAction : MonoBehaviour, ISpeedLimiter, INetworkable, IObserv
                 
                 break;
             default:
-                switch (t)
+                if (_abilitiesEnabled)
                 {
-                    case AbilityType.MOVEMENT:
-                        if(moveAbility.Fire(direction))
-                            movementAbilityObservable.Post(new MovementAbilityFiredMessage(direction));
-                        break;
-                    case AbilityType.GENERIC:
-                        if(genAbility.Fire(direction))
-                            genericAbilityObservable.Post(new GenericAbilityFiredMessage(direction));
-                        break;
-                    case AbilityType.SUPER:
-                        if(superAbility.Fire(direction))
-                            superAbilityObservable.Post(new SuperAbilityFiredMessage());
-                        break;
+                    switch (t)
+                    {
+                        case AbilityType.MOVEMENT:
+                            if (moveAbility.Fire(direction))
+                                movementAbilityObservable.Post(new MovementAbilityFiredMessage(direction));
+                            break;
+                        case AbilityType.GENERIC:
+                            if (genAbility.Fire(direction))
+                                genericAbilityObservable.Post(new GenericAbilityFiredMessage(direction));
+                            break;
+                        case AbilityType.SUPER:
+                            if (superAbility.Fire(direction))
+                                superAbilityObservable.Post(new SuperAbilityFiredMessage());
+                            break;
+                    }
                 }
                 break;
         }
@@ -228,8 +262,13 @@ public class InputToAction : MonoBehaviour, ISpeedLimiter, INetworkable, IObserv
     public void DisableMovement(float duration)
     {
         _movementEnabled = false;
-        rigid.velocity = Vector2.zero;
         Callback.FireAndForget(() => _movementEnabled = true, duration, this);
+    }
+
+    public void DisableAbilities(float duration)
+    {
+        _abilitiesEnabled = false;
+        Callback.FireAndForget(() => _abilitiesEnabled = true, duration, this);
     }
 
     public PacketType[] packetTypes { get { return new PacketType[] { PacketType.PLAYERLOCATION, PacketType.PLAYERINPUT, PacketType.PLAYERMOVEMENTABILITY, PacketType.PLAYERGENERICABILITY, PacketType.PLAYERSUPERABILITY }; } }
@@ -319,13 +358,14 @@ public class InputToAction : MonoBehaviour, ISpeedLimiter, INetworkable, IObserv
             case NetworkMode.LOCALCLIENT:
             case NetworkMode.REMOTECLIENT:
                 {
+                    //server sent it, so it's 100% valid
                     Vector2 direction = m.reader.ReadVector2();
-                    bool activated;
-                    if (m.reader.ReadBoolean()) //if it is a IRandomAbility
+                    bool activated = false;
+                    if (m.reader.ReadBoolean() && _abilitiesEnabled) //if it is a IRandomAbility
                     {
                         activated = ((IRandomAbility)ability).Fire(direction, m.reader.ReadInt32());
                     }
-                    else
+                    else if (_abilitiesEnabled)
                     {
                         activated = ability.Fire(direction);
                     }
@@ -341,6 +381,9 @@ public class InputToAction : MonoBehaviour, ISpeedLimiter, INetworkable, IObserv
 
     bool activateAndSend(PacketType packetType, Vector2 direction, byte playerID, AbstractAbility ability)
     {
+        if (!_abilitiesEnabled)
+            return false;
+
         int seed = -1;
         bool activated;
         if (ability is IRandomAbility)

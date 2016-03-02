@@ -12,7 +12,7 @@ public class CircularWallAndRenderer : CircularWall {
     protected override void Awake()
     {
         rend = GetComponent<LineRenderer>();
-        rend.SetVertexCount(numPoints);
+        rend.SetVertexCount(numPoints + 1);
         rend.SetWidth(lineRendererWidth, lineRendererWidth);
         base.Awake();
     }

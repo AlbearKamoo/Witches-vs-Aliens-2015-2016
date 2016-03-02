@@ -12,20 +12,14 @@ public class SkillShotAbility : GenericAbility
 
     List<Collider2D> ignoreCollisionList;
 
-    protected override void Awake()
-    {
-        base.Awake();
-
-        instantiatedShot = Instantiate(shotPrefab).GetComponent<SkillShotBullet>();
-        instantiatedShot.Active = false;
-    }
-
     // Use this for initialization
     protected override void Start()
     {
         base.Start();
         Side side = GetComponentInParent<Stats>().side;
+        instantiatedShot = Instantiate(shotPrefab).GetComponent<SkillShotBullet>();
         instantiatedShot.Initialize(side, this);
+        instantiatedShot.Active = false;
     }
 
     protected override void onFire(Vector2 direction)
