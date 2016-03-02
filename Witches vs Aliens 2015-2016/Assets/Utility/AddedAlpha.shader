@@ -47,7 +47,7 @@
 				o.vertex = mul(UNITY_MATRIX_MVP, v.vertex);
 				o.uv = v.uv;
 				#if USE_COLOR
-				o.color = i.color;
+				o.color = v.color;
 				#endif
 				return o;
 			}
