@@ -1750,7 +1750,7 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
+    m_RotationOrder: 0
   reverbZoneMixCustomCurve:
     serializedVersion: 2
     m_Curve:
@@ -14247,7 +14247,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 260144251
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: b07c8ec72559431458063bf4bc05b502, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 94be4867c30208f45ab8e0c10bff09f9, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
