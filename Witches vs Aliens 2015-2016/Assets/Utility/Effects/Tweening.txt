@@ -1,3 +1,36 @@
-1/(k*x + 1) //exponential scaled to [0,1]
+1/(k*x + 1)
+//exponential function scaled to [0,1]
+//domain = [-inf,inf]
+//range = [-1,1]
 
-x * x * (3 - 2 * x) //ease-in and ease-out
+--
+
+x * x * (3 - 2 * x)
+//cubic ease-in and ease-out
+//domain = [0,1] for easing
+//range = [0,1] for easing
+
+--
+
+4 * x * (x - 1)
+//quadratic approximation of a normal distribution in [0,1]
+//domain = range = [0,1]
+
+--
+
+16 * x * x * (x - 1) * (x - 1)
+//quartic approximation of a normal distribution in [0,1]
+//domain = range = [0,1]
+//slight optimization by simply squaring the quadratic approximation {4 * x * (x-1)}
+
+--
+
+(k - j) * (x - j)
+//map the range [j,k] to the range [0,1]
+
+--
+
+((k - j) * x) + j
+-or-
+(k * x) + (j * (1 - x))
+//map the range [0,1] to the range [j,k]
