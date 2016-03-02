@@ -2,7 +2,7 @@
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
-/*
+//*
 [CustomEditor(typeof(PolygonCollider2D))]
 public class PolygonCollider2DEditor : Editor
 {
@@ -19,4 +19,4 @@ public class PolygonCollider2DEditor : Editor
         EditorUtility.SetDirty(target);
     }
 }
-*/
+//*/

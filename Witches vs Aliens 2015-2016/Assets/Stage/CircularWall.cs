@@ -23,10 +23,12 @@ public class CircularWall : MonoBehaviour {
 
     PolygonCollider2D col;
 
-    void Awake()
+    Vector2[] newPoints;
+
+    protected virtual void Awake()
     {
         col = GetComponent<PolygonCollider2D>();
-        Vector2[] newPoints = new Vector2[numPoints + 4];
+        newPoints = new Vector2[numPoints + 4];
         newPoints[0] = col.points[0];
         newPoints[1] = col.points[1];
         newPoints[2] = col.points[2];
@@ -39,8 +41,13 @@ public class CircularWall : MonoBehaviour {
             float progress = ((float) i) / ((float) max);
             float angle = Mathf.Lerp(startAngle, endAngle, progress);
             angle *= Mathf.Deg2Rad;
-            newPoints[i + 3] = center + radius * new Vector2(Mathf.Sin(angle), Mathf.Cos(angle));
+            processElement(i, new Vector2(Mathf.Sin(angle), Mathf.Cos(angle)));
         }
         col.points = newPoints;
+    }
+
+    protected virtual void processElement(int index, Vector2 direction)
+    {
+        newPoints[index + 3] = center + radius * direction;
     }
 }
