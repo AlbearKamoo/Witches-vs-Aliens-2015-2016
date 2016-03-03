@@ -18,7 +18,7 @@
 		Pass
 		{
 			ZWrite On
-			Blend SrcAlpha One
+			Blend One One
 			Lighting Off
 			Fog { Mode Off }
 			CGPROGRAM
@@ -73,7 +73,7 @@
 			{
 				v2f o;
 				o.vertex = mul(UNITY_MATRIX_MVP, v.vertex);
-				o.uv0 = TRANSFORM_TEX(v.uv, _MainTex);
+				o.uv0 = v.uv;
 				o.uv1 = TRANSFORM_TEX(v.uv, _EffectTex1);
 				o.uv2 = TRANSFORM_TEX(v.uv, _EffectTex2);
 				return o;
@@ -85,7 +85,13 @@
 				+ tex2D(_EffectTex2, i.uv2  - fixed2(_XShift, _YShift) * _Time.gg)/2);
 				half2 uv = i.uv0 + _Intensity * distortion(effectColor.rg);
 				fixed4 col = tex2D(_MainTex, uv);
-				col.a *= -4 * i.uv0.y * (i.uv0.y - 1) * step(i.uv0.x, _Cutoff);
+				col.a *= -4 * i.uv0.y * (i.uv0.y - 1);
+				col.rgb *= col.a; //apply alpha
+
+				col.rgb += tex2D(_MainTex, i.uv0)/10;
+
+				col.rgb *= step(i.uv0.x, _Cutoff);
+
 				return col;
 			}
 			ENDCG

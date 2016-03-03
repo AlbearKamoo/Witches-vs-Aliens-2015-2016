@@ -122,20 +122,6 @@ Material:
           m_Offset: {x: 0, y: 0}
       data:
         first:
-          name: _GradientTex
-        second:
-          m_Texture: {fileID: 0}
-          m_Scale: {x: 1, y: 1}
-          m_Offset: {x: 0, y: 0}
-      data:
-        first:
-          name: _RelativeHeatTex
-        second:
-          m_Texture: {fileID: 0}
-          m_Scale: {x: 1, y: 1}
-          m_Offset: {x: 0, y: 0}
-      data:
-        first:
           name: _EffectTex1
         second:
           m_Texture: {fileID: 2800000, guid: 34f8dfc893a08a24ab92f94e6efaf0ec, type: 3}
@@ -147,6 +133,27 @@ Material:
         second:
           m_Texture: {fileID: 2800000, guid: 39a5c984e454ce3429dfe1cfb923e104, type: 3}
           m_Scale: {x: 5, y: 0.5}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _ConstTex
+        second:
+          m_Texture: {fileID: 2800000, guid: 64ba7947e383138459fab2a4a419c364, type: 3}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _GradientTex
+        second:
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _RelativeHeatTex
+        second:
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
     m_Floats:
       data:
@@ -256,7 +263,11 @@ Material:
       data:
         first:
           name: _Intensity
-        second: 1
+        second: 0.5
+      data:
+        first:
+          name: _DistortionWeighting
+        second: 2
     m_Colors:
       data:
         first:

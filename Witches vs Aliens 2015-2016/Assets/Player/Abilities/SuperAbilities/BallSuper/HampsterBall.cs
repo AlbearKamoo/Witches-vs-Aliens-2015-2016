@@ -32,9 +32,14 @@ public class HampsterBall : MonoBehaviour, ISpeedLimiter {
             this.gameObject.SetActive(value);
             if (value)
             {
+                vfx.Play();
                 foreach (Collider2D coll in ignoreCollisionList)
                     Physics2D.IgnoreCollision(ball, coll); //ignore collision gets wiped when the collider is deactivated
-                Callback.DoLerp((float l) => rend.material.SetFloat(Tags.ShaderParams.cutoff, l), spawnInFXTime, this);
+                Callback.DoLerp((float l) => { rend.material.SetFloat(Tags.ShaderParams.cutoff, l); ParticleSystem.ShapeModule shape = vfx.shape; shape.arc = l * 360; }, spawnInFXTime, this);
+            }
+            else
+            {
+                vfx.Stop();
             }
         }
     }
@@ -43,6 +48,7 @@ public class HampsterBall : MonoBehaviour, ISpeedLimiter {
     public PolygonCollider2D Ball { get { return ball; } }
 
     LineRenderer rend;
+    ParticleSystem vfx;
     Rigidbody2D rigid;
     List<Collider2D> ignoreCollisionList;
 
@@ -53,6 +59,8 @@ public class HampsterBall : MonoBehaviour, ISpeedLimiter {
         ignoreCollisionList = new List<Collider2D>();
 
         rigid = GetComponent<Rigidbody2D>();
+
+        vfx = GetComponent<ParticleSystem>();
 
         ball = this.gameObject.AddComponent<PolygonCollider2D>();
         ball.sharedMaterial = ballPhysicsMat;
