@@ -7,7 +7,7 @@ Material:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: HampsterFlame
-  m_Shader: {fileID: 4800000, guid: 9fe56d4f7d5195545b6fe881bb0765c2, type: 3}
+  m_Shader: {fileID: 4800000, guid: afe0a084bdb1d6b40af967a498800dfd, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 5
   m_CustomRenderQueue: 3000
@@ -19,7 +19,7 @@ Material:
         first:
           name: _MainTex
         second:
-          m_Texture: {fileID: 0}
+          m_Texture: {fileID: 2800000, guid: 64ba7947e383138459fab2a4a419c364, type: 3}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
       data:
@@ -32,6 +32,27 @@ Material:
       data:
         first:
           name: _DetailNormalMap
+        second:
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _EffectTex
+        second:
+          m_Texture: {fileID: 2800000, guid: 34f8dfc893a08a24ab92f94e6efaf0ec, type: 3}
+          m_Scale: {x: 10, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _CullingTex
+        second:
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _DistortionTex
         second:
           m_Texture: {fileID: 0}
           m_Scale: {x: 1, y: 1}
@@ -99,6 +120,34 @@ Material:
           m_Texture: {fileID: 2800000, guid: 96a86e7c7d9c63e4a872e47d06fc9d82, type: 3}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _GradientTex
+        second:
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _RelativeHeatTex
+        second:
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _EffectTex1
+        second:
+          m_Texture: {fileID: 2800000, guid: 34f8dfc893a08a24ab92f94e6efaf0ec, type: 3}
+          m_Scale: {x: 5, y: 0.5}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _EffectTex2
+        second:
+          m_Texture: {fileID: 2800000, guid: 39a5c984e454ce3429dfe1cfb923e104, type: 3}
+          m_Scale: {x: 5, y: 0.5}
+          m_Offset: {x: 0, y: 0}
     m_Floats:
       data:
         first:
@@ -111,7 +160,11 @@ Material:
       data:
         first:
           name: _Cutoff
-        second: 0.5
+        second: 1
+      data:
+        first:
+          name: _Distortion
+        second: 0
       data:
         first:
           name: _Parallax
@@ -192,6 +245,18 @@ Material:
         first:
           name: _ColorMask
         second: 15
+      data:
+        first:
+          name: _XShift
+        second: 0.25
+      data:
+        first:
+          name: _YShift
+        second: 0.5
+      data:
+        first:
+          name: _Intensity
+        second: 1
     m_Colors:
       data:
         first:

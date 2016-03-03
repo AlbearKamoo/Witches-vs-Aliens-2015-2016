@@ -104,6 +104,7 @@ MonoBehaviour:
   outerRadius: 8
   innerRadius: 7
   numSides: 30
+  spawnInFXTime: 0.5
   initialMaxSpeed: 5
   ballPhysicsMat: {fileID: 6200000, guid: 9659893ae3ba66a4eb87f8545f0ece76, type: 2}
 --- !u!120 &12044758
@@ -180,6 +181,10 @@ Prefab:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: e0649ec63f9a89a4da1e83cd8f62b0db, type: 2}
+    - target: {fileID: 0}
+      propertyPath: spawnInFXTime
+      value: 0.5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 117118}

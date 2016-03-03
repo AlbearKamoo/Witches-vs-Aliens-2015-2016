@@ -16,6 +16,9 @@ public class HampsterBall : MonoBehaviour, ISpeedLimiter {
     protected int numSides;
 
     [SerializeField]
+    protected float spawnInFXTime;
+
+    [SerializeField]
     protected float initialMaxSpeed;
     public float maxSpeed { get { return initialMaxSpeed; } }
 
@@ -28,8 +31,11 @@ public class HampsterBall : MonoBehaviour, ISpeedLimiter {
         {
             this.gameObject.SetActive(value);
             if (value)
+            {
                 foreach (Collider2D coll in ignoreCollisionList)
                     Physics2D.IgnoreCollision(ball, coll); //ignore collision gets wiped when the collider is deactivated
+                Callback.DoLerp((float l) => rend.material.SetFloat(Tags.ShaderParams.cutoff, l), spawnInFXTime, this);
+            }
         }
     }
 
