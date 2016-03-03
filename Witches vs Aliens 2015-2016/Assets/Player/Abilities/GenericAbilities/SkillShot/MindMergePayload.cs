@@ -68,6 +68,7 @@ public class MindMergePayload : SkillShotPayload {
     public override void Reset()
     {
         joint.enabled = false;
+        bullet.Source.active = false;
         selfVisuals.gameObject.SetActive(false);
         otherVisuals.gameObject.SetActive(false);
     }
