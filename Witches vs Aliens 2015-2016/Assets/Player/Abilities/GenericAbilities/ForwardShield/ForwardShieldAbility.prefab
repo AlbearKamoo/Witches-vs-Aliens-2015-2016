@@ -41,7 +41,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   AbilityUIPrefab: {fileID: 172952, guid: 8a0dac2bb75bc8343920ccf8eeff93fd, type: 2}
   cooldownTime: 3
-  maxDuration: 1
+  maxDuration: 10
   forwardShieldPrefab: {fileID: 182350, guid: c1ced625a8f50554b950de781e102431, type: 2}
 --- !u!1001 &100100000
 Prefab:
@@ -85,6 +85,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: m_Volume
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: maxDuration
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
