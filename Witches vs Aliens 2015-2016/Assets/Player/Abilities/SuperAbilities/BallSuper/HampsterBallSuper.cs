@@ -34,7 +34,7 @@ public class HampsterBallSuper : TimedSuperAbility, IPuckAbility, IAlliesAbility
             balls[i].active = false;
         }
 
-        //ready = true; //for easy testing
+        ready = true; //for easy testing
     }
 
     protected override void OnActivate()

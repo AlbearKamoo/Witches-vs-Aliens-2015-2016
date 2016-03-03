@@ -185,6 +185,8 @@ public class Boid : MonoBehaviour, IBoid {
             }
         }
 
+        
+
         if (numMobileAvoids > 0)
         {
             steeringMobileAvoidingVelocity /= (float)numMobileAvoids;
