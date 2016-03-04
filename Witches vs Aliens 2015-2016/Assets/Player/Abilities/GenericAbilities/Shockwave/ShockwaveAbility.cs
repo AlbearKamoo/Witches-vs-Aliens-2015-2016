@@ -11,11 +11,7 @@ public class ShockwaveAbility : AbstractGenericAbility
     protected float radius;
 
     [SerializeField]
-    [AutoLink(childPath = "Wave")]
-    protected ParticleSystem wavevfx;
-
-    [SerializeField]
-    protected AudioClip shockwaveSFX;
+    protected GameObject wavevfx;
 
     [SerializeField]
     [AutoLink(childPath = "Charging")]
@@ -66,10 +62,7 @@ public class ShockwaveAbility : AbstractGenericAbility
 
             if(active)
             {
-                sfx.clip = shockwaveSFX;
-                sfx.Play();
-            
-                wavevfx.Play();
+                Instantiate(wavevfx, this.transform.position, Quaternion.identity);
 
                 Vector2 thisPosition = this.transform.position;
                 foreach (Collider2D hit in Physics2D.OverlapCircleAll(thisPosition, radius))
@@ -102,6 +95,8 @@ public class ShockwaveAbility : AbstractGenericAbility
 
         chargingvfx.Stop();
         chargingvfx.playbackSpeed = 10f; //end it gracefully
+
+        sfx.Stop();
     }
 
     protected override void Reset()

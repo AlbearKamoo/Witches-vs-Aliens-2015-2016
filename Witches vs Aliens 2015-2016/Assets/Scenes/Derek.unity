@@ -589,7 +589,7 @@ MonoBehaviour:
       basePlayer: {fileID: 146214, guid: a8095cd9d9bc36f4e87d6eeda567d5fa, type: 2}
       visuals: {fileID: 186382, guid: d58cb17b4ddacef4aaabf2fc8656265a, type: 2}
       movementAbility: {fileID: 177582, guid: b3ffc9938492a984a8513ab58c226585, type: 2}
-      genericAbility: {fileID: 166162, guid: 86aa63429b3c295489a40a37f5b4d258, type: 2}
+      genericAbility: {fileID: 181508, guid: 38f5e53ae2e43cb4594bd8c48ea20f7a, type: 2}
       superAbility: {fileID: 146254, guid: 945ebe4e0d22b4146a49b6bf1ff9a33b, type: 2}
       side: 0
     bindings:
