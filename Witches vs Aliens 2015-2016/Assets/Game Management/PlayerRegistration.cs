@@ -298,6 +298,7 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
     void setPlayerReady(int playerID)
     {
         registeredPlayers[playerID].ready = true;
+        announcements.PlayOneShot(registeredPlayers[playerID].context.charactersData[registeredPlayers[playerID].SelectedCharacterID].character.selectionSound);
         checkReady();
     }
 
