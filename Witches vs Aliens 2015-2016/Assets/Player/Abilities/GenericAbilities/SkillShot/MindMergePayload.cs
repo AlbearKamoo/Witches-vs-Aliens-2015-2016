@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+[RequireComponent(typeof(AudioSource))]
 public class MindMergePayload : SkillShotPayload {
 
     [SerializeField]
@@ -13,7 +14,12 @@ public class MindMergePayload : SkillShotPayload {
     MindMergeVisuals selfVisuals;
     MindMergeVisuals otherVisuals;
 
+    AudioSource sfx;
 
+    protected void Awake()
+    {
+        sfx = GetComponent<AudioSource>();
+    }
 
     public override void Initialize(SkillShotBullet bullet)
     {
@@ -24,6 +30,7 @@ public class MindMergePayload : SkillShotPayload {
         joint.enabled = false;
         joint.maxDistanceOnly = true;
         //joint.connectedBody = puckRigid;
+        joint.enableCollision = true;
 
         GameObject selfSpawnedVisuals = SimplePool.Spawn(visualsPrefab);
         selfSpawnedVisuals.transform.SetParent(rigid.transform, false);
@@ -52,7 +59,8 @@ public class MindMergePayload : SkillShotPayload {
 
     void AttachToTarget(Rigidbody2D target)
     {
-        Debug.Log(target);
+        sfx.Play();
+
         joint.connectedBody = target;
         selfVisuals.target = target;
         otherVisuals.transform.SetParent(target.transform, false);
@@ -71,5 +79,6 @@ public class MindMergePayload : SkillShotPayload {
         bullet.Source.active = false;
         selfVisuals.gameObject.SetActive(false);
         otherVisuals.gameObject.SetActive(false);
+        sfx.Stop();
     }
 }

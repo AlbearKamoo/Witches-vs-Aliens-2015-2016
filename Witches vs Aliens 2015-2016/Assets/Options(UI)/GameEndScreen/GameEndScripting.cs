@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+[RequireComponent(typeof(AudioSource))]
 public class GameEndScripting : MonoBehaviour {
 
     [SerializeField]
@@ -16,17 +17,24 @@ public class GameEndScripting : MonoBehaviour {
 
 	// Use this for initialization
 	void Awake () {
+        GetComponent<AudioSource>().Play();
+        Debug.Log(".");
         canvas = GameObject.FindGameObjectWithTag(Tags.canvas).GetComponentInParent<Canvas>().transform;
+	}
+
+    void Start()
+    {
         Camera.main.gameObject.AddComponent<BlitGreyscale>().time = gameEndTime;
         Observers.Post(new GameEndMessage(this, gameEndTime));
         Observers.Clear(GameEndMessage.classMessageType, GoalScoredMessage.classMessageType);
-        Pause.pause();
         Callback.FireAndForget(() => { Application.LoadLevel(Tags.Scenes.select); Pause.unPause(); Destroy(this); }, gameEndTime, this, mode: Callback.Mode.REALTIME);
         if (leftScore < rightScore)
             Instantiate(witchesVictoryPrefab).transform.SetParent(canvas, false);
-        else if(leftScore > rightScore)
+        else if (leftScore > rightScore)
             Instantiate(aliensVictoryPrefab).transform.SetParent(canvas, false);
-	}
+
+        Callback.FireForUpdate(() => Pause.pause(), this);
+    }
 
 }
 

@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
+[RequireComponent(typeof(AudioSource))]
 public class BoidSuper : TimedSuperAbility, IPuckAbility, IAlliesAbility, IOpponentsAbility, IRandomAbility
 {
     [SerializeField]
@@ -24,10 +25,17 @@ public class BoidSuper : TimedSuperAbility, IPuckAbility, IAlliesAbility, IOppon
         }
     } }
 
+    AudioSource sfx;
+
     Collider2D puckCollider;
     public Transform puck { set { puckCollider = value.GetComponent<Collider2D>(); } }
 
     List<Boid> boids = new List<Boid>();
+
+    protected void Awake()
+    {
+        sfx = GetComponent<AudioSource>();
+    }
 
     protected override void Start()
     {
@@ -59,6 +67,7 @@ public class BoidSuper : TimedSuperAbility, IPuckAbility, IAlliesAbility, IOppon
 
             boidColliders.Add(newBoid.Coll);
         }
+        sfx.Play();
     }
 
     protected override void OnDeactivate()
@@ -69,5 +78,6 @@ public class BoidSuper : TimedSuperAbility, IPuckAbility, IAlliesAbility, IOppon
             Destroy(boids[i].gameObject);
         }
         boids.Clear();
+        sfx.Stop();
     }
 }

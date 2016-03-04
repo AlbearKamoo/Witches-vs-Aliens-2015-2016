@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
+[RequireComponent(typeof(AudioSource))]
 public class SkillShotAbility : GenericAbility
 {
 
@@ -10,11 +11,17 @@ public class SkillShotAbility : GenericAbility
 
     SkillShotBullet instantiatedShot;
 
+    AudioSource sfx;
+
     List<Collider2D> ignoreCollisionList;
     InputToAction action;
     FloatStat massMod;
 
-    // Use this for initialization
+    protected override void Awake()
+    {
+        base.Awake();
+        sfx = GetComponent<AudioSource>();
+    }
     protected override void Start()
     {
         base.Start();
@@ -31,6 +38,7 @@ public class SkillShotAbility : GenericAbility
         active = true;
         instantiatedShot.Fire(this.transform.position, direction);
         massMod = action.mass.addModifier(99999f);
+        sfx.Play();
     }
 
     protected override void OnDeactivate()
