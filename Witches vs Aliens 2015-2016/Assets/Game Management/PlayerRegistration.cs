@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine.Assertions;
 
+
+[RequireComponent(typeof(AudioSource))]
 [RequireComponent(typeof(SetupData))]
 public class PlayerRegistration : MonoBehaviour, INetworkable {
     [SerializeField]
@@ -13,6 +15,8 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
     [SerializeField]
     protected AudioClip countdownVoice;
     GameObject introMusic;
+
+    AudioSource announcements;
 
 #if UNITY_EDITOR
     [SerializeField]
@@ -57,6 +61,8 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
 
         pressStart = GetComponentInChildren<Canvas>().gameObject;
         pressStart.SetActive(false);
+
+        announcements = GetComponent<AudioSource>();
 	}
 
     void Start()

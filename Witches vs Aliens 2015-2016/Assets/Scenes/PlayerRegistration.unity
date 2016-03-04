@@ -95,6 +95,7 @@ GameObject:
   - 4: {fileID: 21640697}
   - 114: {fileID: 21640696}
   - 114: {fileID: 21640695}
+  - 82: {fileID: 21640698}
   m_Layer: 0
   m_Name: ProgrammaticSpawning
   m_TagString: GameController
@@ -205,6 +206,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 415f7c4a0e662484b90f9f8cffef8d80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  warmupActive: 0
   playerComponentPrefabs: []
 --- !u!4 &21640697
 Transform:
@@ -219,6 +221,80 @@ Transform:
   - {fileID: 972274714}
   m_Father: {fileID: 0}
   m_RootOrder: 1
+--- !u!82 &21640698
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 21640694}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 2
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - time: 1
+      value: 1.0026809
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
 --- !u!1 &69739544
 GameObject:
   m_ObjectHideFlags: 0
@@ -231,7 +307,7 @@ GameObject:
   - 114: {fileID: 69739546}
   - 212: {fileID: 69739545}
   m_Layer: 15
-  m_Name: AliensSideNull
+  m_Name: Ford Prefect
   m_TagString: GameController
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -264,7 +340,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: b6b23c6af6adb2f449be4a4b49b12c9e, type: 3}
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Color: {r: 0.07586193, g: 0, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
 --- !u!114 &69739546
@@ -283,7 +359,8 @@ MonoBehaviour:
     visuals: {fileID: 106104, guid: 652446bdc4c4752479d5d092a4ee1f0f, type: 2}
     movementAbility: {fileID: 186010, guid: 999ab97c110d5bc4baa999b79b3005e9, type: 2}
     genericAbility: {fileID: 137066, guid: acd35d6a36124ef4d8cc2af602a9a8dd, type: 2}
-    superAbility: {fileID: 143026, guid: 9f0bc11609a97544496b9a6170fe50f5, type: 2}
+    superAbility: {fileID: 100384, guid: ecef39a3039700944adba6970c7caaee, type: 2}
+    selectionSound: {fileID: 8300000, guid: bffe90085c2a4cd4fb11b6ad710b9298, type: 3}
     side: 1
 --- !u!61 &69739547
 BoxCollider2D:
@@ -635,7 +712,7 @@ GameObject:
   - 114: {fileID: 428674989}
   - 212: {fileID: 428674988}
   m_Layer: 15
-  m_Name: ForwardShield
+  m_Name: Woonyank
   m_TagString: GameController
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -668,7 +745,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: b6b23c6af6adb2f449be4a4b49b12c9e, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0, g: 1, b: 0.33793092, a: 1}
   m_FlipX: 0
   m_FlipY: 0
 --- !u!114 &428674989
@@ -688,6 +765,7 @@ MonoBehaviour:
     movementAbility: {fileID: 186010, guid: 999ab97c110d5bc4baa999b79b3005e9, type: 2}
     genericAbility: {fileID: 130184, guid: 60c30ec1a94193146929d39c4fde233c, type: 2}
     superAbility: {fileID: 134116, guid: c6aa7c745294ea644aeb195c211fc58e, type: 2}
+    selectionSound: {fileID: 8300000, guid: bffe90085c2a4cd4fb11b6ad710b9298, type: 3}
     side: 1
 --- !u!61 &428674990
 BoxCollider2D:
@@ -727,7 +805,7 @@ GameObject:
   - 114: {fileID: 470944701}
   - 212: {fileID: 470944700}
   m_Layer: 15
-  m_Name: WitchesSideNull
+  m_Name: Flargenshnout
   m_TagString: GameController
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -760,7 +838,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300002, guid: a529b1c9dfb9c724f9551a8a5f4c6533, type: 3}
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Color: {r: 0.24137974, g: 0, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
 --- !u!114 &470944701
@@ -779,7 +857,8 @@ MonoBehaviour:
     visuals: {fileID: 186382, guid: d58cb17b4ddacef4aaabf2fc8656265a, type: 2}
     movementAbility: {fileID: 116816, guid: 24f9725c0345564498ac1b6243018210, type: 2}
     genericAbility: {fileID: 137066, guid: acd35d6a36124ef4d8cc2af602a9a8dd, type: 2}
-    superAbility: {fileID: 189548, guid: 92c627e1702f90443a4a43a527a7d20d, type: 2}
+    superAbility: {fileID: 118026, guid: 96b91265f5dcf6448869685576df4a10, type: 2}
+    selectionSound: {fileID: 8300000, guid: f8052334cfc662e4f9a4f4a7c3ea766a, type: 3}
     side: 0
 --- !u!61 &470944702
 BoxCollider2D:
@@ -1279,6 +1358,7 @@ MonoBehaviour:
     movementAbility: {fileID: 186010, guid: 999ab97c110d5bc4baa999b79b3005e9, type: 2}
     genericAbility: {fileID: 110450, guid: bc177a2768bd39946866f5ebcbe5d375, type: 2}
     superAbility: {fileID: 134116, guid: c6aa7c745294ea644aeb195c211fc58e, type: 2}
+    selectionSound: {fileID: 0}
     side: 1
 --- !u!61 &939447502
 BoxCollider2D:
@@ -1412,7 +1492,7 @@ GameObject:
   - 114: {fileID: 1149256924}
   - 212: {fileID: 1149256927}
   m_Layer: 15
-  m_Name: WitchesSide
+  m_Name: Glenda
   m_TagString: GameController
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1435,6 +1515,7 @@ MonoBehaviour:
     movementAbility: {fileID: 116816, guid: 24f9725c0345564498ac1b6243018210, type: 2}
     genericAbility: {fileID: 181508, guid: 38f5e53ae2e43cb4594bd8c48ea20f7a, type: 2}
     superAbility: {fileID: 189548, guid: 92c627e1702f90443a4a43a527a7d20d, type: 2}
+    selectionSound: {fileID: 8300000, guid: f8052334cfc662e4f9a4f4a7c3ea766a, type: 3}
     side: 0
 --- !u!61 &1149256925
 BoxCollider2D:
@@ -1578,7 +1659,7 @@ GameObject:
   - 114: {fileID: 1220282583}
   - 212: {fileID: 1220282586}
   m_Layer: 15
-  m_Name: AliensSide
+  m_Name: Blarg3
   m_TagString: GameController
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1601,6 +1682,7 @@ MonoBehaviour:
     movementAbility: {fileID: 186010, guid: 999ab97c110d5bc4baa999b79b3005e9, type: 2}
     genericAbility: {fileID: 110450, guid: bc177a2768bd39946866f5ebcbe5d375, type: 2}
     superAbility: {fileID: 143026, guid: 9f0bc11609a97544496b9a6170fe50f5, type: 2}
+    selectionSound: {fileID: 8300000, guid: bffe90085c2a4cd4fb11b6ad710b9298, type: 3}
     side: 1
 --- !u!61 &1220282584
 BoxCollider2D:
@@ -1963,7 +2045,7 @@ GameObject:
   - 114: {fileID: 1847882280}
   - 212: {fileID: 1847882279}
   m_Layer: 15
-  m_Name: Skillshot
+  m_Name: Karen
   m_TagString: GameController
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1996,7 +2078,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300002, guid: a529b1c9dfb9c724f9551a8a5f4c6533, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.07586217, g: 1, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
 --- !u!114 &1847882280
@@ -2016,6 +2098,7 @@ MonoBehaviour:
     movementAbility: {fileID: 116816, guid: 24f9725c0345564498ac1b6243018210, type: 2}
     genericAbility: {fileID: 166162, guid: 86aa63429b3c295489a40a37f5b4d258, type: 2}
     superAbility: {fileID: 146254, guid: 945ebe4e0d22b4146a49b6bf1ff9a33b, type: 2}
+    selectionSound: {fileID: 8300000, guid: f8052334cfc662e4f9a4f4a7c3ea766a, type: 3}
     side: 0
 --- !u!61 &1847882281
 BoxCollider2D:
@@ -2154,6 +2237,7 @@ MonoBehaviour:
     movementAbility: {fileID: 123882, guid: 21b4b94fb80128a42b3c5c473d839bbe, type: 2}
     genericAbility: {fileID: 160466, guid: e4b24301459bfe249a03c99d861b2d78, type: 2}
     superAbility: {fileID: 137540, guid: 8de3d20bd26c7bb42963e0dee2a0e721, type: 2}
+    selectionSound: {fileID: 0}
     side: 0
 --- !u!61 &1954636365
 BoxCollider2D:

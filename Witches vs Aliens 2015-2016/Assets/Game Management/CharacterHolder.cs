@@ -17,6 +17,8 @@ public class CharacterComponents
     public GameObject genericAbility;
     public GameObject superAbility;
 
+    public AudioClip selectionSound;
+
     public Side side;
     public CharacterComponents(){}
 }
