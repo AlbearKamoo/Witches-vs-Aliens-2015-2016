@@ -10,6 +10,9 @@ public class Blit : MonoBehaviour
     [CanBeDefaultOrNull]
     public float intensity = 0;
 
+    [CanBeDefaultOrNull]
+    public bool useIntensityInShader = true;
+
     void Awake()
     {
         material = Instantiate(material);
@@ -23,7 +26,8 @@ public class Blit : MonoBehaviour
             Graphics.Blit(source, destination);
             return;
         }
-        material.SetFloat(Tags.ShaderParams.cutoff, intensity);
+        if (useIntensityInShader)
+            material.SetFloat(Tags.ShaderParams.cutoff, intensity);
         Graphics.Blit(source, destination, material);
     }
 }

@@ -573,6 +573,7 @@ MonoBehaviour:
       movementAbility: {fileID: 186010, guid: 999ab97c110d5bc4baa999b79b3005e9, type: 2}
       genericAbility: {fileID: 130184, guid: 60c30ec1a94193146929d39c4fde233c, type: 2}
       superAbility: {fileID: 134116, guid: c6aa7c745294ea644aeb195c211fc58e, type: 2}
+      selectionSound: {fileID: 0}
       side: 1
     bindings:
       inputMode: 0
@@ -590,7 +591,8 @@ MonoBehaviour:
       visuals: {fileID: 186382, guid: d58cb17b4ddacef4aaabf2fc8656265a, type: 2}
       movementAbility: {fileID: 177582, guid: b3ffc9938492a984a8513ab58c226585, type: 2}
       genericAbility: {fileID: 181508, guid: 38f5e53ae2e43cb4594bd8c48ea20f7a, type: 2}
-      superAbility: {fileID: 146254, guid: 945ebe4e0d22b4146a49b6bf1ff9a33b, type: 2}
+      superAbility: {fileID: 143026, guid: 9f0bc11609a97544496b9a6170fe50f5, type: 2}
+      selectionSound: {fileID: 0}
       side: 0
     bindings:
       inputMode: 0

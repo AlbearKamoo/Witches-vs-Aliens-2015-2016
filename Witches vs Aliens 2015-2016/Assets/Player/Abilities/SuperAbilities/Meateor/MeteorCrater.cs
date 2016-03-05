@@ -26,7 +26,7 @@ public class MeteorCrater : MonoBehaviour, ISpawnable {
 
     void Awake()
     {
-        rend = GetComponent<SpriteRenderer>();
+        rend = transform.Find("Crater").GetComponent<SpriteRenderer>();
         vfx = GetComponent<ParticleSystem>();
         coll = GetComponent<Collider2D>();
         glowMat = Instantiate(glowSprite.material);
