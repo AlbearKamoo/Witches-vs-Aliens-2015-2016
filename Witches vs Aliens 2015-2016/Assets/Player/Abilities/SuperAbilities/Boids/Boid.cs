@@ -42,6 +42,8 @@ public class Boid : MonoBehaviour, IBoid {
     public CircleCollider2D Coll { get { return coll; } }
     Collider2D trigger;
 
+    Material vectoredMetaballMat;
+
     List<IBoid> neighbors = new List<IBoid>();
     List<IStaticAvoidBoid> staticAvoid = new List<IStaticAvoidBoid>();
     List<IMobileAvoidBoid> mobileAvoid = new List<IMobileAvoidBoid>();
@@ -56,6 +58,8 @@ public class Boid : MonoBehaviour, IBoid {
         visuals = transform.Find("visuals");
         coll = visuals.GetComponent<CircleCollider2D>();
         randGenerator = new System.Random(UnityEngine.Random.Range(0, 9999999));
+        vectoredMetaballMat = transform.Find("metaBallVisuals").GetComponent<SpriteRenderer>().material;
+        vectoredMetaballMat.SetFloat("_NumBoids", 8);
     }
 
     void Start()
@@ -209,7 +213,13 @@ public class Boid : MonoBehaviour, IBoid {
         Vector2 newRigidbodyVelocity = rigid.velocity;
         newRigidbodyVelocity = Vector2.ClampMagnitude(newRigidbodyVelocity + center + alignVelocity + seperationForce + randomVector + steeringStaticAvoidingVelocity + steeringMobileAvoidingVelocity, speed);
         rigid.velocity = newRigidbodyVelocity;
+
         visuals.rotation = newRigidbodyVelocity.ToRotation();
+
+        newRigidbodyVelocity = ((newRigidbodyVelocity / speed) + Vector2.one)/2; //map it to [0,1] {zero vector becomes (0.5, 0.5)}
+
+        vectoredMetaballMat.SetFloat("_XVel", newRigidbodyVelocity.x);
+        vectoredMetaballMat.SetFloat("_YVel", newRigidbodyVelocity.y);
 	}
 
     bool inBlindSpot(IBoid boid)

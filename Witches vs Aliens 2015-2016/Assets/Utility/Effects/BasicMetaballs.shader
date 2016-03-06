@@ -1,13 +1,14 @@
-﻿Shader "Unlit/BasicShader"
+﻿Shader "Unlit/BasicMetaballs"
 {
 	Properties
 	{
-		_MainTex("MainTexture", 2D) = "white" {}
+		[PerRendererData] _MainTex("MainTexture", 2D) = "white" {}
+		_Cutoff("Cutoff", Range(0,1)) = 0.1
 	}
 	SubShader
 	{
 		Tags { "RenderType"="Transparent" "IgnoreProjector"="True" "Queue"="Transparent"  "PreviewType"="Plane"}
-		Blend SrcAlpha OneMinusSrcAlpha
+		Blend SrcAlpha OneMinusSrcAlpha, One Zero
 		ZWrite Off
 		Lighting Off
 
@@ -15,7 +16,7 @@
 		{
 			CGPROGRAM
 			#pragma vertex vert
-			#pragma fragment frag
+			#pragma fragment frag alpha
 			
 			#include "UnityCG.cginc"
 
@@ -32,20 +33,23 @@
 			};
 
 			sampler2D _MainTex;
-			float4 _MainTex_ST;
+			fixed _Cutoff;
 
 			v2f vert (appdata v)
 			{
 				v2f o;
 				o.vertex = mul(UNITY_MATRIX_MVP, v.vertex);
-				o.uv = TRANSFORM_TEX(v.uv, _MainTex);
+				o.uv = v.uv;
 				return o;
 			}
 			
 			fixed4 frag (v2f i) : SV_Target
 			{
-				fixed4 col = tex2D(_MainTex, i.uv);
-				return col;
+				fixed col = tex2D(_MainTex, i.uv).b;
+				fixed enabled = step(_Cutoff, col);
+				col = saturate(40 * (col - _Cutoff));
+
+				return enabled * fixed4(1, 1, 1, 1 - col);
 			}
 			ENDCG
 		}

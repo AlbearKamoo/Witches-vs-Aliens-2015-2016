@@ -1,13 +1,16 @@
-﻿Shader "Unlit/BasicShader"
+﻿Shader "Unlit/VectoredMetaball"
 {
 	Properties
 	{
 		_MainTex("MainTexture", 2D) = "white" {}
+		_XVel("Bumpmap X-velocity", Range(0,1)) = 0.5
+		_YVel("Bumpmap Y-velocity", Range(0,1)) = 0.5
+		_NumBoids("Num Boids (precision)", Float) = 4
 	}
 	SubShader
 	{
 		Tags { "RenderType"="Transparent" "IgnoreProjector"="True" "Queue"="Transparent"  "PreviewType"="Plane"}
-		Blend SrcAlpha OneMinusSrcAlpha
+		Blend One One
 		ZWrite Off
 		Lighting Off
 
@@ -29,23 +32,32 @@
 			{
 				float2 uv : TEXCOORD0;
 				float4 vertex : SV_POSITION;
+				fixed3 vectoring : COL;
 			};
 
 			sampler2D _MainTex;
-			float4 _MainTex_ST;
+			fixed _XVel;
+			fixed _YVel;
+			half _NumBoids;
 
 			v2f vert (appdata v)
 			{
 				v2f o;
 				o.vertex = mul(UNITY_MATRIX_MVP, v.vertex);
-				o.uv = TRANSFORM_TEX(v.uv, _MainTex);
+				o.uv = v.uv;
+				o.vectoring.z = 1/_NumBoids;
+				o.vectoring.x = o.vectoring.z * _XVel;
+				o.vectoring.y = o.vectoring.z * _YVel;
 				return o;
 			}
 			
 			fixed4 frag (v2f i) : SV_Target
 			{
-				fixed4 col = tex2D(_MainTex, i.uv);
-				return col;
+				fixed col = tex2D(_MainTex, i.uv).r;
+
+				return fixed4(i.vectoring.x, i.vectoring.y, i.vectoring.z / 2, col * col);
+
+				//return col * fixed4(i.vectoring.x, i.vectoring.y, i.vectoring.z / 2, col);
 			}
 			ENDCG
 		}

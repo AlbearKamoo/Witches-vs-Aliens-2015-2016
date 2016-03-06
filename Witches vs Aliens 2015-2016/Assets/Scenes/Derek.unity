@@ -421,6 +421,52 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 493d0645e9344de4ca9a6bc5d6b2510a, type: 2}
   m_IsPrefabParent: 0
+--- !u!1001 &522478169
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 403184, guid: e0f740c3c70b72e47b0aeea5f48ea198, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 403184, guid: e0f740c3c70b72e47b0aeea5f48ea198, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 403184, guid: e0f740c3c70b72e47b0aeea5f48ea198, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 403184, guid: e0f740c3c70b72e47b0aeea5f48ea198, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 403184, guid: e0f740c3c70b72e47b0aeea5f48ea198, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 403184, guid: e0f740c3c70b72e47b0aeea5f48ea198, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 403184, guid: e0f740c3c70b72e47b0aeea5f48ea198, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 403184, guid: e0f740c3c70b72e47b0aeea5f48ea198, type: 2}
+      propertyPath: m_RootOrder
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 2326760, guid: e0f740c3c70b72e47b0aeea5f48ea198, type: 2}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: e0f740c3c70b72e47b0aeea5f48ea198, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1 &642629413
 GameObject:
   m_ObjectHideFlags: 0
@@ -591,7 +637,7 @@ MonoBehaviour:
       visuals: {fileID: 186382, guid: d58cb17b4ddacef4aaabf2fc8656265a, type: 2}
       movementAbility: {fileID: 177582, guid: b3ffc9938492a984a8513ab58c226585, type: 2}
       genericAbility: {fileID: 181508, guid: 38f5e53ae2e43cb4594bd8c48ea20f7a, type: 2}
-      superAbility: {fileID: 143026, guid: 9f0bc11609a97544496b9a6170fe50f5, type: 2}
+      superAbility: {fileID: 118026, guid: 96b91265f5dcf6448869685576df4a10, type: 2}
       selectionSound: {fileID: 0}
       side: 0
     bindings:
