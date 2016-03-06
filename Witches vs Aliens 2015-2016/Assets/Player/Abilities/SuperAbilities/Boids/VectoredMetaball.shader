@@ -55,9 +55,11 @@
 			{
 				fixed col = tex2D(_MainTex, i.uv).r;
 
-				return fixed4(i.vectoring.x, i.vectoring.y, i.vectoring.z / 2, col * col);
+				//non-interpolated
+				//return fixed4(i.vectoring.x, i.vectoring.y, i.vectoring.z / 2, col * col);
 
-				//return col * fixed4(i.vectoring.x, i.vectoring.y, i.vectoring.z / 2, col);
+				//interpolated
+				return col * fixed4(i.vectoring.x, i.vectoring.y, i.vectoring.z / 2, col);
 			}
 			ENDCG
 		}
