@@ -6,6 +6,8 @@
 		_SampleTex("Sampled Texture", 2D) = "white" {}
 		_Cutoff("Cutoff", Range(0,1)) = 0.1
 		_ScrollSpeed("ScrollSpeed", Float) = 0.1
+		_NumXPixels("Number of X pixels", Float) = 2
+		_NumYPixels("Number of Y pixels", Float) = 2
 	}
 	SubShader
 	{
@@ -36,31 +38,74 @@
 
 			sampler2D _MainTex;
 			sampler2D _SampleTex;
-			float4 _SampleTex_ST;
 			fixed _Cutoff;
 			half _ScrollSpeed;
+			half _NumXPixels;
+			half _NumYPixels;
 
 			v2f vert (appdata v)
 			{
 				v2f o;
 				o.vertex = mul(UNITY_MATRIX_MVP, v.vertex);
 				o.uv = v.uv;
+
 				return o;
 			}
 			
 			fixed4 frag (v2f i) : SV_Target
 			{
-				fixed4 col = tex2D(_MainTex, i.uv);
-				fixed enabled = step(_Cutoff, col.a);
-				col.a = enabled * (1 - saturate((col.a - _Cutoff) / (1 - _Cutoff)) / 2);
+				half2 pixelatedUV; //which pixel we are in
+				half2 subPixelUV; //where are we in that pixel
+				half2 pixelCenterUV; //the center of our pixel in image UV coordinates
 
-				//half scaleFactor = _ScrollSpeed / col.b;
+				subPixelUV.x = modf(i.uv.x * _NumXPixels, pixelatedUV.x);
+				pixelCenterUV.x = (pixelatedUV.x + 0.5) / _NumXPixels;
+				pixelatedUV.x /= _NumXPixels;
 
-				//i.uv_sample.x += (col.x - col.z) * scaleFactor * _Time.gg;
-				//i.uv_sample.y += (col.y - col.z) * scaleFactor * _Time.gg;
 
-				//col.rgb = tex2D(_SampleTex, i.uv_sample).rgb; //don't need the old col anymore
-				//return col;
+				subPixelUV.y = modf(i.uv.y * _NumYPixels, pixelatedUV.y);
+				pixelCenterUV.y = (pixelatedUV.y + 0.5) / _NumYPixels;
+				pixelatedUV.y /= _NumYPixels;
+
+				fixed4 col = tex2D(_MainTex, pixelCenterUV);
+
+
+				half scaleFactor = 1 / col.b;
+
+				half2 ColorVector;
+
+				ColorVector.x = (col.x - col.z) * scaleFactor;
+				ColorVector.y = (col.y - col.z) * scaleFactor;
+
+				half hypotenuse = sqrt((ColorVector.x * ColorVector.x) + (ColorVector.y * ColorVector.y));
+
+				half ColorSin = ColorVector.y / hypotenuse;
+				half ColorCos = ColorVector.x / hypotenuse;
+
+				//map from [0, 1] to [-1, 1]
+				subPixelUV.x = 2 * subPixelUV.x - 1;
+				subPixelUV.y = 2 * subPixelUV.y - 1;
+
+				//rotate to face the color vector
+				half2 rotatedSubPixelUV;
+				rotatedSubPixelUV.x = subPixelUV.x * ColorCos + subPixelUV.y * ColorSin;
+				rotatedSubPixelUV.y = -subPixelUV.x * ColorSin + subPixelUV.y * ColorCos;
+
+				//map from [-1, 1] to [0, 1]
+				rotatedSubPixelUV.x = (rotatedSubPixelUV.x + 1) / 2;
+				rotatedSubPixelUV.y = (rotatedSubPixelUV.y + 1) / 2;
+
+				//scroll
+				rotatedSubPixelUV.x -= _ScrollSpeed * frac(_Time.gg) * hypotenuse / 1.41; // scale by colorVector's magnitude (1.41 is sqrt(1 + 1))
+
+				fixed4 result = tex2D(_SampleTex, rotatedSubPixelUV);
+
+				fixed actualAlpha = tex2D(_MainTex, i.uv).a;
+				fixed enabled = step(_Cutoff, actualAlpha);
+				result.a *= enabled * (saturate((actualAlpha - _Cutoff) / (1 - _Cutoff)));
+				//Shield-style alpha mapping //result.a *= enabled * (1 - saturate((actualAlpha - _Cutoff) / (1 - _Cutoff)) / 2);
+
+				return result;
 
 				//Vector Debugging
 				half center = 1 / (2 * col.z);
