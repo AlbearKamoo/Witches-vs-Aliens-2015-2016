@@ -80,6 +80,13 @@ Material:
           m_Offset: {x: 0, y: 0}
       data:
         first:
+          name: _NoiseTex
+        second:
+          m_Texture: {fileID: 2800000, guid: 0af966d350805ba4ca667713ba2c31c7, type: 3}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
           name: _SampleTex
         second:
           m_Texture: {fileID: 2800000, guid: b08ec0fd060d8c3488dd0d0da7c491ff, type: 3}
@@ -137,15 +144,15 @@ Material:
       data:
         first:
           name: _ScrollSpeed
-        second: 3
+        second: 4
       data:
         first:
           name: _NumXPixels
-        second: 25
+        second: 30
       data:
         first:
           name: _NumYPixels
-        second: 25
+        second: 30
     m_Colors:
       data:
         first:

@@ -4,6 +4,7 @@
 	{
 		_MainTex("MainTexture", 2D) = "white" {}
 		_SampleTex("Sampled Texture", 2D) = "white" {}
+		_NoiseTex("Noise Texture", 2D) = "white" {}
 		_Cutoff("Cutoff", Range(0,1)) = 0.1
 		_ScrollSpeed("ScrollSpeed", Float) = 0.1
 		_NumXPixels("Number of X pixels", Float) = 2
@@ -38,6 +39,7 @@
 
 			sampler2D _MainTex;
 			sampler2D _SampleTex;
+			sampler2D _NoiseTex;
 			fixed _Cutoff;
 			half _ScrollSpeed;
 			half _NumXPixels;
@@ -48,7 +50,6 @@
 				v2f o;
 				o.vertex = mul(UNITY_MATRIX_MVP, v.vertex);
 				o.uv = v.uv;
-
 				return o;
 			}
 
@@ -92,14 +93,18 @@
 				rotatedSubPixelUV.x = (rotatedSubPixelUV.x + 1) / 2;
 				rotatedSubPixelUV.y = (rotatedSubPixelUV.y + 1) / 2;
 
-				//scroll
-				rotatedSubPixelUV.x -= hypotenuse + frac(_ScrollSpeed * _Time.gg); // * hypotenuse / 1.41); // scale by colorVector's magnitude (1.41 is sqrt(1 + 1))
+				//scroll, with noise
+				rotatedSubPixelUV.x -= tex2D(_NoiseTex, pixelCenterUV).r + frac(_ScrollSpeed * _Time.gg); // * hypotenuse / 1.41); // scale by colorVector's magnitude (1.41 is sqrt(1 + 1))
 
 				fixed4 result = tex2D(_SampleTex, rotatedSubPixelUV);
 
 				//scale result by distance from pixel center (there are multiple pixels; this ensures even overlap and smooth transition)
 
 				fixed alphaScale = (1 - abs(subPixelUV.x)) * (1 - abs(subPixelUV.y));
+
+				//create a plateau from 0.25 to 0.75
+
+				alphaScale = saturate(2 * alphaScale);
 
 				result *= 1-((1-alphaScale) * (1-alphaScale));
 
