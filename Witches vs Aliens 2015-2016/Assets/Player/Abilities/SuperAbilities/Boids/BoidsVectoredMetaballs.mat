@@ -97,7 +97,7 @@ Material:
       data:
         first:
           name: _Cutoff
-        second: 0.75
+        second: 0.5
       data:
         first:
           name: _Parallax
@@ -137,7 +137,7 @@ Material:
       data:
         first:
           name: _ScrollSpeed
-        second: 30
+        second: 3
       data:
         first:
           name: _NumXPixels

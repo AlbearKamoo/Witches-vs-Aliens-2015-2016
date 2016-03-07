@@ -51,21 +51,18 @@
 
 				return o;
 			}
-			
-			fixed4 frag (v2f i) : SV_Target
+
+			fixed4 processVertex(v2f i, fixed XShift, fixed YShift)
 			{
-				half2 pixelatedUV; //which pixel we are in
 				half2 subPixelUV; //where are we in that pixel
 				half2 pixelCenterUV; //the center of our pixel in image UV coordinates
 
-				subPixelUV.x = modf(i.uv.x * _NumXPixels, pixelatedUV.x);
-				pixelCenterUV.x = (pixelatedUV.x + 0.5) / _NumXPixels;
-				pixelatedUV.x /= _NumXPixels;
+				subPixelUV.x = modf((i.uv.x * _NumXPixels) + XShift, pixelCenterUV.x);
+				pixelCenterUV.x /= _NumXPixels;
 
 
-				subPixelUV.y = modf(i.uv.y * _NumYPixels, pixelatedUV.y);
-				pixelCenterUV.y = (pixelatedUV.y + 0.5) / _NumYPixels;
-				pixelatedUV.y /= _NumYPixels;
+				subPixelUV.y = modf((i.uv.y * _NumYPixels) + YShift, pixelCenterUV.y);
+				pixelCenterUV.y /= _NumYPixels;
 
 				fixed4 col = tex2D(_MainTex, pixelCenterUV);
 
@@ -96,20 +93,34 @@
 				rotatedSubPixelUV.y = (rotatedSubPixelUV.y + 1) / 2;
 
 				//scroll
-				rotatedSubPixelUV.x -= _ScrollSpeed * frac(_Time.gg) * hypotenuse / 1.41; // scale by colorVector's magnitude (1.41 is sqrt(1 + 1))
+				rotatedSubPixelUV.x -= frac(_ScrollSpeed * _Time.gg); // * hypotenuse / 1.41); // scale by colorVector's magnitude (1.41 is sqrt(1 + 1))
 
-				fixed4 result = tex2D(_SampleTex, rotatedSubPixelUV);
+				fixed4 result = tex2D(_SampleTex, half2(4 * hypotenuse, 4 * hypotenuse) + rotatedSubPixelUV);
 
-				fixed actualAlpha = tex2D(_MainTex, i.uv).a;
-				fixed enabled = step(_Cutoff, actualAlpha);
-				result.a *= enabled * (saturate((actualAlpha - _Cutoff) / (1 - _Cutoff)));
-				//Shield-style alpha mapping //result.a *= enabled * (1 - saturate((actualAlpha - _Cutoff) / (1 - _Cutoff)) / 2);
+				//scale result by distance from pixel center (there are multiple pixels; this ensures even overlap and smooth transition)
+				result.rgb *= (1 - abs(subPixelUV.x)) * (1 - abs(subPixelUV.y));
 
 				return result;
 
 				//Vector Debugging
-				half center = 1 / (2 * col.z);
-				return fixed4(col.x * center, col.y * center, col.z, col.a);
+				//half center = 1 / (2 * col.z);
+				//return fixed4(col.x * center, col.y * center, col.z, col.a);
+			}
+			
+			fixed4 frag (v2f i) : SV_Target
+			{
+				fixed4 result;
+				result = processVertex(i, 0, 0);
+				result += processVertex(i, 0, 0.5);
+				result += processVertex(i, 0.5, 0.25);
+				result += processVertex(i, 0.5, 0.75);
+
+				fixed actualAlpha = tex2D(_MainTex, i.uv).a;
+				fixed enabled = step(_Cutoff, actualAlpha);
+				result.a *= enabled * saturate((actualAlpha - _Cutoff) / (1 - _Cutoff));
+				//Shield-style alpha mapping //result.a *= enabled * (1 - saturate((actualAlpha - _Cutoff) / (1 - _Cutoff)) / 2);
+
+				return result;
 			}
 			ENDCG
 		}
