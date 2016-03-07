@@ -141,11 +141,11 @@ Material:
       data:
         first:
           name: _NumXPixels
-        second: 50
+        second: 25
       data:
         first:
           name: _NumYPixels
-        second: 50
+        second: 25
     m_Colors:
       data:
         first:

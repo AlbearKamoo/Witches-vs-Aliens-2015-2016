@@ -93,12 +93,15 @@
 				rotatedSubPixelUV.y = (rotatedSubPixelUV.y + 1) / 2;
 
 				//scroll
-				rotatedSubPixelUV.x -= frac(_ScrollSpeed * _Time.gg); // * hypotenuse / 1.41); // scale by colorVector's magnitude (1.41 is sqrt(1 + 1))
+				rotatedSubPixelUV.x -= hypotenuse + frac(_ScrollSpeed * _Time.gg); // * hypotenuse / 1.41); // scale by colorVector's magnitude (1.41 is sqrt(1 + 1))
 
-				fixed4 result = tex2D(_SampleTex, half2(4 * hypotenuse, 4 * hypotenuse) + rotatedSubPixelUV);
+				fixed4 result = tex2D(_SampleTex, rotatedSubPixelUV);
 
 				//scale result by distance from pixel center (there are multiple pixels; this ensures even overlap and smooth transition)
-				result.rgb *= (1 - abs(subPixelUV.x)) * (1 - abs(subPixelUV.y));
+
+				fixed alphaScale = (1 - abs(subPixelUV.x)) * (1 - abs(subPixelUV.y));
+
+				result *= 1-((1-alphaScale) * (1-alphaScale));
 
 				return result;
 
