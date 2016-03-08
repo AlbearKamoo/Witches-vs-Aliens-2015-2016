@@ -6,7 +6,7 @@ public class ForceCameraAspect : MonoBehaviour {
 
 	// Use this for initialization
 	void Awake () {
-        GetComponent<Camera>().aspect = Screen.width / Screen.height;
+        GetComponent<Camera>().aspect = (Screen.width / Screen.height);
     }
 	
 	// Update is called once per frame
