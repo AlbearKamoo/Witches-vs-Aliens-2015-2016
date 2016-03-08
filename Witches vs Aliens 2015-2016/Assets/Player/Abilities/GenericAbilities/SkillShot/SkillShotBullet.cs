@@ -81,6 +81,8 @@ public class SkillShotBullet : MonoBehaviour {
         if (other.CompareTag(Tags.stage))
         {
             Active = false; //despawn when we hit a wall
+            Assert.IsTrue(source.active);
+            source.active = false;
             return;
         }
 

@@ -115,7 +115,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AbilityUIPrefab: {fileID: 156974, guid: 84971435ea446c143b8a8db9a71452e1, type: 2}
-  cooldownTime: 10
+  cooldownTime: 1
   shotPrefab: {fileID: 146816, guid: 36f2ded30c4c00a44bcf691869ea786c, type: 2}
 --- !u!1001 &100100000
 Prefab:
@@ -159,6 +159,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: Loop
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: cooldownTime
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

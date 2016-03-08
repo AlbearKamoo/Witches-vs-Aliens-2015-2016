@@ -9,13 +9,6 @@ public class ForwardShield : MonoBehaviour, IIgnorePuckVFX
     [SerializeField]
     protected GameObject impactVFXPrefab;
 
-    AudioSource source;
-
-    void Awake()
-    {
-        source = GetComponent<AudioSource>();
-    }
-
     void OnCollisionEnter2D(Collision2D other)
     {
         PuckSpeedLimiter puck = other.transform.GetComponentInParent<PuckSpeedLimiter>();

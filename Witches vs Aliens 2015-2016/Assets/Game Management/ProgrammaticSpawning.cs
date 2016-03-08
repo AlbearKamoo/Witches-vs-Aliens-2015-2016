@@ -273,7 +273,7 @@ public class ProgrammaticSpawning : MonoBehaviour, IObserver<Message> {
         countdownTimes.Enqueue(-1); //ensure there is always something to Peek();
         yield return null;
 
-        GameObject introMusic = Instantiate(IntroMusicPrefab);
+        Instantiate(IntroMusicPrefab);
 
         Callback.FireAndForget(() => Instantiate(IntroCountdownPrefab), introCountdownVoiceDelay, this);
 

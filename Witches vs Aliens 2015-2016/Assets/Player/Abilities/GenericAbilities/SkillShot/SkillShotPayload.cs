@@ -10,6 +10,12 @@ public abstract class SkillShotPayload : MonoBehaviour {
         this.bullet = bullet;
     }
 
+    protected void End()
+    {
+        bullet.Source.active = false;
+        Reset();
+    }
+
     public abstract void Reset();
 
     public abstract void DeliverToPlayer(Stats target);

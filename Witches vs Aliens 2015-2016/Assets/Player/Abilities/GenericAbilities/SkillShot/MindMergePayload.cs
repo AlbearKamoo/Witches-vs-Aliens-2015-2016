@@ -8,7 +8,10 @@ public class MindMergePayload : SkillShotPayload {
     protected GameObject visualsPrefab;
 
     [SerializeField]
-    protected float duration;
+    protected float playerDuration;
+
+    [SerializeField]
+    protected float puckDuration;
 
     DistanceJoint2D joint;
     MindMergeVisuals selfVisuals;
@@ -49,15 +52,15 @@ public class MindMergePayload : SkillShotPayload {
 
     public override void DeliverToPlayer(Stats target)
     {
-        AttachToTarget(target.GetComponent<Rigidbody2D>());
+        AttachToTarget(target.GetComponent<Rigidbody2D>(), playerDuration);
     }
 
     public override void DeliverToPuck(PuckSpeedLimiter target)
     {
-        AttachToTarget(target.GetComponent<Rigidbody2D>());
+        AttachToTarget(target.GetComponent<Rigidbody2D>(), puckDuration);
     }
 
-    void AttachToTarget(Rigidbody2D target)
+    void AttachToTarget(Rigidbody2D target, float duration)
     {
         sfx.Play();
 
@@ -70,13 +73,12 @@ public class MindMergePayload : SkillShotPayload {
         selfVisuals.gameObject.SetActive(true);
         otherVisuals.gameObject.SetActive(true);
 
-        Callback.FireAndForget(Reset, duration, this);
+        Callback.FireAndForget(End, duration, this);
     }
 
     public override void Reset()
     {
         joint.enabled = false;
-        bullet.Source.active = false;
         selfVisuals.gameObject.SetActive(false);
         otherVisuals.gameObject.SetActive(false);
         sfx.Stop();
