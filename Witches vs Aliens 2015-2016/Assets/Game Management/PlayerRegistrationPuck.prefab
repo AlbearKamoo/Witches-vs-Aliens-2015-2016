@@ -409,7 +409,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2550f0f4a9c9558458d2ea2a9f528548, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initMaxSpeed: 10
+  initMaxSpeed: 20
   initAccel: 999
   rotationLerpValue: 0.5
   rotating: {fileID: 432628}
@@ -2334,6 +2334,10 @@ Prefab:
       propertyPath: AbilityUIPrefab
       value: 
       objectReference: {fileID: 172952, guid: 8a0dac2bb75bc8343920ccf8eeff93fd, type: 2}
+    - target: {fileID: 0}
+      propertyPath: initMaxSpeed
+      value: 20
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 171078}
