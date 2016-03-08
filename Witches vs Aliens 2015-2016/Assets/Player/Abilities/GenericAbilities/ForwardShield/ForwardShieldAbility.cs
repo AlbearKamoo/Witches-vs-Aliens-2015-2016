@@ -7,6 +7,8 @@ public class ForwardShieldAbility : TimedGenericAbility, IObserver<MovementAbili
     protected GameObject forwardShieldPrefab;
 
     GameObject forwardShield;
+    InputToAction action;
+    FloatStat massMod;
 
     protected override void Awake()
     {
@@ -18,6 +20,7 @@ public class ForwardShieldAbility : TimedGenericAbility, IObserver<MovementAbili
     protected override void Start()
     {
         base.Start();
+        action = GetComponentInParent<InputToAction>();
         forwardShield.transform.SetParent(transform.root.Find("Rotating"), false);
         GetComponentInParent<IObservable<MovementAbilityFiredMessage>>().Subscribe<MovementAbilityFiredMessage>(this);
     }
@@ -36,11 +39,14 @@ public class ForwardShieldAbility : TimedGenericAbility, IObserver<MovementAbili
     {
         base.OnActivate();
         forwardShield.SetActive(true);
+        massMod = action.mass.addModifier(99999f);
     }
 
     protected override void OnDeactivate()
     {
         base.OnDeactivate();
         forwardShield.SetActive(false);
+        action.mass.removeModifier(massMod);
+        massMod = null;
     }
 }
