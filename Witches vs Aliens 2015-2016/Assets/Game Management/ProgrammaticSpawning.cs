@@ -292,7 +292,7 @@ public class ProgrammaticSpawning : MonoBehaviour, IObserver<Message> {
         spawnedMainMusicPrefab = Instantiate(MainMusicPrefab);
     }
 
-    void resetPositions(float duration = -1, bool resetTime = true)
+    public void resetPositions(float duration = -1, bool resetTime = true)
     {
         duration = (duration == -1) ? goalResetDuration : duration; //use goalResetDuration as the default
         leftPoints.Shuffle<Vector2>();
@@ -337,6 +337,7 @@ public class ProgrammaticSpawning : MonoBehaviour, IObserver<Message> {
                 AudioSource mainMusic = spawnedMainMusicPrefab.GetComponent<AudioSource>();
                 mainMusic.clip = overtimeClip;
                 mainMusic.Play();
+                resetPositions(resetTime : false);
                 break;
         }
     }

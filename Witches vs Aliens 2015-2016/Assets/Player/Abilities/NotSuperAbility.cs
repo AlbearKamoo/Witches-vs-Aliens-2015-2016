@@ -67,7 +67,6 @@ public abstract class NotSuperAbility : AbstractAbility, IObservable<AbilityStat
     {
         active = false;
         ready = false;
-        Debug.Log("restarting cooldown");
         cooldownCountdown.Restart();
     }
 
