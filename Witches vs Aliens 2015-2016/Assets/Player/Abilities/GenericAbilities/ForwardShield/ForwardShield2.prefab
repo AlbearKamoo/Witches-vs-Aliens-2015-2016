@@ -14,7 +14,7 @@ GameObject:
   - 114: {fileID: 11469326}
   m_Layer: 13
   m_Name: ForwardShield2
-  m_TagString: Untagged
+  m_TagString: Stage
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -201,6 +201,10 @@ Prefab:
       propertyPath: impactVFXPrefab
       value: 
       objectReference: {fileID: 145448, guid: 7ca09c8702c697e428f0ca2e1667caeb, type: 2}
+    - target: {fileID: 0}
+      propertyPath: m_TagString
+      value: Stage
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 159968}

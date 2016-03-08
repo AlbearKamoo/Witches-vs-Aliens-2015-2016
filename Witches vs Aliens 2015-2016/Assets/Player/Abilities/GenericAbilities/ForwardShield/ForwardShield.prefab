@@ -12,7 +12,7 @@ GameObject:
   - 212: {fileID: 21234122}
   m_Layer: 13
   m_Name: ForwardShield
-  m_TagString: Untagged
+  m_TagString: Stage
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -101,6 +101,10 @@ Prefab:
       value: 
       objectReference: {fileID: 21300000, guid: 699ce48b4a226c64787832becf7e2ca0,
         type: 3}
+    - target: {fileID: 0}
+      propertyPath: m_TagString
+      value: Stage
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 134422}
