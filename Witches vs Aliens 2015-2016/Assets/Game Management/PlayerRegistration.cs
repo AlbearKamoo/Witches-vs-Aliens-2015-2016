@@ -44,6 +44,8 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
     Dictionary<int, Registration> registeredPlayers = new Dictionary<int, Registration>();
     int[] localIDToPlayerID;
 
+    Vector2[] joystickEdgeTriggers;
+
     NetworkNode node;
     NetworkMode mode;
 
@@ -59,7 +61,11 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
         for (int i = 0; i < localIDToPlayerID.Length; i++)
             localIDToPlayerID[i] = -1;
 
-        pressStart = GetComponentInChildren<Canvas>().gameObject;
+        joystickEdgeTriggers = new Vector2[possiblePlayers.Length];
+        for (int i = 0; i < joystickEdgeTriggers.Length; i++)
+            joystickEdgeTriggers[i] = Vector2.zero;
+
+            pressStart = GetComponentInChildren<Canvas>().gameObject;
         pressStart.SetActive(false);
 
         announcements = GetComponent<AudioSource>();
@@ -442,15 +448,39 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
 
     bool pressedAccept(int i)
     {
-        return possiblePlayers[i].bindings.inputMode == InputConfiguration.PlayerInputType.MOUSE && Input.GetMouseButtonDown(0)
-                    || possiblePlayers[i].bindings.inputMode == InputConfiguration.PlayerInputType.JOYSTICK && Input.GetAxis(possiblePlayers[i].bindings.movementAbilityAxis) != 0;
+        if(possiblePlayers[i].bindings.inputMode == InputConfiguration.PlayerInputType.MOUSE)
+            return Input.GetMouseButtonDown(0);
+        else if (possiblePlayers[i].bindings.inputMode == InputConfiguration.PlayerInputType.JOYSTICK)
+        {
+            float currentAxisValue = Input.GetAxis(possiblePlayers[i].bindings.movementAbilityAxis);
+            
+            bool returnValue = false;
+            if (currentAxisValue != 0 && joystickEdgeTriggers[i].x == 0)
+                returnValue = true;
+
+            joystickEdgeTriggers[i].x = currentAxisValue;
+            return returnValue;
+        }
+        return false;
     }
 
     bool pressedBack(int i)
     {
-        return possiblePlayers[i].bindings.inputMode == InputConfiguration.PlayerInputType.MOUSE && Input.GetMouseButtonDown(1)
-                    || possiblePlayers[i].bindings.inputMode == InputConfiguration.PlayerInputType.JOYSTICK && Input.GetAxis(possiblePlayers[i].bindings.genericAbilityAxis) != 0;
-    }
+        if (possiblePlayers[i].bindings.inputMode == InputConfiguration.PlayerInputType.MOUSE)
+            return Input.GetMouseButtonDown(1);
+        else if (possiblePlayers[i].bindings.inputMode == InputConfiguration.PlayerInputType.JOYSTICK)
+        {
+            float currentAxisValue = Input.GetAxis(possiblePlayers[i].bindings.genericAbilityAxis);
+
+            bool returnValue = false;
+            if (currentAxisValue != 0 && joystickEdgeTriggers[i].y == 0)
+                returnValue = true;
+
+            joystickEdgeTriggers[i].y = currentAxisValue;
+            return returnValue;
+        }
+        return false;
+}
     // non-state-machine implementation
     /*
     void Update()

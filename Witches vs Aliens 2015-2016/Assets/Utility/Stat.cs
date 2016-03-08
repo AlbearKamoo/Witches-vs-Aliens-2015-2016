@@ -58,10 +58,11 @@ public class FloatStatTracker
         internalUpdate();
         return result;
     }
-    public void removeModifier(FloatStat modifier)
+    public bool removeModifier(FloatStat modifier)
     {
-        stats.Remove(modifier);
+        bool returnValue = stats.Remove(modifier);
         internalUpdate();
+        return returnValue;
     }
 
     public static implicit operator float(FloatStatTracker t) //the style guides say this should be explict, not implicit. I can't see why
