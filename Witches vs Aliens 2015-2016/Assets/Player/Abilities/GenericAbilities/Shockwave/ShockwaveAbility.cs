@@ -99,7 +99,7 @@ public class ShockwaveAbility : AbstractGenericAbility
         sfx.Stop();
     }
 
-    protected override void Reset()
+    protected override void Reset(float timeTillActive)
     {
         active = false;
         StopChargingFX();

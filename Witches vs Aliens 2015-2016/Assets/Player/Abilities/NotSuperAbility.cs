@@ -63,6 +63,14 @@ public abstract class NotSuperAbility : AbstractAbility, IObservable<AbilityStat
         cooldownCountdown.Play();
     }
 
+    protected void SetOnCooldown()
+    {
+        active = false;
+        ready = false;
+        Debug.Log("restarting cooldown");
+        cooldownCountdown.Restart();
+    }
+
     protected virtual IEnumerator Cooldown()
     {
         yield return new WaitForSeconds(cooldownTime);
@@ -71,12 +79,12 @@ public abstract class NotSuperAbility : AbstractAbility, IObservable<AbilityStat
 
     public void Notify(ResetMessage m)
     {
-        Reset();
         cooldownCountdown.Stop();
         ready = true;
+        Reset(m.timeTillActive);
     }
 
-    protected abstract void Reset();
+    protected abstract void Reset(float timeTillActive);
 }
 
 public class AbilityStateChangedMessage

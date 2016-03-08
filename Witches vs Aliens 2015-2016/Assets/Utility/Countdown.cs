@@ -61,7 +61,7 @@ public class Countdown {
             script.StopCoroutine(countdownWrapper);
         }
         countdownWrapper = CountdownWrapper();
-        script.StartCoroutine(countdown);
+        script.StartCoroutine(countdownWrapper);
     }
 
     public bool Pause()

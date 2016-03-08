@@ -30,7 +30,7 @@ public class SkillShotAbility : GenericAbility
         instantiatedShot = Instantiate(shotPrefab).GetComponent<SkillShotBullet>();
         instantiatedShot.Initialize(side, this);
         instantiatedShot.Active = false;
-
+        active = false; //start on cooldown
     }
 
     protected override void onFire(Vector2 direction)
@@ -48,8 +48,12 @@ public class SkillShotAbility : GenericAbility
         massMod = null;
     }
 
-    protected override void Reset()
+    protected override void Reset(float timeTillActive)
     {
         instantiatedShot.Reset();
+        active = false;
+        //start on cooldown
+        Callback.FireAndForget(SetOnCooldown, timeTillActive, this);
+        
     }
 }

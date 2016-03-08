@@ -14,7 +14,7 @@ public class ResetScripting : MonoBehaviour, IObservable<ResetMessage> {
 
     public void Reset(Vector2 newPos, float disabledTime)
     {
-        resetMessageObservable.Post(new ResetMessage());
+        resetMessageObservable.Post(new ResetMessage(disabledTime));
         action.DisableAbilities(disabledTime);
         transform.position = newPos;
         vfx.DoFX();
@@ -22,4 +22,11 @@ public class ResetScripting : MonoBehaviour, IObservable<ResetMessage> {
     }
 }
 
-public class ResetMessage { }
+public class ResetMessage
+{
+    public readonly float timeTillActive;
+    public ResetMessage(float timeTillActive)
+    {
+        this.timeTillActive = timeTillActive;
+    }
+}

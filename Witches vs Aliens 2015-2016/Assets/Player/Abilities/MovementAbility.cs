@@ -14,7 +14,7 @@ public abstract class AbstractMovementAbility : NotSuperAbility
 
 public class MovementAbility : AbstractMovementAbility
 {
-    protected override void Reset()
+    protected override void Reset(float timeTillActive)
     {
     }
 }

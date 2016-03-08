@@ -66,7 +66,7 @@ public class ContagionAbility : AbstractGenericAbility {
         active = false;
     }
 
-    protected override void Reset()
+    protected override void Reset(float timeTillActive)
     {
         for (int i = 0; i < contagions.Count; i++)
         {

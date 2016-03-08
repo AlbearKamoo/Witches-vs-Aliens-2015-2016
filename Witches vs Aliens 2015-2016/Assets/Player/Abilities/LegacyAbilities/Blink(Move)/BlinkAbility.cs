@@ -34,7 +34,7 @@ public class BlinkAbility : AbstractMovementAbility {
         active = false;
     }
 
-    protected override void Reset()
+    protected override void Reset(float timeTillActive)
     {
         //don't need to do anything
     }

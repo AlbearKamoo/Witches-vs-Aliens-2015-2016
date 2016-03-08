@@ -12,7 +12,7 @@ public abstract class AbstractGenericAbility : NotSuperAbility
 
 public class GenericAbility : AbstractGenericAbility
 {
-    protected override void Reset()
+    protected override void Reset(float timeTillActive)
     {
     }
 }

@@ -141,7 +141,7 @@ public class BoostAbility : AbstractMovementAbility, IObserver<ResetMessage> {
         Callback.FireAndForget(() => vfx.Stop(), FXDurationExtend, this);
     }
 
-    protected override void Reset()
+    protected override void Reset(float timeTillActive)
     {
         vfx.Stop();
     }

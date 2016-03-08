@@ -27,7 +27,7 @@ public class TimedGenericAbility : AbstractGenericAbility {
         }
     }
 
-    protected override void Reset()
+    protected override void Reset(float timeTillActive)
     {
         active = false;
     }
