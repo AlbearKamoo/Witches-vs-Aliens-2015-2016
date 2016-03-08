@@ -1,12 +1,16 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.Assertions;
 
 [RequireComponent(typeof(AudioSource))]
 public class BoidSuper : TimedSuperAbility, IPuckAbility, IAlliesAbility, IOpponentsAbility, IRandomAbility
 {
     [SerializeField]
     protected GameObject boidPrefab;
+
+    [SerializeField]
+    protected GameObject boidOverlay;
 
     [SerializeField]
     protected int numBoids;
@@ -26,6 +30,7 @@ public class BoidSuper : TimedSuperAbility, IPuckAbility, IAlliesAbility, IOppon
     } }
 
     AudioSource sfx;
+    GameObject instantiatedOverlay;
 
     Collider2D puckCollider;
     public Transform puck { set { puckCollider = value.GetComponent<Collider2D>(); } }
@@ -56,8 +61,7 @@ public class BoidSuper : TimedSuperAbility, IPuckAbility, IAlliesAbility, IOppon
         List<Collider2D> boidColliders = new List<Collider2D>();
         for (int i = 0; i < numBoids; i++)
         {
-            GameObject instantiatedBoid = Instantiate(boidPrefab);
-            instantiatedBoid.transform.position = Random.insideUnitCircle;
+            GameObject instantiatedBoid = Instantiate(boidPrefab, 5 * Random.insideUnitCircle, Quaternion.identity) as GameObject;
             Boid newBoid = instantiatedBoid.GetComponent<Boid>();
             boids.Add(newBoid);
 
@@ -68,6 +72,8 @@ public class BoidSuper : TimedSuperAbility, IPuckAbility, IAlliesAbility, IOppon
             boidColliders.Add(newBoid.Coll);
         }
         sfx.Play();
+        Assert.IsNull(instantiatedOverlay);
+        instantiatedOverlay = SimplePool.Spawn(boidOverlay, Vector2.zero);
     }
 
     protected override void OnDeactivate()
@@ -79,5 +85,6 @@ public class BoidSuper : TimedSuperAbility, IPuckAbility, IAlliesAbility, IOppon
         }
         boids.Clear();
         sfx.Stop();
+        SimplePool.Despawn(instantiatedOverlay);
     }
 }
