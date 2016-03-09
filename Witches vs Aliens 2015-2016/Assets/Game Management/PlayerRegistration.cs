@@ -599,7 +599,7 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
             AbstractPlayerInput input = entry.Value.selector.gameObject.GetComponent<AbstractPlayerInput>();
             InputConfiguration config = input != null ? input.bindings : new InputConfiguration();
             config.networkMode = entry.Value.selector.gameObject.GetComponent<Stats>().networkMode;
-            results.Add(new PlayerComponents(charactersData[entry.Value.SelectedCharacterID].character, config, entry.Key));
+            results.Add(new PlayerComponents(charactersData[entry.Value.SelectedCharacterID].character, config, entry.Key, entry.Value.ui.CharacterVisualsVector));
         }
 
         data.playerComponentPrefabs = results.ToArray();
@@ -734,6 +734,7 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
                                 node.Send(node.AllCostChannel);
                             }
                             setPlayerReady(playerID);
+
                             break;
                         default:
                             Debug.LogError("Invalid Message Type");

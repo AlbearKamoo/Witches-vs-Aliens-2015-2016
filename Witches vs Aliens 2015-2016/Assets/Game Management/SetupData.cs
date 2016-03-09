@@ -28,11 +28,13 @@ public class PlayerComponents
     public CharacterComponents character;
     public InputConfiguration bindings;
     public int playerID;
+    public Vector2 characterVisualsVector;
     public PlayerComponents() { }
-    public PlayerComponents(CharacterComponents character, InputConfiguration bindings, int playerID)
+    public PlayerComponents(CharacterComponents character, InputConfiguration bindings, int playerID, Vector2 characterVisualsVector)
     {
         this.character = character;
         this.bindings = bindings;
         this.playerID = playerID;
+        this.characterVisualsVector = characterVisualsVector;
     }
 }

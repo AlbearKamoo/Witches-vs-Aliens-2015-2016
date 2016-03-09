@@ -41,6 +41,7 @@ public class RegisteredPlayerUIView : MonoBehaviour {
     AbstractPlayerVisuals spriteSource;
     IEnumerator readyRoutine;
     Vector2 characterVisualsVector;
+    public Vector2 CharacterVisualsVector { get { return characterVisualsVector; } }
     public PlayerRegistration.Registration registration { get; set; }
     public Color playerColor { set { background.color = value; } }
     public string playerName { set { title.text = value; } }
@@ -83,19 +84,19 @@ public class RegisteredPlayerUIView : MonoBehaviour {
             {
                 StopCoroutine(readyRoutine);
                 readyRoutine = null;
-                UpdateCharacterVisuals(characterVisualsVector = Vector2.zero);
+                UpdateCharacterVisuals(characterVisualsVector = new Vector2(Random.value, Random.value));
             }
         }
     }
 	// Use this for initialization
 	void Awake () {
         background = GetComponent<Image>();
-        characterVisualsVector = Vector2.zero;
+        characterVisualsVector = new Vector2(Random.value, Random.value);
 	}
 
     public void Despawn()
     {
-        characterVisualsVector = Vector2.zero;
+        characterVisualsVector = new Vector2(Random.value, Random.value);
         SimplePool.Despawn(this.gameObject);
     }
 
@@ -103,7 +104,7 @@ public class RegisteredPlayerUIView : MonoBehaviour {
     {
         CharacterSprite.enabled = true;
         spriteSource = registration.context.charactersData[ID].character.visuals.GetComponent<AbstractPlayerVisuals>();
-        UpdateCharacterVisuals(Vector2.zero);
+        UpdateCharacterVisuals(characterVisualsVector = new Vector2(Random.value, Random.value));
     }
 
     public void UpdateCharacterVisuals(Vector2 visualSpaceInput)

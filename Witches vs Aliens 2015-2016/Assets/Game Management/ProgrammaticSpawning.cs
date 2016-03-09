@@ -144,7 +144,11 @@ public class ProgrammaticSpawning : MonoBehaviour, IObserver<Message> {
             GameObject.Instantiate(data.playerComponentPrefabs[i].character.movementAbility).transform.SetParent(spawnedPlayer.transform, false);
             GameObject.Instantiate(data.playerComponentPrefabs[i].character.genericAbility).transform.SetParent(spawnedPlayer.transform, false);
             GameObject.Instantiate(data.playerComponentPrefabs[i].character.superAbility).transform.SetParent(spawnedPlayer.transform, false);
-            GameObject.Instantiate(data.playerComponentPrefabs[i].character.visuals).transform.SetParent(spawnedPlayer.transform, false);
+            GameObject visuals = GameObject.Instantiate(data.playerComponentPrefabs[i].character.visuals);
+            visuals.transform.SetParent(spawnedPlayer.transform, false);
+            IHueShiftableVisuals huedVisuals = visuals.GetComponent<IHueShiftableVisuals>();
+            if (huedVisuals != null)
+                huedVisuals.shift = data.playerComponentPrefabs[i].characterVisualsVector;
             players[i] = spawnedPlayer.transform;
             switch (data.playerComponentPrefabs[i].character.side)
             {

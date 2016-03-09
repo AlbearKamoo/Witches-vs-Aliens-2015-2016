@@ -18,7 +18,6 @@ public class GameEndScripting : MonoBehaviour {
 	// Use this for initialization
 	void Awake () {
         GetComponent<AudioSource>().Play();
-        Debug.Log(".");
         canvas = GameObject.FindGameObjectWithTag(Tags.canvas).GetComponentInParent<Canvas>().transform;
 	}
 
