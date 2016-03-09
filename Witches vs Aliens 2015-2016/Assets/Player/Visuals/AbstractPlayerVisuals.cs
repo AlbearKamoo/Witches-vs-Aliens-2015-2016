@@ -17,7 +17,7 @@ public abstract class AbstractPlayerVisuals : MonoBehaviour {
             UpdateVisualRotation(movementDirection);
     }
 
-    public abstract Sprite selectionSprite { get; }
+    public abstract Sprite selectionSprite(Vector2 visualSpaceInput);
 
     protected abstract void UpdateVisualRotation(Vector2 direction);
 }

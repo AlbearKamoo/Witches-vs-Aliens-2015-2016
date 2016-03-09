@@ -8,7 +8,7 @@ public class ContinuousDirectionVisuals : AbstractPlayerVisuals {
     [SerializeField]
     protected Sprite _selectionSprite;
 
-    public override Sprite selectionSprite { get { return _selectionSprite; } }
+    public override Sprite selectionSprite(Vector2 visualSpaceInput) { return _selectionSprite; }
 
     void Awake()
     {

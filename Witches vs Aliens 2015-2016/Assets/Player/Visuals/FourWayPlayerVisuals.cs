@@ -13,7 +13,7 @@ public class FourWayPlayerVisuals : AbstractPlayerVisuals {
     [SerializeField]
     protected Sprite downSprite;
 
-    public override Sprite selectionSprite { get { return downSprite; } }
+    public override Sprite selectionSprite(Vector2 visualSpaceInput) { return downSprite; }
 
     SpriteRenderer rend;
     Direction prevDirection;

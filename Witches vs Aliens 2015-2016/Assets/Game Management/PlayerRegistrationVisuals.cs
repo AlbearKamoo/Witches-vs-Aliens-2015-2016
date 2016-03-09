@@ -1,6 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// placed as a child of the registration puck, in order to handle world-space visuals for registration
+/// </summary>
+
 public class PlayerRegistrationVisuals : MonoBehaviour {
     bool active = false;
     public bool Active

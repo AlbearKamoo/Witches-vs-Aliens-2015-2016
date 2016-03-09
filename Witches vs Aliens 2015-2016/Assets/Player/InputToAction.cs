@@ -75,9 +75,9 @@ public class InputToAction : MonoBehaviour, ISpeedLimiter, INetworkable, IObserv
     [AutoLink(childPath = "Rotating")]
     protected Transform rotating;
 
-    Vector2 _direction = Vector2.zero;
-    public Vector2 direction { get {
-        return _direction;
+    Vector2 _rotationDirection = Vector2.zero;
+    public Vector2 rotationDirection { get {
+        return _rotationDirection;
     } }
 
     Observable<GenericAbilityFiredMessage> genericAbilityObservable = new Observable<GenericAbilityFiredMessage>();
@@ -174,7 +174,7 @@ public class InputToAction : MonoBehaviour, ISpeedLimiter, INetworkable, IObserv
         if (_rotationEnabled)
         {
             rotating.rotation = Quaternion.Slerp(rotating.rotation, targetDirection.ToRotation(), rotationLerpValue); //it's in fixed update, and the direction property should be used instead of sampling the transform
-            _direction = targetDirection;
+            _rotationDirection = targetDirection;
         }
     }
 
@@ -197,7 +197,7 @@ public class InputToAction : MonoBehaviour, ISpeedLimiter, INetworkable, IObserv
                         break;
                 }
                 node.BinaryWriter.Write((byte)(stats.playerID));
-                node.BinaryWriter.Write(direction);
+                node.BinaryWriter.Write(rotationDirection);
                 node.Send(node.ConnectionIDs, node.AllCostChannel);
                 break;
             //add ability.LocalFire, for immediate feedback awaiting server validation
@@ -205,15 +205,15 @@ public class InputToAction : MonoBehaviour, ISpeedLimiter, INetworkable, IObserv
                 switch (t)
                 {
                     case AbilityType.MOVEMENT:
-                        if(activateAndSend(PacketType.PLAYERMOVEMENTABILITY, direction, (byte)(stats.playerID), moveAbility))
-                            movementAbilityObservable.Post(new MovementAbilityFiredMessage(direction));
+                        if(activateAndSend(PacketType.PLAYERMOVEMENTABILITY, rotationDirection, (byte)(stats.playerID), moveAbility))
+                            movementAbilityObservable.Post(new MovementAbilityFiredMessage(rotationDirection));
                         break;
                     case AbilityType.GENERIC:
-                        if(activateAndSend(PacketType.PLAYERGENERICABILITY, direction, (byte)(stats.playerID), genAbility))
-                            genericAbilityObservable.Post(new GenericAbilityFiredMessage(direction));
+                        if(activateAndSend(PacketType.PLAYERGENERICABILITY, rotationDirection, (byte)(stats.playerID), genAbility))
+                            genericAbilityObservable.Post(new GenericAbilityFiredMessage(rotationDirection));
                         break;
                     case AbilityType.SUPER:
-                        if(activateAndSend(PacketType.PLAYERSUPERABILITY, direction, (byte)(stats.playerID), superAbility))
+                        if(activateAndSend(PacketType.PLAYERSUPERABILITY, rotationDirection, (byte)(stats.playerID), superAbility))
                             superAbilityObservable.Post(new SuperAbilityFiredMessage());
                         break;
                 }
@@ -225,15 +225,15 @@ public class InputToAction : MonoBehaviour, ISpeedLimiter, INetworkable, IObserv
                     switch (t)
                     {
                         case AbilityType.MOVEMENT:
-                            if (moveAbility.Fire(direction))
-                                movementAbilityObservable.Post(new MovementAbilityFiredMessage(direction));
+                            if (moveAbility.Fire(rotationDirection))
+                                movementAbilityObservable.Post(new MovementAbilityFiredMessage(rotationDirection));
                             break;
                         case AbilityType.GENERIC:
-                            if (genAbility.Fire(direction))
-                                genericAbilityObservable.Post(new GenericAbilityFiredMessage(direction));
+                            if (genAbility.Fire(rotationDirection))
+                                genericAbilityObservable.Post(new GenericAbilityFiredMessage(rotationDirection));
                             break;
                         case AbilityType.SUPER:
-                            if (superAbility.Fire(direction))
+                            if (superAbility.Fire(rotationDirection))
                                 superAbilityObservable.Post(new SuperAbilityFiredMessage());
                             break;
                     }
