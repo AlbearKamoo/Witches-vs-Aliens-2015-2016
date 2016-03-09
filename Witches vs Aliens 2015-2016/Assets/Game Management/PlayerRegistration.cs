@@ -97,7 +97,8 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
 
     void Update()
     {
-        checkInput();
+        if (!isReady())
+            checkInput();
 
         //now check if all are ready
         checkReady();
@@ -427,7 +428,9 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
 
             for (int i = 0; i < possiblePlayers.Length; i++)
             {
-                if (pressedAccept(i)) //register
+                bool pressed = pressedAccept(i);
+
+                if (pressed)
                 {
                     startGame();
                     break;
@@ -456,7 +459,9 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
             
             bool returnValue = false;
             if (currentAxisValue != 0 && joystickEdgeTriggers[i].x == 0)
+            {
                 returnValue = true;
+            }
 
             joystickEdgeTriggers[i].x = currentAxisValue;
             return returnValue;
