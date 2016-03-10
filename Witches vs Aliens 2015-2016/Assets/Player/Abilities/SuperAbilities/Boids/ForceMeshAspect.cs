@@ -26,8 +26,7 @@ public class ForceMeshAspect : MonoBehaviour {
 
             Debug.Log(newVertices[i]);
         }
-
-        target.SetUVs(0, new List<Vector2>(newUVs));
-        target.SetVertices(new List<Vector3>(newVertices));
+        target.uv = newUVs;
+        target.vertices = newVertices;
 	}
 }
