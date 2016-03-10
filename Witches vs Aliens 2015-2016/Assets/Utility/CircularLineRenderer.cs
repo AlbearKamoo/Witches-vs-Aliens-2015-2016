@@ -15,6 +15,9 @@ public class CircularLineRenderer : MonoBehaviour {
     [SerializeField]
     protected int numSides;
 
+    [SerializeField]
+    protected 
+
 	// Use this for initialization
 	void Awake () {
         Assert.IsTrue(outerRadius > innerRadius);

@@ -9,27 +9,17 @@ public class SuperAbility : AbstractAbility
         get { return _ready; }
         set
         {
-            if (value)
-            {
-                if (!_ready)
-                {
-                    rend.enabled = true;
-                }
-            }
-            else if (_ready)
-            {
-                rend.enabled = false;
-            }
+            visuals.SetActive(value);
             _ready = value;
         }
     }
 
-    SpriteRenderer rend;
+    GameObject visuals;
 
     protected virtual void Start()
     {
         if(transform.parent != null)
-            rend = transform.parent.Find("SuperUI").GetComponent<SpriteRenderer>();
+            visuals = transform.parent.Find("SuperUI").gameObject;
     }
 
     protected override void onFire(Vector2 direction)
