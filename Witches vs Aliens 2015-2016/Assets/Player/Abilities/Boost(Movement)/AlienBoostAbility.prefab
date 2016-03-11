@@ -146,7 +146,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21c9b8f96f375644c8c2ad69ea98aa61, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AbilityUIPrefab: {fileID: 174334, guid: fa4c3179737403447a9bbfd85931d9fb, type: 2}
+  AbilityUIPrefab: {fileID: 157042, guid: fa4c3179737403447a9bbfd85931d9fb, type: 2}
   cooldownTime: 5
   speedMultiplier: 2.5
   maxDuration: 0.33333334
@@ -1819,7 +1819,7 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: AbilityUIPrefab
       value: 
-      objectReference: {fileID: 174334, guid: fa4c3179737403447a9bbfd85931d9fb, type: 2}
+      objectReference: {fileID: 157042, guid: fa4c3179737403447a9bbfd85931d9fb, type: 2}
     - target: {fileID: 0}
       propertyPath: panLevelCustomCurve.m_RotationOrder
       value: 0

@@ -4,10 +4,12 @@ using System.Collections;
 public class OnOffAbilityUI : AbstractAbilityUI {
 
     ParticleSystem vfx;
+    ParticleSystem ping;
 
     protected virtual void Awake()
     {
-        vfx = GetComponent<ParticleSystem>();
+        vfx = transform.Find("MainVisuals").GetComponent<ParticleSystem>();
+        ping = transform.Find("Ping").GetComponent<ParticleSystem>();
     }
 
     public override void Notify(AbilityStateChangedMessage m) //update our display state
@@ -15,6 +17,8 @@ public class OnOffAbilityUI : AbstractAbilityUI {
         if (m.ready)
         {
             vfx.Play();
+            ping.Play();
+            Debug.Log("PING!");
         }
         else
         {
