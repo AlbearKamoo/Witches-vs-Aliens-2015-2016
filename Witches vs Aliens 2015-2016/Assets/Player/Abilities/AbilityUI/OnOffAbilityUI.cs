@@ -18,7 +18,6 @@ public class OnOffAbilityUI : AbstractAbilityUI {
         {
             vfx.Play();
             ping.Play();
-            Debug.Log("PING!");
         }
         else
         {

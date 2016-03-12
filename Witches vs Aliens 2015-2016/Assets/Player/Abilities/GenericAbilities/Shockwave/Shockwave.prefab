@@ -159,7 +159,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.1
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -250,7 +250,6 @@ MonoBehaviour:
   chargeUp: 1
   radius: 10
   wavevfx: {fileID: 187954, guid: bd37e0137076569419c99838023ca225, type: 2}
-  shockwaveSFX: {fileID: 8300000, guid: b943de1a9048c3a4381cee6bcb6a18eb, type: 3}
   chargingvfx: {fileID: 19802928}
   chargingSFX: {fileID: 8300000, guid: 8776d6174dac43d4984d05e93bef5f2f, type: 3}
   backgroundMagnitude: 0.25

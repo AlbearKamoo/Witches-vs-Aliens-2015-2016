@@ -2,12 +2,11 @@
 using UnityEngine.UI;
 using System.Collections;
 
-
-//there should only be one of these, placed on the component that will play the music
-
 //Options should be in the Tag static class
 
+//Sets the audiosource to use music's volume settings
 
+[RequireComponent(typeof(AudioSource))]
 public class VolumeController : MonoBehaviour, IObserver<Message>
 {
     AudioSource music;
@@ -27,7 +26,8 @@ public class VolumeController : MonoBehaviour, IObserver<Message>
         if (PlayerPrefs.HasKey(Tags.Options.MusicLevel)) // set volumes from stored values
             music.volume = PlayerPrefs.GetInt(Tags.Options.MusicLevel) / 100.0f;
         else
-            PlayerPrefs.SetInt(Tags.Options.MusicLevel, 100); 
+            PlayerPrefs.SetInt(Tags.Options.MusicLevel, 100);
+        PlayerPrefs.Save();
 
     }
 

@@ -10,6 +10,7 @@ GameObject:
   - 4: {fileID: 429484}
   - 82: {fileID: 8202080}
   - 114: {fileID: 11494704}
+  - 114: {fileID: 11415670}
   m_Layer: 0
   m_Name: IntroMusic
   m_TagString: Untagged
@@ -37,11 +38,10 @@ AudioSource:
   m_GameObject: {fileID: 110878}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 24300001, guid: 12fca95c238125d44b367ec895672304,
-    type: 2}
+  OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 6651f7b03db2b7441a001d043a223ec8, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.1
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -104,6 +104,17 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
+--- !u!114 &11415670
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 110878}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 647bf210f3074fc4a94fefa336df675e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &11494704
 MonoBehaviour:
   m_ObjectHideFlags: 1
