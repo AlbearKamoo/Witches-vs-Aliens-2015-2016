@@ -7,6 +7,8 @@ public class RegisteredPlayerUIView : MonoBehaviour {
 
     Image background;
     [SerializeField]
+    protected float selectFlashDuration;
+    [SerializeField]
     [AutoLink(childPath = "Title")]
     protected Text title;
     [SerializeField]
@@ -41,6 +43,8 @@ public class RegisteredPlayerUIView : MonoBehaviour {
     AbstractPlayerVisuals spriteSource;
     IEnumerator readyRoutine;
     Vector2 characterVisualsVector;
+    Material myMat;
+    Countdown flashCountdown;
     public Vector2 CharacterVisualsVector { get { return characterVisualsVector; } }
     public PlayerRegistration.Registration registration { get; set; }
     public Color playerColor { set { background.color = value; } }
@@ -79,6 +83,7 @@ public class RegisteredPlayerUIView : MonoBehaviour {
                 Assert.IsNull(readyRoutine);
                 readyRoutine = SelectCharacterVisuals();
                 StartCoroutine(readyRoutine);
+                flashCountdown.Restart();
             }
             else if(readyRoutine != null)
             {
@@ -92,12 +97,22 @@ public class RegisteredPlayerUIView : MonoBehaviour {
 	void Awake () {
         background = GetComponent<Image>();
         characterVisualsVector = new Vector2(Random.value, Random.value);
+
+        myMat = Instantiate(CharacterSprite.material);
+        CharacterSprite.material = myMat;
+        myMat.SetFloat(Tags.ShaderParams.cutoff, 0);
+        flashCountdown = new Countdown(Flash, this, playOnAwake: true);
 	}
 
     public void Despawn()
     {
         characterVisualsVector = new Vector2(Random.value, Random.value);
         SimplePool.Despawn(this.gameObject);
+    }
+
+    IEnumerator Flash()
+    {
+        return Callback.Routines.DoLerpRoutine((float l) => myMat.SetFloat(Tags.ShaderParams.cutoff, l), selectFlashDuration, this, reverse: true);
     }
 
     public void UpdateCharacterSprite(int ID)

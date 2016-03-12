@@ -99,6 +99,8 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
     {
         if (!isReady())
             checkInput();
+        else
+            checkPressedBack();
 
         //now check if all are ready
         checkReady();
@@ -106,13 +108,26 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
 
     void checkInput()
     {
+        checkPressedAccept();
+        checkPressedBack();
+    }
+
+    void checkPressedAccept()
+    {
         for (int i = 0; i < possiblePlayers.Length; i++)
         {
             if (pressedAccept(i)) //register
             {
                 OnPressedAccept(i);
             }
-            else if (pressedBack(i)) //deregister
+        }
+    }
+
+    void checkPressedBack()
+    {
+        for (int i = 0; i < possiblePlayers.Length; i++)
+        {
+            if (pressedBack(i)) //register
             {
                 OnPressedBack(i);
             }
@@ -305,7 +320,8 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
     void setPlayerReady(int playerID)
     {
         registeredPlayers[playerID].ready = true;
-        announcements.PlayOneShot(registeredPlayers[playerID].context.charactersData[registeredPlayers[playerID].SelectedCharacterID].character.selectionSound);
+        CharacterHolder characterHolder = registeredPlayers[playerID].context.charactersData[registeredPlayers[playerID].SelectedCharacterID];
+        characterHolder.Select();
         checkReady();
     }
 
@@ -434,6 +450,10 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
                 {
                     startGame();
                     break;
+                }
+                else if (pressedBack(i))
+                {
+
                 }
             }
         }
