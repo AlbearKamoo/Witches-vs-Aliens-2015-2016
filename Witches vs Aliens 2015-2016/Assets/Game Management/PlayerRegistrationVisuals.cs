@@ -2,7 +2,7 @@
 using System.Collections;
 
 /// <summary>
-/// placed as a child of the registration puck, in order to handle world-space visuals for registration
+/// Placed as a child of the registration puck, in order to handle world-space visuals for registration.
 /// </summary>
 
 public class PlayerRegistrationVisuals : MonoBehaviour {

@@ -77,7 +77,7 @@ public class HampsterBall : MonoBehaviour, ISpeedLimiter {
         for (int i = 0; i <= numSides; i++)
         {
             float angle = TwoPI * i / numSides;
-            Vector2 direction = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle));
+            Vector2 direction = angle.RadToVector2();
             points[i] = innerRadius * direction;
             rend.SetPosition(i, visualRadius * direction);
 
@@ -87,7 +87,7 @@ public class HampsterBall : MonoBehaviour, ISpeedLimiter {
         for (int i = numSides + 1; i < points.Length; i++)
         {
             float angle = TwoPI * i / numSides;
-            points[i] = new Vector2(outerRadius * Mathf.Cos(angle), outerRadius * Mathf.Sin(angle));
+            points[i] = outerRadius * angle.RadToVector2();
         }
 
         ball.points = points;

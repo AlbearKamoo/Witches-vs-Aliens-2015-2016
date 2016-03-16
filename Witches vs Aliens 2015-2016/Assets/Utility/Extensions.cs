@@ -82,6 +82,6 @@ public static class VectorExtension
 
     public static Vector2 RadToVector2(this float angleRad)
     {
-        return new Vector2(Mathf.Sin(angleRad), Mathf.Cos(angleRad));
+        return new Vector2(Mathf.Cos(angleRad), Mathf.Sin(angleRad));
     }
 }
