@@ -7,6 +7,9 @@ using UnityEngine.Assertions;
 public class RaygunAbility : AbstractGenericAbility {
 
     [SerializeField]
+    protected GameObject hitVisualsPrefab;
+
+    [SerializeField]
     protected float chargeUpTime;
 
     [SerializeField]
@@ -123,18 +126,30 @@ public class RaygunAbility : AbstractGenericAbility {
                 RaycastHit2D[] hits = Physics2D.RaycastAll(this.transform.position, direction);
                 for (int i = 0; i < hits.Length; i++)
                 {
-                    InputToAction input = hits[i].transform.GetComponentInParent<InputToAction>();
-                    if (input != null)
+                    if (hits[i].transform.CompareTag(Tags.player))
                     {
-                        Stats otherStats = hits[i].transform.GetComponentInParent<Stats>();
-                        if (otherStats.side != myStats.side)
-                        {
-                            input.DisableMovement(stunTime);
-                        }
+                        hitTarget(hits[i]);
                     }
                 }
                     active = false;
             }, this);
+    }
+
+    void hitTarget(RaycastHit2D hit)
+    {
+        InputToAction input = hit.transform.GetComponentInParent<InputToAction>();
+        if (input != null)
+        {
+            Stats otherStats = hit.transform.GetComponentInParent<Stats>();
+            if (otherStats.side != myStats.side)
+            {
+                input.DisableMovement(stunTime);
+                GameObject visuals = SimplePool.Spawn(hitVisualsPrefab);
+                visuals.transform.SetParent(hit.transform.root);
+                visuals.transform.localPosition = Vector3.zero;
+                Callback.FireAndForget(() => SimplePool.Despawn(visuals), stunTime, this);
+            }
+        }
     }
 
     protected override void Reset(float timeTillActive)
