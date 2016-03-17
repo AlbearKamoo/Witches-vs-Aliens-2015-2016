@@ -33,16 +33,26 @@ public class RaygunAbility : AbstractGenericAbility {
     [SerializeField]
     protected int numArcPoints;
 
+    /// <summary>
+    /// How long the line-renderer-created ray lasts when a shot is fired.
+    /// </summary>
+    [SerializeField]
+    protected float rayDuration;
+
     MeshFilter meshFilter;
     MeshRenderer meshRenderer;
     Transform rotating;
     Stats myStats;
+    ParticleSystem vfx;
+    LineRenderer firedRay;
 
     protected override void Awake()
     {
         base.Awake();
         meshFilter = GetComponent<MeshFilter>();
         meshRenderer = GetComponent<MeshRenderer>();
+        vfx = GetComponentInChildren<ParticleSystem>();
+        firedRay = GetComponent<LineRenderer>();
 
         //create our mesh to represent the firing arc
         Mesh arcMesh = new Mesh();
@@ -123,6 +133,8 @@ public class RaygunAbility : AbstractGenericAbility {
                 StopChargingFX();
 
                 direction = transform.right;
+                playShotVFX(direction);
+
                 RaycastHit2D[] hits = Physics2D.RaycastAll(this.transform.position, direction);
                 for (int i = 0; i < hits.Length; i++)
                 {
@@ -150,6 +162,15 @@ public class RaygunAbility : AbstractGenericAbility {
                 Callback.FireAndForget(() => SimplePool.Despawn(visuals), stunTime, this);
             }
         }
+    }
+
+    void playShotVFX(Vector3 direction)
+    {
+        vfx.Play();
+        firedRay.enabled = true;
+        firedRay.SetPosition(0, this.transform.position);
+        firedRay.SetPosition(1, this.transform.position + 60 * direction);
+        Callback.DoLerp((float l) => {Color rayColor = Color.Lerp(Color.white, Color.black, l); firedRay.SetColors(rayColor, rayColor);}, rayDuration, this).FollowedBy(() => firedRay.enabled = false, this);
     }
 
     protected override void Reset(float timeTillActive)

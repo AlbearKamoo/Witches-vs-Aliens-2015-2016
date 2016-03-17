@@ -6,9 +6,9 @@ Material:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: RaygunMat
+  m_Name: RaygunRayMat
   m_Shader: {fileID: 200, guid: 0000000000000000f000000000000000, type: 0}
-  m_ShaderKeywords: 
+  m_ShaderKeywords: USE_COLOR
   m_LightmapFlags: 5
   m_CustomRenderQueue: 3000
   stringTagMap: {}
@@ -19,7 +19,7 @@ Material:
         first:
           name: _MainTex
         second:
-          m_Texture: {fileID: 2800000, guid: 6a2cdc90b79d990408635b5871f3338a, type: 3}
+          m_Texture: {fileID: 2800000, guid: cef890eea48baa44395b310ca6c9a083, type: 3}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
       data:
@@ -78,20 +78,6 @@ Material:
           m_Texture: {fileID: 0}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
-      data:
-        first:
-          name: _EffectTex1
-        second:
-          m_Texture: {fileID: 0}
-          m_Scale: {x: 1, y: 1}
-          m_Offset: {x: 0, y: 0}
-      data:
-        first:
-          name: _EffectTex2
-        second:
-          m_Texture: {fileID: 0}
-          m_Scale: {x: 1, y: 1}
-          m_Offset: {x: 0, y: 0}
     m_Floats:
       data:
         first:
@@ -143,28 +129,12 @@ Material:
         second: 0
       data:
         first:
+          name: _USES_COLOR
+        second: 1
+      data:
+        first:
           name: _InvFade
         second: 1
-      data:
-        first:
-          name: _XShift
-        second: 1
-      data:
-        first:
-          name: _YShift
-        second: 1
-      data:
-        first:
-          name: _Intensity
-        second: 0.1
-      data:
-        first:
-          name: _RangeMin
-        second: 1
-      data:
-        first:
-          name: _RangeMax
-        second: 2
     m_Colors:
       data:
         first:
@@ -177,20 +147,4 @@ Material:
       data:
         first:
           name: _TintColor
-        second: {r: 0.4852941, g: 0, b: 0, a: 0.5}
-      data:
-        first:
-          name: _PuckPos
-        second: {r: 0, g: 0, b: 0, a: 1}
-      data:
-        first:
-          name: _WitchPos1
-        second: {r: 10, g: 10, b: 0, a: 1}
-      data:
-        first:
-          name: _WitchPos2
-        second: {r: 10, g: 10, b: 0, a: 1}
-      data:
-        first:
-          name: _WitchPos3
-        second: {r: 10, g: 10, b: 0, a: 1}
+        second: {r: 0.5, g: 0.5, b: 0.5, a: 0.5}
