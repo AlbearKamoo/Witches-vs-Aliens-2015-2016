@@ -92,6 +92,9 @@ public class InputToAction : MonoBehaviour, ISpeedLimiter, INetworkable, IObserv
     private List<Callback.CallbackMethod> preFixedUpdateDelegates = new List<Callback.CallbackMethod>();
     public List<Callback.CallbackMethod> PreFixedUpdateDelegates { get { return preFixedUpdateDelegates; } }
 
+    private List<Callback.CallbackMethod> postFixedUpdateDelegates = new List<Callback.CallbackMethod>();
+    public List<Callback.CallbackMethod> PostFixedUpdateDelegates { get { return postFixedUpdateDelegates; } }
+
     Rigidbody2D rigid;
     AbstractMovementAbility moveAbility;
     public AbstractMovementAbility MoveAbility { set { moveAbility = value; } }
@@ -167,6 +170,12 @@ public class InputToAction : MonoBehaviour, ISpeedLimiter, INetworkable, IObserv
         //rotation
         if (aimingInputDirection.sqrMagnitude == 0 && normalizedMovementInput.sqrMagnitude != 0) //aimingInput rotation is handled when the aiming input is set
             rotateTowards(normalizedMovementInput);
+
+        for (int i = 0; i < postFixedUpdateDelegates.Count; i++)
+        {
+            postFixedUpdateDelegates[i]();
+        }
+
 	}
 
     void rotateTowards(Vector2 targetDirection)

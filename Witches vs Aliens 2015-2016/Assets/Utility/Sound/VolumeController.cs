@@ -11,10 +11,14 @@ public class VolumeController : MonoBehaviour, IObserver<Message>
 {
     AudioSource music;
 
+    float baseVolume;
+
     void Awake()
     {
         music = GetComponent<AudioSource>();
         music.ignoreListenerVolume = true;
+
+        baseVolume = music.volume;
 
         Observers.Subscribe(this, Tags.Options.MusicLevel, Tags.Options.SoundLevel);
 
@@ -24,7 +28,7 @@ public class VolumeController : MonoBehaviour, IObserver<Message>
             PlayerPrefs.SetInt(Tags.Options.SoundLevel, 100);
 
         if (PlayerPrefs.HasKey(Tags.Options.MusicLevel)) // set volumes from stored values
-            music.volume = PlayerPrefs.GetInt(Tags.Options.MusicLevel) / 100.0f;
+            music.volume = baseVolume * PlayerPrefs.GetInt(Tags.Options.MusicLevel) / 100.0f;
         else
             PlayerPrefs.SetInt(Tags.Options.MusicLevel, 100);
         PlayerPrefs.Save();
@@ -36,7 +40,7 @@ public class VolumeController : MonoBehaviour, IObserver<Message>
         switch (message.messageType)
         {
             case Tags.Options.MusicLevel:
-                music.volume = PlayerPrefs.GetInt(Tags.Options.MusicLevel) / 100.0f;
+                music.volume = baseVolume * PlayerPrefs.GetInt(Tags.Options.MusicLevel) / 100.0f;
                 break;
             case Tags.Options.SoundLevel:
                 AudioListener.volume = PlayerPrefs.GetInt(Tags.Options.SoundLevel) / 100.0f;
