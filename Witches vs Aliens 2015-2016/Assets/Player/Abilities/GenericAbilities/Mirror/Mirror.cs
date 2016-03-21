@@ -7,6 +7,9 @@ using UnityEngine.Assertions;
 [RequireComponent(typeof(StatsReference))]
 public class Mirror : MonoBehaviour {
 
+    [SerializeField]
+    public bool reverseInputOnMirror;
+
     InputToAction mirrorTarget;
     Rigidbody2D mirrorRigidbody;
     Rigidbody2D myRigidbody;
@@ -28,10 +31,14 @@ public class Mirror : MonoBehaviour {
                 UpdateMirror();
                 //vfx.DoFX();
                 mirrorTarget.PostFixedUpdateDelegates.Add(UpdateMirror);
+                if(reverseInputOnMirror)
+                    mirrorTarget.PreFixedUpdateDelegates.Add(ReverseInput);
             }
             else
             {
                 mirrorTarget.PostFixedUpdateDelegates.Remove(UpdateMirror);
+                if (reverseInputOnMirror)
+                    mirrorTarget.PreFixedUpdateDelegates.Remove(ReverseInput);
             }
         }
     }
@@ -51,6 +58,11 @@ public class Mirror : MonoBehaviour {
         visuals.transform.localPosition = Vector3.zero;
 
         GetComponent<StatsReference>().referencedStat = mirrorTarget.GetComponent<Stats>();
+    }
+
+    void ReverseInput()
+    {
+        mirrorTarget.normalizedMovementInput = -mirrorTarget.normalizedMovementInput;
     }
 
     public void UpdateMirror()
