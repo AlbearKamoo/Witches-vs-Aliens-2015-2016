@@ -34,9 +34,10 @@
 
 			struct v2f
 			{
-				half2 uv0 : TEXCOORD0;
-				half2 uv1 : TEXCOORD1;
-				half2 uv2 : TEXCOORD2;
+				half2 uv  : TEXCOORD0;
+				half2 uv0 : TEXCOORD1;
+				half2 uv1 : TEXCOORD2;
+				half2 uv2 : TEXCOORD3;
 				float4 vertex : SV_POSITION;
 			};
 
@@ -71,6 +72,7 @@
 			{
 				v2f o;
 				o.vertex = mul(UNITY_MATRIX_MVP, v.vertex);
+				o.uv = v.uv;
 				o.uv0 = TRANSFORM_TEX(v.uv, _MainTex);
 				o.uv1 = TRANSFORM_TEX(v.uv, _EffectTex1);
 				o.uv2 = TRANSFORM_TEX(v.uv, _EffectTex2);
@@ -83,7 +85,7 @@
 				+ tex2D(_EffectTex2, i.uv2  - fixed2(_XShift, _YShift) * _Time.gg)/2);
 				half2 uv = i.uv0 + _Intensity * distortion(effectColor.rg);
 				fixed4 col = tex2D(_MainTex, uv);
-				col.a *= -4 * i.uv0.y * (i.uv0.y - 1);
+				col.a *= -4 * i.uv.y * (i.uv.y - 1);
 				return col;
 			}
 			ENDCG
