@@ -75,10 +75,15 @@
 				ColorVector.x = (col.x - col.z) * scaleFactor;
 				ColorVector.y = (col.y - col.z) * scaleFactor;
 
-				half hypotenuse = sqrt((ColorVector.x * ColorVector.x) + (ColorVector.y * ColorVector.y));
+				//half hypotenuse = sqrt((ColorVector.x * ColorVector.x) + (ColorVector.y * ColorVector.y));
 
-				half ColorSin = ColorVector.y / hypotenuse;
-				half ColorCos = ColorVector.x / hypotenuse;
+				//half ColorSin = ColorVector.y / hypotenuse;
+				//half ColorCos = ColorVector.x / hypotenuse;
+
+				half2 normalizedColor = normalize(ColorVector);
+
+				half ColorSin = normalizedColor.y;
+				half ColorCos = normalizedColor.x;
 
 				//map from [0, 1] to [-1, 1]
 				subPixelUV.x = 2 * subPixelUV.x - 1;
