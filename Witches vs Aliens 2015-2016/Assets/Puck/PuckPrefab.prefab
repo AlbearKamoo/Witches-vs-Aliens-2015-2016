@@ -285,7 +285,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   innerRadius: 0
   outerRadius: 1
-  numSides: 100
+  numSides: 20
 --- !u!114 &11497860
 MonoBehaviour:
   m_ObjectHideFlags: 1
