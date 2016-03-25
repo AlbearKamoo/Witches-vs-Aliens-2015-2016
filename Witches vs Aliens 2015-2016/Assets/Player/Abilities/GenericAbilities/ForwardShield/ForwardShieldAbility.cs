@@ -39,7 +39,7 @@ public class ForwardShieldAbility : TimedGenericAbility, IObserver<MovementAbili
     {
         base.OnActivate();
         forwardShield.SetActive(true);
-        massMod = action.mass.addModifier(99999f);
+        massMod = action.mass.addModifier(99f);
     }
 
     protected override void OnDeactivate()
