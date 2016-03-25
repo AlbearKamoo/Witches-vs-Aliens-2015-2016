@@ -37,7 +37,6 @@ public abstract class NetworkNode : AbstractNetworkNode, IObservable<OutgoingNet
 
     protected override void Start()
     {
-        Debug.Log("Start");
         base.Start();
         StartCoroutine(SendStateDataCoroutine());
     }

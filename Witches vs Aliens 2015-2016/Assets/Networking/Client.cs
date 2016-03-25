@@ -13,8 +13,7 @@ public class Client : NetworkNode
     [SerializeField]
     protected bool simulatedNetworking = false;
 
-    [SerializeField]
-    protected string serverIP = "127.0.0.1";
+    public string serverIP = "127.0.0.1";
 
     void OnGUI()
     {

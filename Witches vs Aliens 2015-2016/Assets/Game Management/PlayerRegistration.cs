@@ -18,12 +18,9 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
 
     AudioSource announcements;
 
-#if UNITY_EDITOR
     [SerializeField]
     protected string mainGameSceneName;
-#else
-    const string mainGameSceneName = Tags.Scenes.root;
-#endif 
+
     [SerializeField]
     protected GameObject playerRegistrationPrefab;
 
@@ -53,7 +50,7 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
 
     GameObject pressStart;
 
-	void Awake ()
+    void Awake()
     {
         data = GetComponent<SetupData>();
 
@@ -65,11 +62,11 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
         for (int i = 0; i < joystickEdgeTriggers.Length; i++)
             joystickEdgeTriggers[i] = Vector2.zero;
 
-            pressStart = GetComponentInChildren<Canvas>().gameObject;
+        pressStart = GetComponentInChildren<Canvas>().gameObject;
         pressStart.SetActive(false);
 
         announcements = GetComponent<AudioSource>();
-	}
+    }
 
     void Start()
     {
@@ -628,6 +625,8 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
         }
 
         data.playerComponentPrefabs = results.ToArray();
+
+        data.warmupActive = GameSelection.warmupActive;
 
         Debug.Log(mainGameSceneName);
         if(node != null)

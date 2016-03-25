@@ -7,11 +7,11 @@ EditorBuildSettings:
   m_Scenes:
   - enabled: 1
     path: Assets/Scenes/PlayerRegistrationClient.unity
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/DerekNetworkingClient.unity
   - enabled: 1
     path: Assets/Scenes/PlayerRegistrationServer.unity
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/DerekNetworking.unity
   - enabled: 1
     path: Assets/Scenes/PlayerRegistration.unity
