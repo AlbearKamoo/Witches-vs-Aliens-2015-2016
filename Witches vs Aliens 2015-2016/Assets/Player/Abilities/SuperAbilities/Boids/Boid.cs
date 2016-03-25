@@ -181,7 +181,7 @@ public class Boid : MonoBehaviour, IBoid {
 
             steeringMobileAvoidingVelocity += (displacement / distance) / (distance - coll.radius);
             float dot = Vector2.Dot(displacement, boid.velocity);
-            if (dot > 0) //if they have a chance of hitting us
+            if (distance > 0.25 && dot > 0) //if they have a chance of hitting us
             {
                 Vector2 fleeDirection = displacement - (dot * boid.velocity / Vector2.Dot(boid.velocity, boid.velocity)); //vector component orthogonal to the velocity
                 steeringMobileAvoidingVelocity += fleeDirection.normalized;
