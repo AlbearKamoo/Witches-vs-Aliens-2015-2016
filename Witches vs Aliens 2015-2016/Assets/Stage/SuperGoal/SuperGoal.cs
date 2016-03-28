@@ -8,7 +8,6 @@ public class SuperGoal : MonoBehaviour {
     SuperGoal _mirror;
     SpriteRenderer render;
     ParticleSystem vfx;
-    PuckFX puckFX;
     SuperGoalSpawner spawner;
     public SuperGoalSpawner Spawner { set { spawner = value; } }
     
@@ -30,7 +29,6 @@ public class SuperGoal : MonoBehaviour {
             {
                 if (!_active)
                 {
-                    //puckFX.perSideEffectsActive = true;
                     render.enabled = true;
                     rotateParticlesToTransform();
                     vfx.playbackSpeed = 1.5f;
@@ -50,7 +48,6 @@ public class SuperGoal : MonoBehaviour {
             }
             else if (_active)
             {
-                puckFX.perSideEffectsActive = false;
                 coll.enabled = false;
                 Color mainRenderColor = render.color;
                 vfx.Stop();
@@ -78,12 +75,6 @@ public class SuperGoal : MonoBehaviour {
         render = GetComponentInChildren<SpriteRenderer>();
         vfx = transform.Find("LightShafts").GetComponent<ParticleSystem>();
         //vfx.Play();
-    }
-
-    void Start()
-    {
-        Callback.FireForUpdate(() => {puckFX = GameObject.FindGameObjectWithTag(Tags.puck).GetComponent<PuckFX>();}, this);
-        
     }
 
 	// Use this for initialization
