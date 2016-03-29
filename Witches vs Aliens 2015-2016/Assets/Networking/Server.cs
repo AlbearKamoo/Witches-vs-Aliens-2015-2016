@@ -13,6 +13,8 @@ public class Server : NetworkNode
     [SerializeField]
     protected bool simulatedNetworking = false;
 
+    public override NetworkMode networkMode { get { return NetworkMode.LOCALSERVER; } }
+
     protected override void ConfigureHosts(ConnectionConfig config)
     {
         HostTopology topology = new HostTopology(config, 5);

@@ -13,6 +13,8 @@ public abstract class AbstractNetworkNode : MonoBehaviour {
     public bool active { get { return connectionIDs.Count != 0; } }
     //contains the non-project-specific stuff from network node
 
+    public abstract NetworkMode networkMode { get; }
+
     protected HashSet<int> connectionIDs = new HashSet<int>();
     public HashSet<int> ConnectionIDs { get { return connectionIDs; } }
 
@@ -168,6 +170,10 @@ public abstract class AbstractNetworkNode : MonoBehaviour {
             PacketType packetType = (PacketType)reader.ReadByte();
             //Debug.Log(packetType);
             Assert.IsTrue(NetworkIdentities.ContainsKey(packetType));
+#if UNITY_EDITOR
+            if (!NetworkIdentities.ContainsKey(packetType))
+                Debug.Log(packetType);
+#endif
             NetworkIdentities[packetType].Notify(new IncomingNetworkStreamMessage(reader, connectionID, packetType));
         }
     }

@@ -445,13 +445,15 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
 
                 if (pressed)
                 {
-                    startGame();
+                    attemptStartGame();
                     break;
                 }
+                /*
                 else if (pressedBack(i))
                 {
 
                 }
+                */
             }
         }
     }
@@ -613,6 +615,28 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
      * }
          */
 
+    void attemptStartGame()
+    {
+        if (node == null) //local networking
+        {
+            startGame();
+        }
+        else
+        {
+            switch (node.networkMode)
+            {
+                case NetworkMode.LOCALCLIENT:
+                    //do nothing; only the server has the power
+                    break;
+                case NetworkMode.LOCALSERVER:
+                    node.BinaryWriter.Write(PacketType.SCENEJUMP);
+                    node.Send(node.AllCostChannel);
+                    startGame();
+                    break;
+            }
+        }
+    }
+
     void startGame()
     {
         List<PlayerComponents> results = new List<PlayerComponents>();
@@ -696,7 +720,7 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
         }
     }
 
-    public PacketType[] packetTypes { get { return new PacketType[] { PacketType.REGISTRATIONREQUEST, PacketType.PLAYERREGISTER, PacketType.PLAYERDEREGISTER }; } }
+    public PacketType[] packetTypes { get { return new PacketType[] { PacketType.REGISTRATIONREQUEST, PacketType.PLAYERREGISTER, PacketType.PLAYERDEREGISTER, PacketType.SCENEJUMP }; } }
 
     public void Notify(IncomingNetworkStreamMessage m)
     {
@@ -796,6 +820,12 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
                             Debug.LogError("Invalid Message Type");
                             break;
                     }
+                    break;
+                }
+            case PacketType.SCENEJUMP:
+                {
+                    Assert.IsTrue(startCountdown != null);
+                    startGame();
                     break;
                 }
             default:
