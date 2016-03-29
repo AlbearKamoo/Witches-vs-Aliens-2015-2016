@@ -157,6 +157,8 @@ public class InputToAction : MonoBehaviour, ISpeedLimiter, INetworkable, IObserv
 	
 	// Update is called once per frame
 	void FixedUpdate () {
+        Vector2 cachedNormalizedMovementInput = normalizedMovementInput;
+
         for (int i = 0; i < preFixedUpdateDelegates.Count; i++)
         {
             preFixedUpdateDelegates[i]();
@@ -176,6 +178,7 @@ public class InputToAction : MonoBehaviour, ISpeedLimiter, INetworkable, IObserv
             postFixedUpdateDelegates[i]();
         }
 
+        normalizedMovementInput = cachedNormalizedMovementInput; //undo any modifications made by reversal abilities
 	}
 
     void rotateTowards(Vector2 targetDirection)
