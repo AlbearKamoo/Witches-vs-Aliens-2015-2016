@@ -135,7 +135,7 @@ MonoBehaviour:
       movementAbilityAxis: 
       genericAbilityAxis: 
       superAbilityAxis: 
-  - name: Player1(Joystick)
+  - name: Player1
     abbreviation: 1
     color: {r: 0, g: 1, b: 0.6275861, a: 1}
     bindings:
@@ -148,7 +148,7 @@ MonoBehaviour:
       movementAbilityAxis: J1_Move
       genericAbilityAxis: J1_Generic
       superAbilityAxis: J1_Super
-  - name: Player2(Joystick)
+  - name: Player2
     abbreviation: 2
     color: {r: 0.86206913, g: 0, b: 1, a: 1}
     bindings:
@@ -161,7 +161,7 @@ MonoBehaviour:
       movementAbilityAxis: J2_Move
       genericAbilityAxis: J2_Generic
       superAbilityAxis: J2_Super
-  - name: Player3(Joystick)
+  - name: Player3
     abbreviation: 3
     color: {r: 0.77931035, g: 1, b: 0, a: 1}
     bindings:
@@ -174,7 +174,7 @@ MonoBehaviour:
       movementAbilityAxis: J3_Move
       genericAbilityAxis: J3_Generic
       superAbilityAxis: J3_Super
-  - name: Player4(Joystick)
+  - name: Player4
     abbreviation: 4
     color: {r: 0.15862083, g: 0, b: 1, a: 1}
     bindings:
