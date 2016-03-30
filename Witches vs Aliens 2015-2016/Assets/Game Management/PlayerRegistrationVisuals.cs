@@ -5,6 +5,8 @@ using System.Collections;
 /// Placed as a child of the registration puck, in order to handle world-space visuals for registration.
 /// </summary>
 
+//class is now legacy
+/*
 public class PlayerRegistrationVisuals : MonoBehaviour {
     bool active = false;
     public bool Active
@@ -36,3 +38,4 @@ public class PlayerRegistrationVisuals : MonoBehaviour {
         }
 	}
 }
+*/

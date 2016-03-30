@@ -200,14 +200,14 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
     void spawnPlayerRegistration(int playerID, NetworkMode networkMode)
     {
         GameObject spawnedPlayerRegistrationPuck = SpawnPlayerRegistrationPuck(playerID, networkMode);
-        SpawnPlayerRegistrationComponents(playerID, spawnedPlayerRegistrationPuck);
+        SpawnPlayerRegistrationComponents(playerID, spawnedPlayerRegistrationPuck, networkMode);
         checkReady();
     }
 
     void spawnPlayerRegistration(int localID, int playerID, NetworkMode networkMode)
     {
         GameObject spawnedPlayerRegistrationPuck = SpawnPlayerRegistrationPuck(localID, playerID, networkMode);
-        SpawnPlayerRegistrationComponents(localID, playerID, spawnedPlayerRegistrationPuck);
+        SpawnPlayerRegistrationComponentsAndLocalInfo(localID, playerID, spawnedPlayerRegistrationPuck, networkMode);
         checkReady();
     }
 
@@ -285,7 +285,7 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
         return spawnedPlayerRegistrationPuck;
     }
 
-    void SpawnPlayerRegistrationComponents(int playerID, GameObject spawnedPlayerRegistrationPuck)
+    void SpawnPlayerRegistrationComponents(int playerID, GameObject spawnedPlayerRegistrationPuck, NetworkMode networkMode, int localID = -1)
     {
         CharacterSelector selector = spawnedPlayerRegistrationPuck.AddComponent<CharacterSelector>();
 
@@ -293,15 +293,15 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
         action.rotationEnabled = false;
         action.movementEnabled = true;
 
-        registeredPlayers[playerID] = new Registration(selector, null, RegistrationState.REGISTERING, selector.GetComponentInChildren<PlayerRegistrationVisuals>(), this);
+        registeredPlayers[playerID] = new Registration(selector, null, RegistrationState.REGISTERING, localID, networkMode, this);
 
         selector.registration = registeredPlayers[playerID];
         
     }
 
-    void SpawnPlayerRegistrationComponents(int localID, int playerID, GameObject spawnedPlayerRegistrationPuck)
+    void SpawnPlayerRegistrationComponentsAndLocalInfo(int localID, int playerID, GameObject spawnedPlayerRegistrationPuck, NetworkMode networkMode)
     {
-        SpawnPlayerRegistrationComponents(playerID, spawnedPlayerRegistrationPuck);
+        SpawnPlayerRegistrationComponents(playerID, spawnedPlayerRegistrationPuck, networkMode, localID : localID);
 
         Registration spawnedRegistration = registeredPlayers[playerID];
 
@@ -334,6 +334,9 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
         ui.registration = registeredPlayers[playerID];
         registeredPlayers[playerID].ui = ui;
         ui.UpdateCharacterSprite(registeredPlayers[playerID].SelectedCharacterID);
+
+        Destroy(registeredPlayers[playerID].selector.gameObject);
+        registeredPlayers[playerID].selector = null;
 
         checkReady();
     }
@@ -423,6 +426,11 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
     {
         registeredPlayers[playerID].ready = false;
         registeredPlayers[playerID].ui.Despawn();
+        registeredPlayers[playerID].ui = null;
+        if (registeredPlayers[playerID].localID != -1)
+            spawnPlayerRegistration(registeredPlayers[playerID].localID, playerID, registeredPlayers[playerID].networkMode);
+        else
+            spawnPlayerRegistration(playerID, registeredPlayers[playerID].networkMode);
         checkNotReady();
     }
 
@@ -658,9 +666,8 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
         List<PlayerComponents> results = new List<PlayerComponents>();
         foreach (KeyValuePair<int, Registration> entry in registeredPlayers)
         {
-            AbstractPlayerInput input = entry.Value.selector.gameObject.GetComponent<AbstractPlayerInput>();
-            InputConfiguration config = input != null ? input.bindings : new InputConfiguration();
-            config.networkMode = entry.Value.selector.gameObject.GetComponent<Stats>().networkMode;
+            InputConfiguration config = entry.Value.localID != -1 ? possiblePlayers[entry.Value.localID].bindings : new InputConfiguration();
+            config.networkMode = entry.Value.networkMode;
             results.Add(new PlayerComponents(charactersData[entry.Value.SelectedCharacterID].character, config, entry.Key, entry.Value.ui.CharacterVisualsVector));
         }
 
@@ -693,9 +700,10 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
         public CharacterSelector selector;
         public RegisteredPlayerUIView ui;
         public RegistrationState registrationState;
-        public PlayerRegistrationVisuals visuals;
         public PlayerRegistration context;
         private int selectedCharacterID = -1;
+        public int localID;
+        public NetworkMode networkMode;
         public int SelectedCharacterID
         {
             get { return selectedCharacterID; }
@@ -704,15 +712,21 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
                 selectedCharacterID = value;
             }
         }
-        public Registration(CharacterSelector selector, RegisteredPlayerUIView ui, RegistrationState registrationState, PlayerRegistrationVisuals visuals, PlayerRegistration context)
+        public Registration(CharacterSelector selector, RegisteredPlayerUIView ui, RegistrationState registrationState, NetworkMode networkMode, PlayerRegistration context)
         {
             this.selector = selector;
             this.ui = ui;
             this.registrationState = registrationState;
-            this.visuals = visuals;
             this.context = context;
+            this.localID = -1;
+            this.networkMode = networkMode;
         }
 
+        public Registration(CharacterSelector selector, RegisteredPlayerUIView ui, RegistrationState registrationState, int localID, NetworkMode networkMode, PlayerRegistration context)
+            : this(selector, ui, registrationState, networkMode, context)
+        {
+            this.localID = localID;
+        }
         public bool ready
         {
             set
@@ -720,14 +734,10 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
                 if (value)
                 {
                     registrationState = RegistrationState.READY;
-                    selector.gameObject.GetComponent<InputToAction>().movementEnabled = false;
-                    visuals.Active = true;
                 }
                 else
                 {
                     registrationState = RegistrationState.REGISTERING;
-                    selector.gameObject.GetComponent<InputToAction>().movementEnabled = true;
-                    visuals.Active = false;
                 }
             }
         }

@@ -63,7 +63,7 @@ public class RegisteredPlayerUIView : MonoBehaviour {
 
     IEnumerator SelectCharacterVisuals()
     {
-        InputToAction action = registration.visuals.GetComponentInParent<InputToAction>();
+        InputToAction action = registration.selector.GetComponentInParent<InputToAction>();
         while (true)
         {
             Vector2 deltaVisuals = action.normalizedMovementInput;
