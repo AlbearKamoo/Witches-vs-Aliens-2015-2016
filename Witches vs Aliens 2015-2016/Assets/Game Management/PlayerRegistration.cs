@@ -285,18 +285,14 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
     {
         CharacterSelector selector = spawnedPlayerRegistrationPuck.AddComponent<CharacterSelector>();
 
-        RegisteredPlayerUIView ui = SimplePool.Spawn(playerRegistrationUIPrefab).GetComponent<RegisteredPlayerUIView>();
-        ui.transform.SetParent(UIParent, Vector3.one, false);
-        ui.ready = false;
-
         InputToAction action = spawnedPlayerRegistrationPuck.GetComponent<InputToAction>();
         action.rotationEnabled = false;
         action.movementEnabled = true;
 
-        registeredPlayers[playerID] = new Registration(selector, ui, RegistrationState.REGISTERING, selector.GetComponentInChildren<PlayerRegistrationVisuals>(), this);
+        registeredPlayers[playerID] = new Registration(selector, null, RegistrationState.REGISTERING, selector.GetComponentInChildren<PlayerRegistrationVisuals>(), this);
 
         selector.registration = registeredPlayers[playerID];
-        ui.registration = registeredPlayers[playerID];
+        
     }
 
     void SpawnPlayerRegistrationComponents(int localID, int playerID, GameObject spawnedPlayerRegistrationPuck)
@@ -305,11 +301,7 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
 
         Registration spawnedRegistration = registeredPlayers[playerID];
 
-        spawnedRegistration.ui.inputMode = possiblePlayers[localID].bindings.inputMode;
-
-        spawnedRegistration.ui.playerColor = spawnedRegistration.selector.gameObject.GetComponentInChildren<Image>().color = spawnedRegistration.selector.gameObject.GetComponent<ParticleSystem>().startColor = possiblePlayers[localID].color;
-        spawnedRegistration.ui.GetComponentInChildren<Text>().text = possiblePlayers[localID].abbreviation;
-        spawnedRegistration.ui.playerName = possiblePlayers[localID].name;
+        spawnedRegistration.selector.gameObject.GetComponentInChildren<Image>().color = spawnedRegistration.selector.gameObject.GetComponent<ParticleSystem>().startColor = possiblePlayers[localID].color;
 
         localIDToPlayerID[localID] = playerID;
     }
@@ -319,6 +311,12 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
         registeredPlayers[playerID].ready = true;
         CharacterHolder characterHolder = registeredPlayers[playerID].context.charactersData[registeredPlayers[playerID].SelectedCharacterID];
         characterHolder.Select();
+
+        RegisteredPlayerUIView ui = SimplePool.Spawn(playerRegistrationUIPrefab).GetComponent<RegisteredPlayerUIView>();
+        ui.transform.SetParent(UIParent, Vector3.one, false);
+        ui.registration = registeredPlayers[playerID];
+        registeredPlayers[playerID].ui = ui;
+
         checkReady();
     }
 
@@ -376,7 +374,6 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
     {
         Registration toDespawn = registeredPlayers[playerID];
         Destroy(toDespawn.selector.gameObject);
-        toDespawn.ui.Despawn();
         registeredPlayers.Remove(playerID);
         checkReady();
         checkNotReady();
@@ -407,6 +404,7 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
     void setPlayerNotReady(int playerID)
     {
         registeredPlayers[playerID].ready = false;
+        registeredPlayers[playerID].ui.Despawn();
         checkNotReady();
     }
 
@@ -686,7 +684,6 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
             set
             {
                 selectedCharacterID = value;
-                ui.UpdateCharacterSprite(value);
             }
         }
         public Registration(CharacterSelector selector, RegisteredPlayerUIView ui, RegistrationState registrationState, PlayerRegistrationVisuals visuals, PlayerRegistration context)
@@ -705,14 +702,12 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
                 if (value)
                 {
                     registrationState = RegistrationState.READY;
-                    ui.ready = true;
                     selector.gameObject.GetComponent<InputToAction>().movementEnabled = false;
                     visuals.Active = true;
                 }
                 else
                 {
                     registrationState = RegistrationState.REGISTERING;
-                    ui.ready = false;
                     selector.gameObject.GetComponent<InputToAction>().movementEnabled = true;
                     visuals.Active = false;
                 }
