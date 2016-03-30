@@ -3,7 +3,7 @@ using UnityEngine.UI;
 using System.Collections;
 using UnityEngine.Assertions;
 
-public class RegisteredPlayerUIView : MonoBehaviour, ISpawnable {
+public class RegisteredPlayerUIView : MonoBehaviour {
 
     Image background;
     [SerializeField]
@@ -35,17 +35,6 @@ public class RegisteredPlayerUIView : MonoBehaviour, ISpawnable {
         myMat.SetFloat(Tags.ShaderParams.cutoff, 0);
 	}
 
-    public void Create()
-    {
-        Callback.FireForUpdate(() =>
-            {
-                UpdateCharacterSprite(registration.SelectedCharacterID);
-                Assert.IsNull(readyRoutine);
-                readyRoutine = SelectCharacterVisuals();
-                StartCoroutine(readyRoutine);
-            }, this);
-    }
-
     public void Despawn()
     {
         StopCoroutine(readyRoutine);
@@ -59,6 +48,10 @@ public class RegisteredPlayerUIView : MonoBehaviour, ISpawnable {
         CharacterSprite.enabled = true;
         spriteSource = registration.context.charactersData[ID].character.visuals.GetComponent<AbstractPlayerVisuals>();
         UpdateCharacterVisuals(characterVisualsVector = new Vector2(Random.value, Random.value));
+
+        Assert.IsNull(readyRoutine);
+        readyRoutine = SelectCharacterVisuals();
+        StartCoroutine(readyRoutine);
     }
 
     public void UpdateCharacterVisuals(Vector2 visualSpaceInput)

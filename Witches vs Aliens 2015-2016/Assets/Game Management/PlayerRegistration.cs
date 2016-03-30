@@ -333,6 +333,7 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
         ui.transform.SetParent(UIParent, Vector3.one, false);
         ui.registration = registeredPlayers[playerID];
         registeredPlayers[playerID].ui = ui;
+        ui.UpdateCharacterSprite(registeredPlayers[playerID].SelectedCharacterID);
 
         checkReady();
     }
