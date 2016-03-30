@@ -13,6 +13,9 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
     protected GameObject introMusicPrefab;
 
     [SerializeField]
+    protected GameObject puckPrefab;
+
+    [SerializeField]
     protected AudioClip countdownVoice;
     GameObject introMusic;
 
@@ -79,6 +82,8 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
 
     void Start()
     {
+        Instantiate(puckPrefab);
+
         node = NetworkNode.node;
         if (node == null) //if null, no networking, server controls it if there is networking
         {
@@ -491,6 +496,7 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
 
         Vector2 playgroundEchoPosition = data.playgroundAvatar.transform.position;
 
+        data.playgroundAvatar.GetComponent<ResetScripting>().Reset(Vector2.zero, 0f);
         Destroy(data.playgroundAvatar);
         data.playgroundAvatar = null;
         data.playgroundAvatarVisuals = null;
