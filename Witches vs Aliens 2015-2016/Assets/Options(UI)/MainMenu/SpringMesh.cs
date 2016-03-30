@@ -29,6 +29,8 @@ public class SpringMesh : MonoBehaviour {
     }
 
 	void Start () {
+        Vector2 offset = this.transform.position;
+        Debug.Log(offset);
         nodes = new GameObject[width,height];
         for (int x = 0; x < width; x++)
         {
@@ -36,6 +38,7 @@ public class SpringMesh : MonoBehaviour {
             {
                 nodes[x, y] = Instantiate(springNode);
                 Vector2 position = 1.1f * scale * (new Vector2((x - width / 2) - triangleWidth * (y - height / 2), (y - height / 2) * triangleHeight));
+                position += offset;
                 nodes[x, y].transform.position = position;
                 SpringJoint2D anchorSpring = nodes[x, y].AddComponent<SpringJoint2D>();
                 anchorSpring.connectedAnchor = position;
@@ -86,14 +89,16 @@ public class SpringMesh : MonoBehaviour {
         List<Vector2> uvs = new List<Vector2>();
         List<int> tris = new List<int>();
 
+        Vector3 offset = this.transform.position;
+
         for (int x = 1; x < width; x++)
         {
             for (int y = 1; y < height; y++)
             {
-                Vector3 v1 = nodes[x - 1, y - 1].transform.position;//new Vector3(x1, y1, 0);
-                Vector3 v2 = nodes[x - 1, y].transform.position;//new Vector3(x1, y2, 0);
-                Vector3 v3 = nodes[x, y].transform.position;//new Vector3(x2, y2, 0);
-                Vector3 v4 = nodes[x, y - 1].transform.position;//new Vector3(x2, y1, 0);
+                Vector3 v1 = nodes[x - 1, y - 1].transform.position - offset;//new Vector3(x1, y1, 0);
+                Vector3 v2 = nodes[x - 1, y].transform.position - offset;//new Vector3(x1, y2, 0);
+                Vector3 v3 = nodes[x, y].transform.position - offset;//new Vector3(x2, y2, 0);
+                Vector3 v4 = nodes[x, y - 1].transform.position - offset;//new Vector3(x2, y1, 0);
 
                 int v = verts.Count; //future index of v1
 
@@ -140,14 +145,16 @@ public class SpringMesh : MonoBehaviour {
         Color32[] cols = new Color32[filter.mesh.vertexCount];
         int index = 0;
 
+        Vector3 offset = this.transform.position;
+
         for (int x = 1; x < width; x++)
         {
             for (int y = 1; y < height; y++)
             {
-                Vector3 v1 = nodes[x - 1, y - 1].transform.position;//new Vector3(x1, y1, 0);
-                Vector3 v2 = nodes[x - 1, y].transform.position;//new Vector3(x1, y2, 0);
-                Vector3 v3 = nodes[x, y].transform.position;//new Vector3(x2, y2, 0);
-                Vector3 v4 = nodes[x, y - 1].transform.position;//new Vector3(x2, y1, 0);
+                Vector3 v1 = nodes[x - 1, y - 1].transform.position - offset;//new Vector3(x1, y1, 0);
+                Vector3 v2 = nodes[x - 1, y].transform.position - offset;//new Vector3(x1, y2, 0);
+                Vector3 v3 = nodes[x, y].transform.position - offset;//new Vector3(x2, y2, 0);
+                Vector3 v4 = nodes[x, y - 1].transform.position - offset;//new Vector3(x2, y1, 0);
 
                 verts[index] = v1;
                 cols[index++] = PerlinColor(seed, v1);

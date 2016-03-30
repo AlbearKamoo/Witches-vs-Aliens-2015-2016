@@ -317,8 +317,9 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
 
     void setPlayerReady(int playerID)
     {
-        registeredPlayers[playerID].ready = true;
-        CharacterHolder characterHolder = registeredPlayers[playerID].context.charactersData[registeredPlayers[playerID].SelectedCharacterID];
+        Registration data = registeredPlayers[playerID];
+        data.ready = true;
+        CharacterHolder characterHolder = data.context.charactersData[data.SelectedCharacterID];
         characterHolder.Select();
 
         RegisteredPlayerUIView ui = SimplePool.Spawn(playerRegistrationUIPrefab).GetComponent<RegisteredPlayerUIView>();
@@ -336,14 +337,18 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
         }
 
         ui.transform.SetParent(UIParent, Vector3.one, false);
-        ui.registration = registeredPlayers[playerID];
-        registeredPlayers[playerID].ui = ui;
-        ui.UpdateCharacterSprite(registeredPlayers[playerID].SelectedCharacterID);
+        ui.registration = data;
+        data.ui = ui;
+        ui.UpdateCharacterSprite(data.SelectedCharacterID);
 
-        Destroy(registeredPlayers[playerID].selector.gameObject);
-        registeredPlayers[playerID].selector = null;
+        Vector2 echoPosition = data.selector.transform.position;
+
+        Destroy(data.selector.gameObject);
+        data.selector = null;
 
         spawnPlaygroundAvatar(playerID);
+
+        data.echoPosition = echoPosition;
 
         checkReady();
     }
@@ -398,7 +403,9 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
         }
         data.playgroundAvatar = spawnedPlayer;
 
-        Callback.FireForUpdate(() => spawnedPlayer.GetComponent<ResetScripting>().Reset(Vector2.zero, 0f), this);
+        Vector2 echoPosition = data.echoPosition;
+
+        Callback.FireForUpdate(() => spawnedPlayer.GetComponent<ResetScripting>().Reset(echoPosition, 0f), this);
     }
 
     void OnPressedBack(int localID)
@@ -482,6 +489,8 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
         data.ui.Despawn();
         data.ui = null;
 
+        Vector2 playgroundEchoPosition = data.playgroundAvatar.transform.position;
+
         Destroy(data.playgroundAvatar);
         data.playgroundAvatar = null;
         data.playgroundAvatarVisuals = null;
@@ -490,6 +499,12 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
             spawnPlayerRegistration(data.localID, playerID, data.networkMode);
         else
             spawnPlayerRegistration(playerID, data.networkMode);
+
+        //spawnPlayerRegistration creates a new registration
+
+        registeredPlayers[playerID].selector.transform.position = data.echoPosition;
+
+        registeredPlayers[playerID].echoPosition = playgroundEchoPosition;
         checkNotReady();
     }
 
@@ -828,6 +843,7 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
         public NetworkMode networkMode;
         public IHueShiftableVisuals playgroundAvatarVisuals;
         public GameObject playgroundAvatar;
+        public Vector2 echoPosition;
         public int SelectedCharacterID
         {
             get { return selectedCharacterID; }
@@ -844,6 +860,7 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
             this.context = context;
             this.localID = -1;
             this.networkMode = networkMode;
+            this.echoPosition = Vector2.zero;
         }
 
         public Registration(CharacterSelector selector, RegisteredPlayerUIView ui, RegistrationState registrationState, int localID, NetworkMode networkMode, PlayerRegistration context)
