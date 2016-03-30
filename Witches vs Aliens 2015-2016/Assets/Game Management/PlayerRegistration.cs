@@ -46,6 +46,7 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
     int[] localIDToPlayerID;
 
     Vector2[] joystickEdgeTriggers;
+    Vector2[] joystickEdgeTriggersXY;
 
     NetworkNode node;
     NetworkMode mode;
@@ -65,6 +66,10 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
         joystickEdgeTriggers = new Vector2[possiblePlayers.Length];
         for (int i = 0; i < joystickEdgeTriggers.Length; i++)
             joystickEdgeTriggers[i] = Vector2.zero;
+
+        joystickEdgeTriggersXY = new Vector2[possiblePlayers.Length];
+        for (int i = 0; i < joystickEdgeTriggersXY.Length; i++)
+            joystickEdgeTriggersXY[i] = Vector2.zero;
 
         pressStart = GetComponentInChildren<Canvas>().gameObject;
         pressStart.SetActive(false);
@@ -563,6 +568,7 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
         }
         else if (possiblePlayers[i].bindings.inputMode == InputConfiguration.PlayerInputType.JOYSTICK)
         {
+            //ability axis
             float currentAxisValue = Input.GetAxis(possiblePlayers[i].bindings.movementAbilityAxis);
 
             bool returnValue = false;
@@ -572,6 +578,26 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
             }
 
             joystickEdgeTriggers[i].x = currentAxisValue;
+
+            if (registeredPlayers.ContainsKey(localIDToPlayerID[i]))
+            {
+                Registration data = registeredPlayers[localIDToPlayerID[i]];
+                if (data.registrationState == RegistrationState.READY)
+                {
+                    returnValue = false; //disable ability axis, because ability axis is used in the playground
+                }
+            }
+
+            //now XY axis
+            currentAxisValue = Input.GetAxis(possiblePlayers[i].bindings.acceptAbilityAxis);
+
+            if (currentAxisValue != 0 && joystickEdgeTriggersXY[i].x == 0)
+            {
+                returnValue = true;
+            }
+
+            joystickEdgeTriggersXY[i].x = currentAxisValue;
+
             return returnValue;
         }
         return false;
@@ -601,6 +627,26 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
                 returnValue = true;
 
             joystickEdgeTriggers[i].y = currentAxisValue;
+
+            if (registeredPlayers.ContainsKey(localIDToPlayerID[i]))
+            {
+                Registration data = registeredPlayers[localIDToPlayerID[i]];
+                if (data.registrationState == RegistrationState.READY)
+                {
+                    returnValue = false; //disable ability axis, because ability axis is used in the playground
+                }
+            }
+
+            //now XY axis
+            currentAxisValue = Input.GetAxis(possiblePlayers[i].bindings.backAbilityAxis);
+
+            if (currentAxisValue != 0 && joystickEdgeTriggersXY[i].y == 0)
+            {
+                returnValue = true;
+            }
+
+            joystickEdgeTriggersXY[i].y = currentAxisValue;
+
             return returnValue;
         }
         return false;

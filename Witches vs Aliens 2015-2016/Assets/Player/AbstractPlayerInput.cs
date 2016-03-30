@@ -62,6 +62,12 @@ public class InputConfiguration
     [CanBeDefaultOrNull]
     [Tooltip("You can leave this as anything for mouse mode")]
     public string superAbilityAxis;
+    [CanBeDefaultOrNull]
+    [Tooltip("You can leave this as anything for mouse mode")]
+    public string acceptAbilityAxis;
+    [CanBeDefaultOrNull]
+    [Tooltip("You can leave this as anything for mouse mode")]
+    public string backAbilityAxis;
 
     public InputConfiguration() { }
 
