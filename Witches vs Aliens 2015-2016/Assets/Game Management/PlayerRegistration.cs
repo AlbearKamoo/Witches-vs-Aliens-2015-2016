@@ -338,6 +338,8 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
         Destroy(registeredPlayers[playerID].selector.gameObject);
         registeredPlayers[playerID].selector = null;
 
+        spawnPlaygroundAvatar(playerID);
+
         checkReady();
     }
 
@@ -346,6 +348,52 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
         Assert.IsTrue(registeredPlayers[playerID].SelectedCharacterID != characterID);
         registeredPlayers[playerID].SelectedCharacterID = characterID;
         setPlayerReady(playerID);
+    }
+
+    void spawnPlaygroundAvatar(int playerID)
+    {
+        Registration data = registeredPlayers[playerID];
+        CharacterComponents character = charactersData[data.SelectedCharacterID].character;
+
+        GameObject spawnedPlayer = (GameObject)Instantiate(character.basePlayer);
+        Stats spawnedStats = spawnedPlayer.AddComponent<Stats>();
+        spawnedStats.side = character.side;
+        spawnedStats.playerID = playerID;
+        spawnedStats.networkMode = data.networkMode;
+
+        switch (data.networkMode)
+        {
+            case NetworkMode.REMOTECLIENT:
+            case NetworkMode.REMOTESERVER:
+                break;
+            default:
+                if (data.localID != -1)
+                {
+                    switch (possiblePlayers[data.localID].bindings.inputMode)
+                    {
+                        case InputConfiguration.PlayerInputType.MOUSE:
+                            spawnedPlayer.AddComponent<MousePlayerInput>().bindings = possiblePlayers[data.localID].bindings;
+                            break;
+                        case InputConfiguration.PlayerInputType.JOYSTICK:
+                            spawnedPlayer.AddComponent<JoystickCustomDeadZoneInput>().bindings = possiblePlayers[data.localID].bindings;
+                            break;
+                    }
+                }
+                break;
+        }
+        GameObject.Instantiate(character.movementAbility).transform.SetParent(spawnedPlayer.transform, false);
+        GameObject.Instantiate(character.genericAbility).transform.SetParent(spawnedPlayer.transform, false);
+        GameObject visuals = GameObject.Instantiate(character.visuals);
+        visuals.transform.SetParent(spawnedPlayer.transform, false);
+        IHueShiftableVisuals huedVisuals = visuals.GetComponent<IHueShiftableVisuals>();
+        if (huedVisuals != null)
+        {
+            data.playgroundAvatarVisuals = huedVisuals;
+            huedVisuals.shift = data.ui.CharacterVisualsVector;
+        }
+        data.playgroundAvatar = spawnedPlayer;
+
+        Callback.FireForUpdate(() => spawnedPlayer.GetComponent<ResetScripting>().Reset(Vector2.zero, 0f), this);
     }
 
     void OnPressedBack(int localID)
@@ -424,13 +472,19 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
 
     void setPlayerNotReady(int playerID)
     {
-        registeredPlayers[playerID].ready = false;
-        registeredPlayers[playerID].ui.Despawn();
-        registeredPlayers[playerID].ui = null;
+        Registration data = registeredPlayers[playerID];
+        data.ready = false;
+        data.ui.Despawn();
+        data.ui = null;
+
+        Destroy(data.playgroundAvatar);
+        data.playgroundAvatar = null;
+        data.playgroundAvatarVisuals = null;
+
         if (registeredPlayers[playerID].localID != -1)
-            spawnPlayerRegistration(registeredPlayers[playerID].localID, playerID, registeredPlayers[playerID].networkMode);
+            spawnPlayerRegistration(data.localID, playerID, data.networkMode);
         else
-            spawnPlayerRegistration(playerID, registeredPlayers[playerID].networkMode);
+            spawnPlayerRegistration(playerID, data.networkMode);
         checkNotReady();
     }
 
@@ -704,6 +758,8 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
         private int selectedCharacterID = -1;
         public int localID;
         public NetworkMode networkMode;
+        public IHueShiftableVisuals playgroundAvatarVisuals;
+        public GameObject playgroundAvatar;
         public int SelectedCharacterID
         {
             get { return selectedCharacterID; }
