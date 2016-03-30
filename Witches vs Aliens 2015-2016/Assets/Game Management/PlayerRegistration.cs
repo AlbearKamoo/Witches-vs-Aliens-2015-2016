@@ -16,6 +16,9 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
     protected GameObject puckPrefab;
 
     [SerializeField]
+    protected GameObject meshInteraction;
+
+    [SerializeField]
     protected AudioClip countdownVoice;
     GameObject introMusic;
 
@@ -398,6 +401,11 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
         }
         GameObject.Instantiate(character.movementAbility).transform.SetParent(spawnedPlayer.transform, false);
         GameObject.Instantiate(character.genericAbility).transform.SetParent(spawnedPlayer.transform, false);
+
+        GameObject instantiatedMeshInteraction = GameObject.Instantiate(meshInteraction);
+        instantiatedMeshInteraction.transform.SetParent(spawnedPlayer.transform, false);
+        instantiatedMeshInteraction.GetComponent<ParticleSystem>().startColor = data.localID != -1 ? possiblePlayers[data.localID].color : HSVColor.HSVToRGB(Random.value, 1, 1);
+
         GameObject visuals = GameObject.Instantiate(character.visuals);
         visuals.transform.SetParent(spawnedPlayer.transform, false);
         IHueShiftableVisuals huedVisuals = visuals.GetComponent<IHueShiftableVisuals>();
