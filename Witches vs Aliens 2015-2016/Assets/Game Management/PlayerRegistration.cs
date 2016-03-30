@@ -34,8 +34,12 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
     public CharacterHolder[] charactersData; //this array maps the characters to ints, for networking.
 
     [SerializeField]
-    [AutoLink(parentTag = Tags.canvas, childPath = "RegisteredPlayers")]
-    protected Transform UIParent;
+    [AutoLink(parentTag = Tags.canvas, childPath = "RegisteredWitchPlayers")]
+    protected Transform UIParentWitch;
+
+    [SerializeField]
+    [AutoLink(parentTag = Tags.canvas, childPath = "RegisteredAlienPlayers")]
+    protected Transform UIParentAlien;
 
     SetupData data;
     Dictionary<int, Registration> registeredPlayers = new Dictionary<int, Registration>();
@@ -313,6 +317,19 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
         characterHolder.Select();
 
         RegisteredPlayerUIView ui = SimplePool.Spawn(playerRegistrationUIPrefab).GetComponent<RegisteredPlayerUIView>();
+
+        Transform UIParent;
+        switch (characterHolder.character.side)
+        {
+            default:
+            case Side.LEFT: //witch
+                UIParent = UIParentWitch;
+                break;
+            case Side.RIGHT:
+                UIParent = UIParentAlien;
+                break;
+        }
+
         ui.transform.SetParent(UIParent, Vector3.one, false);
         ui.registration = registeredPlayers[playerID];
         registeredPlayers[playerID].ui = ui;
