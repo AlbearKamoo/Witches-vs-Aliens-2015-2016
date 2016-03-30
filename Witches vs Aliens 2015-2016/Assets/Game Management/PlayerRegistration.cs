@@ -548,12 +548,23 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
 
     bool pressedAccept(int i)
     {
-        if(possiblePlayers[i].bindings.inputMode == InputConfiguration.PlayerInputType.MOUSE)
-            return Input.GetMouseButtonDown(0);
+        if (possiblePlayers[i].bindings.inputMode == InputConfiguration.PlayerInputType.MOUSE)
+        {
+            if(registeredPlayers.ContainsKey(localIDToPlayerID[i]))
+            {
+                Registration data = registeredPlayers[localIDToPlayerID[i]];
+                if (data.registrationState == RegistrationState.READY)
+                {
+                    return Input.GetKeyDown(KeyCode.Space);
+                }
+            }
+            //otherwise
+            return Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0);
+        }
         else if (possiblePlayers[i].bindings.inputMode == InputConfiguration.PlayerInputType.JOYSTICK)
         {
             float currentAxisValue = Input.GetAxis(possiblePlayers[i].bindings.movementAbilityAxis);
-            
+
             bool returnValue = false;
             if (currentAxisValue != 0 && joystickEdgeTriggers[i].x == 0)
             {
@@ -569,7 +580,18 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
     bool pressedBack(int i)
     {
         if (possiblePlayers[i].bindings.inputMode == InputConfiguration.PlayerInputType.MOUSE)
-            return Input.GetMouseButtonDown(1);
+        {
+            if (registeredPlayers.ContainsKey(localIDToPlayerID[i]))
+            {
+                Registration data = registeredPlayers[localIDToPlayerID[i]];
+                if (data.registrationState == RegistrationState.READY)
+                {
+                    return Input.GetKeyDown(KeyCode.Escape);
+                }
+            }
+            //otherwise
+            return Input.GetKeyDown(KeyCode.Escape) || Input.GetMouseButtonDown(1);
+        }
         else if (possiblePlayers[i].bindings.inputMode == InputConfiguration.PlayerInputType.JOYSTICK)
         {
             float currentAxisValue = Input.GetAxis(possiblePlayers[i].bindings.genericAbilityAxis);
