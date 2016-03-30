@@ -16,8 +16,11 @@ public class RegisteredPlayerUIView : MonoBehaviour {
     protected Image CharacterSprite;
     [SerializeField]
     protected float visualsSelectSensitivity;
+    [SerializeField]
+    protected float displayedVisualsUpdateDelay;
     AbstractPlayerVisuals spriteSource;
     IEnumerator readyRoutine;
+    IEnumerator gameVisualsRoutine;
     Vector2 characterVisualsVector;
     Material myMat;
     public Vector2 CharacterVisualsVector { get { return characterVisualsVector; } }
@@ -39,6 +42,11 @@ public class RegisteredPlayerUIView : MonoBehaviour {
     {
         StopCoroutine(readyRoutine);
         readyRoutine = null;
+        if (gameVisualsRoutine != null)
+        {
+            StopCoroutine(gameVisualsRoutine);
+            gameVisualsRoutine = null;
+        }
         characterVisualsVector = new Vector2(Random.value, Random.value);
         SimplePool.Despawn(this.gameObject);
     }
@@ -52,6 +60,10 @@ public class RegisteredPlayerUIView : MonoBehaviour {
         Assert.IsNull(readyRoutine);
         readyRoutine = SelectCharacterVisuals();
         StartCoroutine(readyRoutine);
+
+        Assert.IsNull(gameVisualsRoutine);
+        gameVisualsRoutine = UpdateCharacterVisuals();
+        StartCoroutine(gameVisualsRoutine);
     }
 
     public void UpdateCharacterVisuals(Vector2 visualSpaceInput)
@@ -63,10 +75,10 @@ public class RegisteredPlayerUIView : MonoBehaviour {
 
     IEnumerator SelectCharacterVisuals()
     {
-        InputToAction action = registration.selector.GetComponentInParent<InputToAction>();
         while (true)
         {
-            Vector2 deltaVisuals = action.normalizedMovementInput;
+            Vector2 deltaVisuals = Input.GetAxis("Mouse ScrollWheel") * Vector2.right;
+            
             if (deltaVisuals != Vector2.zero)
             {
                 characterVisualsVector += Time.deltaTime * visualsSelectSensitivity * deltaVisuals;
@@ -77,6 +89,40 @@ public class RegisteredPlayerUIView : MonoBehaviour {
                 UpdateCharacterVisuals(characterVisualsVector);
             }
             yield return null;
+        }
+    }
+
+    IEnumerator UpdateCharacterVisuals()
+    {
+        yield return null;
+        IHueShiftableVisuals hueShift = registration.playgroundAvatarVisuals;
+
+        if (hueShift == null)
+        {
+            gameVisualsRoutine = null;
+        }
+        else
+        {
+            Vector2 currentlyDisplayedVector = characterVisualsVector;
+            Vector2 previousStoredVector = characterVisualsVector;
+
+            while (true)
+            {
+                yield return new WaitForSeconds(displayedVisualsUpdateDelay);
+
+                if (characterVisualsVector != currentlyDisplayedVector) //if we need to update at all
+                {
+                    if (characterVisualsVector == previousStoredVector) //if the player has finished choosing
+                    {
+                        currentlyDisplayedVector = characterVisualsVector;
+                        hueShift.shift = characterVisualsVector;
+                    }
+                    else
+                    {
+                        previousStoredVector = characterVisualsVector;
+                    }
+                }
+            }
         }
     }
 }

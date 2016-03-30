@@ -356,7 +356,7 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
         if (data.localID != -1)
             ui.playerColor = possiblePlayers[data.localID].color;
         else
-            ui.playerColor = HSVColor.HSVToRGB(Random.value, 1, 1);
+            ui.playerColor = data.color = HSVColor.HSVToRGB(Random.value, 1, 1);
         ui.transform.SetParent(UIParent, Vector3.one, false);
         ui.registration = data;
         data.ui = ui;
@@ -418,7 +418,7 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
 
         GameObject instantiatedMeshInteraction = GameObject.Instantiate(meshInteraction);
         instantiatedMeshInteraction.transform.SetParent(spawnedPlayer.transform, false);
-        instantiatedMeshInteraction.GetComponent<ParticleSystem>().startColor = data.localID != -1 ? possiblePlayers[data.localID].color : HSVColor.HSVToRGB(Random.value, 1, 1);
+        instantiatedMeshInteraction.GetComponent<ParticleSystem>().startColor = data.localID != -1 ? possiblePlayers[data.localID].color : data.color;
 
         GameObject visuals = GameObject.Instantiate(character.visuals);
         visuals.transform.SetParent(spawnedPlayer.transform, false);
@@ -872,6 +872,7 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
         public PlayerRegistration context;
         private int selectedCharacterID = -1;
         public int localID;
+        public Color color;
         public NetworkMode networkMode;
         public IHueShiftableVisuals playgroundAvatarVisuals;
         public GameObject playgroundAvatar;

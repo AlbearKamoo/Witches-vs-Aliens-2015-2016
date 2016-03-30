@@ -50,6 +50,7 @@ public class HueShiftedAnimation : AnimatedFourWayPlayerVisuals, IHueShiftableVi
 
     void setHue(float oldHue, float newHue)
     {
+        Debug.Log(newHue - oldHue);
         setHueArray(oldHue, newHue, upSprites);
         setHueArray(oldHue, newHue, leftSprites);
         setHueArray(oldHue, newHue, rightSprites);
