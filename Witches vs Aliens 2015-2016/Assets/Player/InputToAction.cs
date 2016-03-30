@@ -456,9 +456,13 @@ public class InputToAction : MonoBehaviour, ISpeedLimiter, INetworkable, IObserv
         if(myIndex != -1)
         {
             players.RemoveAt(myIndex);
-            if (node != null && myIndex == 0 && players.Count != 0)
+            if (node != null && myIndex == 0)
             {
-                node.Subscribe(players[0].inputToAction); //have someone else subscribe to the networked node
+                node.Unsubscribe(this);
+                if (players.Count != 0)
+                {
+                    node.Subscribe(players[0].inputToAction); //have someone else subscribe to the networked node
+                }
             }
         }
         if (node != null)

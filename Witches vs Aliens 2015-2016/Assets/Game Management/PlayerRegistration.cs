@@ -121,10 +121,7 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
 
     void Update()
     {
-        if (!isReady())
-            checkInput();
-        else
-            checkPressedBack();
+        checkInput();
 
         //now check if all are ready
         checkReady();
@@ -140,6 +137,15 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
     {
         for (int i = 0; i < possiblePlayers.Length; i++)
         {
+
+            if (registeredPlayers.ContainsKey(localIDToPlayerID[i]))
+            {
+                if (registeredPlayers[localIDToPlayerID[i]].registrationState == RegistrationState.READY)
+                {
+                    continue; //we shouldn't check
+                }
+            }
+            //otherwise, check
             if (pressedAccept(i)) //register
             {
                 OnPressedAccept(i);
@@ -151,9 +157,12 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
     {
         for (int i = 0; i < possiblePlayers.Length; i++)
         {
-            if (pressedBack(i)) //register
+            if (registeredPlayers.ContainsKey(localIDToPlayerID[i]))
             {
-                OnPressedBack(i);
+                if (pressedBack(i)) //register
+                {
+                    OnPressedBack(i);
+                }
             }
         }
     }
@@ -925,6 +934,8 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
 
     public void Notify(IncomingNetworkStreamMessage m)
     {
+        Debug.Log(mode);
+        Debug.Log(m.packetType);
         switch (m.packetType)
         {
             case PacketType.REGISTRATIONREQUEST:

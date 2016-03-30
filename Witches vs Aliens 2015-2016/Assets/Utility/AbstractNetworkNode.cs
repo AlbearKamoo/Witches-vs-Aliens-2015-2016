@@ -54,8 +54,11 @@ public abstract class AbstractNetworkNode : MonoBehaviour {
         for (int i = 0; i < types.Length; i++)
         {
 #if UNITY_EDITOR
-            if(NetworkIdentities.ContainsKey(types[i]))
+            if (NetworkIdentities.ContainsKey(types[i]))
+            {
                 Debug.Log(NetworkIdentities[types[i]]);
+                Debug.Log(observer);
+            }
 #endif
             NetworkIdentities[types[i]] = observer;
         }
