@@ -24,6 +24,11 @@ public class GoalScreenTearing : MonoBehaviour, IObserver<Message> {
         Observers.Subscribe(this, GoalScoredMessage.classMessageType);
     }
 
+    void OnDestroy()
+    {
+        Observers.Unsubscribe(this, GoalScoredMessage.classMessageType);
+    }
+
 
     public void Notify(Message m)
     {

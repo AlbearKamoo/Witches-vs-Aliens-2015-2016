@@ -23,8 +23,11 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
 
     [SerializeField]
     protected AudioClip countdownVoice;
-    GameObject introMusic;
 
+    [SerializeField]
+    protected Transform puckSpawnPoint;
+   
+    GameObject introMusic;
     AudioSource announcements;
 
     [SerializeField]
@@ -88,7 +91,11 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
 
     void Start()
     {
-        Instantiate(puckPrefab);
+        GameObject puck = Instantiate(puckPrefab);
+
+        puck.GetComponent<Rigidbody2D>().velocity = puck.GetComponent<ISpeedLimiter>().maxSpeed * Random.insideUnitCircle;
+        GameObject.Instantiate(meshInteraction).transform.SetParent(puck.transform, false);
+
 
         node = NetworkNode.node;
         if (node == null) //if null, no networking, server controls it if there is networking
@@ -271,7 +278,7 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
 
     GameObject SpawnPlayerRegistrationPuck(int playerID, NetworkMode networkMode)
     {
-        GameObject spawnedPlayerRegistrationPuck = (GameObject)Instantiate(playerRegistrationPrefab, Vector2.zero, Quaternion.identity); //the positions are temporary
+        GameObject spawnedPlayerRegistrationPuck = (GameObject)Instantiate(playerRegistrationPrefab, puckSpawnPoint.position, Quaternion.identity); //the positions are temporary
         Stats spawnedStats = spawnedPlayerRegistrationPuck.AddComponent<Stats>();
         spawnedStats.playerID = playerID;
         spawnedStats.networkMode = networkMode;
@@ -346,7 +353,10 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
                 UIParent = UIParentAlien;
                 break;
         }
-
+        if (data.localID != -1)
+            ui.playerColor = possiblePlayers[data.localID].color;
+        else
+            ui.playerColor = HSVColor.HSVToRGB(Random.value, 1, 1);
         ui.transform.SetParent(UIParent, Vector3.one, false);
         ui.registration = data;
         data.ui = ui;
@@ -422,7 +432,11 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
 
         Vector2 echoPosition = data.echoPosition;
 
-        Callback.FireForUpdate(() => spawnedPlayer.GetComponent<ResetScripting>().Reset(echoPosition, 0f), this);
+        InputToAction action = spawnedPlayer.GetComponent<InputToAction>();
+        action.movementEnabled = true;
+        action.abilitiesEnabled = true;
+
+        //Callback.FireForUpdate(() => spawnedPlayer.GetComponent<ResetScripting>().Reset(echoPosition, 0f), this);
     }
 
     void OnPressedBack(int localID)
