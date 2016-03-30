@@ -19,6 +19,9 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
     protected GameObject meshInteraction;
 
     [SerializeField]
+    protected GameObject nullSuperPrefab;
+
+    [SerializeField]
     protected AudioClip countdownVoice;
     GameObject introMusic;
 
@@ -401,6 +404,7 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
         }
         GameObject.Instantiate(character.movementAbility).transform.SetParent(spawnedPlayer.transform, false);
         GameObject.Instantiate(character.genericAbility).transform.SetParent(spawnedPlayer.transform, false);
+        GameObject.Instantiate(nullSuperPrefab).transform.SetParent(spawnedPlayer.transform, false);
 
         GameObject instantiatedMeshInteraction = GameObject.Instantiate(meshInteraction);
         instantiatedMeshInteraction.transform.SetParent(spawnedPlayer.transform, false);

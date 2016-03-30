@@ -30,7 +30,6 @@ public class SpringMesh : MonoBehaviour {
 
 	void Start () {
         Vector2 offset = this.transform.position;
-        Debug.Log(offset);
         nodes = new GameObject[width,height];
         for (int x = 0; x < width; x++)
         {

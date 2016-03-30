@@ -117,6 +117,7 @@ MonoBehaviour:
   introMusicPrefab: {fileID: 129924, guid: c11a39805b0734f40bae483a2f720505, type: 2}
   puckPrefab: {fileID: 135402, guid: 6e5f3e0169f30de41bb5f3e1b78cbd68, type: 2}
   meshInteraction: {fileID: 119870, guid: b8e55c24ba2ff5141aadeb14f52bcbee, type: 2}
+  nullSuperPrefab: {fileID: 105680, guid: 5f1280ea6606137478581a28ca3a2475, type: 2}
   countdownVoice: {fileID: 8300000, guid: 5b84ac5bf89c31e4ab422295910ef143, type: 3}
   mainGameSceneName: Derek
   playerRegistrationPrefab: {fileID: 171078, guid: df99a46226850ad4194db9a6272820ae,
