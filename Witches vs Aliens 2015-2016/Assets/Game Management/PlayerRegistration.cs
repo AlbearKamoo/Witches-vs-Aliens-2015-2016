@@ -571,19 +571,23 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
 
             for (int i = 0; i < possiblePlayers.Length; i++)
             {
-                bool pressed = pressedAccept(i);
-
-                if (pressed)
+                int playerID = localIDToPlayerID[i];
+                if (registeredPlayers.ContainsKey(playerID) && registeredPlayers[playerID].registrationState == RegistrationState.READY)
                 {
-                    attemptStartGame();
-                    break;
-                }
-                /*
-                else if (pressedBack(i))
-                {
+                    bool pressed = pressedAccept(i);
 
+                    if (pressed)
+                    {
+                        attemptStartGame();
+                        break;
+                    }
+                    /*
+                    else if (pressedBack(i))
+                    {
+
+                    }
+                    */
                 }
-                */
             }
         }
     }
