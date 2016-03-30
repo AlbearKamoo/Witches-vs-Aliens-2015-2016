@@ -50,7 +50,6 @@ public class HueShiftedAnimation : AnimatedFourWayPlayerVisuals, IHueShiftableVi
 
     void setHue(float oldHue, float newHue)
     {
-        Debug.Log(newHue - oldHue);
         setHueArray(oldHue, newHue, upSprites);
         setHueArray(oldHue, newHue, leftSprites);
         setHueArray(oldHue, newHue, rightSprites);
@@ -79,7 +78,7 @@ public class HueShiftedAnimation : AnimatedFourWayPlayerVisuals, IHueShiftableVi
                 Color temp = tex.GetPixel(x, y);
                 float hue, saturation, value;
                 HSVColor.RGBToHSV(temp, out hue, out saturation, out value);
-                temp = HSVColor.HSVToRGB((hue + (newHue - oldHue)) % 1, saturation, value, temp.a);
+                temp = HSVColor.HSVToRGB((hue + (newHue - oldHue) + 1) % 1, saturation, value, temp.a);
                 output.SetPixel(x, y, temp);
             }
         }
