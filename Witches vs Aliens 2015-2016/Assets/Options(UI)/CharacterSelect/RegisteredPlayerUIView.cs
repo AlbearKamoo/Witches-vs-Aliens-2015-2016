@@ -3,7 +3,7 @@ using UnityEngine.UI;
 using System.Collections;
 using UnityEngine.Assertions;
 
-public class RegisteredPlayerUIView : MonoBehaviour {
+public class RegisteredPlayerUIView : MonoBehaviour, ISpawnable {
 
     Image background;
     [SerializeField]
@@ -23,6 +23,8 @@ public class RegisteredPlayerUIView : MonoBehaviour {
     IEnumerator gameVisualsRoutine;
     Vector2 characterVisualsVector;
     Material myMat;
+    LayoutElement layout;
+    float layoutHeight;
     public Vector2 CharacterVisualsVector { get { return characterVisualsVector; } }
     public PlayerRegistration.Registration registration { get; set; }
     public Color playerColor { set { background.color = value; } }
@@ -30,6 +32,8 @@ public class RegisteredPlayerUIView : MonoBehaviour {
 
 	// Use this for initialization
 	void Awake () {
+        layout = GetComponent<LayoutElement>();
+        layoutHeight = layout.preferredHeight;
         background = GetComponent<Image>();
         characterVisualsVector = new Vector2(Random.value, Random.value);
 
@@ -37,6 +41,11 @@ public class RegisteredPlayerUIView : MonoBehaviour {
         CharacterSprite.material = myMat;
         myMat.SetFloat(Tags.ShaderParams.cutoff, 0);
 	}
+
+    public void Create()
+    {
+        Callback.DoLerp((float l) => layout.preferredHeight = l * layoutHeight, selectFlashDuration, this);
+    }
 
     public void Despawn()
     {
