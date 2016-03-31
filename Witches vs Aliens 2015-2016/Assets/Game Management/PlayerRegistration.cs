@@ -234,6 +234,7 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
         GameObject spawnedPlayerRegistrationPuck = SpawnPlayerRegistrationPuck(playerID, networkMode);
         SpawnPlayerRegistrationComponents(playerID, spawnedPlayerRegistrationPuck, networkMode);
         checkReady();
+        checkNotReady();
     }
 
     void spawnPlayerRegistration(int localID, int playerID, NetworkMode networkMode)
@@ -241,6 +242,7 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
         GameObject spawnedPlayerRegistrationPuck = SpawnPlayerRegistrationPuck(localID, playerID, networkMode);
         SpawnPlayerRegistrationComponentsAndLocalInfo(localID, playerID, spawnedPlayerRegistrationPuck, networkMode);
         checkReady();
+        checkNotReady();
     }
 
     /*
