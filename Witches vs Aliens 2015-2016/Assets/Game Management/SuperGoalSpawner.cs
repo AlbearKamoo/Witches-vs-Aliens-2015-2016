@@ -31,15 +31,18 @@ public class SuperGoalSpawner : MonoBehaviour, INetworkable {
 
     SuperGoal SuperGoal1;
     SuperGoal SuperGoal2;
-    void SetGoalsActive(bool active) { SuperGoal1.active = active; SuperGoal2.active = active; } //setting a supergoal to false will destroy it
+    void SetGoalsActive(bool active) { SuperGoal1.active = active; SuperGoal2.active = active; puckFX.perSideEffectsActive = active; } //setting a supergoal to false will destroy it
     NetworkNode node;
     NetworkMode mode;
     AudioSource sfx;
+
+    PuckFX puckFX;
 
 	// Use this for initialization
 	void Awake () {
         Assert.IsTrue(spawnPositions.Length != 0);
         sfx = GetComponent<AudioSource>();
+        Callback.FireForUpdate(() => puckFX = GameObject.FindGameObjectWithTag(Tags.puck).GetComponent<PuckFX>(), this);
     }
 
     void Start()
