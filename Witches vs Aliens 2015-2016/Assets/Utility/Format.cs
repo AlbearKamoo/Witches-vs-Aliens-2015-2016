@@ -3,16 +3,17 @@ using System.Collections;
 using System.Net;
 using System.Net.Sockets;
 
-//a class to assist with formatting
-
-//makeReadable(int number) converts large numbers to use symbols (e.g. 2k instead of 2,000)
-
-//mousePosInWorld() returns the world-position of the cursor at a Z-depth of zero
-// TODO : (I might want to add more options and allow custom Z-depths to be used)
-
+/// <summary>
+/// A collection of static functions to assist with formatting data.
+/// </summary>
 public static class Format{
 
     //transform it into 2k, 3m, etc.
+    /// <summary>
+    /// Converts a number into a string, using single-character notation for very large numbers.
+    /// </summary>
+    /// <param name="number">The large integer to convert into a more human-readable string.</param>
+    /// <returns>A string representing the number in human-readable form.</returns>
     public static string makeReadable(int number) //int, so no decimals (YAY!)
     {
         int level = 0;
@@ -20,7 +21,6 @@ public static class Format{
         string result = number.ToString();
         if (level > 0)
             result = result.Substring(0, result.Length - level * 3) + levelToSuffix(level);
-        //todo: commas
         return result;
     }
 
@@ -48,11 +48,21 @@ public static class Format{
             default: return "";
         }
     }
+
+    /// <summary>
+    /// Calculates the position of the mouse cursor in world space relative to the main camera.
+    /// </summary>
+    /// <returns>The position of the mouse in world space relative to the main camera.</returns>
     public static Vector3 mousePosInWorld()
     {
         return mousePosInWorld(Camera.main.transform); //I don't want to use default parameters, because that would involve some extra computation through null-coalescing (the ?? thing)
     }
 
+    /// <summary>
+    /// Calculates the position of the mouse cursor in world space relative to the specified camera.
+    /// </summary>
+    /// <param name="cameraTransform">The camera to use when calculating the position of the mouse cursor.</param>
+    /// <returns>The position of the mouse in world space relative to the specified camera.</returns>
     public static Vector3 mousePosInWorld(Transform cameraTransform)
     {
         Vector3 screenPoint = Input.mousePosition;
@@ -60,7 +70,12 @@ public static class Format{
         return screenPoint.toWorldPoint();
     }
 
-    public static string formatMilliseconds(float numSeconds) //precision  = 0 means seconds, = 1 means milliseconds, and so on
+    /// <summary>
+    /// Returns the float formatted as a time in minutes, seconds, and milliseconds (XX:XX:XXX).
+    /// </summary>
+    /// <param name="numSeconds">Time in seconds.</param>
+    /// <returns>Time formatted as a string (XX:XX:XXX).</returns>
+    public static string formatMilliseconds(float numSeconds)
     {
         System.Text.StringBuilder result = new System.Text.StringBuilder(Mathf.FloorToInt(numSeconds / 60f).ToString("00"));
         result.Append(':');
@@ -73,6 +88,11 @@ public static class Format{
         return result.ToString();
     }
 
+    /// <summary>
+    /// Returns the float formatted as a time in minutes and seconds (XX:XX).
+    /// </summary>
+    /// <param name="numSeconds">Time in seconds.</param>
+    /// <returns>Time formatted as a string (XX:XX).</returns>
     public static string formatSeconds(float numSeconds)
     {
         System.Text.StringBuilder result = new System.Text.StringBuilder(Mathf.FloorToInt(numSeconds / 60f).ToString("00"));
@@ -83,6 +103,10 @@ public static class Format{
         return result.ToString();
     }
 
+    /// <summary>
+    /// Returns the most local IP Address as a string.
+    /// </summary>
+    /// <returns>The most local IP Address.</returns>
     public static string localIPAddress()
     {
         IPHostEntry host;
