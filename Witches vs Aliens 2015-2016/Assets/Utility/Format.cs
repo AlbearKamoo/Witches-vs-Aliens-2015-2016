@@ -55,19 +55,19 @@ public static class Format{
     /// <returns>The position of the mouse in world space relative to the main camera.</returns>
     public static Vector3 mousePosInWorld()
     {
-        return mousePosInWorld(Camera.main.transform); //I don't want to use default parameters, because that would involve some extra computation through null-coalescing (the ?? thing)
+        return mousePosInWorld(Camera.main); //I don't want to use default parameters, because that would involve some extra computation through null-coalescing (the ?? thing)
     }
 
     /// <summary>
     /// Calculates the position of the mouse cursor in world space relative to the specified camera.
     /// </summary>
-    /// <param name="cameraTransform">The camera to use when calculating the position of the mouse cursor.</param>
+    /// <param name="camera">The camera to use when calculating the position of the mouse cursor.</param>
     /// <returns>The position of the mouse in world space relative to the specified camera.</returns>
-    public static Vector3 mousePosInWorld(Transform cameraTransform)
+    public static Vector3 mousePosInWorld(Camera camera)
     {
         Vector3 screenPoint = Input.mousePosition;
-        screenPoint.z = -cameraTransform.position.z;
-        return screenPoint.toWorldPoint();
+        screenPoint.z = -camera.transform.position.z;
+        return screenPoint.toWorldPoint(camera);
     }
 
     /// <summary>
