@@ -9,7 +9,7 @@ public class CharacterSelector : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (registration.registrationState != PlayerRegistration.RegistrationState.READY && (other.CompareTag("Witch")||other.CompareTag("Alien")))
+        if (registration.registrationState != PlayerRegistration.RegistrationState.READY && other.CompareTag(Tags.gameController))
         {
             registration.SelectedCharacterID = other.GetComponent<CharacterHolder>().characterID;
         }

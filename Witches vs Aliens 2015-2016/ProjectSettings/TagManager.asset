@@ -7,8 +7,6 @@ TagManager:
   - Stage
   - Puck
   - Canvas
-  - Witch
-  - Alien
   layers:
   - Default
   - TransparentFX
