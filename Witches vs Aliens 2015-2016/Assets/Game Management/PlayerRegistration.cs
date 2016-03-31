@@ -448,7 +448,7 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
         if (huedVisuals != null)
         {
             data.playgroundAvatarVisuals = huedVisuals;
-            huedVisuals.shift = data.ui.CharacterVisualsVector;
+            huedVisuals.shiftAsync = data.ui.CharacterVisualsVector;
         }
         data.playgroundAvatar = spawnedPlayer;
 
