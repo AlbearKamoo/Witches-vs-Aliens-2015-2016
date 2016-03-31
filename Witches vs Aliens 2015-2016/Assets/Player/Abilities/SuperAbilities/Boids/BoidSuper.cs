@@ -15,6 +15,9 @@ public class BoidSuper : TimedSuperAbility, IPuckAbility, IAlliesAbility, IOppon
     [SerializeField]
     protected int numBoids;
 
+    [SerializeField]
+    protected int boidsSpawnedPerFrame;
+
     List<Transform> _opponents;
     public List<Transform> opponents { set { _opponents = value; } }
 
@@ -59,21 +62,43 @@ public class BoidSuper : TimedSuperAbility, IPuckAbility, IAlliesAbility, IOppon
     {
         base.OnActivate();
         List<Collider2D> boidColliders = new List<Collider2D>();
+        StartCoroutine(spawnBoidsAsync(boidColliders));
+        /*
         for (int i = 0; i < numBoids; i++)
         {
-            GameObject instantiatedBoid = Instantiate(boidPrefab, 5 * Random.insideUnitCircle, Quaternion.identity) as GameObject;
-            Boid newBoid = instantiatedBoid.GetComponent<Boid>();
-            boids.Add(newBoid);
-
-            newBoid.ignoreCollision(puckCollider);
-            newBoid.ignoreCollisions(allyColliders);
-            newBoid.ignoreCollisions(boidColliders);
-
-            boidColliders.Add(newBoid.Coll);
+            spawnBoid(boidColliders);
         }
+         */
         sfx.Play();
         Assert.IsNull(instantiatedOverlay);
         instantiatedOverlay = SimplePool.Spawn(boidOverlay, Vector2.zero);
+    }
+
+    IEnumerator spawnBoidsAsync(List<Collider2D> boidColliders)
+    {
+        int i = 0;
+        while (i < numBoids)
+        {
+            for (int j = 0; j < boidsSpawnedPerFrame && i < numBoids; j++)
+            {
+                spawnBoid(boidColliders);
+                i++;
+            }
+            yield return null; //next frame
+        }
+    }
+
+    void spawnBoid(List<Collider2D> boidColliders)
+    {
+        GameObject instantiatedBoid = Instantiate(boidPrefab, 5 * Random.insideUnitCircle, Quaternion.identity) as GameObject;
+        Boid newBoid = instantiatedBoid.GetComponent<Boid>();
+        boids.Add(newBoid);
+
+        newBoid.ignoreCollision(puckCollider);
+        newBoid.ignoreCollisions(allyColliders);
+        newBoid.ignoreCollisions(boidColliders);
+
+        boidColliders.Add(newBoid.Coll);
     }
 
     protected override void OnDeactivate()

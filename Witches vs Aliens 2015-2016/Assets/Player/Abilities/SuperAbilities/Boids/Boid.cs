@@ -225,11 +225,18 @@ public class Boid : MonoBehaviour, IBoid, INetworkable, IObserver<OutgoingNetwor
 
             steeringMobileAvoidingVelocity += (displacement / distance) / (distance - coll.radius);
             float dot = Vector2.Dot(displacement, boid.velocity);
-            if (distance > 0.25 && dot > 0) //if they have a chance of hitting us
+            if (distance > 0.15f)
             {
-                Vector2 fleeDirection = displacement - (dot * boid.velocity / Vector2.Dot(boid.velocity, boid.velocity)); //vector component orthogonal to the velocity
-                steeringMobileAvoidingVelocity += fleeDirection.normalized;
-                numMobileAvoids++;
+                if (dot > 0) //if they have a chance of hitting us
+                {
+                    Vector2 fleeDirection = displacement - (dot * boid.velocity / Vector2.Dot(boid.velocity, boid.velocity)); //vector component orthogonal to the velocity
+                    steeringMobileAvoidingVelocity += fleeDirection.normalized;
+                    numMobileAvoids++;
+                }
+            }
+            else
+            {
+                this.transform.position = (Vector2)(this.transform.position) + 3 * ((float)(2 * Mathf.PI * randGenerator.NextDouble())).RadToVector2(); //forcibly move away
             }
         }
 
