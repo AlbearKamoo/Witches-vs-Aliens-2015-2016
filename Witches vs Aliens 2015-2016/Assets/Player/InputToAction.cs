@@ -157,6 +157,8 @@ public class InputToAction : MonoBehaviour, ISpeedLimiter, INetworkable, IObserv
 	
 	// Update is called once per frame
 	void FixedUpdate () {
+        Vector2 cachedNormalizedMovementInput = normalizedMovementInput;
+
         for (int i = 0; i < preFixedUpdateDelegates.Count; i++)
         {
             preFixedUpdateDelegates[i]();
@@ -176,6 +178,7 @@ public class InputToAction : MonoBehaviour, ISpeedLimiter, INetworkable, IObserv
             postFixedUpdateDelegates[i]();
         }
 
+        normalizedMovementInput = cachedNormalizedMovementInput; //undo any modifications made by reversal abilities
 	}
 
     void rotateTowards(Vector2 targetDirection)
@@ -330,19 +333,19 @@ public class InputToAction : MonoBehaviour, ISpeedLimiter, INetworkable, IObserv
             case PacketType.PLAYERMOVEMENTABILITY:
                 if (checkValidPlayer(m, index))
                 {
-                    handleNetworkedAbilityInput(m, index, players[index].inputToAction.moveAbility);
+                    handleNetworkedAbilityInput(m, index, players[index].inputToAction.moveAbility, AbilityType.MOVEMENT);
                 }
                 break;
             case PacketType.PLAYERGENERICABILITY:
                 if (checkValidPlayer(m, index))
                 {
-                    handleNetworkedAbilityInput(m, index, players[index].inputToAction.genAbility);
+                    handleNetworkedAbilityInput(m, index, players[index].inputToAction.genAbility, AbilityType.GENERIC);
                 }
                 break;
             case PacketType.PLAYERSUPERABILITY:
                 if (checkValidPlayer(m, index))
                 {
-                    handleNetworkedAbilityInput(m, index, players[index].inputToAction.superAbility);
+                    handleNetworkedAbilityInput(m, index, players[index].inputToAction.superAbility, AbilityType.SUPER);
                 }
                 break;
                 
@@ -353,7 +356,7 @@ public class InputToAction : MonoBehaviour, ISpeedLimiter, INetworkable, IObserv
         }
     }
 
-    void handleNetworkedAbilityInput(IncomingNetworkStreamMessage m, int index, AbstractAbility ability)
+    void handleNetworkedAbilityInput(IncomingNetworkStreamMessage m, int index, AbstractAbility ability, AbilityType type)
     {
         switch (players[index].networkMode)
         {
@@ -378,6 +381,22 @@ public class InputToAction : MonoBehaviour, ISpeedLimiter, INetworkable, IObserv
                     {
                         activated = ability.Fire(direction);
                     }
+                    switch (type)
+                    {
+                        case AbilityType.MOVEMENT:
+                            movementAbilityObservable.Post(new MovementAbilityFiredMessage(direction));
+                            break;
+                        case AbilityType.GENERIC:
+                            genericAbilityObservable.Post(new GenericAbilityFiredMessage(direction));
+                            break;
+                        case AbilityType.SUPER:
+                            superAbilityObservable.Post(new SuperAbilityFiredMessage());
+                            break;
+                        default:
+                            Debug.Log("Invalid Ability Type");
+                            break;
+                    }
+
                     //maybe call a ForceFire method?
                     Assert.IsTrue(activated);
                     break;
@@ -453,9 +472,13 @@ public class InputToAction : MonoBehaviour, ISpeedLimiter, INetworkable, IObserv
         if(myIndex != -1)
         {
             players.RemoveAt(myIndex);
-            if (node != null && myIndex == 0 && players.Count != 0)
+            if (node != null && myIndex == 0)
             {
-                node.Subscribe(players[0].inputToAction); //have someone else subscribe to the networked node
+                node.Unsubscribe(this);
+                if (players.Count != 0)
+                {
+                    node.Subscribe(players[0].inputToAction); //have someone else subscribe to the networked node
+                }
             }
         }
         if (node != null)

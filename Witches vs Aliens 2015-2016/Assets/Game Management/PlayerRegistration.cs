@@ -13,9 +13,21 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
     protected GameObject introMusicPrefab;
 
     [SerializeField]
-    protected AudioClip countdownVoice;
-    GameObject introMusic;
+    protected GameObject puckPrefab;
 
+    [SerializeField]
+    protected GameObject meshInteraction;
+
+    [SerializeField]
+    protected GameObject nullSuperPrefab;
+
+    [SerializeField]
+    protected AudioClip countdownVoice;
+
+    [SerializeField]
+    protected Transform puckSpawnPoint;
+   
+    GameObject introMusic;
     AudioSource announcements;
 
     [SerializeField]
@@ -34,14 +46,19 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
     public CharacterHolder[] charactersData; //this array maps the characters to ints, for networking.
 
     [SerializeField]
-    [AutoLink(parentTag = Tags.canvas, childPath = "RegisteredPlayers")]
-    protected Transform UIParent;
+    [AutoLink(parentTag = Tags.canvas, childPath = "RegisteredWitchPlayers")]
+    protected Transform UIParentWitch;
+
+    [SerializeField]
+    [AutoLink(parentTag = Tags.canvas, childPath = "RegisteredAlienPlayers")]
+    protected Transform UIParentAlien;
 
     SetupData data;
     Dictionary<int, Registration> registeredPlayers = new Dictionary<int, Registration>();
     int[] localIDToPlayerID;
 
     Vector2[] joystickEdgeTriggers;
+    Vector2[] joystickEdgeTriggersXY;
 
     NetworkNode node;
     NetworkMode mode;
@@ -62,6 +79,10 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
         for (int i = 0; i < joystickEdgeTriggers.Length; i++)
             joystickEdgeTriggers[i] = Vector2.zero;
 
+        joystickEdgeTriggersXY = new Vector2[possiblePlayers.Length];
+        for (int i = 0; i < joystickEdgeTriggersXY.Length; i++)
+            joystickEdgeTriggersXY[i] = Vector2.zero;
+
         pressStart = GetComponentInChildren<Canvas>().gameObject;
         pressStart.SetActive(false);
 
@@ -70,6 +91,12 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
 
     void Start()
     {
+        GameObject puck = Instantiate(puckPrefab);
+
+        puck.GetComponent<Rigidbody2D>().velocity = puck.GetComponent<ISpeedLimiter>().maxSpeed * Random.insideUnitCircle;
+        GameObject.Instantiate(meshInteraction).transform.SetParent(puck.transform, false);
+
+
         node = NetworkNode.node;
         if (node == null) //if null, no networking, server controls it if there is networking
         {
@@ -94,10 +121,7 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
 
     void Update()
     {
-        if (!isReady())
-            checkInput();
-        else
-            checkPressedBack();
+        checkInput();
 
         //now check if all are ready
         checkReady();
@@ -113,6 +137,15 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
     {
         for (int i = 0; i < possiblePlayers.Length; i++)
         {
+
+            if (registeredPlayers.ContainsKey(localIDToPlayerID[i]))
+            {
+                if (registeredPlayers[localIDToPlayerID[i]].registrationState == RegistrationState.READY)
+                {
+                    continue; //we shouldn't check
+                }
+            }
+            //otherwise, check
             if (pressedAccept(i)) //register
             {
                 OnPressedAccept(i);
@@ -124,9 +157,12 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
     {
         for (int i = 0; i < possiblePlayers.Length; i++)
         {
-            if (pressedBack(i)) //register
+            if (registeredPlayers.ContainsKey(localIDToPlayerID[i]))
             {
-                OnPressedBack(i);
+                if (pressedBack(i)) //register
+                {
+                    OnPressedBack(i);
+                }
             }
         }
     }
@@ -196,14 +232,14 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
     void spawnPlayerRegistration(int playerID, NetworkMode networkMode)
     {
         GameObject spawnedPlayerRegistrationPuck = SpawnPlayerRegistrationPuck(playerID, networkMode);
-        SpawnPlayerRegistrationComponents(playerID, spawnedPlayerRegistrationPuck);
+        SpawnPlayerRegistrationComponents(playerID, spawnedPlayerRegistrationPuck, networkMode);
         checkReady();
     }
 
     void spawnPlayerRegistration(int localID, int playerID, NetworkMode networkMode)
     {
         GameObject spawnedPlayerRegistrationPuck = SpawnPlayerRegistrationPuck(localID, playerID, networkMode);
-        SpawnPlayerRegistrationComponents(localID, playerID, spawnedPlayerRegistrationPuck);
+        SpawnPlayerRegistrationComponentsAndLocalInfo(localID, playerID, spawnedPlayerRegistrationPuck, networkMode);
         checkReady();
     }
 
@@ -251,7 +287,7 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
 
     GameObject SpawnPlayerRegistrationPuck(int playerID, NetworkMode networkMode)
     {
-        GameObject spawnedPlayerRegistrationPuck = (GameObject)Instantiate(playerRegistrationPrefab, Vector2.zero, Quaternion.identity); //the positions are temporary
+        GameObject spawnedPlayerRegistrationPuck = (GameObject)Instantiate(playerRegistrationPrefab, puckSpawnPoint.position, Quaternion.identity); //the positions are temporary
         Stats spawnedStats = spawnedPlayerRegistrationPuck.AddComponent<Stats>();
         spawnedStats.playerID = playerID;
         spawnedStats.networkMode = networkMode;
@@ -281,44 +317,80 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
         return spawnedPlayerRegistrationPuck;
     }
 
-    void SpawnPlayerRegistrationComponents(int playerID, GameObject spawnedPlayerRegistrationPuck)
+    void SpawnPlayerRegistrationComponents(int playerID, GameObject spawnedPlayerRegistrationPuck, NetworkMode networkMode, int localID = -1)
     {
         CharacterSelector selector = spawnedPlayerRegistrationPuck.AddComponent<CharacterSelector>();
-
-        RegisteredPlayerUIView ui = SimplePool.Spawn(playerRegistrationUIPrefab).GetComponent<RegisteredPlayerUIView>();
-        ui.transform.SetParent(UIParent, Vector3.one, false);
-        ui.ready = false;
 
         InputToAction action = spawnedPlayerRegistrationPuck.GetComponent<InputToAction>();
         action.rotationEnabled = false;
         action.movementEnabled = true;
 
-        registeredPlayers[playerID] = new Registration(selector, ui, RegistrationState.REGISTERING, selector.GetComponentInChildren<PlayerRegistrationVisuals>(), this);
+
+
+        Color playerColor;
+        if (registeredPlayers.ContainsKey(playerID))
+            playerColor = registeredPlayers[playerID].color;
+        else if (localID != -1)
+            playerColor = possiblePlayers[localID].color;
+        else
+            playerColor = HSVColor.HSVToRGB(Random.value, 1, 1);
+
+
+        registeredPlayers[playerID] = new Registration(selector, null, RegistrationState.REGISTERING, localID, networkMode, this);
+
+        selector.gameObject.GetComponentInChildren<Image>().color = selector.gameObject.GetComponent<ParticleSystem>().startColor = registeredPlayers[playerID].color = playerColor;
 
         selector.registration = registeredPlayers[playerID];
-        ui.registration = registeredPlayers[playerID];
+        
     }
 
-    void SpawnPlayerRegistrationComponents(int localID, int playerID, GameObject spawnedPlayerRegistrationPuck)
+    void SpawnPlayerRegistrationComponentsAndLocalInfo(int localID, int playerID, GameObject spawnedPlayerRegistrationPuck, NetworkMode networkMode)
     {
-        SpawnPlayerRegistrationComponents(playerID, spawnedPlayerRegistrationPuck);
+        SpawnPlayerRegistrationComponents(playerID, spawnedPlayerRegistrationPuck, networkMode, localID : localID);
 
         Registration spawnedRegistration = registeredPlayers[playerID];
-
-        spawnedRegistration.ui.inputMode = possiblePlayers[localID].bindings.inputMode;
-
-        spawnedRegistration.ui.playerColor = spawnedRegistration.selector.gameObject.GetComponentInChildren<Image>().color = spawnedRegistration.selector.gameObject.GetComponent<ParticleSystem>().startColor = possiblePlayers[localID].color;
-        spawnedRegistration.ui.GetComponentInChildren<Text>().text = possiblePlayers[localID].abbreviation;
-        spawnedRegistration.ui.playerName = possiblePlayers[localID].name;
 
         localIDToPlayerID[localID] = playerID;
     }
 
     void setPlayerReady(int playerID)
     {
-        registeredPlayers[playerID].ready = true;
-        CharacterHolder characterHolder = registeredPlayers[playerID].context.charactersData[registeredPlayers[playerID].SelectedCharacterID];
+        Registration data = registeredPlayers[playerID];
+        data.ready = true;
+        CharacterHolder characterHolder = data.context.charactersData[data.SelectedCharacterID];
         characterHolder.Select();
+
+        RegisteredPlayerUIView ui = SimplePool.Spawn(playerRegistrationUIPrefab).GetComponent<RegisteredPlayerUIView>();
+
+        Transform UIParent;
+        switch (characterHolder.character.side)
+        {
+            default:
+            case Side.LEFT: //witch
+                UIParent = UIParentWitch;
+                break;
+            case Side.RIGHT:
+                UIParent = UIParentAlien;
+                break;
+        }
+        if (data.localID != -1)
+            ui.playerColor = possiblePlayers[data.localID].color;
+        else
+            ui.playerColor = data.color;
+        ui.transform.SetParent(UIParent, Vector3.one, false);
+        ui.registration = data;
+        data.ui = ui;
+        ui.UpdateCharacterSprite(data.SelectedCharacterID);
+
+        Vector2 echoPosition = data.selector.transform.position;
+
+        Destroy(data.selector.gameObject);
+        data.selector = null;
+
+        spawnPlaygroundAvatar(playerID);
+
+        data.echoPosition = echoPosition;
+
         checkReady();
     }
 
@@ -327,6 +399,64 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
         Assert.IsTrue(registeredPlayers[playerID].SelectedCharacterID != characterID);
         registeredPlayers[playerID].SelectedCharacterID = characterID;
         setPlayerReady(playerID);
+    }
+
+    void spawnPlaygroundAvatar(int playerID)
+    {
+        Registration data = registeredPlayers[playerID];
+        CharacterComponents character = charactersData[data.SelectedCharacterID].character;
+
+        GameObject spawnedPlayer = (GameObject)Instantiate(character.basePlayer);
+        Stats spawnedStats = spawnedPlayer.AddComponent<Stats>();
+        spawnedStats.side = character.side;
+        spawnedStats.playerID = playerID;
+        spawnedStats.networkMode = data.networkMode;
+
+        switch (data.networkMode)
+        {
+            case NetworkMode.REMOTECLIENT:
+            case NetworkMode.REMOTESERVER:
+                break;
+            default:
+                if (data.localID != -1)
+                {
+                    switch (possiblePlayers[data.localID].bindings.inputMode)
+                    {
+                        case InputConfiguration.PlayerInputType.MOUSE:
+                            spawnedPlayer.AddComponent<MousePlayerInput>().bindings = possiblePlayers[data.localID].bindings;
+                            break;
+                        case InputConfiguration.PlayerInputType.JOYSTICK:
+                            spawnedPlayer.AddComponent<JoystickCustomDeadZoneInput>().bindings = possiblePlayers[data.localID].bindings;
+                            break;
+                    }
+                }
+                break;
+        }
+        GameObject.Instantiate(character.movementAbility).transform.SetParent(spawnedPlayer.transform, false);
+        GameObject.Instantiate(character.genericAbility).transform.SetParent(spawnedPlayer.transform, false);
+        GameObject.Instantiate(nullSuperPrefab).transform.SetParent(spawnedPlayer.transform, false);
+
+        GameObject instantiatedMeshInteraction = GameObject.Instantiate(meshInteraction);
+        instantiatedMeshInteraction.transform.SetParent(spawnedPlayer.transform, false);
+        instantiatedMeshInteraction.GetComponent<ParticleSystem>().startColor = data.localID != -1 ? possiblePlayers[data.localID].color : data.color;
+
+        GameObject visuals = GameObject.Instantiate(character.visuals);
+        visuals.transform.SetParent(spawnedPlayer.transform, false);
+        IHueShiftableVisuals huedVisuals = visuals.GetComponent<IHueShiftableVisuals>();
+        if (huedVisuals != null)
+        {
+            data.playgroundAvatarVisuals = huedVisuals;
+            huedVisuals.shift = data.ui.CharacterVisualsVector;
+        }
+        data.playgroundAvatar = spawnedPlayer;
+
+        Vector2 echoPosition = data.echoPosition;
+
+        InputToAction action = spawnedPlayer.GetComponent<InputToAction>();
+        action.movementEnabled = true;
+        action.abilitiesEnabled = true;
+
+        //Callback.FireForUpdate(() => spawnedPlayer.GetComponent<ResetScripting>().Reset(echoPosition, 0f), this);
     }
 
     void OnPressedBack(int localID)
@@ -376,7 +506,6 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
     {
         Registration toDespawn = registeredPlayers[playerID];
         Destroy(toDespawn.selector.gameObject);
-        toDespawn.ui.Despawn();
         registeredPlayers.Remove(playerID);
         checkReady();
         checkNotReady();
@@ -406,21 +535,57 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
 
     void setPlayerNotReady(int playerID)
     {
-        registeredPlayers[playerID].ready = false;
+        Registration data = registeredPlayers[playerID];
+        data.ready = false;
+        data.ui.Despawn();
+        data.ui = null;
+
+        Vector2 playgroundEchoPosition = data.playgroundAvatar.transform.position;
+
+        data.playgroundAvatar.GetComponent<ResetScripting>().Reset(Vector2.zero, 0f);
+        Destroy(data.playgroundAvatar);
+        data.playgroundAvatar = null;
+        data.playgroundAvatarVisuals = null;
+
+        if (registeredPlayers[playerID].localID != -1)
+            spawnPlayerRegistration(data.localID, playerID, data.networkMode);
+        else
+            spawnPlayerRegistration(playerID, data.networkMode);
+
+        //spawnPlayerRegistration creates a new registration
+
+        registeredPlayers[playerID].selector.transform.position = data.echoPosition;
+
+        registeredPlayers[playerID].echoPosition = playgroundEchoPosition;
         checkNotReady();
     }
 
     bool isReady()
     {
         bool atLeastOneReady = false;
+        int sideDiff = 0;
         foreach(Registration r in registeredPlayers.Values)
         {
             if(r.registrationState == RegistrationState.READY)
                 atLeastOneReady = true;
             else
                 return false; //everyone has to be ready
+
+            if (GameSelection.balancedTeams)
+            {
+                switch (r.context.charactersData[r.SelectedCharacterID].character.side)
+                {
+                    case Side.LEFT:
+                        sideDiff--;
+                        break;
+                    default:
+                    case Side.RIGHT:
+                        sideDiff++;
+                        break;
+                }
+            }
         }
-        return atLeastOneReady;
+        return atLeastOneReady && sideDiff == 0;
     }
 
     void checkReady()
@@ -441,16 +606,22 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
 
             for (int i = 0; i < possiblePlayers.Length; i++)
             {
-                bool pressed = pressedAccept(i);
-
-                if (pressed)
+                int playerID = localIDToPlayerID[i];
+                if (registeredPlayers.ContainsKey(playerID) && registeredPlayers[playerID].registrationState == RegistrationState.READY)
                 {
-                    startGame();
-                    break;
-                }
-                else if (pressedBack(i))
-                {
+                    bool pressed = pressedAccept(i);
 
+                    if (pressed)
+                    {
+                        attemptStartGame();
+                        break;
+                    }
+                    /*
+                    else if (pressedBack(i))
+                    {
+
+                    }
+                    */
                 }
             }
         }
@@ -468,12 +639,24 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
 
     bool pressedAccept(int i)
     {
-        if(possiblePlayers[i].bindings.inputMode == InputConfiguration.PlayerInputType.MOUSE)
-            return Input.GetMouseButtonDown(0);
+        if (possiblePlayers[i].bindings.inputMode == InputConfiguration.PlayerInputType.MOUSE)
+        {
+            if(registeredPlayers.ContainsKey(localIDToPlayerID[i]))
+            {
+                Registration data = registeredPlayers[localIDToPlayerID[i]];
+                if (data.registrationState == RegistrationState.READY)
+                {
+                    return Input.GetKeyDown(KeyCode.Space);
+                }
+            }
+            //otherwise
+            return Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0);
+        }
         else if (possiblePlayers[i].bindings.inputMode == InputConfiguration.PlayerInputType.JOYSTICK)
         {
+            //ability axis
             float currentAxisValue = Input.GetAxis(possiblePlayers[i].bindings.movementAbilityAxis);
-            
+
             bool returnValue = false;
             if (currentAxisValue != 0 && joystickEdgeTriggers[i].x == 0)
             {
@@ -481,6 +664,26 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
             }
 
             joystickEdgeTriggers[i].x = currentAxisValue;
+
+            if (registeredPlayers.ContainsKey(localIDToPlayerID[i]))
+            {
+                Registration data = registeredPlayers[localIDToPlayerID[i]];
+                if (data.registrationState == RegistrationState.READY)
+                {
+                    returnValue = false; //disable ability axis, because ability axis is used in the playground
+                }
+            }
+
+            //now XY axis
+            currentAxisValue = Input.GetAxis(possiblePlayers[i].bindings.acceptAbilityAxis);
+
+            if (currentAxisValue != 0 && joystickEdgeTriggersXY[i].x == 0)
+            {
+                returnValue = true;
+            }
+
+            joystickEdgeTriggersXY[i].x = currentAxisValue;
+
             return returnValue;
         }
         return false;
@@ -489,7 +692,18 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
     bool pressedBack(int i)
     {
         if (possiblePlayers[i].bindings.inputMode == InputConfiguration.PlayerInputType.MOUSE)
-            return Input.GetMouseButtonDown(1);
+        {
+            if (registeredPlayers.ContainsKey(localIDToPlayerID[i]))
+            {
+                Registration data = registeredPlayers[localIDToPlayerID[i]];
+                if (data.registrationState == RegistrationState.READY)
+                {
+                    return Input.GetKeyDown(KeyCode.Escape);
+                }
+            }
+            //otherwise
+            return Input.GetKeyDown(KeyCode.Escape) || Input.GetMouseButtonDown(1);
+        }
         else if (possiblePlayers[i].bindings.inputMode == InputConfiguration.PlayerInputType.JOYSTICK)
         {
             float currentAxisValue = Input.GetAxis(possiblePlayers[i].bindings.genericAbilityAxis);
@@ -499,6 +713,26 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
                 returnValue = true;
 
             joystickEdgeTriggers[i].y = currentAxisValue;
+
+            if (registeredPlayers.ContainsKey(localIDToPlayerID[i]))
+            {
+                Registration data = registeredPlayers[localIDToPlayerID[i]];
+                if (data.registrationState == RegistrationState.READY)
+                {
+                    returnValue = false; //disable ability axis, because ability axis is used in the playground
+                }
+            }
+
+            //now XY axis
+            currentAxisValue = Input.GetAxis(possiblePlayers[i].bindings.backAbilityAxis);
+
+            if (currentAxisValue != 0 && joystickEdgeTriggersXY[i].y == 0)
+            {
+                returnValue = true;
+            }
+
+            joystickEdgeTriggersXY[i].y = currentAxisValue;
+
             return returnValue;
         }
         return false;
@@ -613,14 +847,35 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
      * }
          */
 
+    void attemptStartGame()
+    {
+        if (node == null) //local networking
+        {
+            startGame();
+        }
+        else
+        {
+            switch (node.networkMode)
+            {
+                case NetworkMode.LOCALCLIENT:
+                    //do nothing; only the server has the power
+                    break;
+                case NetworkMode.LOCALSERVER:
+                    node.BinaryWriter.Write(PacketType.SCENEJUMP);
+                    node.Send(node.AllCostChannel);
+                    startGame();
+                    break;
+            }
+        }
+    }
+
     void startGame()
     {
         List<PlayerComponents> results = new List<PlayerComponents>();
         foreach (KeyValuePair<int, Registration> entry in registeredPlayers)
         {
-            AbstractPlayerInput input = entry.Value.selector.gameObject.GetComponent<AbstractPlayerInput>();
-            InputConfiguration config = input != null ? input.bindings : new InputConfiguration();
-            config.networkMode = entry.Value.selector.gameObject.GetComponent<Stats>().networkMode;
+            InputConfiguration config = entry.Value.localID != -1 ? possiblePlayers[entry.Value.localID].bindings : new InputConfiguration();
+            config.networkMode = entry.Value.networkMode;
             results.Add(new PlayerComponents(charactersData[entry.Value.SelectedCharacterID].character, config, entry.Key, entry.Value.ui.CharacterVisualsVector));
         }
 
@@ -653,27 +908,38 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
         public CharacterSelector selector;
         public RegisteredPlayerUIView ui;
         public RegistrationState registrationState;
-        public PlayerRegistrationVisuals visuals;
         public PlayerRegistration context;
         private int selectedCharacterID = -1;
+        public int localID;
+        public Color color;
+        public NetworkMode networkMode;
+        public IHueShiftableVisuals playgroundAvatarVisuals;
+        public GameObject playgroundAvatar;
+        public Vector2 echoPosition;
         public int SelectedCharacterID
         {
             get { return selectedCharacterID; }
             set
             {
                 selectedCharacterID = value;
-                ui.UpdateCharacterSprite(value);
             }
         }
-        public Registration(CharacterSelector selector, RegisteredPlayerUIView ui, RegistrationState registrationState, PlayerRegistrationVisuals visuals, PlayerRegistration context)
+        public Registration(CharacterSelector selector, RegisteredPlayerUIView ui, RegistrationState registrationState, NetworkMode networkMode, PlayerRegistration context)
         {
             this.selector = selector;
             this.ui = ui;
             this.registrationState = registrationState;
-            this.visuals = visuals;
             this.context = context;
+            this.localID = -1;
+            this.networkMode = networkMode;
+            this.echoPosition = Vector2.zero;
         }
 
+        public Registration(CharacterSelector selector, RegisteredPlayerUIView ui, RegistrationState registrationState, int localID, NetworkMode networkMode, PlayerRegistration context)
+            : this(selector, ui, registrationState, networkMode, context)
+        {
+            this.localID = localID;
+        }
         public bool ready
         {
             set
@@ -681,25 +947,21 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
                 if (value)
                 {
                     registrationState = RegistrationState.READY;
-                    ui.ready = true;
-                    selector.gameObject.GetComponent<InputToAction>().movementEnabled = false;
-                    visuals.Active = true;
                 }
                 else
                 {
                     registrationState = RegistrationState.REGISTERING;
-                    ui.ready = false;
-                    selector.gameObject.GetComponent<InputToAction>().movementEnabled = true;
-                    visuals.Active = false;
                 }
             }
         }
     }
 
-    public PacketType[] packetTypes { get { return new PacketType[] { PacketType.REGISTRATIONREQUEST, PacketType.PLAYERREGISTER, PacketType.PLAYERDEREGISTER }; } }
+    public PacketType[] packetTypes { get { return new PacketType[] { PacketType.REGISTRATIONREQUEST, PacketType.PLAYERREGISTER, PacketType.PLAYERDEREGISTER, PacketType.SCENEJUMP }; } }
 
     public void Notify(IncomingNetworkStreamMessage m)
     {
+        Debug.Log(mode);
+        Debug.Log(m.packetType);
         switch (m.packetType)
         {
             case PacketType.REGISTRATIONREQUEST:
@@ -796,6 +1058,12 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
                             Debug.LogError("Invalid Message Type");
                             break;
                     }
+                    break;
+                }
+            case PacketType.SCENEJUMP:
+                {
+                    Assert.IsTrue(startCountdown != null);
+                    startGame();
                     break;
                 }
             default:

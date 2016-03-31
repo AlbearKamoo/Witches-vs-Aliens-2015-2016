@@ -15,6 +15,8 @@ public class Client : NetworkNode
 
     public string serverIP = "127.0.0.1";
 
+    public override NetworkMode networkMode { get { return NetworkMode.LOCALCLIENT; } }
+
     void OnGUI()
     {
         if (active) // Set when ConnectEvent received

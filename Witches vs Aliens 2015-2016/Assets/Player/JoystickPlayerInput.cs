@@ -23,6 +23,11 @@ public class JoystickPlayerInput : AbstractPlayerInput {
             action.FireAbility(AbilityType.MOVEMENT);
             prevMovement = Input.GetAxis(bindings.movementAbilityAxis);
         }
+        else if (Input.GetAxis(bindings.acceptAbilityAxis) != 0)
+        {
+            action.FireAbility(AbilityType.MOVEMENT);
+            prevMovement = Input.GetAxis(bindings.acceptAbilityAxis);
+        }
         if (Input.GetAxis(bindings.superAbilityAxis) != prevSuper)
         {
             Debug.Log(Input.GetAxis(bindings.superAbilityAxis));
@@ -34,8 +39,12 @@ public class JoystickPlayerInput : AbstractPlayerInput {
             action.FireAbility(AbilityType.GENERIC);
             prevGeneric = Input.GetAxis(bindings.genericAbilityAxis);
         }
-
-        if (prevMovement != 0 && Input.GetAxis(bindings.movementAbilityAxis) == 0)
+        else if (Input.GetAxis(bindings.backAbilityAxis) != 0)
+        {
+            action.FireAbility(AbilityType.GENERIC);
+            prevGeneric = Input.GetAxis(bindings.backAbilityAxis);
+        }
+        if (prevMovement != 0 && Mathf.Max(Input.GetAxis(bindings.movementAbilityAxis), Input.GetAxis(bindings.acceptAbilityAxis)) == 0)
         {
             action.StopFireAbility(AbilityType.MOVEMENT);
             prevMovement = 0;
@@ -44,7 +53,7 @@ public class JoystickPlayerInput : AbstractPlayerInput {
         {
             action.StopFireAbility(AbilityType.SUPER);
         }
-        if (prevGeneric != 0 && Input.GetAxis(bindings.genericAbilityAxis) == 0)
+        if (prevGeneric != 0 && Mathf.Max(Input.GetAxis(bindings.genericAbilityAxis), Input.GetAxis(bindings.backAbilityAxis)) == 0)
         {
             action.StopFireAbility(AbilityType.GENERIC);
             prevGeneric = 0;

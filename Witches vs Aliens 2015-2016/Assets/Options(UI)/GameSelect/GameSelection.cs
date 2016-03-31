@@ -8,6 +8,9 @@ public class GameSelection : MonoBehaviour {
     protected Toggle warmupEnabled;
 
     [SerializeField]
+    protected Toggle balancedTeamsEnabled;
+
+    [SerializeField]
     protected Dropdown networkingMode;
 
     [SerializeField]
@@ -22,7 +25,9 @@ public class GameSelection : MonoBehaviour {
     [SerializeField]
     protected string characterSelectSceneName;
 
-    public static bool warmupActive; //static to easily pass it between scenes
+    //static to easily pass it between scenes
+    public static bool warmupActive; 
+    public static bool balancedTeams; 
 
     void Start()
     {
@@ -35,6 +40,7 @@ public class GameSelection : MonoBehaviour {
     public void StartGame()
     {
         warmupActive = warmupEnabled.isOn;
+        balancedTeams = balancedTeamsEnabled.isOn;
 
         switch (networkingMode.value)
         {

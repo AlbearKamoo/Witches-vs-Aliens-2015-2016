@@ -2,10 +2,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.Assertions;
+using System.Linq;
 
 [RequireComponent(typeof(Collider2D))]
 [RequireComponent(typeof(Rigidbody2D))]
-public class Boid : MonoBehaviour, IBoid {
+public class Boid : MonoBehaviour, IBoid, INetworkable, IObserver<OutgoingNetworkStreamMessage>
+{
 
     [SerializeField]
     protected float speed;
@@ -29,6 +31,10 @@ public class Boid : MonoBehaviour, IBoid {
     [SerializeField]
     protected float mobileAvoidWeight;
 
+    static Dictionary<int, Boid> boids = new Dictionary<int, Boid>();
+    static int nextID;
+    static int subscribedID;
+
     public float seperation { get { return seperationDistance; } }
     public Vector2 position { get { return transform.position; } }
 
@@ -51,6 +57,9 @@ public class Boid : MonoBehaviour, IBoid {
     Transform visuals;
     Vector2 staticAvoidVelocity = Vector2.zero;
 
+    int id;
+    NetworkNode node;
+
     void Awake()
     {
         rigid = GetComponent<Rigidbody2D>();
@@ -60,6 +69,26 @@ public class Boid : MonoBehaviour, IBoid {
         randGenerator = new System.Random(UnityEngine.Random.Range(0, 9999999));
         vectoredMetaballMat = transform.Find("metaBallVisuals").GetComponent<SpriteRenderer>().material;
         vectoredMetaballMat.SetFloat("_NumBoids", 8);
+
+        node = NetworkNode.node;
+        if (node != null && (node is Client || node is Server))
+        {
+            id = nextID++;
+            
+            if (node is Server)
+            {
+                node.Subscribe<OutgoingNetworkStreamMessage>(this);
+            }
+            else if (node is Client && boids.Count == 0)
+            {
+                Debug.Log("DING!");
+                subscribedID = id;
+                node.Subscribe(this);
+            }
+
+            boids[id] = this;
+        }
+
     }
 
     void Start()
@@ -70,6 +99,21 @@ public class Boid : MonoBehaviour, IBoid {
             OnTriggerEnter2D(others[i]);
         }
         rigid.velocity = speed * Random.insideUnitCircle;
+    }
+
+    void OnDestroy()
+    {
+        if (node != null)
+        {
+            node.Unsubscribe<OutgoingNetworkStreamMessage>(this);
+            boids.Remove(id);
+            if (subscribedID == id && boids.Count != 0) //set up another boid to be the subscribed
+            {
+                node.Unsubscribe(this);
+                subscribedID = boids.Keys.First();
+                node.Subscribe(boids[subscribedID]);
+            }
+        }
     }
 
     void OnTriggerEnter2D(Collider2D other)
@@ -249,6 +293,35 @@ public class Boid : MonoBehaviour, IBoid {
 
         if(numAvoids > 0)
             staticAvoidVelocity /= (float)numAvoids;
+    }
+
+    public PacketType[] packetTypes { get { return new PacketType[]{PacketType.BOIDPOSITION}; } }
+
+    public void Notify(OutgoingNetworkStreamMessage m)
+    {
+        Assert.IsTrue(node.networkMode == NetworkMode.LOCALSERVER);
+        {
+            m.writer.Write((byte)(PacketType.BOIDPOSITION));
+            m.writer.Write((byte)(id));
+            m.writer.Write((Vector2)(this.transform.position));
+            m.writer.Write(rigid.velocity);
+        }
+    }
+
+    public void Notify(IncomingNetworkStreamMessage m)
+    {
+        int index = m.reader.ReadByte();
+        Assert.IsTrue(boids.ContainsKey(index));
+        switch (m.packetType)
+        {
+            case PacketType.BOIDPOSITION:
+                boids[index].rigid.position = m.reader.ReadVector2();
+                boids[index].rigid.velocity = m.reader.ReadVector2();
+                break;
+            default:
+                Debug.LogError("Invalid Message Type");
+                break;
+        }
     }
 }
 

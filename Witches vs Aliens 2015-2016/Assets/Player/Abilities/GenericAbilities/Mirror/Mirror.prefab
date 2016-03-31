@@ -145,7 +145,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4b8842c9e05dbd48bff1a9e83e95dcf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  reverseInputOnMirror: 1
+  reverseInputOnMirror: 0
 --- !u!114 &11438894
 MonoBehaviour:
   m_ObjectHideFlags: 1
