@@ -57,7 +57,8 @@ public class RegisteredPlayerUIView : MonoBehaviour, ISpawnable {
             gameVisualsRoutine = null;
         }
         characterVisualsVector = new Vector2(Random.value, Random.value);
-        SimplePool.Despawn(this.gameObject);
+        Callback.DoLerp((float l) => layout.preferredHeight = l * layoutHeight, selectFlashDuration, this, reverse : true).FollowedBy(() =>
+            SimplePool.Despawn(this.gameObject), this);
     }
 
     public void UpdateCharacterSprite(int ID)
