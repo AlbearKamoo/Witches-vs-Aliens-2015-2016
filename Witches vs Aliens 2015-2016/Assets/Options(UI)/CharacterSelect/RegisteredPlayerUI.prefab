@@ -178,10 +178,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4fa636c5cf2c8754ea9083b2eac00b08, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  selectFlashDuration: 1
+  selectFlashDuration: 0.5
   title: {fileID: 11493286}
   CharacterSprite: {fileID: 11419026}
   visualsSelectSensitivity: 0.2
+  displayedVisualsUpdateDelay: 0
 --- !u!114 &11493286
 MonoBehaviour:
   m_ObjectHideFlags: 1

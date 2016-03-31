@@ -333,19 +333,19 @@ public class InputToAction : MonoBehaviour, ISpeedLimiter, INetworkable, IObserv
             case PacketType.PLAYERMOVEMENTABILITY:
                 if (checkValidPlayer(m, index))
                 {
-                    handleNetworkedAbilityInput(m, index, players[index].inputToAction.moveAbility);
+                    handleNetworkedAbilityInput(m, index, players[index].inputToAction.moveAbility, AbilityType.MOVEMENT);
                 }
                 break;
             case PacketType.PLAYERGENERICABILITY:
                 if (checkValidPlayer(m, index))
                 {
-                    handleNetworkedAbilityInput(m, index, players[index].inputToAction.genAbility);
+                    handleNetworkedAbilityInput(m, index, players[index].inputToAction.genAbility, AbilityType.GENERIC);
                 }
                 break;
             case PacketType.PLAYERSUPERABILITY:
                 if (checkValidPlayer(m, index))
                 {
-                    handleNetworkedAbilityInput(m, index, players[index].inputToAction.superAbility);
+                    handleNetworkedAbilityInput(m, index, players[index].inputToAction.superAbility, AbilityType.SUPER);
                 }
                 break;
                 
@@ -356,7 +356,7 @@ public class InputToAction : MonoBehaviour, ISpeedLimiter, INetworkable, IObserv
         }
     }
 
-    void handleNetworkedAbilityInput(IncomingNetworkStreamMessage m, int index, AbstractAbility ability)
+    void handleNetworkedAbilityInput(IncomingNetworkStreamMessage m, int index, AbstractAbility ability, AbilityType type)
     {
         switch (players[index].networkMode)
         {
@@ -381,6 +381,22 @@ public class InputToAction : MonoBehaviour, ISpeedLimiter, INetworkable, IObserv
                     {
                         activated = ability.Fire(direction);
                     }
+                    switch (type)
+                    {
+                        case AbilityType.MOVEMENT:
+                            movementAbilityObservable.Post(new MovementAbilityFiredMessage(direction));
+                            break;
+                        case AbilityType.GENERIC:
+                            genericAbilityObservable.Post(new GenericAbilityFiredMessage(direction));
+                            break;
+                        case AbilityType.SUPER:
+                            superAbilityObservable.Post(new SuperAbilityFiredMessage());
+                            break;
+                        default:
+                            Debug.Log("Invalid Ability Type");
+                            break;
+                    }
+
                     //maybe call a ForceFire method?
                     Assert.IsTrue(activated);
                     break;
