@@ -34,8 +34,12 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
     public CharacterHolder[] charactersData; //this array maps the characters to ints, for networking.
 
     [SerializeField]
-    [AutoLink(parentTag = Tags.canvas, childPath = "RegisteredPlayers")]
+    [AutoLink(parentTag = Tags.canvas, childPath = "RegisteredPlayersWitches")]
     protected Transform UIParent;
+
+    [SerializeField]
+    [AutoLink(parentTag = Tags.canvas, childPath = "RegisteredPlayersAliens")]
+    protected Transform UIParent2;
 
     SetupData data;
     Dictionary<int, Registration> registeredPlayers = new Dictionary<int, Registration>();
@@ -252,6 +256,7 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
     GameObject SpawnPlayerRegistrationPuck(int playerID, NetworkMode networkMode)
     {
         GameObject spawnedPlayerRegistrationPuck = (GameObject)Instantiate(playerRegistrationPrefab, Vector2.zero, Quaternion.identity); //the positions are temporary
+        spawnedPlayerRegistrationPuck.transform.Translate(0, 5, 0);
         Stats spawnedStats = spawnedPlayerRegistrationPuck.AddComponent<Stats>();
         spawnedStats.playerID = playerID;
         spawnedStats.networkMode = networkMode;
@@ -286,7 +291,7 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
         CharacterSelector selector = spawnedPlayerRegistrationPuck.AddComponent<CharacterSelector>();
 
         RegisteredPlayerUIView ui = SimplePool.Spawn(playerRegistrationUIPrefab).GetComponent<RegisteredPlayerUIView>();
-        ui.transform.SetParent(UIParent, Vector3.one, false);
+        //ui.transform.SetParent(UIParent, Vector3.one, false);
         ui.ready = false;
 
         InputToAction action = spawnedPlayerRegistrationPuck.GetComponent<InputToAction>();
@@ -310,7 +315,7 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
         spawnedRegistration.ui.playerColor = spawnedRegistration.selector.gameObject.GetComponentInChildren<Image>().color = spawnedRegistration.selector.gameObject.GetComponent<ParticleSystem>().startColor = possiblePlayers[localID].color;
         spawnedRegistration.ui.GetComponentInChildren<Text>().text = possiblePlayers[localID].abbreviation;
         spawnedRegistration.ui.playerName = possiblePlayers[localID].name;
-
+        //registeredPlayers[playerID].RegisteredPlayerUIView.transform.SetParent(UIParent, Vector3.one, false);
         localIDToPlayerID[localID] = playerID;
     }
 
@@ -319,6 +324,15 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
         registeredPlayers[playerID].ready = true;
         CharacterHolder characterHolder = registeredPlayers[playerID].context.charactersData[registeredPlayers[playerID].SelectedCharacterID];
         characterHolder.Select();
+        if (characterHolder.CompareTag("Witch"))
+        {
+            registeredPlayers[playerID].ui.transform.SetParent(UIParent, Vector3.one, false);
+        }
+        else
+        {
+            registeredPlayers[playerID].ui.transform.SetParent(UIParent2, Vector3.one, false);
+        }
+        //registeredPlayers[playerID].ui.transform.SetParent(UIParent, Vector3.one, false);
         checkReady();
     }
 
@@ -332,6 +346,7 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
     void OnPressedBack(int localID)
     {
         int playerID = localIDToPlayerID[localID];
+        registeredPlayers[playerID].ui.transform.parent=null;
         switch (localIDToState(localID))
         {
             //case RegistrationState.NOTREGISTERED: //don't need to do anything
