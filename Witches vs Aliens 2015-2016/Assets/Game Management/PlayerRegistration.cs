@@ -325,7 +325,20 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
         action.rotationEnabled = false;
         action.movementEnabled = true;
 
+
+
+        Color playerColor;
+        if (registeredPlayers.ContainsKey(playerID))
+            playerColor = registeredPlayers[playerID].color;
+        else if (localID != -1)
+            playerColor = possiblePlayers[localID].color;
+        else
+            playerColor = HSVColor.HSVToRGB(Random.value, 1, 1);
+
+
         registeredPlayers[playerID] = new Registration(selector, null, RegistrationState.REGISTERING, localID, networkMode, this);
+
+        selector.gameObject.GetComponentInChildren<Image>().color = selector.gameObject.GetComponent<ParticleSystem>().startColor = registeredPlayers[playerID].color = playerColor;
 
         selector.registration = registeredPlayers[playerID];
         
@@ -336,8 +349,6 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
         SpawnPlayerRegistrationComponents(playerID, spawnedPlayerRegistrationPuck, networkMode, localID : localID);
 
         Registration spawnedRegistration = registeredPlayers[playerID];
-
-        spawnedRegistration.selector.gameObject.GetComponentInChildren<Image>().color = spawnedRegistration.selector.gameObject.GetComponent<ParticleSystem>().startColor = possiblePlayers[localID].color;
 
         localIDToPlayerID[localID] = playerID;
     }
@@ -365,7 +376,7 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
         if (data.localID != -1)
             ui.playerColor = possiblePlayers[data.localID].color;
         else
-            ui.playerColor = data.color = HSVColor.HSVToRGB(Random.value, 1, 1);
+            ui.playerColor = data.color;
         ui.transform.SetParent(UIParent, Vector3.one, false);
         ui.registration = data;
         data.ui = ui;
