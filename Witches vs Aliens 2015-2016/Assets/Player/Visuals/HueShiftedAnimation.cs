@@ -10,6 +10,7 @@ public class HueShiftedAnimation : AnimatedFourWayPlayerVisuals, IHueShiftableVi
 
     Vector2 _shift = Vector2.zero;
     public Vector2 shift { set { setHue(_shift.x, value.x); _shift = value; } }
+    public Vector2 shiftAsync { set { StartCoroutine(setHueAsync(_shift.x, value.x)); _shift = value; } }
 
 	// Use this for initialization
 	protected override void Start () {
@@ -56,11 +57,27 @@ public class HueShiftedAnimation : AnimatedFourWayPlayerVisuals, IHueShiftableVi
         setHueArray(oldHue, newHue, downSprites);
     }
 
+    IEnumerator setHueAsync(float oldHue, float newHue) //use coroutines to not cause a single-frame lag spike
+    {
+        yield return StartCoroutine(setHueArrayAsync(oldHue, newHue, upSprites));
+        yield return StartCoroutine(setHueArrayAsync(oldHue, newHue, leftSprites));
+        yield return StartCoroutine(setHueArrayAsync(oldHue, newHue, rightSprites));
+        yield return StartCoroutine(setHueArrayAsync(oldHue, newHue, downSprites));
+    }
+
     void setHueArray(float oldHue, float newHue, Sprite[] sprites)
     {
         for (int i = 0; i < sprites.Length; i++)
         {
             setHueSprite(oldHue, newHue, ref sprites[i]);
+        }
+    }
+
+    IEnumerator setHueArrayAsync(float oldHue, float newHue, Sprite[] sprites)
+    {
+        for (int i = 0; i < sprites.Length; i++)
+        {
+            yield return StartCoroutine(setHueSpriteAsync(oldHue, newHue, sprites, i));
         }
     }
 
@@ -86,6 +103,12 @@ public class HueShiftedAnimation : AnimatedFourWayPlayerVisuals, IHueShiftableVi
         sprite = Sprite.Create(output, Rect.MinMaxRect(0, 0, output.width, output.height), Vector2.one / 2, sprite.pixelsPerUnit);
     }
 
+    IEnumerator setHueSpriteAsync(float oldHue, float newHue, Sprite[] sprites, int index)
+    {
+        setHueSprite(oldHue, newHue, ref sprites[index]);
+        yield return null;
+    }
+
     public override Sprite selectionSprite(Vector2 visualSpaceInput)
     {
         Sprite result = base.selectionSprite(visualSpaceInput);
@@ -97,4 +120,5 @@ public class HueShiftedAnimation : AnimatedFourWayPlayerVisuals, IHueShiftableVi
 public interface IHueShiftableVisuals
 {
     Vector2 shift { set; }
+    Vector2 shiftAsync { set; }
 }

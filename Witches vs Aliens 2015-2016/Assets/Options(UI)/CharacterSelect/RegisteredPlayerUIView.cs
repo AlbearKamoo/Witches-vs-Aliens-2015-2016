@@ -88,7 +88,9 @@ public class RegisteredPlayerUIView : MonoBehaviour, ISpawnable {
         while (true)
         {
             Vector2 deltaVisuals = Input.GetAxis("Mouse ScrollWheel") * Vector2.right;
-            
+
+            //Debug.Log(deltaVisuals);
+
             if (deltaVisuals != Vector2.zero)
             {
                 characterVisualsVector += Time.deltaTime * visualsSelectSensitivity * deltaVisuals;
@@ -125,7 +127,7 @@ public class RegisteredPlayerUIView : MonoBehaviour, ISpawnable {
                     if (characterVisualsVector == previousStoredVector) //if the player has finished choosing
                     {
                         currentlyDisplayedVector = characterVisualsVector;
-                        hueShift.shift = characterVisualsVector;
+                        hueShift.shiftAsync = characterVisualsVector;
                     }
                     else
                     {
