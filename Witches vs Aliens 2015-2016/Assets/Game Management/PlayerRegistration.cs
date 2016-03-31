@@ -552,14 +552,29 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
     bool isReady()
     {
         bool atLeastOneReady = false;
+        int sideDiff = 0;
         foreach(Registration r in registeredPlayers.Values)
         {
             if(r.registrationState == RegistrationState.READY)
                 atLeastOneReady = true;
             else
                 return false; //everyone has to be ready
+
+            if (GameSelection.balancedTeams)
+            {
+                switch (r.context.charactersData[r.SelectedCharacterID].character.side)
+                {
+                    case Side.LEFT:
+                        sideDiff--;
+                        break;
+                    default:
+                    case Side.RIGHT:
+                        sideDiff++;
+                        break;
+                }
+            }
         }
-        return atLeastOneReady;
+        return atLeastOneReady && sideDiff == 0;
     }
 
     void checkReady()
