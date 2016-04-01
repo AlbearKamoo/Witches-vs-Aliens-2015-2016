@@ -108,5 +108,6 @@ public class BoidSuper : TimedSuperAbility, IPuckAbility, IAlliesAbility, IRando
         boids.Clear();
         sfx.Stop();
         SimplePool.Despawn(instantiatedOverlay);
+        instantiatedOverlay = null;
     }
 }

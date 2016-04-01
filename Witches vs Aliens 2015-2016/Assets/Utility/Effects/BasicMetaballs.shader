@@ -2,7 +2,7 @@
 {
 	Properties
 	{
-		[PerRendererData] _MainTex("MainTexture", 2D) = "white" {}
+		_MainTex("MainTexture", 2D) = "white" {}
 		_Cutoff("Cutoff", Range(0,1)) = 0.1
 	}
 	SubShader

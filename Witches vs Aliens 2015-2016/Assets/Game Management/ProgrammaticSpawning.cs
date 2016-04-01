@@ -63,6 +63,7 @@ public class ProgrammaticSpawning : MonoBehaviour, IObserver<Message> {
     Vector2[] leftPoints;
     Vector2[] rightPoints;
     Transform[] players;
+    public Transform[] Players { get { return players; } }
     List<Transform> leftPlayers = new List<Transform>();
     public List<Transform> LeftPlayers { get { return leftPlayers; } }
     List<Transform> rightPlayers = new List<Transform>();
