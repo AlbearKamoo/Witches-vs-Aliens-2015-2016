@@ -123,14 +123,21 @@
 			fixed4 frag (v2f i) : SV_Target
 			{
 				fixed4 result;
+
+				fixed actualAlpha = tex2D(_MainTex, i.uv).a;
+				fixed enabled = step(_Cutoff, actualAlpha);
+
+				if(enabled == 0)
+				{
+					return fixed4(1, 0, 1, 0);
+				}
 				result = processVertex(i, 0, 0);
 				result += processVertex(i, 0, 0.5);
 				result += processVertex(i, 0.5, 0.25);
 				result += processVertex(i, 0.5, 0.75);
 
-				fixed actualAlpha = tex2D(_MainTex, i.uv).a;
-				fixed enabled = step(_Cutoff, actualAlpha);
-				result.a *= enabled * saturate((actualAlpha - _Cutoff) / (1 - _Cutoff));
+				
+				result.a *= saturate((actualAlpha - _Cutoff) / (1 - _Cutoff));
 				//Shield-style alpha mapping //result.a *= enabled * (1 - saturate((actualAlpha - _Cutoff) / (1 - _Cutoff)) / 2);
 
 				return result;
