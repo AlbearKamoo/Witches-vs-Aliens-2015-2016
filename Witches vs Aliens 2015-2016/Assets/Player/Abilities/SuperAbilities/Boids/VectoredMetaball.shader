@@ -32,7 +32,7 @@
 			{
 				float2 uv : TEXCOORD0;
 				float4 vertex : SV_POSITION;
-				fixed3 vectoring : COL;
+				fixed3 vectoring : COLOR;
 			};
 
 			sampler2D _MainTex;

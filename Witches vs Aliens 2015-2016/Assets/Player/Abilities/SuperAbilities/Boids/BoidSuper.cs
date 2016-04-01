@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine.Assertions;
 
 [RequireComponent(typeof(AudioSource))]
-public class BoidSuper : TimedSuperAbility, IPuckAbility, IAlliesAbility, IOpponentsAbility, IRandomAbility
+public class BoidSuper : TimedSuperAbility, IPuckAbility, IAlliesAbility, IRandomAbility
 {
     [SerializeField]
     protected GameObject boidPrefab;
@@ -17,9 +17,6 @@ public class BoidSuper : TimedSuperAbility, IPuckAbility, IAlliesAbility, IOppon
 
     [SerializeField]
     protected int boidsSpawnedPerFrame;
-
-    List<Transform> _opponents;
-    public List<Transform> opponents { set { _opponents = value; } }
 
     List<Transform> _allies;
     List<Collider2D> allyColliders;

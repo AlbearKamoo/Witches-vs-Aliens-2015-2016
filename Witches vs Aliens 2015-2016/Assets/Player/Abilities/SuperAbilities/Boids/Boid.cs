@@ -46,7 +46,6 @@ public class Boid : MonoBehaviour, IBoid, INetworkable, IObserver<OutgoingNetwor
 
     CircleCollider2D coll;
     public CircleCollider2D Coll { get { return coll; } }
-    Collider2D trigger;
 
     Material vectoredMetaballMat;
 
@@ -63,7 +62,6 @@ public class Boid : MonoBehaviour, IBoid, INetworkable, IObserver<OutgoingNetwor
     void Awake()
     {
         rigid = GetComponent<Rigidbody2D>();
-        trigger = GetComponent<Collider2D>();
         visuals = transform.Find("visuals");
         coll = visuals.GetComponent<CircleCollider2D>();
         randGenerator = new System.Random(UnityEngine.Random.Range(0, 9999999));

@@ -118,6 +118,7 @@ MonoBehaviour:
   boidPrefab: {fileID: 109554, guid: b6cb319720191ca43b7fbaa3f16230f9, type: 2}
   boidOverlay: {fileID: 184524, guid: e0f740c3c70b72e47b0aeea5f48ea198, type: 2}
   numBoids: 60
+  boidsSpawnedPerFrame: 5
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

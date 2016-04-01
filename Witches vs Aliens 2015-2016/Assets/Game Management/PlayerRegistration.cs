@@ -5,8 +5,6 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine.Assertions;
 
-
-[RequireComponent(typeof(AudioSource))]
 [RequireComponent(typeof(SetupData))]
 public class PlayerRegistration : MonoBehaviour, INetworkable {
     [SerializeField]
@@ -28,7 +26,6 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
     protected Transform puckSpawnPoint;
    
     GameObject introMusic;
-    AudioSource announcements;
 
     [SerializeField]
     protected string mainGameSceneName;
@@ -85,8 +82,6 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
 
         pressStart = GetComponentInChildren<Canvas>().gameObject;
         pressStart.SetActive(false);
-
-        announcements = GetComponent<AudioSource>();
     }
 
     void Start()
@@ -350,8 +345,6 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
     {
         SpawnPlayerRegistrationComponents(playerID, spawnedPlayerRegistrationPuck, networkMode, localID : localID);
 
-        Registration spawnedRegistration = registeredPlayers[playerID];
-
         localIDToPlayerID[localID] = playerID;
     }
 
@@ -451,8 +444,6 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
             huedVisuals.shiftAsync = data.ui.CharacterVisualsVector;
         }
         data.playgroundAvatar = spawnedPlayer;
-
-        Vector2 echoPosition = data.echoPosition;
 
         InputToAction action = spawnedPlayer.GetComponent<InputToAction>();
         action.movementEnabled = true;

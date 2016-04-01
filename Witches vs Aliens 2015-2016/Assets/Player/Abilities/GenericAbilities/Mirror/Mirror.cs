@@ -14,8 +14,6 @@ public class Mirror : MonoBehaviour {
     Rigidbody2D mirrorRigidbody;
     Rigidbody2D myRigidbody;
 
-    VisualAnimate vfx;
-
     bool _active;
     public bool active
     {
@@ -46,7 +44,6 @@ public class Mirror : MonoBehaviour {
     void Awake()
     {
         myRigidbody = GetComponent<Rigidbody2D>();
-        vfx = GetComponent<VisualAnimate>();
     }
 
     public void Initialize(InputToAction mirrorTarget)
