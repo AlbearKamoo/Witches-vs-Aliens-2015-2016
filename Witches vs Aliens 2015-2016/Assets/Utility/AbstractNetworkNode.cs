@@ -181,7 +181,7 @@ public abstract class AbstractNetworkNode : MonoBehaviour {
         }
     }
 
-    void OnApplicationQuit()
+    void OnDestroy()
     {
         // Gracefully disconnect
         if (hostID != -1 && connectionIDs.Count > 0)
