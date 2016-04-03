@@ -5,7 +5,7 @@
 	}
 	SubShader
 	{
-		Tags { "Queue" = "Transparent" "RenderType"="Opaque"  }
+		Tags {"RenderType"="Opaque"  }
  
 		ZWrite On
 		Cull Off
@@ -43,8 +43,9 @@
 			fixed4 frag (v2f i) : SV_Target
 			{
 				//Get the distance to the camera from the depth buffer for this point
-                float sceneZ = Linear01Depth (tex2Dproj(_CameraDepthTexture,
-                                                         UNITY_PROJ_COORD(i.projPos)).r);
+                float sceneZ = LinearEyeDepth (tex2Dproj(_CameraDepthTexture,
+                                                         UNITY_PROJ_COORD(i.projPos)).r) / 50;
+
 				return fixed4(sceneZ, sceneZ, sceneZ, 1);
 			}
 			ENDCG

@@ -6,11 +6,11 @@ Material:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: VoronoiCell
-  m_Shader: {fileID: 4800000, guid: d99ae7087c78e154c893b23f25f4cfb9, type: 3}
-  m_ShaderKeywords: EDGE_HIGHLIGHTING
+  m_Name: DepthWrite
+  m_Shader: {fileID: 4800000, guid: 187bd65965b0bb545937e0e577950dfc, type: 3}
+  m_ShaderKeywords: 
   m_LightmapFlags: 5
-  m_CustomRenderQueue: 3000
+  m_CustomRenderQueue: 2000
   stringTagMap: {}
   m_SavedProperties:
     serializedVersion: 2
@@ -19,7 +19,7 @@ Material:
         first:
           name: _MainTex
         second:
-          m_Texture: {fileID: 2800000, guid: 73b9f8d46ad27714484b5940f8229937, type: 3}
+          m_Texture: {fileID: 0}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
       data:
@@ -81,10 +81,6 @@ Material:
     m_Floats:
       data:
         first:
-          name: _Radius
-        second: 1
-      data:
-        first:
           name: _SrcBlend
         second: 1
       data:
@@ -131,14 +127,6 @@ Material:
         first:
           name: _Metallic
         second: 0
-      data:
-        first:
-          name: _EDGE_HIGHLIGHTING
-        second: 1
-      data:
-        first:
-          name: _HighlightThresholdMax
-        second: 1
     m_Colors:
       data:
         first:
@@ -147,12 +135,4 @@ Material:
       data:
         first:
           name: _Color
-        second: {r: 1, g: 0, b: 0, a: 1}
-      data:
-        first:
-          name: _RegularColor
-        second: {r: 1, g: 1, b: 1, a: 0.103}
-      data:
-        first:
-          name: _HighlightColor
-        second: {r: 1, g: 0, b: 0, a: 1}
+        second: {r: 1, g: 1, b: 1, a: 1}
