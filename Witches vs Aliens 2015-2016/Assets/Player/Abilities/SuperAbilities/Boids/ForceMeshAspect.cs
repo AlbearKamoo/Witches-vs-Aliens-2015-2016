@@ -23,8 +23,6 @@ public class ForceMeshAspect : MonoBehaviour {
             newUVs[i].y = UVdistance + 0.5f;
 
             newVertices[i].y *= aspectRatio;
-
-            Debug.Log(newVertices[i]);
         }
         target.uv = newUVs;
         target.vertices = newVertices;

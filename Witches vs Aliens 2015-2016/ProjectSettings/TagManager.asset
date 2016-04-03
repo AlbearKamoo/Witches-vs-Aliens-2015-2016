@@ -37,7 +37,7 @@ TagManager:
   - 
   - MainCameraInvisible_Crater
   - MainCameraInvisible_Boids
-  - 
+  - MainCameraInvisible_Voronoi
   - 
   - 
   m_SortingLayers:
