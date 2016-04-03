@@ -31,7 +31,9 @@
 			{
 				float2 uv : TEXCOORD0;
 				float4 vertex : SV_POSITION;
+				#if EDGE_HIGHLIGHTING
 				float4 projPos : TEXCOORD2; //Screen position of pos
+				#endif
 			};
 
 			sampler2D _MainTex;
@@ -44,7 +46,9 @@
 			{
 				v2f o;
 				o.vertex = mul(UNITY_MATRIX_MVP, v.vertex);
+				#if EDGE_HIGHLIGHTING
 				o.projPos = ComputeScreenPos(o.vertex);
+				#endif
 				o.uv = v.uv;
 				return o;
 			}
@@ -78,10 +82,6 @@
 				{
 					result.rgb = col.r * lerp(fixed3(1, 1, 1), _Color, 1-col.g);
 				}
-
-				result.rgb = col.r * lerp(fixed3(1, 1, 1), _Color, 1-col.g);
-
-				
 
 				return result;
 			}
