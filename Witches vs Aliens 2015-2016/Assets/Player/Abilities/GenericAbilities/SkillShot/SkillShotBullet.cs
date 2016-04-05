@@ -9,6 +9,9 @@ public class SkillShotBullet : MonoBehaviour {
     [SerializeField]
     protected float speed;
 
+    [SerializeField]
+    protected float maxDuration;
+
     SkillShotAbility source;
     public SkillShotAbility Source { get { return source; } }
     Rigidbody2D rigid;
@@ -22,6 +25,8 @@ public class SkillShotBullet : MonoBehaviour {
     public Side Side { get { return side; } }
 
     bool active = true;
+
+    float timeToLive;
 
     public bool Active
     {
@@ -38,11 +43,22 @@ public class SkillShotBullet : MonoBehaviour {
                 vfx.Pause();
                 vfx.Clear();
                 Callback.FireForUpdate(() => vfx.Play(), this, mode : Callback.Mode.FIXEDUPDATE);
-            }
-            else
-            {
+                timeToLive = maxDuration;
             }
             active = value;
+        }
+    }
+
+    void Update()
+    {
+        if (active)
+        {
+            timeToLive -= Time.deltaTime;
+            if (timeToLive < 0)
+            {
+                source.active = false;
+                Debug.Log("Bullet despawned by time");
+            }
         }
     }
 
@@ -67,7 +83,6 @@ public class SkillShotBullet : MonoBehaviour {
         rigid.position = origin;
         Active = true;
         rigid.velocity = speed * direction.normalized;
-        
     }
 
     public void Reset()
