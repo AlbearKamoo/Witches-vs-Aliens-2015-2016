@@ -43,6 +43,7 @@ public class SuperGoalSpawner : MonoBehaviour, INetworkable {
         Assert.IsTrue(spawnPositions.Length != 0);
         sfx = GetComponent<AudioSource>();
         Callback.FireForUpdate(() => puckFX = GameObject.FindGameObjectWithTag(Tags.puck).GetComponent<PuckFX>(), this);
+        //TODO: maybe move to start instead of using callback?
     }
 
     void Start()
@@ -88,11 +89,11 @@ public class SuperGoalSpawner : MonoBehaviour, INetworkable {
         {
             case NetworkMode.LOCALSERVER:
                 node.BinaryWriter.Write(PacketType.SUPERGOALSCORED);
-                node.BinaryWriter.Write((byte)(bumped.player.GetComponent<Stats>().playerID));
+                node.BinaryWriter.Write((byte)(bumped.lastBumpedPlayer.GetComponent<Stats>().playerID));
                 node.Send(node.AllCostChannel);
                 goto case NetworkMode.UNKNOWN;
             case NetworkMode.UNKNOWN:
-                bumped.player.GetComponentInChildren<SuperAbility>().ready = true;
+                bumped.lastBumpedPlayer.GetComponentInChildren<SuperAbility>().ready = true;
                 playFX(bumped.side);
                 break;
             /*case NetworkMode.REMOTECLIENT:

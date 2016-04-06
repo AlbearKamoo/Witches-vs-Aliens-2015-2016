@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using System.Collections.Generic;
 
 [RequireComponent(typeof(Image))]
 public class Score : MonoBehaviour, IObserver<Message> {
@@ -26,6 +27,9 @@ public class Score : MonoBehaviour, IObserver<Message> {
     int leftScore = 0;
     int rightScore = 0;
 
+    Dictionary<Transform, int> playerScores = new Dictionary<Transform, int>();
+    LastBumped puck;
+
 	// Use this for initialization
     void Awake()
     {
@@ -40,6 +44,16 @@ public class Score : MonoBehaviour, IObserver<Message> {
         float baseAlpha = background.GetFloat(Tags.ShaderParams.alpha);
         CanvasGroup group = GetComponent<CanvasGroup>();
         Callback.DoLerp((float l) => { background.SetFloat(Tags.ShaderParams.imageStrength, baseImageStrength * l); background.SetFloat(Tags.ShaderParams.alpha, baseAlpha * l); group.alpha = l; }, 1f, this);
+    }
+
+    void Start()
+    {
+        ProgrammaticSpawning spawning = FindObjectOfType<ProgrammaticSpawning>();
+        for (int i = 0; i < spawning.Players.Length; i++)
+        {
+            playerScores[spawning.Players[i]] = 0;
+        }
+        puck = GameObject.FindGameObjectWithTag(Tags.puck).GetComponent<LastBumped>();
     }
 
     void UpdateScore(Side side)
@@ -73,7 +87,24 @@ public class Score : MonoBehaviour, IObserver<Message> {
         switch (m.messageType)
         {
             case GoalScoredMessage.classMessageType:
-                UpdateScore((m as GoalScoredMessage).side);
+
+                GoalScoredMessage goalM = m as GoalScoredMessage;
+
+                if (goalM.side == puck.side)
+                {
+                    playerScores[puck.lastBumpedPlayer] += 1;
+                    Debug.Log(puck.lastBumpedPlayer);
+                    Debug.Log(playerScores[puck.lastBumpedPlayer]);
+                }
+                else
+                {
+                    playerScores[puck.lastBumpedPlayerOpposingSide] += 1;
+                    Debug.Log(puck.lastBumpedPlayerOpposingSide);
+                    Debug.Log(playerScores[puck.lastBumpedPlayerOpposingSide]);
+                }
+                
+
+                UpdateScore(goalM.side);
                 animateBackgroundTexture();
                 break;
 

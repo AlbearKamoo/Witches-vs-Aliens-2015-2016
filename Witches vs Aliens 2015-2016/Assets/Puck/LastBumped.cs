@@ -8,8 +8,13 @@ public class LastBumped : MonoBehaviour, IObservable<BumpedSideChangedMessage>
     //keeps track of who bumped the puck last
     Side _side;
     public Side side { get { return _side; } }
-    Transform _player;
-    public Transform player { get { return _player; } }
+    Transform _lastBumpedPlayer;
+    public Transform lastBumpedPlayer { get { return _lastBumpedPlayer; } }
+    Transform _lastBumpedPlayerOpposingSide;
+    /// <summary>
+    /// The player who last touched the ball who is not on the same side as the lastBumpedPlayer
+    /// </summary>
+    public Transform lastBumpedPlayerOpposingSide { get { return _lastBumpedPlayerOpposingSide; } }
 	// Use this for initialization
     void OnCollisionEnter2D(Collision2D other)
     {
@@ -21,11 +26,18 @@ public class LastBumped : MonoBehaviour, IObservable<BumpedSideChangedMessage>
 
     public void setLastBumped(Transform player)
     {
-        if (player != _player)
+        if (player != _lastBumpedPlayer)
         {
-            _player = player;
-            _side = player.GetComponent<Stats>().side;
-            _bumpedSideChangedObservable.Post(new BumpedSideChangedMessage(_side, _player));
+            Side newSide = player.GetComponent<Stats>().side;
+            if (_side != newSide)
+            {
+                _side = newSide;
+                //push current lastBumpedPlayer into _lastBumpedPlayerOpposingSide;
+                _lastBumpedPlayerOpposingSide = _lastBumpedPlayer;
+            }
+
+            _lastBumpedPlayer = player.root;
+            _bumpedSideChangedObservable.Post(new BumpedSideChangedMessage(_side, _lastBumpedPlayer));
         }
     }
 }
