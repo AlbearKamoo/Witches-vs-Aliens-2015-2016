@@ -24,6 +24,8 @@ public class RegisteredPlayerUIView : MonoBehaviour, ISpawnable {
     Vector2 characterVisualsVector;
     Material myMat;
     LayoutElement layout;
+    CanvasGroup canvasGroup;
+    AspectRatioFitter aspectRatio;
     float layoutHeight;
     public Vector2 CharacterVisualsVector { get { return characterVisualsVector; } }
     public PlayerRegistration.Registration registration { get; set; }
@@ -32,8 +34,10 @@ public class RegisteredPlayerUIView : MonoBehaviour, ISpawnable {
 
 	// Use this for initialization
 	void Awake () {
+        aspectRatio = GetComponent<AspectRatioFitter>();
+        canvasGroup = GetComponent<CanvasGroup>();
+        Assert.IsTrue(canvasGroup.alpha == 0);
         layout = GetComponent<LayoutElement>();
-        layoutHeight = layout.preferredHeight;
         background = GetComponent<Image>();
         characterVisualsVector = new Vector2(Random.value, Random.value);
 
@@ -44,7 +48,14 @@ public class RegisteredPlayerUIView : MonoBehaviour, ISpawnable {
 
     public void Create()
     {
-        Callback.DoLerp((float l) => layout.preferredHeight = l * layoutHeight, selectFlashDuration, this);
+        Callback.FireForUpdate(() =>
+        {
+            canvasGroup.alpha = 1;
+            layoutHeight = ((RectTransform)transform).rect.height;
+            Debug.Log(layoutHeight);
+            aspectRatio.enabled = false;
+            Callback.DoLerp((float l) => layout.preferredHeight = l * layoutHeight, selectFlashDuration, this).FollowedBy(() => aspectRatio.enabled = true, this);
+        }, this);
     }
 
     public void Despawn()
@@ -57,8 +68,14 @@ public class RegisteredPlayerUIView : MonoBehaviour, ISpawnable {
             gameVisualsRoutine = null;
         }
         characterVisualsVector = new Vector2(Random.value, Random.value);
-        Callback.DoLerp((float l) => layout.preferredHeight = l * layoutHeight, selectFlashDuration, this, reverse : true).FollowedBy(() =>
-            SimplePool.Despawn(this.gameObject), this);
+
+        aspectRatio.enabled = false;
+        Callback.DoLerp((float l) => layout.preferredHeight = l * layoutHeight, selectFlashDuration, this, reverse: true).FollowedBy(() =>
+        {
+            canvasGroup.alpha = 0;
+            aspectRatio.enabled = true;
+            SimplePool.Despawn(this.gameObject);
+        }, this);
     }
 
     public void UpdateCharacterSprite(int ID)
