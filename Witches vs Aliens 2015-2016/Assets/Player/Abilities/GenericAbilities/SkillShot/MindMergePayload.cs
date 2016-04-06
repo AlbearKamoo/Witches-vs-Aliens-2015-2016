@@ -57,6 +57,7 @@ public class MindMergePayload : SkillShotPayload {
 
     public override void DeliverToPuck(PuckSpeedLimiter target)
     {
+        target.GetComponent<LastBumped>().setLastBumped(bullet.Source.transform.root);
         AttachToTarget(target.GetComponent<Rigidbody2D>(), puckDuration);
     }
 
