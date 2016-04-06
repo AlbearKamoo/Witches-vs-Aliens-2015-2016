@@ -73,6 +73,10 @@ public class Mirror : MonoBehaviour {
     void OnCollisionEnter2D(Collision2D other)
     {
         UpdateCollision();
+        if (other.transform.CompareTag(Tags.puck))
+        {
+            other.transform.GetComponent<LastBumped>().setLastBumped(mirrorTarget.transform);
+        }
     }
 
     public void UpdateCollision()

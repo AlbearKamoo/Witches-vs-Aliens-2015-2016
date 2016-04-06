@@ -90,17 +90,14 @@ public class Score : MonoBehaviour, IObserver<Message> {
 
                 GoalScoredMessage goalM = m as GoalScoredMessage;
 
-                if (goalM.side == puck.side)
+                //goal side is the side that was scored on, and is the side that isn't getting a point
+                if (goalM.side != puck.side)
                 {
                     playerScores[puck.lastBumpedPlayer] += 1;
-                    Debug.Log(puck.lastBumpedPlayer);
-                    Debug.Log(playerScores[puck.lastBumpedPlayer]);
                 }
                 else
                 {
                     playerScores[puck.lastBumpedPlayerOpposingSide] += 1;
-                    Debug.Log(puck.lastBumpedPlayerOpposingSide);
-                    Debug.Log(playerScores[puck.lastBumpedPlayerOpposingSide]);
                 }
                 
 
