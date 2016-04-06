@@ -18,7 +18,7 @@ public class LastBumped : MonoBehaviour, IObservable<BumpedSideChangedMessage>
 	// Use this for initialization
     void OnCollisionEnter2D(Collision2D other)
     {
-        if (other.collider.CompareTag(Tags.player))
+        if (other.transform.root.CompareTag(Tags.player))
         {
             setLastBumped(other.transform);
         }
