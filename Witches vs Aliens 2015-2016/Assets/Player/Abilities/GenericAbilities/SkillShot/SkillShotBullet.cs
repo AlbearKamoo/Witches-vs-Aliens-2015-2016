@@ -57,7 +57,6 @@ public class SkillShotBullet : MonoBehaviour {
             if (timeToLive < 0)
             {
                 source.active = false;
-                Debug.Log("Bullet despawned by time");
             }
         }
     }
