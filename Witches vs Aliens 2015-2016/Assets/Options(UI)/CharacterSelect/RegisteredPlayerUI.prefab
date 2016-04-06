@@ -32,6 +32,7 @@ GameObject:
   - 114: {fileID: 11486736}
   - 114: {fileID: 11459682}
   - 114: {fileID: 11406452}
+  - 225: {fileID: 22505032}
   m_Layer: 5
   m_Name: RegisteredPlayerUI
   m_TagString: Untagged
@@ -301,6 +302,17 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: -5}
   m_SizeDelta: {x: -10, y: 40}
   m_Pivot: {x: 0.5, y: 1}
+--- !u!225 &22505032
+CanvasGroup:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 188064}
+  m_Enabled: 1
+  m_Alpha: 0
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
