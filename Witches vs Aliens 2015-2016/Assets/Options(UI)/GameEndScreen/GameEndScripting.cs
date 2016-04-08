@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.Assertions;
@@ -36,6 +37,9 @@ public class GameEndScripting : MonoBehaviour, INetworkable
 	void Awake () {
         GetComponent<AudioSource>().Play();
         canvas = GameObject.FindGameObjectWithTag(Tags.canvas).GetComponentInParent<Canvas>().transform;
+
+        Image fade = GetComponent<Image>();
+        Callback.DoLerp((float l) => fade.color = Color.Lerp(Color.clear, Color.black, l), gameEndTime, this, mode : Callback.Mode.REALTIME);
 	}
 
     void Start()
@@ -44,8 +48,6 @@ public class GameEndScripting : MonoBehaviour, INetworkable
         {
             NetworkNode.node.Subscribe(this);
         }
-
-        Camera.main.gameObject.AddComponent<BlitGreyscale>().time = gameEndTime;
 
         Observers.Post(new GameEndMessage(this, gameEndTime)); //sends this object around, elements add their data to this object
 
