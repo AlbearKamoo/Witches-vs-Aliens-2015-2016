@@ -11,7 +11,7 @@ GameObject:
   - 114: {fileID: 11498846}
   - 82: {fileID: 8208494}
   m_Layer: 0
-  m_Name: GameEndPrefab
+  m_Name: OldGameEndPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -114,9 +114,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e34db182b01e94d4aa6a8acd0f98be70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerEntryPrefab: {fileID: 0}
   gameEndTime: 3
-  witchesVictoryPrefab: {fileID: 164700, guid: d6e0d36783918bd4ca36c4b9f8d36767, type: 2}
-  aliensVictoryPrefab: {fileID: 149922, guid: 376d68fbd4fcf9946b20ad6e64273c42, type: 2}
+  witchesStats: {fileID: 0}
+  aliensStats: {fileID: 0}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

@@ -80,7 +80,7 @@ public class ShockwaveAbility : AbstractGenericAbility
                             displacement.Normalize();
                             hitRigidbody.velocity = limiter.maxSpeed * displacement;
                             if (hit.CompareTag(Tags.puck))
-                                hit.GetComponent<LastBumped>().setLastBumped(this.transform.parent);
+                                hit.GetComponent<LastBumped>().setLastBumped(this.transform.root);
                     }
                 }
             }

@@ -109,6 +109,7 @@ public class Score : MonoBehaviour, IObserver<Message> {
                 GameEndScripting endData = (m as GameEndMessage).endData;
                 endData.leftScore = this.leftScore;
                 endData.rightScore = this.rightScore;
+                endData.playerScores = playerScores;
 
                 float baseImageStrength = background.GetFloat(Tags.ShaderParams.imageStrength);
                 float baseAlpha = background.GetFloat(Tags.ShaderParams.alpha);
@@ -128,7 +129,7 @@ public class Score : MonoBehaviour, IObserver<Message> {
 
     public void EndTheGame()
     {
-        Instantiate(GameEndPrefab);
+        Instantiate(GameEndPrefab).transform.SetParent(this.transform.root, false);
     }
 
     public bool GameEnd()

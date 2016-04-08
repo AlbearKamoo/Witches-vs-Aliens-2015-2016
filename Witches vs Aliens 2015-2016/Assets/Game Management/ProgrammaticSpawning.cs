@@ -337,6 +337,7 @@ public class ProgrammaticSpawning : MonoBehaviour, IObserver<Message> {
             case GameEndMessage.classMessageType:
                 //add player stats data to the endData, once we figure out what stats to use
                 data.Destruct();
+                resetPositions(introPlayerSpawnDelay);
                 break;
             case OvertimeMessage.classMessageType:
                 AudioSource mainMusic = spawnedMainMusicPrefab.GetComponent<AudioSource>();

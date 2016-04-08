@@ -19,7 +19,6 @@ public class AnimatedFourWayPlayerVisuals : AbstractPlayerVisuals
     protected float timePerLoop;
 
     public override Sprite selectionSprite(Vector2 visualSpaceInput) { Assert.IsTrue(downSprites.Length > 0); return downSprites[0]; }
-
     SpriteRenderer rend;
     Direction prevDirection;
 

@@ -9,7 +9,7 @@ public class HueShiftedAnimation : AnimatedFourWayPlayerVisuals, IHueShiftableVi
     protected bool flipRightSprites = false;
 
     Vector2 _shift = Vector2.zero;
-    public Vector2 shift { set { setHue(_shift.x, value.x); _shift = value; } }
+    public Vector2 shift { get { return _shift; } set { setHue(_shift.x, value.x); _shift = value; } }
     public Vector2 shiftAsync { set { StartCoroutine(setHueAsync(_shift.x, value.x)); _shift = value; } }
 
 	// Use this for initialization
@@ -115,10 +115,15 @@ public class HueShiftedAnimation : AnimatedFourWayPlayerVisuals, IHueShiftableVi
         setHueSprite(0, visualSpaceInput.x, ref result);
         return result;
     }
+
+    public override Sprite selectionSprite()
+    {
+        return selectionSprite(_shift);
+    }
 }
 
 public interface IHueShiftableVisuals
 {
-    Vector2 shift { set; }
+    Vector2 shift { get; set; }
     Vector2 shiftAsync { set; }
 }

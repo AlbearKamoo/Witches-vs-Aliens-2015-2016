@@ -872,7 +872,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e793e433d0db4c4491e84e3e1b218cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GameEndPrefab: {fileID: 133780, guid: d18690c7a7c34af45b37b5d218d3004b, type: 2}
+  GameEndPrefab: {fileID: 126218, guid: 4d4cb381a52c730498c855faaeed6cf9, type: 2}
   leftScoreBoard: {fileID: 11497928}
   rightScoreBoard: {fileID: 11445714}
   scoreFXTime: 3
