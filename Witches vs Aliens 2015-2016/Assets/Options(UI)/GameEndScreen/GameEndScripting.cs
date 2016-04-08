@@ -19,11 +19,15 @@ public class GameEndScripting : MonoBehaviour {
     [SerializeField]
     public Transform aliensStats;
 
+    [SerializeField]
+    public CanvasGroup continueTooltip;
+
     public int leftScore {get; set;}
     public int rightScore { get; set; }
 
     public Dictionary<Transform, int> playerScores { get; set; }
 
+    List<AbstractPlayerInput> inputs = new List<AbstractPlayerInput>();
     Transform canvas;
 
 	// Use this for initialization
@@ -42,6 +46,20 @@ public class GameEndScripting : MonoBehaviour {
 
         //Callback.FireAndForget(() => { Application.LoadLevel(Tags.Scenes.select); Destroy(this); }, gameEndTime, this, mode: Callback.Mode.REALTIME);
 
+        Callback.FireForUpdate(() => Pause.pause(), this);
+
+        Callback.FireAndForget(() => { Pause.unPause(); SpawnEndScreen(); }, gameEndTime, this, mode: Callback.Mode.REALTIME);
+
+        /*
+        if (leftScore < rightScore)
+            Instantiate(witchesVictoryPrefab).transform.SetParent(canvas, false);
+        else if (leftScore > rightScore)
+            Instantiate(aliensVictoryPrefab).transform.SetParent(canvas, false);
+        */
+    }
+
+    void SpawnEndScreen()
+    {
         int maxScore = Mathf.Max(leftScore, rightScore);
 
         foreach (KeyValuePair<Transform, int> player in playerScores)
@@ -51,14 +69,22 @@ public class GameEndScripting : MonoBehaviour {
             instantiatedEntry.SetParent(side == Side.LEFT ? witchesStats : aliensStats, false);
             GameEndPlayerEntry gameEndEntry = instantiatedEntry.GetComponentInChildren<GameEndPlayerEntry>();
             gameEndEntry.Init(player.Value, maxScore, player.Key.GetComponentInChildren<AbstractPlayerVisuals>());
+
+            inputs.Add(player.Key.GetComponent<AbstractPlayerInput>());
         }
 
-        /*
-        if (leftScore < rightScore)
-            Instantiate(witchesVictoryPrefab).transform.SetParent(canvas, false);
-        else if (leftScore > rightScore)
-            Instantiate(aliensVictoryPrefab).transform.SetParent(canvas, false);
-        */
+        Callback.FireAndForget(() => Callback.DoLerp((float l) => continueTooltip.alpha = l, gameEndTime, this), gameEndTime, this);
+    }
+
+    void Update()
+    {
+        for (int i = 0; i < inputs.Count; i++)
+        {
+            if (inputs[i].pressedAccept())
+            {
+                Application.LoadLevel(Tags.Scenes.select);
+            }
+        }
     }
 
 }
