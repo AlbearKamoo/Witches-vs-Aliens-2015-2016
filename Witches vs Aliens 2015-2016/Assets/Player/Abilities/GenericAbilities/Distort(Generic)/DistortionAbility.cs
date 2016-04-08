@@ -46,6 +46,8 @@ public class DistortionAbility : TimedGenericAbility
         effector = GetComponent<PointEffector2D>();
         render = GetComponent<MeshRenderer>();
         source = GetComponent<AudioSource>();
+
+        render.sortingLayerName = "Overlay";
 	}
 
     protected override void Start()
