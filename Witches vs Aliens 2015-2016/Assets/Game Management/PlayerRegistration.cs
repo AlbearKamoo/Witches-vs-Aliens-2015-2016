@@ -882,12 +882,14 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
         data.playerComponentPrefabs = results.ToArray();
 
         data.warmupActive = GameSelection.warmupActive;
-
-        node.Unsubscribe(this);
+        
 
         Debug.Log(mainGameSceneName);
-        if(node != null)
+        if (node != null)
+        {
+            node.Unsubscribe(this);
             node.Clear();
+        }
         Application.LoadLevel(mainGameSceneName);
         Destroy(this);
         Destroy(pressStart.gameObject);
