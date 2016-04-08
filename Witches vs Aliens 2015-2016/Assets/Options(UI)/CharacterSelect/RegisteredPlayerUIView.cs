@@ -52,7 +52,6 @@ public class RegisteredPlayerUIView : MonoBehaviour, ISpawnable {
         {
             canvasGroup.alpha = 1;
             layoutHeight = ((RectTransform)transform).rect.height;
-            Debug.Log(layoutHeight);
             aspectRatio.enabled = false;
             Callback.DoLerp((float l) => layout.preferredHeight = l * layoutHeight, selectFlashDuration, this).FollowedBy(() => aspectRatio.enabled = true, this);
         }, this);

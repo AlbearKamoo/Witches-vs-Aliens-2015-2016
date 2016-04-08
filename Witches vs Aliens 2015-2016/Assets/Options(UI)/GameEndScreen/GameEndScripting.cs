@@ -1,9 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.Assertions;
 
 [RequireComponent(typeof(AudioSource))]
-public class GameEndScripting : MonoBehaviour {
+public class GameEndScripting : MonoBehaviour, INetworkable
+{
 
     [SerializeField]
     protected GameObject playerEntryPrefab;
@@ -38,6 +40,11 @@ public class GameEndScripting : MonoBehaviour {
 
     void Start()
     {
+        if (NetworkNode.node != null)
+        {
+            NetworkNode.node.Subscribe(this);
+        }
+
         Camera.main.gameObject.AddComponent<BlitGreyscale>().time = gameEndTime;
 
         Observers.Post(new GameEndMessage(this, gameEndTime)); //sends this object around, elements add their data to this object
@@ -60,6 +67,8 @@ public class GameEndScripting : MonoBehaviour {
 
     void SpawnEndScreen()
     {
+        Debug.Log(Time.timeScale);
+
         int maxScore = Mathf.Max(leftScore, rightScore);
 
         foreach (KeyValuePair<Transform, int> player in playerScores)
@@ -70,23 +79,53 @@ public class GameEndScripting : MonoBehaviour {
             GameEndPlayerEntry gameEndEntry = instantiatedEntry.GetComponentInChildren<GameEndPlayerEntry>();
             gameEndEntry.Init(player.Value, maxScore, player.Key.GetComponentInChildren<AbstractPlayerVisuals>());
 
-            inputs.Add(player.Key.GetComponent<AbstractPlayerInput>());
+            AbstractPlayerInput playerInput = player.Key.GetComponent<AbstractPlayerInput>();
+            if(playerInput != null)
+                inputs.Add(playerInput);
         }
 
         Callback.FireAndForget(() => Callback.DoLerp((float l) => continueTooltip.alpha = l, gameEndTime, this), gameEndTime, this);
+        if (NetworkNode.node == null || NetworkNode.node is Server)
+        {
+            StartCoroutine(CheckSceneTransition());
+        }
     }
 
-    void Update()
+    IEnumerator CheckSceneTransition()
     {
-        for (int i = 0; i < inputs.Count; i++)
+        while (true)
         {
-            if (inputs[i].pressedAccept())
+            yield return null;
+            for (int i = 0; i < inputs.Count; i++)
             {
-                Application.LoadLevel(Tags.Scenes.select);
+                if (inputs[i].pressedAccept())
+                {
+                    if (NetworkNode.node is Server)
+                    {
+                        NetworkNode.node.BinaryWriter.Write(PacketType.SCENEJUMP);
+                        NetworkNode.node.Send(NetworkNode.node.AllCostChannel);
+                    }
+                    Application.LoadLevel(Tags.Scenes.select);
+                }
             }
         }
     }
 
+    public PacketType[] packetTypes { get { return new PacketType[] { PacketType.SCENEJUMP }; } }
+
+    public void Notify(IncomingNetworkStreamMessage m)
+    {
+        switch (m.packetType)
+        {
+            case PacketType.SCENEJUMP:
+                Assert.IsTrue(NetworkNode.node is Client);
+                Application.LoadLevel(Tags.Scenes.select);
+                break;
+            default:
+                Debug.LogError("Invalid Message Type");
+                break;
+        }
+    }
 }
 
 public class GameEndMessage : Message

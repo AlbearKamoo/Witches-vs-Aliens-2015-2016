@@ -89,7 +89,6 @@ public class Score : MonoBehaviour, IObserver<Message> {
             case GoalScoredMessage.classMessageType:
 
                 GoalScoredMessage goalM = m as GoalScoredMessage;
-
                 //goal side is the side that was scored on, and is the side that isn't getting a point
                 if (goalM.side != puck.side)
                 {
@@ -115,7 +114,7 @@ public class Score : MonoBehaviour, IObserver<Message> {
                 float baseAlpha = background.GetFloat(Tags.ShaderParams.alpha);
                 CanvasGroup group = GetComponent<CanvasGroup>();
                 Callback.DoLerp((float l) => { background.SetFloat(Tags.ShaderParams.imageStrength, baseImageStrength * l); background.SetFloat(Tags.ShaderParams.alpha, baseAlpha * l); group.alpha = l; }, (m as GameEndMessage).time, this, reverse: true, mode: Callback.Mode.REALTIME);
-                Observers.Subscribe(this, GoalScoredMessage.classMessageType, GameEndMessage.classMessageType);
+                Observers.Unsubscribe(this, GoalScoredMessage.classMessageType, GameEndMessage.classMessageType);
                 break;
         }
     }

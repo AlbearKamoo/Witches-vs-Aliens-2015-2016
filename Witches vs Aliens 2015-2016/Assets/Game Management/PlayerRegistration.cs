@@ -66,6 +66,12 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
 
     void Awake()
     {
+        Assert.IsTrue(Time.timeScale == 1);
+        if (Time.timeScale != 1)
+        {
+            Pause.unPause();
+        }
+
         data = GetComponent<SetupData>();
 
         localIDToPlayerID = new int[possiblePlayers.Length];
@@ -876,6 +882,8 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
         data.playerComponentPrefabs = results.ToArray();
 
         data.warmupActive = GameSelection.warmupActive;
+
+        node.Unsubscribe(this);
 
         Debug.Log(mainGameSceneName);
         if(node != null)

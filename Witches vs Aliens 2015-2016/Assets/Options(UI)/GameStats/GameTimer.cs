@@ -33,7 +33,7 @@ public class GameTimer : MonoBehaviour {
         set {
             if (value)
             {
-                if (timer == null)
+                if (timer == null && timeRemainingSec > 0)
                 {
                     timer = countdown();
                     StartCoroutine(timer);

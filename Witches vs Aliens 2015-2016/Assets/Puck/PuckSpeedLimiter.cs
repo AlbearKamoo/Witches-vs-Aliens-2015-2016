@@ -69,6 +69,18 @@ public class PuckSpeedLimiter : MonoBehaviour, ISpeedLimiter, INetworkable, IObs
         m.writer.Write(rigid.velocity);
     }
 
+    void OnDestroy()
+    {
+        if (node is Client)
+        {
+            node.Unsubscribe(this);
+        }
+        else if (node is Server)
+        {
+            node.Unsubscribe<OutgoingNetworkStreamMessage>(this);
+        }
+    }
+
     public void Notify(IncomingNetworkStreamMessage m)
     {
         switch (m.packetType)

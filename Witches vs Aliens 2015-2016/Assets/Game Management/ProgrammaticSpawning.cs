@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine.Assertions;
 
 public class ProgrammaticSpawning : MonoBehaviour, IObserver<Message> {
     [SerializeField]
@@ -78,8 +79,16 @@ public class ProgrammaticSpawning : MonoBehaviour, IObserver<Message> {
     // Use this for initialization
     void Awake () {
 
+        Assert.IsTrue(Time.timeScale == 1);
+        if (Time.timeScale != 1)
+        {
+            Pause.unPause();
+        }
+
         if (SetupData.self != null) //workaround for unity level-loading method order
             data = SetupData.self;
+        else
+            Debug.Log("Setup data not linked");
 
         Observers.Subscribe(this, GoalScoredMessage.classMessageType, GameEndMessage.classMessageType, OvertimeMessage.classMessageType);
 
@@ -325,6 +334,11 @@ public class ProgrammaticSpawning : MonoBehaviour, IObserver<Message> {
         }
     }
 
+    void OnDestroy()
+    {
+        Observers.Unsubscribe(this, GoalScoredMessage.classMessageType, GameEndMessage.classMessageType, OvertimeMessage.classMessageType);
+    }
+
     public void Notify(Message m)
     {
         switch (m.messageType)
@@ -336,7 +350,15 @@ public class ProgrammaticSpawning : MonoBehaviour, IObserver<Message> {
 
             case GameEndMessage.classMessageType:
                 //add player stats data to the endData, once we figure out what stats to use
+                for (int i = 0; i < players.Length; i++)
+                {
+                    InputToAction playerControl = players[i].GetComponent<InputToAction>();
+                    playerControl.movementEnabled = false;
+                    playerControl.abilitiesEnabled = false;
+                    playerControl.rotationEnabled = false;
+                }
                 data.Destruct();
+                Destroy(this.gameObject);
                 break;
             case OvertimeMessage.classMessageType:
                 AudioSource mainMusic = spawnedMainMusicPrefab.GetComponent<AudioSource>();
