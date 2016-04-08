@@ -63,6 +63,16 @@ public abstract class AbstractAI : AbstractPlayerInput {
     {
         //ablities will be called in the steering behaviour
     }
+
+    public override bool pressedAccept()
+    {
+        return false;
+    }
+
+    public override bool pressedBack()
+    {
+        return false;
+    }
 }
 
 public interface IGoalAI

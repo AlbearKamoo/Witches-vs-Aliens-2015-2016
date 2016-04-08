@@ -59,4 +59,48 @@ public class JoystickPlayerInput : AbstractPlayerInput {
             prevGeneric = 0;
         }
     }
+
+    public override bool pressedAccept()
+    {
+        //ability axis
+        float currentAxisValue = Input.GetAxis(bindings.movementAbilityAxis);
+
+        bool returnValue = false;
+        if (currentAxisValue != 0)
+        {
+            returnValue = true;
+        }
+
+        //now XY axis
+        currentAxisValue = Input.GetAxis(bindings.acceptAbilityAxis);
+
+        if (currentAxisValue != 0)
+        {
+            returnValue = true;
+        }
+
+        return returnValue;
+    }
+
+    public override bool pressedBack()
+    {
+        //ability axis
+        float currentAxisValue = Input.GetAxis(bindings.genericAbilityAxis);
+
+        bool returnValue = false;
+        if (currentAxisValue != 0)
+        {
+            returnValue = true;
+        }
+
+        //now XY axis
+        currentAxisValue = Input.GetAxis(bindings.backAbilityAxis);
+
+        if (currentAxisValue != 0)
+        {
+            returnValue = true;
+        }
+
+        return returnValue;
+    }
 }

@@ -32,6 +32,72 @@ public abstract class AbstractPlayerInput : MonoBehaviour
         action.normalizedMovementInput = new Vector2(Input.GetAxis(bindings.horizontalMovementAxisName), Input.GetAxis(bindings.verticalMovementAxisName)).normalized;
     }
 
+    public abstract bool pressedAccept();
+
+    public abstract bool pressedBack();
+
+    public static bool pressingAccept(InputConfiguration bindings)
+    {
+        switch (bindings.inputMode)
+        {
+            case InputConfiguration.PlayerInputType.MOUSE:
+                return Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0);
+
+            case InputConfiguration.PlayerInputType.JOYSTICK:
+                //ability axis
+                float currentAxisValue = Input.GetAxis(bindings.movementAbilityAxis);
+
+                bool returnValue = false;
+                if (currentAxisValue != 0)
+                {
+                    returnValue = true;
+                }
+
+                //now XY axis
+                currentAxisValue = Input.GetAxis(bindings.acceptAbilityAxis);
+
+                if (currentAxisValue != 0)
+                {
+                    returnValue = true;
+                }
+
+                return returnValue;
+            default:
+                return false;
+        }
+}
+
+    public static bool pressingBack(InputConfiguration bindings)
+    {
+        switch (bindings.inputMode)
+        {
+            case InputConfiguration.PlayerInputType.MOUSE:
+                return Input.GetKeyDown(KeyCode.Escape) || Input.GetMouseButtonDown(1);
+
+            case InputConfiguration.PlayerInputType.JOYSTICK:
+                //ability axis
+                float currentAxisValue = Input.GetAxis(bindings.genericAbilityAxis);
+
+                bool returnValue = false;
+                if (currentAxisValue != 0)
+                {
+                    returnValue = true;
+                }
+
+                //now XY axis
+                currentAxisValue = Input.GetAxis(bindings.backAbilityAxis);
+
+                if (currentAxisValue != 0)
+                {
+                    returnValue = true;
+                }
+
+                return returnValue;
+            default:
+                return false;
+        }
+    }
+
     protected abstract void updateAim();
 
     protected abstract void checkAbilities();

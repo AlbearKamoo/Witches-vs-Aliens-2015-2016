@@ -682,6 +682,7 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
         return false;
     }
 
+    //TODO : switch to calling the pressed/pressing Accept and Back in PlayerInput scripts
     bool pressedBack(int i)
     {
         if (possiblePlayers[i].bindings.inputMode == InputConfiguration.PlayerInputType.MOUSE)

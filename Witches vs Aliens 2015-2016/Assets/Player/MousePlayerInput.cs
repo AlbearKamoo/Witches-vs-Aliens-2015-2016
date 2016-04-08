@@ -38,6 +38,16 @@ public class MousePlayerInput : AbstractPlayerInput {
             action.StopFireAbility(AbilityType.SUPER);
 
     }
+
+    public override bool pressedAccept()
+    {
+        return Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0);
+    }
+
+    public override bool pressedBack()
+    {
+        return Input.GetKeyDown(KeyCode.Escape) || Input.GetMouseButtonDown(1);
+    }
 }
 
     

@@ -31,4 +31,14 @@ public class CrappyAIInput : AbstractPlayerInput
     {
 
     }
+
+    public override bool pressedAccept()
+    {
+        return false;
+    }
+
+    public override bool pressedBack()
+    {
+        return false;
+    }
 }
