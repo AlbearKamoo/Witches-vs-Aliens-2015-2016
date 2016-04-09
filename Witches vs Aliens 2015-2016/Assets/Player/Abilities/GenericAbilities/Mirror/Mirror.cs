@@ -59,14 +59,20 @@ public class Mirror : MonoBehaviour {
 
     void ReverseInput()
     {
-        mirrorTarget.normalizedMovementInput = -mirrorTarget.normalizedMovementInput;
+        mirrorTarget.normalizedMovementInput = flipXComponent(mirrorTarget.normalizedMovementInput);
+    }
+
+    Vector2 flipXComponent(Vector2 original)
+    {
+        original.x = -original.x;
+        return original;
     }
 
     public void UpdateMirror()
     {
-        myRigidbody.position = -mirrorRigidbody.position;
+        myRigidbody.position = flipXComponent(mirrorRigidbody.position);
         myRigidbody.rotation = 180f + mirrorRigidbody.rotation;
-        myRigidbody.velocity = -mirrorRigidbody.velocity;
+        myRigidbody.velocity = flipXComponent(mirrorRigidbody.velocity);
         myRigidbody.mass = mirrorRigidbody.mass;
     }
 
@@ -83,13 +89,13 @@ public class Mirror : MonoBehaviour {
     {
         Assert.IsTrue(mirrorRigidbody.mass == myRigidbody.mass);
 
-        Vector2 avgPosition = (mirrorRigidbody.position - myRigidbody.position) / 2;
-        Vector2 avgVelocity = (mirrorRigidbody.velocity - myRigidbody.velocity) / 2;
+        Vector2 avgPosition = (mirrorRigidbody.position + flipXComponent(myRigidbody.position)) / 2;
+        Vector2 avgVelocity = (mirrorRigidbody.velocity + flipXComponent(myRigidbody.velocity)) / 2;
 
         mirrorRigidbody.position = avgPosition;
-        myRigidbody.position = -avgPosition;
+        myRigidbody.position = flipXComponent(avgPosition);
 
         mirrorRigidbody.velocity = avgVelocity;
-        myRigidbody.velocity = -avgVelocity;
+        myRigidbody.velocity = flipXComponent(avgVelocity);
     }
 }
