@@ -39,7 +39,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ea94b7050808b841bd0c8aee8c04ac7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  packetPeriod: 0.1
+  packetPeriod: 0.01
   simulatedNetworking: 0
   serverIP: 127.0.0.1
 --- !u!1001 &100100000

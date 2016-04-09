@@ -39,8 +39,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 795578f049ec10744a6be6d8d9a65909, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  packetPeriod: 0.1
-  simulatedNetworking: 0
+  packetPeriod: 0.01
+  simulatedNetworking: 1
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
