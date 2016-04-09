@@ -22,20 +22,21 @@ public class FogSuper : SuperAbility, IAlliesAbility, IPuckAbility {
     public Transform puck { set { _puck = value; } }
 
     private static int[] witchPos;
-    private static int puckPos = Shader.PropertyToID("_PuckPos");
+    private static int puckPos;
 
     protected void Awake()
     {
+        puckPos = Shader.PropertyToID("_PuckPos");
+        if (witchPos == null)
+        {
+            witchPos = new int[] { Shader.PropertyToID("_WitchPos1"), Shader.PropertyToID("_WitchPos2"), Shader.PropertyToID("_WitchPos3") };
+        }
         sfx = GetComponent<AudioSource>();
     }
 
     protected override void Start()
     {
         base.Start();
-        if (witchPos == null)
-        {
-            witchPos = new int[] {Shader.PropertyToID("_WitchPos1"), Shader.PropertyToID("_WitchPos2"), Shader.PropertyToID("_WitchPos3")};
-        }
         //ready = true; //for easy testing
     }
 

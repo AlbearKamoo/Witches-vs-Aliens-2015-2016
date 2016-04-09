@@ -71,7 +71,7 @@ public class GameEndScripting : MonoBehaviour, INetworkable
     {
         Debug.Log(Time.timeScale);
 
-        int maxScore = Mathf.Max(leftScore, rightScore);
+        int maxScore = Mathf.Max(leftScore, rightScore, 1);
 
         foreach (KeyValuePair<Transform, int> player in playerScores)
         {
