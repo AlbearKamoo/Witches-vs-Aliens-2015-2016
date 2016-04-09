@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine.Assertions;
 
 [RequireComponent(typeof(MeshFilter))]
@@ -45,10 +46,13 @@ public class RaygunAbility : AbstractGenericAbility {
     Stats myStats;
     ParticleSystem vfx;
     LineRenderer firedRay;
+    List<GameObject> hitVisuals = new List<GameObject>();
+    Countdown resetVisualsCountdown;
 
     protected override void Awake()
     {
         base.Awake();
+        resetVisualsCountdown = new Countdown(() => Callback.Routines.FireAndForgetRoutine(clearHitVisuals, stunTime, this), this);
         meshFilter = GetComponent<MeshFilter>();
         meshRenderer = GetComponent<MeshRenderer>();
         vfx = GetComponentInChildren<ParticleSystem>();
@@ -132,6 +136,9 @@ public class RaygunAbility : AbstractGenericAbility {
             {
                 StopChargingFX();
 
+                if (!active)
+                    return;
+
                 direction = transform.right;
                 playShotVFX(direction);
 
@@ -143,6 +150,8 @@ public class RaygunAbility : AbstractGenericAbility {
                         hitTarget(hits[i]);
                     }
                 }
+                resetVisualsCountdown.Play();
+
                     active = false;
             }, this);
     }
@@ -159,9 +168,18 @@ public class RaygunAbility : AbstractGenericAbility {
                 GameObject visuals = SimplePool.Spawn(hitVisualsPrefab);
                 visuals.transform.SetParent(hit.transform.root);
                 visuals.transform.localPosition = Vector3.zero;
-                Callback.FireAndForget(() => SimplePool.Despawn(visuals), stunTime, this);
+                hitVisuals.Add(visuals);
             }
         }
+    }
+
+    void clearHitVisuals()
+    {
+        for (int i = 0; i < hitVisuals.Count; i++)
+        {
+            SimplePool.Despawn(hitVisuals[i]);
+        }
+        hitVisuals.Clear();
     }
 
     void playShotVFX(Vector3 direction)
@@ -176,6 +194,8 @@ public class RaygunAbility : AbstractGenericAbility {
     protected override void Reset(float timeTillActive)
     {
         active = false;
+        resetVisualsCountdown.Stop();
+        clearHitVisuals();
         StopChargingFX();
     }
 }
