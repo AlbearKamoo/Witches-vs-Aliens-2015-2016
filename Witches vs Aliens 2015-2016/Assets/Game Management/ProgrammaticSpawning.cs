@@ -60,6 +60,10 @@ public class ProgrammaticSpawning : MonoBehaviour, IObserver<Message> {
     [SerializeField]
     protected float goalToPlayerResetTime;
 
+    //size of the field
+    const float horizontalBounds = 25;
+    const float verticalBounds = 15;
+
     public SetupData data;
     Vector2[] leftPoints;
     Vector2[] rightPoints;
@@ -109,6 +113,7 @@ public class ProgrammaticSpawning : MonoBehaviour, IObserver<Message> {
         }
 
         puck = ((GameObject)(Instantiate(PuckPrefab, puckRespawnPoint.position, Quaternion.identity))).GetComponent<PuckFX>();
+        puck.gameObject.AddComponent<OutOfBoundsCheck>().Init(new Vector2(-horizontalBounds - 1, -verticalBounds), new Vector2(horizontalBounds + 1, verticalBounds));
 
         players = new Transform[data.playerComponentPrefabs.Length];
         for (int i = 0; i < data.playerComponentPrefabs.Length; i++)
@@ -304,6 +309,11 @@ public class ProgrammaticSpawning : MonoBehaviour, IObserver<Message> {
         }
 
         spawnedMainMusicPrefab = Instantiate(MainMusicPrefab);
+
+        foreach (Transform player in players)
+        {
+            player.gameObject.AddComponent<OutOfBoundsCheck>().Init(new Vector2(-horizontalBounds, -verticalBounds), new Vector2(horizontalBounds, verticalBounds));
+        }
     }
 
     public void resetPositions(float duration = -1, bool resetTime = true)

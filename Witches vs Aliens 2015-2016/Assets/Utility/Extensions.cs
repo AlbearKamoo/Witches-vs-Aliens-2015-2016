@@ -42,6 +42,17 @@ public static class TransformExtension
     {
         self.rotation = (worldPosition - (Vector2)(self.position)).ToRotation();
     }
+
+    /// <summary>
+    /// Adds a component of class T to the game object.
+    /// </summary>
+    /// <typeparam name="T">Component class to add.</typeparam>
+    /// <param name="transform">Transform whose gameObject will recieve a new component.</param>
+    /// <returns>The added component.</returns>
+    public static T AddComponent<T>(this Transform transform) where T : Component
+    {
+        return transform.gameObject.AddComponent<T>();
+    }
 }
 
 /// <summary>
