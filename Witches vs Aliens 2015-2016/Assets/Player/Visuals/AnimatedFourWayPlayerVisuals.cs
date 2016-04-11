@@ -27,6 +27,18 @@ public class AnimatedFourWayPlayerVisuals : AbstractPlayerVisuals
     int currentFrame;
     Sprite[] currentSpritesheet;
 
+    public override float alpha
+    {
+        get
+        {
+            return rend.color.a;
+        }
+        set
+        {
+            rend.color = rend.color.setAlphaFloat(value);
+        }
+    }
+
 	// Use this for initialization
 	void Awake () {
         rend = GetComponent<SpriteRenderer>();

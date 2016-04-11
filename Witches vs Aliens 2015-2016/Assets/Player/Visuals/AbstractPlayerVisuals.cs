@@ -4,6 +4,8 @@ using System.Collections;
 public abstract class AbstractPlayerVisuals : MonoBehaviour {
     Rigidbody2D rigid;
 	// Use this for initialization
+    public abstract float alpha { get; set; }
+
 	protected virtual void Start () {
         GetComponentInParent<VisualAnimate>().targets[0] = GetComponent<Renderer>();
         rigid = GetComponentInParent<Rigidbody2D>();

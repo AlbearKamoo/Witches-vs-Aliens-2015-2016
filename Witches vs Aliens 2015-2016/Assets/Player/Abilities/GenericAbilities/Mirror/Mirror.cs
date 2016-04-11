@@ -8,11 +8,19 @@ using UnityEngine.Assertions;
 public class Mirror : MonoBehaviour {
 
     [SerializeField]
-    public bool reverseInputOnMirror;
+    protected bool reverseInputOnMirror;
 
     InputToAction mirrorTarget;
     Rigidbody2D mirrorRigidbody;
     Rigidbody2D myRigidbody;
+
+    [SerializeField]
+    protected GameObject physics;
+
+    [SerializeField]
+    protected float inactiveAlpha;
+
+    AbstractPlayerVisuals visuals;
 
     bool _active;
     public bool active
@@ -23,20 +31,14 @@ public class Mirror : MonoBehaviour {
         }
         set
         {
-            this.gameObject.SetActive(_active = value);
+            physics.SetActive(_active = value);
             if (_active)
             {
-                UpdateMirror();
-                //vfx.DoFX();
-                mirrorTarget.PostFixedUpdateDelegates.Add(UpdateMirror);
-                if(reverseInputOnMirror)
-                    mirrorTarget.PreFixedUpdateDelegates.Add(ReverseInput);
+                visuals.alpha = 1;
             }
             else
             {
-                mirrorTarget.PostFixedUpdateDelegates.Remove(UpdateMirror);
-                if (reverseInputOnMirror)
-                    mirrorTarget.PreFixedUpdateDelegates.Remove(ReverseInput);
+                visuals.alpha = inactiveAlpha;
             }
         }
     }
@@ -50,11 +52,16 @@ public class Mirror : MonoBehaviour {
     {
         this.mirrorTarget = mirrorTarget;
         mirrorRigidbody = mirrorTarget.GetComponent<Rigidbody2D>();
-        GameObject visuals = Instantiate(mirrorTarget.GetComponentInChildren<AbstractPlayerVisuals>().gameObject);
+        visuals = Instantiate(mirrorTarget.GetComponentInChildren<AbstractPlayerVisuals>().gameObject).GetComponent<AbstractPlayerVisuals>();
         visuals.transform.SetParent(this.transform, false);
         visuals.transform.localPosition = Vector3.zero;
 
         GetComponent<StatsReference>().referencedStat = mirrorTarget.GetComponent<Stats>();
+
+        UpdateMirror();
+        mirrorTarget.PostFixedUpdateDelegates.Add(UpdateMirror);
+        if (reverseInputOnMirror)
+            mirrorTarget.PreFixedUpdateDelegates.Add(ReverseInput);
     }
 
     void ReverseInput()

@@ -18,6 +18,19 @@ public class FourWayPlayerVisuals : AbstractPlayerVisuals {
     SpriteRenderer rend;
     Direction prevDirection;
 	// Use this for initialization
+
+    public override float alpha
+    {
+        get
+        {
+            return rend.color.a;
+        }
+        set
+        {
+            rend.color = rend.color.setAlphaFloat(value);
+        }
+    }
+
 	void Awake () {
         rend = GetComponent<SpriteRenderer>();
 	}

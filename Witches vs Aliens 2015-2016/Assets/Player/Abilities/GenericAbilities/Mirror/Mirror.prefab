@@ -1,8 +1,23 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &119224
+--- !u!1 &107768
 GameObject:
   m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 454414}
+  m_Layer: 0
+  m_Name: Physics
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &119224
+GameObject:
+  m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 4
@@ -24,10 +39,10 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 447864}
-  - 50: {fileID: 5077792}
   - 114: {fileID: 11403926}
   - 114: {fileID: 11488818}
   - 114: {fileID: 11438894}
+  - 50: {fileID: 5081246}
   m_Layer: 0
   m_Name: Mirror
   m_TagString: Untagged
@@ -37,7 +52,7 @@ GameObject:
   m_IsActive: 1
 --- !u!1 &184808
 GameObject:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 4
@@ -61,7 +76,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 447864}
+  m_Father: {fileID: 454414}
   m_RootOrder: 1
 --- !u!4 &447864
 Transform:
@@ -73,9 +88,22 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 454414}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+--- !u!4 &454414
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 107768}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
   - {fileID: 491892}
   - {fileID: 432832}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 447864}
   m_RootOrder: 0
 --- !u!4 &491892
 Transform:
@@ -87,9 +115,9 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 447864}
+  m_Father: {fileID: 454414}
   m_RootOrder: 0
---- !u!50 &5077792
+--- !u!50 &5081246
 Rigidbody2D:
   serializedVersion: 2
   m_ObjectHideFlags: 1
@@ -146,6 +174,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   reverseInputOnMirror: 0
+  physics: {fileID: 107768}
 --- !u!114 &11438894
 MonoBehaviour:
   m_ObjectHideFlags: 1
