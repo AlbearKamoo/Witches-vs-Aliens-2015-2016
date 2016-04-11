@@ -587,13 +587,15 @@ MonoBehaviour:
       superAbilityAxis: J1_Super
       acceptAbilityAxis: 
       backAbilityAxis: 
+      horizontalVisualsAxis: 
+      verticalVisualsAxis: 
     playerID: 0
     characterVisualsVector: {x: 0, y: 0}
   - character:
       basePlayer: {fileID: 146214, guid: a8095cd9d9bc36f4e87d6eeda567d5fa, type: 2}
       visuals: {fileID: 186382, guid: d58cb17b4ddacef4aaabf2fc8656265a, type: 2}
       movementAbility: {fileID: 177582, guid: b3ffc9938492a984a8513ab58c226585, type: 2}
-      genericAbility: {fileID: 175702, guid: 703ae33542be96249ad0c988e680dc04, type: 2}
+      genericAbility: {fileID: 181508, guid: 38f5e53ae2e43cb4594bd8c48ea20f7a, type: 2}
       superAbility: {fileID: 189548, guid: 92c627e1702f90443a4a43a527a7d20d, type: 2}
       selectionSound: {fileID: 0}
       side: 0
@@ -609,6 +611,8 @@ MonoBehaviour:
       superAbilityAxis: J2_Super
       acceptAbilityAxis: 
       backAbilityAxis: 
+      horizontalVisualsAxis: 
+      verticalVisualsAxis: 
     playerID: 0
     characterVisualsVector: {x: 0, y: 0}
 --- !u!4 &1020276493 stripped
