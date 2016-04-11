@@ -98,6 +98,8 @@ public abstract class AbstractPlayerInput : MonoBehaviour
         }
     }
 
+    public abstract Vector2 deltaVisuals();
+
     protected abstract void updateAim();
 
     protected abstract void checkAbilities();
@@ -134,6 +136,11 @@ public class InputConfiguration
     [CanBeDefaultOrNull]
     [Tooltip("You can leave this as anything for mouse mode")]
     public string backAbilityAxis;
+    [CanBeDefaultOrNull]
+    [Tooltip("You can leave this as anything for mouse mode")]
+    public string horizontalVisualsAxis;
+    [Tooltip("You can leave this as anything for mouse mode")]
+    public string verticalVisualsAxis;
 
     public InputConfiguration() { }
 

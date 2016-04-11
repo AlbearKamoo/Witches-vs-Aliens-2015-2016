@@ -48,6 +48,11 @@ public class MousePlayerInput : AbstractPlayerInput {
     {
         return Input.GetKeyDown(KeyCode.Escape) || Input.GetMouseButtonDown(1);
     }
+
+    public override Vector2 deltaVisuals()
+    {
+        return Input.GetAxis("Mouse ScrollWheel") * Vector2.right;
+    }
 }
 
     

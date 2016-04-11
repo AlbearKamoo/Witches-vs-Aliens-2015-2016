@@ -103,4 +103,9 @@ public class JoystickPlayerInput : AbstractPlayerInput {
 
         return returnValue;
     }
+
+    public override Vector2 deltaVisuals()
+    {
+        return new Vector2(Input.GetAxis(bindings.horizontalVisualsAxis), Input.GetAxis(bindings.verticalVisualsAxis));
+    }
 }

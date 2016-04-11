@@ -101,22 +101,27 @@ public class RegisteredPlayerUIView : MonoBehaviour, ISpawnable {
 
     IEnumerator SelectCharacterVisuals()
     {
-        while (true)
+        yield return null;
+        AbstractPlayerInput input = registration.playgroundAvatar.GetComponent<AbstractPlayerInput>();
+        if (input != null)
         {
-            Vector2 deltaVisuals = Input.GetAxis("Mouse ScrollWheel") * Vector2.right;
-
-            //Debug.Log(deltaVisuals);
-
-            if (deltaVisuals != Vector2.zero)
+            while (true)
             {
-                characterVisualsVector += Time.deltaTime * visualsSelectSensitivity * deltaVisuals;
+                Vector2 deltaVisuals = input.deltaVisuals();
 
-                //limit to [0,1] range
-                characterVisualsVector.x = (characterVisualsVector.x + 1) % 1;
-                characterVisualsVector.y = (characterVisualsVector.y + 1) % 1;
-                UpdateCharacterVisuals(characterVisualsVector);
+                //Debug.Log(deltaVisuals);
+
+                if (deltaVisuals != Vector2.zero)
+                {
+                    characterVisualsVector += Time.deltaTime * visualsSelectSensitivity * deltaVisuals;
+
+                    //limit to [0,1] range
+                    characterVisualsVector.x = (characterVisualsVector.x + 1) % 1;
+                    characterVisualsVector.y = (characterVisualsVector.y + 1) % 1;
+                    UpdateCharacterVisuals(characterVisualsVector);
+                }
+                yield return null;
             }
-            yield return null;
         }
     }
 

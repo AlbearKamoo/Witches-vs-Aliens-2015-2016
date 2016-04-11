@@ -41,4 +41,9 @@ public class CrappyAIInput : AbstractPlayerInput
     {
         return false;
     }
+
+    public override Vector2 deltaVisuals()
+    {
+        return Vector2.zero;
+    }
 }

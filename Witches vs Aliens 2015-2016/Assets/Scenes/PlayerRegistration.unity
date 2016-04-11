@@ -141,6 +141,8 @@ MonoBehaviour:
       superAbilityAxis: 
       acceptAbilityAxis: 
       backAbilityAxis: 
+      horizontalVisualsAxis: 
+      verticalVisualsAxis: 
   - name: Player1
     abbreviation: 1
     color: {r: 0, g: 1, b: 0.6275861, a: 1}
@@ -156,6 +158,8 @@ MonoBehaviour:
       superAbilityAxis: J1_Super
       acceptAbilityAxis: J1_X
       backAbilityAxis: J1_Y
+      horizontalVisualsAxis: HorizontalVisuals_J1
+      verticalVisualsAxis: VerticalVisuals_J1
   - name: Player2
     abbreviation: 2
     color: {r: 0.86206913, g: 0, b: 1, a: 1}
@@ -171,6 +175,8 @@ MonoBehaviour:
       superAbilityAxis: J2_Super
       acceptAbilityAxis: J2_X
       backAbilityAxis: J2_Y
+      horizontalVisualsAxis: HorizontalVisuals_J2
+      verticalVisualsAxis: VerticalVisuals_J2
   - name: Player3
     abbreviation: 3
     color: {r: 0.77931035, g: 1, b: 0, a: 1}
@@ -186,6 +192,8 @@ MonoBehaviour:
       superAbilityAxis: J3_Super
       acceptAbilityAxis: J3_X
       backAbilityAxis: J3_Y
+      horizontalVisualsAxis: HorizontalVisuals_J3
+      verticalVisualsAxis: VerticalVisuals_J3
   - name: Player4
     abbreviation: 4
     color: {r: 0.15862083, g: 0, b: 1, a: 1}
@@ -201,6 +209,8 @@ MonoBehaviour:
       superAbilityAxis: J4_Super
       acceptAbilityAxis: J4_X
       backAbilityAxis: J4_Y
+      horizontalVisualsAxis: HorizontalVisuals_J4
+      verticalVisualsAxis: VerticalVisuals_J4
   charactersData:
   - {fileID: 1149256924}
   - {fileID: 1220282583}
