@@ -22,8 +22,7 @@ public class GameEndPlayerEntry : MonoBehaviour {
         this.player = player;
         playerContainer.sprite = player.selectionSprite();
 
-        if(numGoals > 0)
-            numGoalsText.text = numGoals.ToString();
+        numGoalsText.text = numGoals.ToString();
 
         Callback.FireForUpdate(() => //Fire after the aspect ratio component has been initialized
         {
