@@ -192,6 +192,8 @@ public class InputToAction : MonoBehaviour, ISpeedLimiter, INetworkable, IObserv
 
     public void FireAbility(AbilityType t)
     {
+        if (Pause.isPaused())
+            return;
         switch (stats.networkMode)
         {
             case NetworkMode.LOCALCLIENT:
