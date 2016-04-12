@@ -33,6 +33,11 @@ public class Tags{
         public const string stage = "Stage";
     }
 
+    public class SortingLayers
+    {
+        public const string overlay = "Overlay";
+    }
+
     public class AnimatorParams
     {
     }

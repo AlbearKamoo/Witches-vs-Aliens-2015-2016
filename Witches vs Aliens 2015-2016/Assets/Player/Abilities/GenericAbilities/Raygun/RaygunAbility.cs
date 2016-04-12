@@ -11,6 +11,9 @@ public class RaygunAbility : AbstractGenericAbility {
     protected GameObject hitVisualsPrefab;
 
     [SerializeField]
+    protected GameObject rayPrefab;
+
+    [SerializeField]
     protected float chargeUpTime;
 
     [SerializeField]
@@ -34,20 +37,13 @@ public class RaygunAbility : AbstractGenericAbility {
     [SerializeField]
     protected int numArcPoints;
 
-    /// <summary>
-    /// How long the line-renderer-created ray lasts when a shot is fired.
-    /// </summary>
-    [SerializeField]
-    protected float rayDuration;
-
     MeshFilter meshFilter;
     MeshRenderer meshRenderer;
     Transform rotating;
     Stats myStats;
-    ParticleSystem vfx;
-    LineRenderer firedRay;
     List<GameObject> hitVisuals = new List<GameObject>();
     Countdown resetVisualsCountdown;
+    RaygunRay ray;
 
     protected override void Awake()
     {
@@ -55,8 +51,6 @@ public class RaygunAbility : AbstractGenericAbility {
         resetVisualsCountdown = new Countdown(() => Callback.Routines.FireAndForgetRoutine(clearHitVisuals, stunTime, this), this);
         meshFilter = GetComponent<MeshFilter>();
         meshRenderer = GetComponent<MeshRenderer>();
-        vfx = GetComponentInChildren<ParticleSystem>();
-        firedRay = GetComponent<LineRenderer>();
 
         //create our mesh to represent the firing arc
         Mesh arcMesh = new Mesh();
@@ -89,6 +83,8 @@ public class RaygunAbility : AbstractGenericAbility {
         arcMesh.vertices = verticies;
         arcMesh.uv = uvs;
         arcMesh.triangles = triangles;
+
+        ray = Instantiate(rayPrefab).GetComponent<RaygunRay>();
     }
 
     protected override void Start()
@@ -140,7 +136,7 @@ public class RaygunAbility : AbstractGenericAbility {
                     return;
 
                 direction = transform.right;
-                playShotVFX(direction);
+                ray.playShotVFX(this.transform.position, direction);
 
                 RaycastHit2D[] hits = Physics2D.RaycastAll(this.transform.position, direction);
                 for (int i = 0; i < hits.Length; i++)
@@ -180,15 +176,6 @@ public class RaygunAbility : AbstractGenericAbility {
             SimplePool.Despawn(hitVisuals[i]);
         }
         hitVisuals.Clear();
-    }
-
-    void playShotVFX(Vector3 direction)
-    {
-        vfx.Play();
-        firedRay.enabled = true;
-        firedRay.SetPosition(0, this.transform.position);
-        firedRay.SetPosition(1, this.transform.position + 60 * direction);
-        Callback.DoLerp((float l) => {Color rayColor = Color.Lerp(Color.white, Color.black, l); firedRay.SetColors(rayColor, rayColor);}, rayDuration, this).FollowedBy(() => firedRay.enabled = false, this);
     }
 
     protected override void Reset(float timeTillActive)

@@ -7,7 +7,7 @@ Material:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: RaygunRayMat
-  m_Shader: {fileID: 200, guid: 0000000000000000f000000000000000, type: 0}
+  m_Shader: {fileID: 4800000, guid: 2295eeab09228044db35c428c109a13b, type: 3}
   m_ShaderKeywords: USE_COLOR
   m_LightmapFlags: 5
   m_CustomRenderQueue: 3000
@@ -81,6 +81,10 @@ Material:
     m_Floats:
       data:
         first:
+          name: _MainTex
+        second: 1
+      data:
+        first:
           name: _SrcBlend
         second: 1
       data:
@@ -135,6 +139,10 @@ Material:
         first:
           name: _InvFade
         second: 1
+      data:
+        first:
+          name: _DistortionStrength
+        second: 3
     m_Colors:
       data:
         first:
