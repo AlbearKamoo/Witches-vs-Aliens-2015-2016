@@ -5,6 +5,7 @@ using UnityEngine.Assertions;
 
 [RequireComponent(typeof(MeshFilter))]
 [RequireComponent(typeof(MeshRenderer))]
+[RequireComponent(typeof(AudioSource))]
 public class RaygunAbility : AbstractGenericAbility {
 
     [SerializeField]
@@ -12,6 +13,12 @@ public class RaygunAbility : AbstractGenericAbility {
 
     [SerializeField]
     protected GameObject rayPrefab;
+
+    [SerializeField]
+    protected AudioClip fireClip;
+
+    [SerializeField]
+    protected AudioClip chargeClip;
 
     [SerializeField]
     protected float chargeUpTime;
@@ -44,6 +51,7 @@ public class RaygunAbility : AbstractGenericAbility {
     List<GameObject> hitVisuals = new List<GameObject>();
     Countdown resetVisualsCountdown;
     RaygunRay ray;
+    AudioSource sfx;
 
     protected override void Awake()
     {
@@ -51,6 +59,7 @@ public class RaygunAbility : AbstractGenericAbility {
         resetVisualsCountdown = new Countdown(() => Callback.Routines.FireAndForgetRoutine(clearHitVisuals, stunTime, this), this);
         meshFilter = GetComponent<MeshFilter>();
         meshRenderer = GetComponent<MeshRenderer>();
+        sfx = GetComponent<AudioSource>();
 
         //create our mesh to represent the firing arc
         Mesh arcMesh = new Mesh();
@@ -120,6 +129,7 @@ public class RaygunAbility : AbstractGenericAbility {
 
     void StopChargingFX()
     {
+        sfx.Stop();
         meshRenderer.enabled = false;
     }
 
@@ -128,12 +138,17 @@ public class RaygunAbility : AbstractGenericAbility {
         active = true;
         meshRenderer.enabled = true;
 
+        sfx.clip = chargeClip;
+        sfx.Play();
         Callback.DoLerp(updateMesh, chargeUpTime, this, reverse : true).FollowedBy(() =>
             {
                 StopChargingFX();
 
                 if (!active)
                     return;
+
+                sfx.clip = fireClip;
+                sfx.Play();
 
                 direction = transform.right;
                 ray.playShotVFX(this.transform.position, direction);

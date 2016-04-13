@@ -114,7 +114,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12e12d08f0b2f0a48a44129fc0675a20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  introMusicPrefab: {fileID: 129924, guid: c11a39805b0734f40bae483a2f720505, type: 2}
   puckPrefab: {fileID: 135402, guid: 6e5f3e0169f30de41bb5f3e1b78cbd68, type: 2}
   meshInteraction: {fileID: 119870, guid: b8e55c24ba2ff5141aadeb14f52bcbee, type: 2}
   nullSuperPrefab: {fileID: 105680, guid: 5f1280ea6606137478581a28ca3a2475, type: 2}
@@ -1299,7 +1298,7 @@ Prefab:
     - target: {fileID: 8250790, guid: c11a39805b0734f40bae483a2f720505, type: 2}
       propertyPath: m_audioClip
       value: 
-      objectReference: {fileID: 8300000, guid: d2f6e9ab17e5380409efb4a1df5a238b, type: 3}
+      objectReference: {fileID: 8300000, guid: fe7da6c9f6ee53844874577a0852a881, type: 3}
     - target: {fileID: 8250790, guid: c11a39805b0734f40bae483a2f720505, type: 2}
       propertyPath: m_PlayOnAwake
       value: 1
@@ -1311,6 +1310,10 @@ Prefab:
     - target: {fileID: 8250790, guid: c11a39805b0734f40bae483a2f720505, type: 2}
       propertyPath: spreadCustomCurve.m_RotationOrder
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8250790, guid: c11a39805b0734f40bae483a2f720505, type: 2}
+      propertyPath: m_Volume
+      value: 0.5
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 11409060, guid: c11a39805b0734f40bae483a2f720505, type: 2}

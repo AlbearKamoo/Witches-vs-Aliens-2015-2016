@@ -19,7 +19,7 @@ Material:
         first:
           name: _MainTex
         second:
-          m_Texture: {fileID: 2800000, guid: 97f30e19da1d8a342b948d6d7e2710bf, type: 3}
+          m_Texture: {fileID: 2800000, guid: 40c5c1eca10c8b84687e698f5627bdca, type: 3}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
       data:
@@ -80,6 +80,13 @@ Material:
           m_Offset: {x: 0, y: 0}
       data:
         first:
+          name: _ASCIITex
+        second:
+          m_Texture: {fileID: 2800000, guid: 310fc283f6270894bb5a5552f7532056, type: 3}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
           name: _NoiseTex1
         second:
           m_Texture: {fileID: 0}
@@ -90,13 +97,6 @@ Material:
           name: _NoiseTex2
         second:
           m_Texture: {fileID: 0}
-          m_Scale: {x: 1, y: 1}
-          m_Offset: {x: 0, y: 0}
-      data:
-        first:
-          name: _ASCIITex
-        second:
-          m_Texture: {fileID: 2800000, guid: 310fc283f6270894bb5a5552f7532056, type: 3}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
     m_Floats:
@@ -158,24 +158,24 @@ Material:
         second: 1
       data:
         first:
+          name: _NumXPixels
+        second: 87.86
+      data:
+        first:
+          name: _NumYPixels
+        second: 107.96
+      data:
+        first:
+          name: _NumASCIIValues
+        second: 70
+      data:
+        first:
           name: _StretchFactor
         second: 1
       data:
         first:
           name: _MiddleCutoff
         second: 0.1
-      data:
-        first:
-          name: _NumXPixels
-        second: 4
-      data:
-        first:
-          name: _NumYPixels
-        second: 4
-      data:
-        first:
-          name: _NumASCIIValues
-        second: 70
     m_Colors:
       data:
         first:

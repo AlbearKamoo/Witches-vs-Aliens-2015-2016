@@ -8,9 +8,6 @@ using UnityEngine.Assertions;
 [RequireComponent(typeof(SetupData))]
 public class PlayerRegistration : MonoBehaviour, INetworkable {
     [SerializeField]
-    protected GameObject introMusicPrefab;
-
-    [SerializeField]
     protected GameObject puckPrefab;
 
     [SerializeField]
