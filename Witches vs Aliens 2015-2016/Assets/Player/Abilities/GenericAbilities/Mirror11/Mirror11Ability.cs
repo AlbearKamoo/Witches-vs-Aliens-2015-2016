@@ -1,32 +1,37 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class Mirror11Ability : TimedGenericAbility
 {
-
     [SerializeField]
     protected GameObject mirrorPrefab;
     const float xSeperation = 25;
+    const float ySeperation = 15;
 
-    Mirror11[] instantiatedMirrors;
+    List<Mirror11> instantiatedMirrors = new List<Mirror11>();
 
     // Use this for initialization
     protected override void Start()
     {
         base.Start();
-        instantiatedMirrors = new Mirror11[2];
-        instantiatedMirrors[0] = Instantiate(mirrorPrefab).GetComponent<Mirror11>();
-        instantiatedMirrors[0].Initialize(transform.root, xSeperation * Vector2.right);
-        instantiatedMirrors[0].active = false;
-
-        instantiatedMirrors[1] = Instantiate(mirrorPrefab).GetComponent<Mirror11>();
-        instantiatedMirrors[1].Initialize(transform.root, xSeperation * Vector2.left);
-        instantiatedMirrors[1].active = false;
+        for (int x = -2; x <= 2; x++)
+        {
+            for (int y = -1; y <= 1; y++)
+            {
+                if (x == 0 && y == 0)
+                    continue;
+                Mirror11 instantiatedMirror = Instantiate(mirrorPrefab).GetComponent<Mirror11>();
+                instantiatedMirror.Initialize(transform.root, new Vector2(x * xSeperation, y * ySeperation));
+                instantiatedMirror.active = false;
+                instantiatedMirrors.Add(instantiatedMirror);
+            }
+        }
     }
 
     void setMirrorsActive(bool active)
     {
-        for (int i = 0; i < instantiatedMirrors.Length; i++)
+        for (int i = 0; i < instantiatedMirrors.Count; i++)
             instantiatedMirrors[i].active = active;
     }
 
