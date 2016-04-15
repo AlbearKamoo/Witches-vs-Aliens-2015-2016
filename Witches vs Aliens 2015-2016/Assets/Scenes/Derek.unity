@@ -346,82 +346,6 @@ Prefab:
       propertyPath: m_Name
       value: Options&PauseSystemCanvas
       objectReference: {fileID: 0}
-    - target: {fileID: 11448284, guid: 493d0645e9344de4ca9a6bc5d6b2510a, type: 2}
-      propertyPath: timeRemainingSec
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 22488076, guid: 493d0645e9344de4ca9a6bc5d6b2510a, type: 2}
-      propertyPath: m_AnchorMin.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 22488076, guid: 493d0645e9344de4ca9a6bc5d6b2510a, type: 2}
-      propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 22488076, guid: 493d0645e9344de4ca9a6bc5d6b2510a, type: 2}
-      propertyPath: m_AnchoredPosition.x
-      value: 129
-      objectReference: {fileID: 0}
-    - target: {fileID: 22488076, guid: 493d0645e9344de4ca9a6bc5d6b2510a, type: 2}
-      propertyPath: m_AnchoredPosition.y
-      value: -32.25
-      objectReference: {fileID: 0}
-    - target: {fileID: 22488076, guid: 493d0645e9344de4ca9a6bc5d6b2510a, type: 2}
-      propertyPath: m_SizeDelta.x
-      value: 72
-      objectReference: {fileID: 0}
-    - target: {fileID: 22488076, guid: 493d0645e9344de4ca9a6bc5d6b2510a, type: 2}
-      propertyPath: m_SizeDelta.y
-      value: 64.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 22416658, guid: 493d0645e9344de4ca9a6bc5d6b2510a, type: 2}
-      propertyPath: m_AnchorMin.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 22416658, guid: 493d0645e9344de4ca9a6bc5d6b2510a, type: 2}
-      propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 22416658, guid: 493d0645e9344de4ca9a6bc5d6b2510a, type: 2}
-      propertyPath: m_AnchoredPosition.x
-      value: 250
-      objectReference: {fileID: 0}
-    - target: {fileID: 22416658, guid: 493d0645e9344de4ca9a6bc5d6b2510a, type: 2}
-      propertyPath: m_AnchoredPosition.y
-      value: -20
-      objectReference: {fileID: 0}
-    - target: {fileID: 22416658, guid: 493d0645e9344de4ca9a6bc5d6b2510a, type: 2}
-      propertyPath: m_SizeDelta.x
-      value: 140
-      objectReference: {fileID: 0}
-    - target: {fileID: 22416658, guid: 493d0645e9344de4ca9a6bc5d6b2510a, type: 2}
-      propertyPath: m_SizeDelta.y
-      value: 40
-      objectReference: {fileID: 0}
-    - target: {fileID: 22416476, guid: 493d0645e9344de4ca9a6bc5d6b2510a, type: 2}
-      propertyPath: m_AnchorMin.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 22416476, guid: 493d0645e9344de4ca9a6bc5d6b2510a, type: 2}
-      propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 22416476, guid: 493d0645e9344de4ca9a6bc5d6b2510a, type: 2}
-      propertyPath: m_AnchoredPosition.x
-      value: 371
-      objectReference: {fileID: 0}
-    - target: {fileID: 22416476, guid: 493d0645e9344de4ca9a6bc5d6b2510a, type: 2}
-      propertyPath: m_AnchoredPosition.y
-      value: -32.25
-      objectReference: {fileID: 0}
-    - target: {fileID: 22416476, guid: 493d0645e9344de4ca9a6bc5d6b2510a, type: 2}
-      propertyPath: m_SizeDelta.x
-      value: 72
-      objectReference: {fileID: 0}
-    - target: {fileID: 22416476, guid: 493d0645e9344de4ca9a6bc5d6b2510a, type: 2}
-      propertyPath: m_SizeDelta.y
-      value: 64.5
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 493d0645e9344de4ca9a6bc5d6b2510a, type: 2}
   m_IsPrefabParent: 0
@@ -575,7 +499,7 @@ MonoBehaviour:
       basePlayer: {fileID: 146214, guid: a8095cd9d9bc36f4e87d6eeda567d5fa, type: 2}
       visuals: {fileID: 106104, guid: 652446bdc4c4752479d5d092a4ee1f0f, type: 2}
       movementAbility: {fileID: 186010, guid: 999ab97c110d5bc4baa999b79b3005e9, type: 2}
-      genericAbility: {fileID: 169154, guid: df4cc774d6b7d0e4e8578a380a695d9e, type: 2}
+      genericAbility: {fileID: 142916, guid: 853350ea5c045614e834026fb2ede6bb, type: 2}
       superAbility: {fileID: 143026, guid: 9f0bc11609a97544496b9a6170fe50f5, type: 2}
       selectionSound: {fileID: 0}
       side: 1

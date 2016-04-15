@@ -22,6 +22,7 @@ public class MirrorAbility : TimedGenericAbility {
         {
             instantiatedMirror.UpdateCollision();
         }
+        //if not active, the mirror passively follows the player after a collision instead of acting as additional inertia
     }
 
     protected override void OnActivate()
