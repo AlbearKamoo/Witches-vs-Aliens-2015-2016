@@ -33,7 +33,6 @@ public class TeleportMirrorAbility : GenericAbility
         myRigidbody.position = mirrorRigidbody.position;
         mirrorRigidbody.position = thisPosition;
         instantiatedMirror.UpdateCollision();
-        Debug.Log("swap");
 
         //active = false;
     }

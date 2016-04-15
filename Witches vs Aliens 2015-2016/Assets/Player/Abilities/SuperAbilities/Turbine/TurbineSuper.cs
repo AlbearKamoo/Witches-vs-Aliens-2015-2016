@@ -27,7 +27,7 @@ public class TurbineSuper : TimedSuperAbility, IAlliesAbility
     {
         turbine = Instantiate(turbinePrefab).GetComponent<Turbine>();
         base.Start();
-        ready = true; //for easy testing
+        //ready = true; //for easy testing
         turbine.active = false;
     }
 
