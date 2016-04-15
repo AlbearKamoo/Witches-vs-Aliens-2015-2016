@@ -144,7 +144,7 @@ MonoBehaviour:
       verticalVisualsAxis: 
   - name: Player1
     abbreviation: 1
-    color: {r: 0, g: 1, b: 0.6275861, a: 1}
+    color: {r: 0, g: 1, b: 0.006896496, a: 1}
     bindings:
       inputMode: 1
       networkMode: 0
@@ -738,6 +738,7 @@ Canvas:
   m_ReceivesEvents: 1
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
@@ -1989,6 +1990,7 @@ Canvas:
   m_ReceivesEvents: 1
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
