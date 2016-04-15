@@ -454,6 +454,38 @@ InputManager:
     axis: 0
     joyNum: 4
   - serializedVersion: 3
+    m_Name: HorizontalMovement_J5
+    descriptiveName: 
+    descriptiveNegativeName: 
+    negativeButton: 
+    positiveButton: 
+    altNegativeButton: 
+    altPositiveButton: 
+    gravity: 9999
+    dead: 0
+    sensitivity: 1
+    snap: 0
+    invert: 0
+    type: 2
+    axis: 0
+    joyNum: 5
+  - serializedVersion: 3
+    m_Name: HorizontalMovement_J6
+    descriptiveName: 
+    descriptiveNegativeName: 
+    negativeButton: 
+    positiveButton: 
+    altNegativeButton: 
+    altPositiveButton: 
+    gravity: 9999
+    dead: 0
+    sensitivity: 1
+    snap: 0
+    invert: 0
+    type: 2
+    axis: 0
+    joyNum: 6
+  - serializedVersion: 3
     m_Name: HorizontalAim_J1
     descriptiveName: 
     descriptiveNegativeName: 
@@ -517,6 +549,38 @@ InputManager:
     type: 2
     axis: 3
     joyNum: 4
+  - serializedVersion: 3
+    m_Name: HorizontalAim_J5
+    descriptiveName: 
+    descriptiveNegativeName: 
+    negativeButton: 
+    positiveButton: 
+    altNegativeButton: 
+    altPositiveButton: 
+    gravity: 9999
+    dead: 0
+    sensitivity: 1
+    snap: 0
+    invert: 0
+    type: 2
+    axis: 3
+    joyNum: 5
+  - serializedVersion: 3
+    m_Name: HorizontalAim_J6
+    descriptiveName: 
+    descriptiveNegativeName: 
+    negativeButton: 
+    positiveButton: 
+    altNegativeButton: 
+    altPositiveButton: 
+    gravity: 9999
+    dead: 0
+    sensitivity: 1
+    snap: 0
+    invert: 0
+    type: 2
+    axis: 3
+    joyNum: 6
   - serializedVersion: 3
     m_Name: VerticalMovement_J1
     descriptiveName: 
@@ -582,6 +646,38 @@ InputManager:
     axis: 1
     joyNum: 4
   - serializedVersion: 3
+    m_Name: VerticalMovement_J5
+    descriptiveName: 
+    descriptiveNegativeName: 
+    negativeButton: 
+    positiveButton: 
+    altNegativeButton: 
+    altPositiveButton: 
+    gravity: 9999
+    dead: 0
+    sensitivity: 1
+    snap: 0
+    invert: 1
+    type: 2
+    axis: 1
+    joyNum: 5
+  - serializedVersion: 3
+    m_Name: VerticalMovement_J6
+    descriptiveName: 
+    descriptiveNegativeName: 
+    negativeButton: 
+    positiveButton: 
+    altNegativeButton: 
+    altPositiveButton: 
+    gravity: 9999
+    dead: 0
+    sensitivity: 1
+    snap: 0
+    invert: 1
+    type: 2
+    axis: 1
+    joyNum: 6
+  - serializedVersion: 3
     m_Name: VerticalAim_J1
     descriptiveName: 
     descriptiveNegativeName: 
@@ -645,6 +741,38 @@ InputManager:
     type: 2
     axis: 4
     joyNum: 4
+  - serializedVersion: 3
+    m_Name: VerticalAim_J5
+    descriptiveName: 
+    descriptiveNegativeName: 
+    negativeButton: 
+    positiveButton: 
+    altNegativeButton: 
+    altPositiveButton: 
+    gravity: 9999
+    dead: 0
+    sensitivity: 1
+    snap: 0
+    invert: 1
+    type: 2
+    axis: 4
+    joyNum: 5
+  - serializedVersion: 3
+    m_Name: VerticalAim_J6
+    descriptiveName: 
+    descriptiveNegativeName: 
+    negativeButton: 
+    positiveButton: 
+    altNegativeButton: 
+    altPositiveButton: 
+    gravity: 9999
+    dead: 0
+    sensitivity: 1
+    snap: 0
+    invert: 1
+    type: 2
+    axis: 4
+    joyNum: 6
   - serializedVersion: 3
     m_Name: HorizontalVisuals_J1
     descriptiveName: 
@@ -710,6 +838,38 @@ InputManager:
     axis: 6
     joyNum: 4
   - serializedVersion: 3
+    m_Name: HorizontalVisuals_J5
+    descriptiveName: 
+    descriptiveNegativeName: 
+    negativeButton: 
+    positiveButton: 
+    altNegativeButton: 
+    altPositiveButton: 
+    gravity: 9999
+    dead: 0
+    sensitivity: 1
+    snap: 0
+    invert: 1
+    type: 2
+    axis: 6
+    joyNum: 5
+  - serializedVersion: 3
+    m_Name: HorizontalVisuals_J6
+    descriptiveName: 
+    descriptiveNegativeName: 
+    negativeButton: 
+    positiveButton: 
+    altNegativeButton: 
+    altPositiveButton: 
+    gravity: 9999
+    dead: 0
+    sensitivity: 1
+    snap: 0
+    invert: 1
+    type: 2
+    axis: 6
+    joyNum: 6
+  - serializedVersion: 3
     m_Name: VerticalVisuals_J1
     descriptiveName: 
     descriptiveNegativeName: 
@@ -773,6 +933,38 @@ InputManager:
     type: 2
     axis: 6
     joyNum: 4
+  - serializedVersion: 3
+    m_Name: VerticalVisuals_J5
+    descriptiveName: 
+    descriptiveNegativeName: 
+    negativeButton: 
+    positiveButton: 
+    altNegativeButton: 
+    altPositiveButton: 
+    gravity: 9999
+    dead: 0
+    sensitivity: 1
+    snap: 0
+    invert: 1
+    type: 2
+    axis: 6
+    joyNum: 5
+  - serializedVersion: 3
+    m_Name: VerticalVisuals_J6
+    descriptiveName: 
+    descriptiveNegativeName: 
+    negativeButton: 
+    positiveButton: 
+    altNegativeButton: 
+    altPositiveButton: 
+    gravity: 9999
+    dead: 0
+    sensitivity: 1
+    snap: 0
+    invert: 1
+    type: 2
+    axis: 6
+    joyNum: 6
   - serializedVersion: 3
     m_Name: P0_Move
     descriptiveName: 
@@ -854,6 +1046,38 @@ InputManager:
     axis: 0
     joyNum: 4
   - serializedVersion: 3
+    m_Name: J5_Move
+    descriptiveName: 
+    descriptiveNegativeName: 
+    negativeButton: 
+    positiveButton: joystick 5 button 0
+    altNegativeButton: 
+    altPositiveButton: 
+    gravity: 9999
+    dead: 0.25
+    sensitivity: 3
+    snap: 0
+    invert: 1
+    type: 0
+    axis: 0
+    joyNum: 5
+  - serializedVersion: 3
+    m_Name: J6_Move
+    descriptiveName: 
+    descriptiveNegativeName: 
+    negativeButton: 
+    positiveButton: joystick 6 button 0
+    altNegativeButton: 
+    altPositiveButton: 
+    gravity: 9999
+    dead: 0.25
+    sensitivity: 3
+    snap: 0
+    invert: 1
+    type: 0
+    axis: 0
+    joyNum: 6
+  - serializedVersion: 3
     m_Name: P0_Generic
     descriptiveName: 
     descriptiveNegativeName: 
@@ -934,6 +1158,38 @@ InputManager:
     axis: 0
     joyNum: 4
   - serializedVersion: 3
+    m_Name: J5_Generic
+    descriptiveName: 
+    descriptiveNegativeName: 
+    negativeButton: 
+    positiveButton: joystick 5 button 1
+    altNegativeButton: 
+    altPositiveButton: 
+    gravity: 9999
+    dead: 0.25
+    sensitivity: 3
+    snap: 0
+    invert: 1
+    type: 0
+    axis: 0
+    joyNum: 5
+  - serializedVersion: 3
+    m_Name: J6_Generic
+    descriptiveName: 
+    descriptiveNegativeName: 
+    negativeButton: 
+    positiveButton: joystick 6 button 1
+    altNegativeButton: 
+    altPositiveButton: 
+    gravity: 9999
+    dead: 0.25
+    sensitivity: 3
+    snap: 0
+    invert: 1
+    type: 0
+    axis: 0
+    joyNum: 6
+  - serializedVersion: 3
     m_Name: J1_X
     descriptiveName: 
     descriptiveNegativeName: 
@@ -998,6 +1254,38 @@ InputManager:
     axis: 0
     joyNum: 4
   - serializedVersion: 3
+    m_Name: J5_X
+    descriptiveName: 
+    descriptiveNegativeName: 
+    negativeButton: 
+    positiveButton: joystick 5 button 2
+    altNegativeButton: 
+    altPositiveButton: 
+    gravity: 9999
+    dead: 0.25
+    sensitivity: 3
+    snap: 0
+    invert: 1
+    type: 0
+    axis: 0
+    joyNum: 5
+  - serializedVersion: 3
+    m_Name: J6_X
+    descriptiveName: 
+    descriptiveNegativeName: 
+    negativeButton: 
+    positiveButton: joystick 6 button 2
+    altNegativeButton: 
+    altPositiveButton: 
+    gravity: 9999
+    dead: 0.25
+    sensitivity: 3
+    snap: 0
+    invert: 1
+    type: 0
+    axis: 0
+    joyNum: 6
+  - serializedVersion: 3
     m_Name: J1_Y
     descriptiveName: 
     descriptiveNegativeName: 
@@ -1061,6 +1349,38 @@ InputManager:
     type: 0
     axis: 0
     joyNum: 4
+  - serializedVersion: 3
+    m_Name: J5_Y
+    descriptiveName: 
+    descriptiveNegativeName: 
+    negativeButton: 
+    positiveButton: joystick 5 button 3
+    altNegativeButton: 
+    altPositiveButton: 
+    gravity: 9999
+    dead: 0.25
+    sensitivity: 3
+    snap: 0
+    invert: 1
+    type: 0
+    axis: 0
+    joyNum: 5
+  - serializedVersion: 3
+    m_Name: J6_Y
+    descriptiveName: 
+    descriptiveNegativeName: 
+    negativeButton: 
+    positiveButton: joystick 6 button 3
+    altNegativeButton: 
+    altPositiveButton: 
+    gravity: 9999
+    dead: 0.25
+    sensitivity: 3
+    snap: 0
+    invert: 1
+    type: 0
+    axis: 0
+    joyNum: 6
   - serializedVersion: 3
     m_Name: P0_Super
     descriptiveName: 
@@ -1142,6 +1462,38 @@ InputManager:
     axis: 2
     joyNum: 4
   - serializedVersion: 3
+    m_Name: J5_Super
+    descriptiveName: 
+    descriptiveNegativeName: 
+    negativeButton: 
+    positiveButton: joystick 5 button 4
+    altNegativeButton: 
+    altPositiveButton: joystick 5 button 5
+    gravity: 9999
+    dead: 0.5
+    sensitivity: 3
+    snap: 0
+    invert: 1
+    type: 2
+    axis: 2
+    joyNum: 5
+  - serializedVersion: 3
+    m_Name: J6_Super
+    descriptiveName: 
+    descriptiveNegativeName: 
+    negativeButton: 
+    positiveButton: joystick 6 button 4
+    altNegativeButton: 
+    altPositiveButton: joystick 6 button 5
+    gravity: 9999
+    dead: 0.5
+    sensitivity: 3
+    snap: 0
+    invert: 1
+    type: 2
+    axis: 2
+    joyNum: 6
+  - serializedVersion: 3
     m_Name: J1_A
     descriptiveName: 
     descriptiveNegativeName: 
@@ -1205,3 +1557,35 @@ InputManager:
     type: 0
     axis: 0
     joyNum: 4
+  - serializedVersion: 3
+    m_Name: J5_A
+    descriptiveName: 
+    descriptiveNegativeName: 
+    negativeButton: 
+    positiveButton: joystick 5 button 0
+    altNegativeButton: 
+    altPositiveButton: 
+    gravity: 9999
+    dead: 0.25
+    sensitivity: 3
+    snap: 0
+    invert: 1
+    type: 0
+    axis: 0
+    joyNum: 5
+  - serializedVersion: 3
+    m_Name: J6_A
+    descriptiveName: 
+    descriptiveNegativeName: 
+    negativeButton: 
+    positiveButton: joystick 6 button 0
+    altNegativeButton: 
+    altPositiveButton: 
+    gravity: 9999
+    dead: 0.25
+    sensitivity: 3
+    snap: 0
+    invert: 1
+    type: 0
+    axis: 0
+    joyNum: 6

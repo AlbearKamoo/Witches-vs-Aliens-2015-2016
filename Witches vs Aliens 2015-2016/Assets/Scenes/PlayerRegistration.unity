@@ -210,6 +210,40 @@ MonoBehaviour:
       backAbilityAxis: J4_Y
       horizontalVisualsAxis: HorizontalVisuals_J4
       verticalVisualsAxis: VerticalVisuals_J4
+  - name: Player5
+    abbreviation: 5
+    color: {r: 0, g: 0.91724133, b: 1, a: 1}
+    bindings:
+      inputMode: 1
+      networkMode: 0
+      verticalMovementAxisName: VerticalMovement_J5
+      horizontalMovementAxisName: HorizontalMovement_J5
+      verticalAimingAxisName: VerticalAim_J5
+      horizontalAimingAxisName: HorizontalAim_J5
+      movementAbilityAxis: J5_Move
+      genericAbilityAxis: J5_Generic
+      superAbilityAxis: J5_Super
+      acceptAbilityAxis: J5_X
+      backAbilityAxis: J5_Y
+      horizontalVisualsAxis: HorizontalVisuals_J5
+      verticalVisualsAxis: VerticalVisuals_J5
+  - name: Player6
+    abbreviation: 6
+    color: {r: 1, g: 0.68275857, b: 0, a: 1}
+    bindings:
+      inputMode: 1
+      networkMode: 0
+      verticalMovementAxisName: VerticalMovement_J6
+      horizontalMovementAxisName: HorizontalMovement_J6
+      verticalAimingAxisName: VerticalAim_J6
+      horizontalAimingAxisName: HorizontalAim_J6
+      movementAbilityAxis: J6_Move
+      genericAbilityAxis: J6_Generic
+      superAbilityAxis: J6_Super
+      acceptAbilityAxis: J6_X
+      backAbilityAxis: J6_Y
+      horizontalVisualsAxis: HorizontalVisuals_J6
+      verticalVisualsAxis: VerticalVisuals_J6
   charactersData:
   - {fileID: 1149256924}
   - {fileID: 1220282583}
