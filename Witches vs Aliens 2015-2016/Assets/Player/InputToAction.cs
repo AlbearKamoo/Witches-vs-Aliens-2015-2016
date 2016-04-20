@@ -470,16 +470,19 @@ public class InputToAction : MonoBehaviour, ISpeedLimiter, INetworkable, IObserv
 
     void OnDestroy()
     {
-        int myIndex = findPlayerIndex(stats.playerID);
-        if(myIndex != -1)
+        if (stats != null)
         {
-            players.RemoveAt(myIndex);
-            if (node != null && myIndex == 0)
+            int myIndex = findPlayerIndex(stats.playerID);
+            if (myIndex != -1)
             {
-                node.Unsubscribe(this);
-                if (players.Count != 0)
+                players.RemoveAt(myIndex);
+                if (node != null && myIndex == 0)
                 {
-                    node.Subscribe(players[0].inputToAction); //have someone else subscribe to the networked node
+                    node.Unsubscribe(this);
+                    if (players.Count != 0)
+                    {
+                        node.Subscribe(players[0].inputToAction); //have someone else subscribe to the networked node
+                    }
                 }
             }
         }

@@ -48,7 +48,7 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
     protected Transform UIParentAlien;
 
     SetupData data;
-    Dictionary<int, Registration> registeredPlayers = new Dictionary<int, Registration>();
+    Dictionary<int, Registration> registeredPlayers = new Dictionary<int, Registration>(); //int key is the playerID
     int[] localIDToPlayerID;
 
     Vector2[] joystickEdgeTriggers;
@@ -60,6 +60,8 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
     IEnumerator startCountdown;
 
     GameObject pressStart;
+
+    static PersistentRegistration[] previousRegistrationData = new PersistentRegistration[0];
 
     void Awake()
     {
@@ -114,6 +116,22 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
         for (int i = 0; i < charactersData.Length; i++)
         {
             charactersData[i].characterID = i;
+        }
+
+        loadPreviousRegistrationData();
+    }
+
+    void loadPreviousRegistrationData()
+    {
+        for (int i = 0; i < previousRegistrationData.Length; i++)
+        {
+            PersistentRegistration player = previousRegistrationData[i];
+            if (player.localID >= 0)
+                spawnPlayerRegistration(player.localID, player.playerID, player.networkMode);
+            else
+                spawnPlayerRegistration(player.playerID, player.networkMode);
+
+            setPlayerReady(player.playerID, player.selectedCharacterID);
         }
     }
 
@@ -880,7 +898,8 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
         data.playerComponentPrefabs = results.ToArray();
 
         data.warmupActive = GameSelection.warmupActive;
-        
+
+        previousRegistrationData = PersistentRegistration.extractPersistentData(registeredPlayers);
 
         Debug.Log(mainGameSceneName);
         if (node != null)
@@ -1071,6 +1090,35 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
             default:
                 Debug.LogError("Invalid Message Type");
                 break;
+        }
+    }
+
+    public class PersistentRegistration
+    {
+        public int playerID;
+        public int selectedCharacterID;
+        public int localID;
+        public NetworkMode networkMode;
+        public Vector2 characterVisualsVector;
+        public PersistentRegistration(int playerID, int selectedCharacterID, int localID, NetworkMode networkMode, Vector2 characterVisualsVector)
+        {
+            this.playerID = playerID;
+            this.selectedCharacterID = selectedCharacterID;
+            this.localID = localID;
+            this.networkMode = networkMode;
+            this.characterVisualsVector = characterVisualsVector;
+        }
+
+        public static PersistentRegistration[] extractPersistentData(Dictionary<int, Registration> registeredPlayers)
+        {
+            PersistentRegistration[] result = new PersistentRegistration[registeredPlayers.Count];
+            int i = 0;
+            foreach (KeyValuePair<int, Registration> player in registeredPlayers)
+            {
+                result[i] = new PersistentRegistration(player.Key, player.Value.SelectedCharacterID, player.Value.localID, player.Value.networkMode, player.Value.ui.CharacterVisualsVector);
+                i++;
+            }
+            return result;
         }
     }
 }
