@@ -51,9 +51,10 @@ public class SkillShotAbility : GenericAbility
     protected override void Reset(float timeTillActive)
     {
         instantiatedShot.Reset();
-        active = false;
+
+        //active = false;
         //start on cooldown
-        Callback.FireAndForget(SetOnCooldown, timeTillActive, this);
+        //Callback.FireAndForget(SetOnCooldown, timeTillActive, this);
         
     }
 }
