@@ -595,7 +595,7 @@ MonoBehaviour:
       basePlayer: {fileID: 146214, guid: a8095cd9d9bc36f4e87d6eeda567d5fa, type: 2}
       visuals: {fileID: 186382, guid: d58cb17b4ddacef4aaabf2fc8656265a, type: 2}
       movementAbility: {fileID: 177582, guid: b3ffc9938492a984a8513ab58c226585, type: 2}
-      genericAbility: {fileID: 166162, guid: 86aa63429b3c295489a40a37f5b4d258, type: 2}
+      genericAbility: {fileID: 106928, guid: 6ba5f4f368e733044b3a781afa721d24, type: 2}
       superAbility: {fileID: 189548, guid: 92c627e1702f90443a4a43a527a7d20d, type: 2}
       selectionSound: {fileID: 0}
       side: 0

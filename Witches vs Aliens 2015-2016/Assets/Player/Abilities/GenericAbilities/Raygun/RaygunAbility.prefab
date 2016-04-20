@@ -157,7 +157,7 @@ MonoBehaviour:
   chargeClip: {fileID: 8300000, guid: 4a86d1fd0cefd944fa55b5383a26cf88, type: 3}
   chargeUpTime: 1
   stunTime: 5
-  initialArcAngle: 4
+  initialArcAngle: 1
   initialArcLength: 20
   numArcPoints: 10
 --- !u!1001 &100100000

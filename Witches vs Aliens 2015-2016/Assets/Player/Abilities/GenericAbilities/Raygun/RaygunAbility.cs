@@ -6,7 +6,7 @@ using UnityEngine.Assertions;
 [RequireComponent(typeof(MeshFilter))]
 [RequireComponent(typeof(MeshRenderer))]
 [RequireComponent(typeof(AudioSource))]
-public class RaygunAbility : AbstractGenericAbility {
+public class RaygunAbility : AbstractGenericAbility, IOpponentsAbility {
 
     [SerializeField]
     protected GameObject hitVisualsPrefab;
@@ -27,7 +27,7 @@ public class RaygunAbility : AbstractGenericAbility {
     protected float stunTime;
 
     /// <summary>
-    /// Pngle of the firing arc when the charging first starts, in radians.
+    /// Angle of the firing arc when the charging first starts, in radians.
     /// </summary>
     [SerializeField]
     protected float initialArcAngle;
@@ -53,10 +53,15 @@ public class RaygunAbility : AbstractGenericAbility {
     RaygunRay ray;
     AudioSource sfx;
 
+    float angle; //current angle, in radians, in the range [0, 2pi]
+    float actualStunTime;
+
+    public List<Transform> opponents { get; set; }
+
     protected override void Awake()
     {
         base.Awake();
-        resetVisualsCountdown = new Countdown(() => Callback.Routines.FireAndForgetRoutine(clearHitVisuals, stunTime, this), this);
+        resetVisualsCountdown = new Countdown(() => Callback.Routines.FireAndForgetRoutine(clearHitVisuals, actualStunTime, this), this);
         meshFilter = GetComponent<MeshFilter>();
         meshRenderer = GetComponent<MeshRenderer>();
         sfx = GetComponent<AudioSource>();
@@ -112,8 +117,8 @@ public class RaygunAbility : AbstractGenericAbility {
         for(int i = 0; i <= numArcPoints + 1; i++)
         {
             float lerpValue = (float) i / (numArcPoints + 1);
-            float angle = (lerpValue - 0.5f) * arcAngle / 2;
-            Vector2 unitDirectionVector = angle.RadToVector2();
+            float lerpAngle = (lerpValue - 0.5f) * arcAngle * 2;
+            Vector2 unitDirectionVector = lerpAngle.RadToVector2();
             verticies[i + 1] = arcLength * unitDirectionVector;
         }
         return verticies;
@@ -121,7 +126,7 @@ public class RaygunAbility : AbstractGenericAbility {
 
     void updateMesh(float lerpValue)
     {
-        float angle = lerpValue * initialArcAngle;
+        angle = lerpValue * initialArcAngle;
         float length = lerpValue != 0 ? initialArcLength / lerpValue : 1000f;
         meshFilter.mesh.vertices = generateArcVertices(angle, length);
         transform.rotation = rotating.rotation;
@@ -131,6 +136,61 @@ public class RaygunAbility : AbstractGenericAbility {
     {
         sfx.Stop();
         meshRenderer.enabled = false;
+    }
+
+    protected override bool onFireActive(Vector2 direction)
+    {
+        Reset(0);
+        active = false;
+
+        HashSet<Transform> hitTargets = new HashSet<Transform>(); //use a set to prevent duplicates
+
+        float angleDegrees = Mathf.Rad2Deg * angle;
+
+        foreach (Transform t in opponents)
+        {
+            if (Vector2.Angle(t.position - this.transform.position, direction) < angleDegrees)
+                hitTargets.Add(t);
+        }
+
+        RaycastHit2D[] hits = Physics2D.RaycastAll(this.transform.position, Quaternion.Euler(0, 0, angleDegrees) * direction);
+
+        for (int i = 0; i < hits.Length; i++)
+        {
+            if (hits[i].transform.CompareTag(Tags.player))
+            {
+                hitTargets.Add(hits[i].transform.root);
+            }
+        }
+
+        hits = Physics2D.RaycastAll(this.transform.position, Quaternion.Euler(0, 0, -angleDegrees) * direction);
+
+        for (int i = 0; i < hits.Length; i++)
+        {
+            if (hits[i].transform.CompareTag(Tags.player))
+            {
+                hitTargets.Add(hits[i].transform.root);
+            }
+        }
+
+        /*
+        Callback.DoLerp((float l) =>
+        {
+            Debug.DrawRay(this.transform.position, Quaternion.Euler(0, 0, angleDegrees) * direction * 100);
+            Debug.DrawRay(this.transform.position, Quaternion.Euler(0, 0, -angleDegrees) * direction * 100);
+        }, 10, this);
+        */
+
+        actualStunTime = stunTime * (initialArcAngle - angle) / initialArcAngle;
+
+        foreach (Transform t in hitTargets)
+        {
+            hitTarget(t, actualStunTime);
+        }
+
+        resetVisualsCountdown.Play();
+
+        return true;
     }
 
     protected override void onFire(Vector2 direction)
@@ -158,26 +218,33 @@ public class RaygunAbility : AbstractGenericAbility {
                 {
                     if (hits[i].transform.CompareTag(Tags.player))
                     {
-                        hitTarget(hits[i]);
+                        hitTarget(hits[i].transform.root);
                     }
                 }
+                actualStunTime = stunTime;
+
                 resetVisualsCountdown.Play();
 
-                    active = false;
+                active = false;
             }, this);
     }
 
-    void hitTarget(RaycastHit2D hit)
+    void hitTarget(Transform hit)
     {
-        InputToAction input = hit.transform.GetComponentInParent<InputToAction>();
+        hitTarget(hit, stunTime);
+    }
+
+    void hitTarget(Transform hit, float stunTime)
+    {
+        InputToAction input = hit.GetComponent<InputToAction>();
         if (input != null)
         {
-            Stats otherStats = hit.transform.GetComponentInParent<Stats>();
+            Stats otherStats = hit.GetComponent<Stats>();
             if (otherStats.side != myStats.side)
             {
                 input.DisableMovement(stunTime);
                 GameObject visuals = SimplePool.Spawn(hitVisualsPrefab);
-                visuals.transform.SetParent(hit.transform.root);
+                visuals.transform.SetParent(hit);
                 visuals.transform.localPosition = Vector3.zero;
                 hitVisuals.Add(visuals);
             }
