@@ -528,7 +528,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: <b>RB</b>
+  m_Text: <b>RT</b>
 --- !u!114 &11423970
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -639,7 +639,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: <b>LB</b>
+  m_Text: <b>LT</b>
 --- !u!114 &11462378
 MonoBehaviour:
   m_ObjectHideFlags: 1
