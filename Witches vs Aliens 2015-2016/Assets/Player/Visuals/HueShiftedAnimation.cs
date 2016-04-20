@@ -9,9 +9,37 @@ public class HueShiftedAnimation : AnimatedFourWayPlayerVisuals, IHueShiftableVi
     [SerializeField]
     protected bool flipRightSprites = false;
 
-    Vector2 _shift = Vector2.zero;
-    public Vector2 shift { get { return _shift; } set { setHue(_shift.x, value.x); _shift = value; } }
-    public Vector2 shiftAsync { set { StartCoroutine(setHueAsync(_shift.x, value.x)); _shift = value; } }
+    [SerializeField]
+    protected float hueMin;
+
+    [SerializeField]
+    protected float hueRange;
+
+    [SerializeField]
+    protected float numShades;
+
+    Vector2 _shift;
+    public Vector2 shift
+    {
+        get { return _shift; }
+        set
+        {
+            Vector2 hueSpaceShiftVector = visualsToHueVector(_shift);
+            Vector2 hueSpaceValueVector = visualsToHueVector(value);
+            setHue(hueSpaceShiftVector.x, hueSpaceValueVector.x);
+            _shift = value;
+        }
+    }
+    public Vector2 shiftAsync
+    {
+        set
+        {
+            Vector2 hueSpaceShiftVector = visualsToHueVector(_shift);
+            Vector2 hueSpaceValueVector = visualsToHueVector(value);
+            StartCoroutine(setHueAsync(hueSpaceShiftVector.x, hueSpaceValueVector.x));
+            _shift = value;
+        }
+    }
 
     Vector2 selectionShift = Vector2.zero;
     Sprite selectSprite;
@@ -34,6 +62,16 @@ public class HueShiftedAnimation : AnimatedFourWayPlayerVisuals, IHueShiftableVi
         {
             flipSpriteArray(rightSprites);
         }
+
+        if (selectSprite == null)
+        {
+            selectSprite = duplicateSprite(selectionSprite());
+            selectionShift = visualsToHueVector(Vector2.zero);
+            setHueSprite(0, selectionShift.x, selectSprite);
+        }
+
+        _shift = visualsToHueVector(Vector2.zero);
+        setHue(0, _shift.x);
     }
 
     void duplicateSpriteArray(Sprite[] sprites)
@@ -81,6 +119,28 @@ public class HueShiftedAnimation : AnimatedFourWayPlayerVisuals, IHueShiftableVi
             }
             tex.Apply();
         }
+    }
+
+    Vector2 visualsToHueVector(Vector2 characterVisualsVector)
+    {
+        Vector2 result = characterVisualsVector;
+
+        //have the vector snap to (n = numShades) spots
+        result *= numShades;
+        result.x = Mathf.Floor(result.x);
+        result.y = Mathf.Floor(result.y);
+        result /= numShades;
+
+        //move the vector from [0, 1] to [hueMin, hueMin + hueRange] space
+        result *= hueRange;
+
+        result.x = result.x + hueMin;
+        result.y = result.y + hueMin;
+        
+        result.x = result.x % 1;
+        result.y = result.y % 1;
+
+        return result;
     }
 
     void setHue(float oldHue, float newHue)
@@ -146,11 +206,11 @@ public class HueShiftedAnimation : AnimatedFourWayPlayerVisuals, IHueShiftableVi
         if (selectSprite == null)
         {
             selectSprite = duplicateSprite(selectionSprite());
-            Assert.IsTrue(selectionShift == Vector2.zero);
-            selectionShift = Vector2.zero;
+            selectionShift = visualsToHueVector(Vector2.zero);
+            setHueSprite(0, selectionShift.x, selectSprite);
         }
 
-        setHueSprite(selectionShift.x, visualSpaceInput.x, selectSprite);
+        setHueSprite(visualsToHueVector(selectionShift).x, visualsToHueVector(visualSpaceInput).x, selectSprite);
         selectionShift = visualSpaceInput;
         return selectSprite;
     }
