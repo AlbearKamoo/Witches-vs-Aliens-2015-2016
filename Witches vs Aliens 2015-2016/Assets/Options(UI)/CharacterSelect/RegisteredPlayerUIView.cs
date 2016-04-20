@@ -39,7 +39,7 @@ public class RegisteredPlayerUIView : MonoBehaviour, ISpawnable {
         Assert.IsTrue(canvasGroup.alpha == 0);
         layout = GetComponent<LayoutElement>();
         background = GetComponent<Image>();
-        characterVisualsVector = Vector2.zero;//new Vector2(Random.value, Random.value);
+        characterVisualsVector = Vector2.one / 2;//new Vector2(Random.value, Random.value);
 
         myMat = Instantiate(CharacterSprite.material);
         CharacterSprite.material = myMat;
@@ -66,7 +66,7 @@ public class RegisteredPlayerUIView : MonoBehaviour, ISpawnable {
             StopCoroutine(gameVisualsRoutine);
             gameVisualsRoutine = null;
         }
-        characterVisualsVector = Vector2.zero;
+        characterVisualsVector = Vector2.one / 2;
 
         aspectRatio.enabled = false;
         Callback.DoLerp((float l) => layout.preferredHeight = l * layoutHeight, selectFlashDuration, this, reverse: true).FollowedBy(() =>
@@ -81,7 +81,7 @@ public class RegisteredPlayerUIView : MonoBehaviour, ISpawnable {
     {
         CharacterSprite.enabled = true;
         spriteSource = registration.context.charactersData[ID].character.visuals.GetComponent<AbstractPlayerVisuals>();
-        UpdateCharacterVisuals(characterVisualsVector = Vector2.zero);
+        UpdateCharacterVisuals(characterVisualsVector = Vector2.one / 2);
 
         Assert.IsNull(readyRoutine);
         readyRoutine = SelectCharacterVisuals();

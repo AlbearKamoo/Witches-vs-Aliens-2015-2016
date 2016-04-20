@@ -118,8 +118,6 @@ public class HueShiftedAnimation : AnimatedFourWayPlayerVisuals, IHueShiftableVi
 
     void setHueSprite(float oldHue, float newHue, Sprite sprite)
     {
-        Debug.Log(newHue);
-        Debug.Log(oldHue);
         Rect bounds = sprite.rect;
         Texture2D tex = sprite.texture;
 
