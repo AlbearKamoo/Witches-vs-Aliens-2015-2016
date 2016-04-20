@@ -62,6 +62,13 @@ public class DistortionAbility : TimedGenericAbility
         source.Play();
     }
 
+    protected override bool onFireActive(Vector2 direction)
+    {
+        Reset(0);
+        active = false;
+        return true;
+    }
+
     public override void StopFire()
     {
         //active = false; lasts for full duration
