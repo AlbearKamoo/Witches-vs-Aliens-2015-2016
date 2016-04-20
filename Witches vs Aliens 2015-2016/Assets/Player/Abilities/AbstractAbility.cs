@@ -42,6 +42,10 @@ public abstract class AbstractAbility : MonoBehaviour {
             onFire(direction);
             return true;
         }
+        else if(_active)
+        {
+            return onFireActive(direction);
+        }
         else
         {
             return false; //didn't fire
@@ -54,6 +58,11 @@ public abstract class AbstractAbility : MonoBehaviour {
     }
 
     protected abstract void onFire(Vector2 direction);
+
+    protected virtual bool onFireActive(Vector2 direction)
+    {
+        return false;
+    }
 }
 
 public enum AbilityType
