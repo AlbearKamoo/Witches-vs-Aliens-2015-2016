@@ -83,6 +83,8 @@ public class RegisteredPlayerUIView : MonoBehaviour, ISpawnable {
         spriteSource = registration.context.charactersData[ID].character.visuals.GetComponent<AbstractPlayerVisuals>();
         UpdateCharacterVisuals(characterVisualsVector = new Vector2(Random.value, Random.value));
 
+        Callback.FireForUpdate(() => UpdateCharacterVisuals(characterVisualsVector), this);
+
         Assert.IsNull(readyRoutine);
         readyRoutine = SelectCharacterVisuals();
         StartCoroutine(readyRoutine);

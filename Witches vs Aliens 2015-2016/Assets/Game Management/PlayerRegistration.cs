@@ -378,7 +378,6 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
         ui.transform.SetParent(UIParent, Vector3.one, false);
         ui.registration = data;
         data.ui = ui;
-        ui.UpdateCharacterSprite(data.SelectedCharacterID);
 
         Vector2 echoPosition = data.selector.transform.position;
 
@@ -386,6 +385,8 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
         data.selector = null;
 
         spawnPlaygroundAvatar(playerID);
+
+        ui.UpdateCharacterSprite(data.SelectedCharacterID);
 
         data.echoPosition = echoPosition;
 

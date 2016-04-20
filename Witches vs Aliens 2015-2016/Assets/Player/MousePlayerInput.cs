@@ -51,7 +51,7 @@ public class MousePlayerInput : AbstractPlayerInput {
 
     public override Vector2 deltaVisuals()
     {
-        return Input.GetAxis("Mouse ScrollWheel") * Vector2.right;
+        return 10 * Input.GetAxis("Mouse ScrollWheel") * Vector2.right;
     }
 }
 

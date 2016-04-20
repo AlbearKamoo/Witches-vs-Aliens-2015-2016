@@ -40,7 +40,7 @@ public class AnimatedFourWayPlayerVisuals : AbstractPlayerVisuals
     }
 
 	// Use this for initialization
-	void Awake () {
+	protected virtual void Awake () {
         rend = GetComponent<SpriteRenderer>();
         restartAnimation();
 	}
