@@ -319,20 +319,25 @@ public class ProgrammaticSpawning : MonoBehaviour, IObserver<Message> {
     public void resetPositions(float duration = -1, bool resetTime = true)
     {
         duration = (duration == -1) ? goalResetDuration : duration; //use goalResetDuration as the default
-        leftPoints.Shuffle<Vector2>();
-        rightPoints.Shuffle<Vector2>();
+        int[] indicies = new int[leftPoints.Length];
+        for (int i = 0; i < indicies.Length; i++)
+            indicies[i] = i;
+
+        indicies.Shuffle<int>();
+
         int leftPointsIndex = 0;
         int rightPointsIndex = 0;
-        foreach (Transform t in players)
+        for (int i = 0; i < players.Length; i++)
         {
+            Transform t = players[i];
             switch (t.GetComponent<Stats>().side)
             {
                 case Side.LEFT:
-                    t.GetComponent<ResetScripting>().Reset(leftPoints[leftPointsIndex], duration);
+                    t.GetComponent<ResetScripting>().Reset(leftPoints[indicies[leftPointsIndex]], duration);
                     leftPointsIndex++;
                     break;
                 case Side.RIGHT:
-                    t.GetComponent<ResetScripting>().Reset(rightPoints[rightPointsIndex], duration);
+                    t.GetComponent<ResetScripting>().Reset(rightPoints[indicies[rightPointsIndex]], duration);
                     rightPointsIndex++;
                     break;
             }
