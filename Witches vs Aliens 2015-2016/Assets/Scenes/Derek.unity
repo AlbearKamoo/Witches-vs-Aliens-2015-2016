@@ -418,6 +418,10 @@ Prefab:
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 11448284, guid: 493d0645e9344de4ca9a6bc5d6b2510a, type: 2}
+      propertyPath: timeRemainingSec
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 493d0645e9344de4ca9a6bc5d6b2510a, type: 2}
   m_IsPrefabParent: 0
@@ -590,7 +594,7 @@ MonoBehaviour:
       horizontalVisualsAxis: 
       verticalVisualsAxis: 
     playerID: 0
-    characterVisualsVector: {x: 0, y: 0}
+    characterVisualsVector: {x: 0.75, y: 0}
   - character:
       basePlayer: {fileID: 146214, guid: a8095cd9d9bc36f4e87d6eeda567d5fa, type: 2}
       visuals: {fileID: 186382, guid: d58cb17b4ddacef4aaabf2fc8656265a, type: 2}
@@ -614,7 +618,7 @@ MonoBehaviour:
       horizontalVisualsAxis: 
       verticalVisualsAxis: 
     playerID: 0
-    characterVisualsVector: {x: 0, y: 0}
+    characterVisualsVector: {x: 0.25, y: 0}
 --- !u!4 &1020276493 stripped
 Transform:
   m_PrefabParentObject: {fileID: 422084, guid: ae276d1e363cf0c49be7db4c5b225c6b, type: 2}

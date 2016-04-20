@@ -62,10 +62,8 @@ public class HueShiftedAnimation : AnimatedFourWayPlayerVisuals, IHueShiftableVi
 
     void flipSpriteArray(Sprite[] sprites)
     {
-        Debug.Log("DING!");
         for (int i = 0; i < sprites.Length; i++)
         {
-            Debug.Log(i);
             Rect bounds = sprites[i].rect;
             Texture2D tex = sprites[i].texture;
 
@@ -120,6 +118,8 @@ public class HueShiftedAnimation : AnimatedFourWayPlayerVisuals, IHueShiftableVi
 
     void setHueSprite(float oldHue, float newHue, Sprite sprite)
     {
+        Debug.Log(newHue);
+        Debug.Log(oldHue);
         Rect bounds = sprite.rect;
         Texture2D tex = sprite.texture;
 
