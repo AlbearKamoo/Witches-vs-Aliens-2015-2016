@@ -18,32 +18,41 @@ public class JoystickPlayerInput : AbstractPlayerInput {
 
     protected override void checkAbilities()
     {
-        if (Input.GetAxis(bindings.movementAbilityAxis) != 0)
+        if (prevMovement == 0)
         {
-            action.FireAbility(AbilityType.MOVEMENT);
-            prevMovement = Input.GetAxis(bindings.movementAbilityAxis);
+            if (Input.GetAxis(bindings.movementAbilityAxis) != 0)
+            {
+                action.FireAbility(AbilityType.MOVEMENT);
+                prevMovement = Input.GetAxis(bindings.movementAbilityAxis);
+            }
+            else if (Input.GetAxis(bindings.acceptAbilityAxis) != 0)
+            {
+                action.FireAbility(AbilityType.MOVEMENT);
+                prevMovement = Input.GetAxis(bindings.acceptAbilityAxis);
+            }
         }
-        else if (Input.GetAxis(bindings.acceptAbilityAxis) != 0)
-        {
-            action.FireAbility(AbilityType.MOVEMENT);
-            prevMovement = Input.GetAxis(bindings.acceptAbilityAxis);
-        }
+
         if (Input.GetAxis(bindings.superAbilityAxis) != prevSuper)
         {
             Debug.Log(Input.GetAxis(bindings.superAbilityAxis));
             action.FireAbility(AbilityType.SUPER);
             prevSuper = Input.GetAxis(bindings.superAbilityAxis);
         }
-        if (Input.GetAxis(bindings.genericAbilityAxis) != 0)
+
+        if (prevGeneric == 0)
         {
-            action.FireAbility(AbilityType.GENERIC);
-            prevGeneric = Input.GetAxis(bindings.genericAbilityAxis);
+            if (Input.GetAxis(bindings.genericAbilityAxis) != 0)
+            {
+                action.FireAbility(AbilityType.GENERIC);
+                prevGeneric = Input.GetAxis(bindings.genericAbilityAxis);
+            }
+            else if (Input.GetAxis(bindings.backAbilityAxis) != 0)
+            {
+                action.FireAbility(AbilityType.GENERIC);
+                prevGeneric = Input.GetAxis(bindings.backAbilityAxis);
+            }
         }
-        else if (Input.GetAxis(bindings.backAbilityAxis) != 0)
-        {
-            action.FireAbility(AbilityType.GENERIC);
-            prevGeneric = Input.GetAxis(bindings.backAbilityAxis);
-        }
+
         if (prevMovement != 0 && Mathf.Max(Input.GetAxis(bindings.movementAbilityAxis), Input.GetAxis(bindings.acceptAbilityAxis)) == 0)
         {
             action.StopFireAbility(AbilityType.MOVEMENT);
