@@ -3,12 +3,6 @@ using System.Collections;
 
 public class TeleportMirrorAbility : GenericAbility
 {
-
-    [SerializeField]
-    protected GameObject mirrorPrefab;
-
-    Mirror instantiatedMirror;
-    Rigidbody2D mirrorRigidbody;
     Rigidbody2D myRigidbody;
 
     // Use this for initialization
@@ -17,23 +11,18 @@ public class TeleportMirrorAbility : GenericAbility
         base.Start();
 
         myRigidbody = GetComponentInParent<Rigidbody2D>();
-
-        instantiatedMirror = Instantiate(mirrorPrefab).GetComponent<Mirror>();
-        instantiatedMirror.Initialize(GetComponentInParent<InputToAction>());
-        instantiatedMirror.active = false;
-        mirrorRigidbody = instantiatedMirror.GetComponent<Rigidbody2D>();
     }
 
     protected override void onFire(Vector2 direction)
     {
-        //active = true; //to toggle the UI and cooldown
-        Vector3 thisPosition = this.transform.position;
+
+        Vector3 thisPosition = myRigidbody.position;
 
         //do the teleport
-        myRigidbody.position = mirrorRigidbody.position;
-        mirrorRigidbody.position = thisPosition;
-        instantiatedMirror.UpdateCollision();
+        thisPosition.x = -(thisPosition.x);
+        myRigidbody.position = thisPosition;
 
-        //active = false;
+        active = true; //to toggle the UI and cooldown
+        active = false;
     }
 }
