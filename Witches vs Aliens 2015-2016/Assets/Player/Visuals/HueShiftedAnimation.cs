@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.Assertions;
 
 public class HueShiftedAnimation : AnimatedFourWayPlayerVisuals, IHueShiftableVisuals
 {
@@ -14,8 +15,6 @@ public class HueShiftedAnimation : AnimatedFourWayPlayerVisuals, IHueShiftableVi
 
     Vector2 selectionShift = Vector2.zero;
     Sprite selectSprite;
-
-    bool debugInit = false;
 
 	// Use this for initialization
     protected override void Awake()
@@ -144,8 +143,12 @@ public class HueShiftedAnimation : AnimatedFourWayPlayerVisuals, IHueShiftableVi
 
     public override Sprite selectionSprite(Vector2 visualSpaceInput)
     {
-        if(selectSprite == null)
+        if (selectSprite == null)
+        {
             selectSprite = duplicateSprite(selectionSprite());
+            Assert.IsTrue(selectionShift == Vector2.zero);
+            selectionShift = Vector2.zero;
+        }
 
         setHueSprite(selectionShift.x, visualSpaceInput.x, selectSprite);
         selectionShift = visualSpaceInput;
