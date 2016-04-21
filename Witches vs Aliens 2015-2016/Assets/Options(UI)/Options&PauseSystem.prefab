@@ -231,6 +231,7 @@ GameObject:
   - 114: {fileID: 11497724}
   - 114: {fileID: 11455004}
   - 114: {fileID: 11472768}
+  - 114: {fileID: 11484354}
   m_Layer: 5
   m_Name: OptionsButton
   m_TagString: Canvas
@@ -371,6 +372,9 @@ GameObject:
   - 114: {fileID: 11451530}
   - 114: {fileID: 11431130}
   - 114: {fileID: 11410588}
+  - 114: {fileID: 11453908}
+  - 114: {fileID: 11476836}
+  - 114: {fileID: 11438250}
   m_Layer: 5
   m_Name: Quit
   m_TagString: Untagged
@@ -1149,6 +1153,18 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &11438250
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 163372}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ffa05e88045fae4b97e8c280ef1f88d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  key: 332
 --- !u!114 &11439958
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1294,7 +1310,7 @@ MonoBehaviour:
     type: 2}
   OvertimeTextColor: {r: 1, g: 0.75208914, b: 0, a: 1}
   OvertimeOutlineColor: {r: 0.5019608, g: 0.2516795, b: 0, a: 0.5019608}
-  timeRemainingSec: 180
+  timeRemainingSec: 10
 --- !u!114 &11449838
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1455,6 +1471,18 @@ MonoBehaviour:
   m_EffectColor: {r: 1, g: 1, b: 1, a: 0.5}
   m_EffectDistance: {x: 1, y: -1}
   m_UseGraphicAlpha: 1
+--- !u!114 &11453908
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 163372}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ffa05e88045fae4b97e8c280ef1f88d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  key: 337
 --- !u!114 &11455004
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1623,6 +1651,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   key: 337
+--- !u!114 &11476836
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 163372}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ffa05e88045fae4b97e8c280ef1f88d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  key: 330
 --- !u!114 &11482538
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1708,6 +1748,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 526a4dc96ae107f4c96d496e4477acdb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &11484354
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 130050}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a060e1aa9cf2ea049a0f632157e77561, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  disableWithMultiplayer: 1
 --- !u!114 &11494268
 MonoBehaviour:
   m_ObjectHideFlags: 1
