@@ -31,12 +31,22 @@ public class JoystickPlayerInput : AbstractPlayerInput {
                 prevMovement = Input.GetAxis(bindings.acceptAbilityAxis);
             }
         }
+            //prevMovement is != 0
+        else if (Input.GetAxis(bindings.movementAbilityAxis) == 0 && Input.GetAxis(bindings.acceptAbilityAxis) == 0)
+        {
+            action.StopFireAbility(AbilityType.MOVEMENT);
+            prevMovement = 0;
+        }
 
         if (Input.GetAxis(bindings.superAbilityAxis) != prevSuper)
         {
-            Debug.Log(Input.GetAxis(bindings.superAbilityAxis));
             action.FireAbility(AbilityType.SUPER);
             prevSuper = Input.GetAxis(bindings.superAbilityAxis);
+        }
+
+        if (prevSuper == Input.GetAxis(bindings.superAbilityAxis))
+        {
+            action.StopFireAbility(AbilityType.SUPER);
         }
 
         if (prevGeneric == 0)
@@ -52,17 +62,8 @@ public class JoystickPlayerInput : AbstractPlayerInput {
                 prevGeneric = Input.GetAxis(bindings.backAbilityAxis);
             }
         }
-
-        if (prevMovement != 0 && Mathf.Max(Input.GetAxis(bindings.movementAbilityAxis), Input.GetAxis(bindings.acceptAbilityAxis)) == 0)
-        {
-            action.StopFireAbility(AbilityType.MOVEMENT);
-            prevMovement = 0;
-        }
-        if (prevSuper == Input.GetAxis(bindings.superAbilityAxis))
-        {
-            action.StopFireAbility(AbilityType.SUPER);
-        }
-        if (prevGeneric != 0 && Mathf.Max(Input.GetAxis(bindings.genericAbilityAxis), Input.GetAxis(bindings.backAbilityAxis)) == 0)
+            //prev generic != 0
+        else if (Input.GetAxis(bindings.genericAbilityAxis) == 0 && Input.GetAxis(bindings.backAbilityAxis) == 0)
         {
             action.StopFireAbility(AbilityType.GENERIC);
             prevGeneric = 0;

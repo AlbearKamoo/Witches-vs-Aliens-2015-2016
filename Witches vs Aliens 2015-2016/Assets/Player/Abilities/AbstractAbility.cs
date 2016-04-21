@@ -37,6 +37,7 @@ public abstract class AbstractAbility : MonoBehaviour {
 
     public bool Fire(Vector2 direction) //not virtual to encourage you to put your stuff in OnFire
     {
+        Debug.Log("Fire");
         if (ready)
         {
             onFire(direction);
