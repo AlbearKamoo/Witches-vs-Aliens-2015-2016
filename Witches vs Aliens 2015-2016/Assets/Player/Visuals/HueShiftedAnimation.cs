@@ -71,7 +71,8 @@ public class HueShiftedAnimation : AnimatedFourWayPlayerVisuals, IHueShiftableVi
         }
 
         _shift = visualsToHueVector(Vector2.zero);
-        setHue(0, _shift.x);
+        //setHue(0, _shift.x);
+        StartCoroutine(setHueAsync(0, _shift.x));
     }
 
     void duplicateSpriteArray(Sprite[] sprites)
