@@ -40,6 +40,9 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
     public CharacterHolder[] charactersData; //this array maps the characters to ints, for networking.
 
     [SerializeField]
+    protected KeyCode[] startGameKeyBindings;
+
+    [SerializeField]
     [AutoLink(parentTag = Tags.canvas, childPath = "RegisteredWitchPlayers")]
     protected Transform UIParentWitch;
 
@@ -618,6 +621,15 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
         for (; ; )
         {
             yield return null;
+
+            for (int i = 0; i < startGameKeyBindings.Length; i++)
+            {
+                if (Input.GetKeyDown(startGameKeyBindings[i]))
+                {
+                    attemptStartGame();
+                    break;
+                }
+            }
 
             for (int i = 0; i < possiblePlayers.Length; i++)
             {

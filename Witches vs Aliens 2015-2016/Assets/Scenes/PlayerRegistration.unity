@@ -251,6 +251,7 @@ MonoBehaviour:
   - {fileID: 69739546}
   - {fileID: 1847882280}
   - {fileID: 428674989}
+  startGameKeyBindings: 0d0000002000000051010000
   UIParentWitch: {fileID: 351718218}
   UIParentAlien: {fileID: 714022693}
 --- !u!114 &21640696

@@ -98,19 +98,31 @@ public class GameEndScripting : MonoBehaviour, INetworkable
         while (true)
         {
             yield return null;
+            if (Input.GetKeyDown(KeyCode.JoystickButton7))
+            {
+                changeScene();
+                break;
+            }
+
             for (int i = 0; i < inputs.Count; i++)
             {
                 if (inputs[i].pressedAccept())
                 {
-                    if (NetworkNode.node is Server)
-                    {
-                        NetworkNode.node.BinaryWriter.Write(PacketType.SCENEJUMP);
-                        NetworkNode.node.Send(NetworkNode.node.AllCostChannel);
-                    }
-                    Application.LoadLevel(Tags.Scenes.select);
+                    changeScene();
+                    break;
                 }
             }
         }
+    }
+
+    void changeScene()
+    {
+        if (NetworkNode.node is Server)
+        {
+            NetworkNode.node.BinaryWriter.Write(PacketType.SCENEJUMP);
+            NetworkNode.node.Send(NetworkNode.node.AllCostChannel);
+        }
+        Application.LoadLevel(Tags.Scenes.select);
     }
 
     public PacketType[] packetTypes { get { return new PacketType[] { PacketType.SCENEJUMP }; } }
