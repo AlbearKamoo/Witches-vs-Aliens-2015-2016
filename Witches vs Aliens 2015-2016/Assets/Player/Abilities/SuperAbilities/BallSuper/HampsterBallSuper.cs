@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class HampsterBallSuper : TimedSuperAbility, IPuckAbility, IAlliesAbility, IOpponentsAbility
+public class HampsterBallSuper : TimedSuperAbility, IPuckAbility, IAlliesAbility, IOpponentsAbility, IObserver<ResetMessage>
 {
     [SerializeField]
     protected GameObject hampsterBallPrefab;
@@ -34,7 +34,11 @@ public class HampsterBallSuper : TimedSuperAbility, IPuckAbility, IAlliesAbility
             balls[i].active = false;
         }
 
-        //ready = true; //for easy testing
+        IObservable<ResetMessage> resetObservable = GetComponentInParent<IObservable<ResetMessage>>();
+        if (resetObservable != null)
+            resetObservable.Subscribe(this);
+
+        ready = true; //for easy testing
     }
 
     protected override void OnActivate()
@@ -53,6 +57,17 @@ public class HampsterBallSuper : TimedSuperAbility, IPuckAbility, IAlliesAbility
         for (int i = 0; i < balls.Length; i++)
         {
             balls[i].active = false;
+        }
+    }
+
+    public void Notify(ResetMessage m)
+    {
+        if (active)
+        {
+            for (int i = 0; i < balls.Length; i++)
+            {
+                balls[i].transform.position = Vector2.zero;
+            }
         }
     }
 }
