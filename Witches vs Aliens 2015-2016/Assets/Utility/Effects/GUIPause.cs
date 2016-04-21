@@ -7,9 +7,31 @@ using System.Collections;
 
 public static class Pause {
 
+    public static Observable<PausedMessage> pausedObservable = new Observable<PausedMessage>();
+    public static Observable<UnPausedMessage> unpausedObservable = new Observable<UnPausedMessage>();
+
     private static float? currentTimeScale;
 
-    private static bool paused = false;
+    private static bool _paused = false;
+    private static bool paused
+    {
+        get { return _paused; }
+        set
+        {
+            if (_paused != value)
+            {
+                if (value)
+                {
+                    pausedObservable.Post(new PausedMessage());
+                }
+                else
+                {
+                    unpausedObservable.Post(new UnPausedMessage());
+                }
+            }
+            _paused = value;
+        }
+    }
 	public static bool isPaused()
 	{
 		return paused;
@@ -95,3 +117,6 @@ public class GUIPause : MonoBehaviour
         Pause.unPause(toUnPause);
     }
 }
+
+public class PausedMessage { }
+public class UnPausedMessage { }
