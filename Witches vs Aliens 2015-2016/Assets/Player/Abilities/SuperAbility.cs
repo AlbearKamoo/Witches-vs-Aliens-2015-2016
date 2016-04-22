@@ -12,10 +12,12 @@ public class SuperAbility : AbstractAbility
         set
         {
             visuals.SetActive(value);
-
-            tooltip.SetActive(false);
-            if (value)
-                Callback.FireAndForget(() => { if (ready) tooltip.SetActive(true); }, tooltipDelay, this);
+            if (tooltip != null)
+            {
+                tooltip.SetActive(false);
+                if (value)
+                    Callback.FireAndForget(() => { if (ready) tooltip.SetActive(true); }, tooltipDelay, this);
+            }
 
             _ready = value;
         }
@@ -28,14 +30,22 @@ public class SuperAbility : AbstractAbility
         if (transform.parent != null)
         {
             visuals = transform.parent.Find("SuperUI").gameObject;
-            switch (transform.root.GetComponent<AbstractPlayerInput>().bindings.inputMode)
+            AbstractPlayerInput input = transform.root.GetComponent<AbstractPlayerInput>();
+            if (input != null)
             {
-                case InputConfiguration.PlayerInputType.MOUSE:
-                    tooltip = transform.parent.Find("SuperUI/Tooltips/Mouse Tooltip").gameObject;
-                    break;
-                case InputConfiguration.PlayerInputType.JOYSTICK:
-                    tooltip = transform.parent.Find("SuperUI/Tooltips/Joystick Tooltip").gameObject;
-                    break;
+                switch (transform.root.GetComponent<AbstractPlayerInput>().bindings.inputMode)
+                {
+                    case InputConfiguration.PlayerInputType.MOUSE:
+                        tooltip = transform.parent.Find("SuperUI/Tooltips/Mouse Tooltip").gameObject;
+                        break;
+                    case InputConfiguration.PlayerInputType.JOYSTICK:
+                        tooltip = transform.parent.Find("SuperUI/Tooltips/Joystick Tooltip").gameObject;
+                        break;
+                }
+            }
+            else
+            {
+                Destroy(tooltip);
             }
         }
     }
