@@ -104,7 +104,6 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
         if (node == null) //if null, no networking, server controls it if there is networking
         {
             mode = NetworkMode.UNKNOWN;
-            loadPreviousRegistrationData();
         }
         else if (node is Server)
         {
@@ -121,6 +120,8 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
         {
             charactersData[i].characterID = i;
         }
+
+        loadPreviousRegistrationData();
     }
 
     void loadPreviousRegistrationData()

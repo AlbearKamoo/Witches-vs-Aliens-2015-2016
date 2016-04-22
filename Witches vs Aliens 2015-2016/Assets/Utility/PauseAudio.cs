@@ -23,4 +23,10 @@ public class PauseAudio : MonoBehaviour, IObserver<PausedMessage>, IObserver<UnP
     {
         audioSource.UnPause();
     }
+
+    void OnDestroy()
+    {
+        Pause.pausedObservable.Unsubscribe(this);
+        Pause.unpausedObservable.Unsubscribe(this);
+    }
 }
