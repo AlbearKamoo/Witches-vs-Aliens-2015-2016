@@ -10,6 +10,7 @@ GameObject:
   - 4: {fileID: 418884}
   - 20: {fileID: 2089590}
   - 114: {fileID: 11408442}
+  - 114: {fileID: 11464400}
   m_Layer: 0
   m_Name: BoidsCamera
   m_TagString: Untagged
@@ -104,7 +105,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_Materials:
-  - {fileID: 2100000, guid: 143bd2e75bfbc3f45b4c80908802d09e, type: 2}
+  - {fileID: 2100000, guid: 3b94e7ac0aca3ef4d82400084e9cdd2a, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 1
@@ -149,6 +150,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b94dc86103b8634085ceab4cad0950b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &11464400
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 122774}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0792e89011d42434b8a37270b6bab22a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PreviousFrameBuffer: {fileID: 8400000, guid: d9b944f0d1da3ac49ab6342880bfeec1, type: 2}
+  material: {fileID: 2100000, guid: 704d31dd1b6033841863a8ed5a14dbdc, type: 2}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
