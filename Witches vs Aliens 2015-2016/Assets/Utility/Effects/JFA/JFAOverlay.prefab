@@ -87,7 +87,7 @@ Camera:
     serializedVersion: 2
     m_Bits: 268435456
   m_RenderingPath: -1
-  m_TargetTexture: {fileID: 8400000, guid: bb6ce3693747d71468493c3a0a8330e6, type: 2}
+  m_TargetTexture: {fileID: 8400000, guid: b740f568585a6e1488e6a66aecf8eb7d, type: 2}
   m_TargetDisplay: 0
   m_TargetEye: 3
   m_HDR: 0
@@ -105,7 +105,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_Materials:
-  - {fileID: 2100000, guid: 3b94e7ac0aca3ef4d82400084e9cdd2a, type: 2}
+  - {fileID: 2100000, guid: c47cf2ec8ebd26342ac0b955a8d1e463, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 1
