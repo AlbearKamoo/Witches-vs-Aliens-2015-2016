@@ -12,6 +12,9 @@ public class GameSelection : MonoBehaviour {
     protected Toggle balancedTeamsEnabled;
 
     [SerializeField]
+    protected Toggle EightBitEnabled;
+
+    [SerializeField]
     protected Dropdown networkingMode;
 
     [SerializeField]
@@ -38,6 +41,7 @@ public class GameSelection : MonoBehaviour {
     //static to easily pass it between scenes
     public static bool warmupActive; 
     public static bool balancedTeams;
+    public static bool eightBit;
     State currentState;
 
     void Start()
@@ -112,6 +116,7 @@ public class GameSelection : MonoBehaviour {
 
             warmupActive = host.warmupEnabled.isOn;
             balancedTeams = host.balancedTeamsEnabled.isOn;
+            eightBit = host.EightBitEnabled.isOn;
 
             switch (host.networkingMode.value)
             {
