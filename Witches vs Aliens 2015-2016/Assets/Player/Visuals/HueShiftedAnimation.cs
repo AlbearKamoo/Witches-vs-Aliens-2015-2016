@@ -30,6 +30,7 @@ public class HueShiftedAnimation : AnimatedFourWayPlayerVisuals, IHueShiftableVi
             _shift = value;
         }
     }
+
     public Vector2 shiftAsync
     {
         set
@@ -122,7 +123,7 @@ public class HueShiftedAnimation : AnimatedFourWayPlayerVisuals, IHueShiftableVi
         }
     }
 
-    Vector2 visualsToHueVector(Vector2 characterVisualsVector)
+    public Vector2 visualsToHueVector(Vector2 characterVisualsVector)
     {
         Vector2 result = characterVisualsVector;
 
@@ -248,4 +249,5 @@ public interface IHueShiftableVisuals
 {
     Vector2 shift { get; set; }
     Vector2 shiftAsync { set; }
+    Vector2 visualsToHueVector(Vector2 characterVisualsVector);
 }

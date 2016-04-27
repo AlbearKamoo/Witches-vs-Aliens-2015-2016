@@ -36,6 +36,14 @@ public class ShaderShiftedAnimation : AnimatedFourWayPlayerVisuals, IHueShiftabl
         }
     }
 
+    public Vector2 actualHueShift()
+    {
+        if (mat != null)
+            return new Vector2(mat.GetFloat("_Shift"), 0);
+        else
+            return Vector2.zero;
+    }
+
     Vector2 selectionShift = Vector2.zero;
     Sprite selectSprite;
     Material mat;
@@ -116,7 +124,7 @@ public class ShaderShiftedAnimation : AnimatedFourWayPlayerVisuals, IHueShiftabl
         }
     }
 
-    Vector2 visualsToHueVector(Vector2 characterVisualsVector)
+    public Vector2 visualsToHueVector(Vector2 characterVisualsVector)
     {
         Vector2 result = characterVisualsVector;
 

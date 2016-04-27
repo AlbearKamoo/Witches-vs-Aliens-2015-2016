@@ -39,9 +39,7 @@ public class RegisteredPlayerUIView : MonoBehaviour, ISpawnable {
         background = GetComponent<Image>();
         characterVisualsVector = Vector2.one / 2;//new Vector2(Random.value, Random.value);
 
-        myMat = Instantiate(CharacterSprite.material);
-        CharacterSprite.material = myMat;
-        myMat.SetFloat(Tags.ShaderParams.cutoff, 0);
+        myMat = CharacterSprite.material = Instantiate(CharacterSprite.material);
 	}
 
     public void Create()
@@ -94,7 +92,9 @@ public class RegisteredPlayerUIView : MonoBehaviour, ISpawnable {
     {
         Assert.IsTrue(CharacterSprite.enabled);
         Assert.IsNotNull(spriteSource);
-        CharacterSprite.sprite = spriteSource.selectionSprite(visualSpaceInput);
+        CharacterSprite.sprite = spriteSource.selectionSprite();
+        if(spriteSource is IHueShiftableVisuals)
+        myMat.SetFloat("_Shift", (spriteSource as IHueShiftableVisuals).visualsToHueVector(visualSpaceInput).x);
     }
 
     IEnumerator SelectCharacterVisuals()
