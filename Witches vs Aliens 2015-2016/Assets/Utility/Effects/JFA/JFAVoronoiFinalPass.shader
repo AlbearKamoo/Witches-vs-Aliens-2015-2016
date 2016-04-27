@@ -53,7 +53,14 @@
 				result.rgb /= maxComponent;
 				//result.rgb *= col.z;
 
-				return result;
+				//return result;
+
+				half dist = frac(distance(col.rg, i.uv) * 15);
+
+				dist = dist * dist;
+				dist = dist * dist;
+
+				return fixed4(dist, dist, dist, 1);
 			}
 			ENDCG
 		}

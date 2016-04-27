@@ -134,7 +134,7 @@ Material:
       data:
         first:
           name: _Height
-        second: 768
+        second: 1024
       data:
         first:
           name: _Distance
