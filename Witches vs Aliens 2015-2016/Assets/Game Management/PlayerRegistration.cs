@@ -52,6 +52,12 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
 
     SetupData data;
     Dictionary<int, Registration> registeredPlayers = new Dictionary<int, Registration>(); //int key is the playerID
+
+    List<Transform> leftPlayers = new List<Transform>();
+    public List<Transform> LeftPlayers { get { return leftPlayers; } }
+    List<Transform> rightPlayers = new List<Transform>();
+    public List<Transform> RightPlayers { get { return rightPlayers; } }
+
     int[] localIDToPlayerID;
 
     Vector2[] joystickEdgeTriggers;
@@ -63,6 +69,8 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
     IEnumerator startCountdown;
 
     GameObject pressStart;
+
+    GameObject puck;
 
     static PersistentRegistration[] previousRegistrationData = new PersistentRegistration[0];
 
@@ -94,7 +102,7 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
 
     void Start()
     {
-        GameObject puck = Instantiate(puckPrefab);
+        puck = Instantiate(puckPrefab);
 
         puck.GetComponent<Rigidbody2D>().velocity = puck.GetComponent<ISpeedLimiter>().maxSpeed * Random.insideUnitCircle;
         GameObject.Instantiate(meshInteraction).transform.SetParent(puck.transform, false);
@@ -431,6 +439,8 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
         spawnedStats.playerID = playerID;
         spawnedStats.networkMode = data.networkMode;
 
+        AbstractPlayerInput input;
+
         switch (data.networkMode)
         {
             case NetworkMode.REMOTECLIENT:
@@ -442,10 +452,12 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
                     switch (possiblePlayers[data.localID].bindings.inputMode)
                     {
                         case InputConfiguration.PlayerInputType.MOUSE:
-                            spawnedPlayer.AddComponent<MousePlayerInput>().bindings = possiblePlayers[data.localID].bindings;
+                            input = spawnedPlayer.AddComponent<MousePlayerInput>();
+                            input.bindings = possiblePlayers[data.localID].bindings;
                             break;
                         case InputConfiguration.PlayerInputType.JOYSTICK:
-                            spawnedPlayer.AddComponent<JoystickCustomDeadZoneInput>().bindings = possiblePlayers[data.localID].bindings;
+                            input = spawnedPlayer.AddComponent<JoystickCustomDeadZoneInput>();
+                            input.bindings = possiblePlayers[data.localID].bindings;
                             break;
                     }
                 }
@@ -473,6 +485,47 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
         action.movementEnabled = true;
         action.abilitiesEnabled = true;
 
+        switch(character.side)
+        {
+            case Side.LEFT:
+                leftPlayers.Add(spawnedPlayer.transform);
+                break;
+            case Side.RIGHT:
+                rightPlayers.Add(spawnedPlayer.transform);
+                break;
+        }
+
+        foreach (AbstractAbility ability in spawnedPlayer.GetComponentsInChildren<AbstractAbility>())
+        {
+            if (ability is IOpponentsAbility)
+            {
+                switch (character.side)
+                {
+                    case Side.LEFT:
+                        (ability as IOpponentsAbility).opponents = rightPlayers;
+                        break;
+                    case Side.RIGHT:
+                        (ability as IOpponentsAbility).opponents = leftPlayers;
+                        break;
+                }
+            }
+            if (ability is IAlliesAbility)
+            {
+                switch (character.side)
+                {
+                    case Side.LEFT:
+                        (ability as IAlliesAbility).allies = leftPlayers;
+                        break;
+                    case Side.RIGHT:
+                        (ability as IAlliesAbility).allies = rightPlayers;
+                        break;
+                }
+            }
+            if (ability is IPuckAbility)
+            {
+                (ability as IPuckAbility).puck = puck.transform;
+            }
+        }
         //Callback.FireForUpdate(() => spawnedPlayer.GetComponent<ResetScripting>().Reset(echoPosition, 0f), this);
     }
 
@@ -558,6 +611,16 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
         data.ui = null;
 
         Vector2 playgroundEchoPosition = data.playgroundAvatar.transform.position;
+
+        switch (charactersData[data.SelectedCharacterID].character.side)
+        {
+            case Side.LEFT:
+                leftPlayers.Remove(data.playgroundAvatar.transform);
+                break;
+            case Side.RIGHT:
+                rightPlayers.Remove(data.playgroundAvatar.transform);
+                break;
+        }
 
         data.playgroundAvatar.GetComponent<ResetScripting>().Reset(Vector2.zero, 0f);
         Destroy(data.playgroundAvatar);
