@@ -38,7 +38,7 @@ public class HampsterBallSuper : TimedSuperAbility, IPuckAbility, IAlliesAbility
         if (resetObservable != null)
             resetObservable.Subscribe(this);
 
-        ready = true; //for easy testing
+        //ready = true; //for easy testing
     }
 
     protected override void OnActivate()
