@@ -12,6 +12,11 @@ public class GameEndScripting : MonoBehaviour, INetworkable
     protected GameObject playerEntryPrefab;
 
     [SerializeField]
+    protected AudioClip alienWinClip;
+    [SerializeField]
+    protected AudioClip witchWinClip;
+
+    [SerializeField]
     protected float gameEndTime;
 
     [AutoLink(childPath = "WitchStats")]
@@ -32,10 +37,12 @@ public class GameEndScripting : MonoBehaviour, INetworkable
 
     List<AbstractPlayerInput> inputs = new List<AbstractPlayerInput>();
     Transform canvas;
+    AudioSource audioSource;
 
 	// Use this for initialization
 	void Awake () {
-        GetComponent<AudioSource>().Play();
+        audioSource = GetComponent<AudioSource>();
+        audioSource.Play();
         canvas = GameObject.FindGameObjectWithTag(Tags.canvas).GetComponentInParent<Canvas>().transform;
 
         Image fade = GetComponent<Image>();
@@ -70,6 +77,17 @@ public class GameEndScripting : MonoBehaviour, INetworkable
     void SpawnEndScreen()
     {
         Debug.Log(Time.timeScale);
+
+        if(leftScore < rightScore)
+        {
+            audioSource.clip = witchWinClip;
+        }
+        else
+        {
+            audioSource.clip = alienWinClip;
+        }
+        
+        audioSource.Play();
 
         int maxScore = Mathf.Max(leftScore, rightScore, 1);
 
