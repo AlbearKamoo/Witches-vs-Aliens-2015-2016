@@ -92,11 +92,13 @@ public class Score : MonoBehaviour, IObserver<Message> {
                 //goal side is the side that was scored on, and is the side that isn't getting a point
                 if (goalM.side != puck.side)
                 {
-                    playerScores[puck.lastBumpedPlayer] += 1;
+                    if (puck.lastBumpedPlayer != null) //if null, don't count it as a valid goal. No-one from the scoring team touched it
+                        playerScores[puck.lastBumpedPlayer] += 1;
                 }
                 else
                 {
-                    playerScores[puck.lastBumpedPlayerOpposingSide] += 1;
+                    if (puck.lastBumpedPlayerOpposingSide != null) //if null, don't count it as a valid goal. No-one from the scoring team touched it
+                        playerScores[puck.lastBumpedPlayerOpposingSide] += 1;
                 }
                 
 

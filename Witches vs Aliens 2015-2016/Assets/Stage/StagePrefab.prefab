@@ -2000,6 +2000,7 @@ MonoBehaviour:
   mySide: 1
   goalSound: {fileID: 8300000, guid: 44c46b86b8e70f74bbbaa71096fa4cd1, type: 3}
   crySound: {fileID: 8300000, guid: 617d848a1ea877c4cbd5ed61df00badf, type: 3}
+  burnSound: {fileID: 8300000, guid: addf48e44c1a79b44972498c62edc947, type: 3}
 --- !u!114 &11444978
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2109,6 +2110,7 @@ MonoBehaviour:
   mySide: 0
   goalSound: {fileID: 8300000, guid: 44c46b86b8e70f74bbbaa71096fa4cd1, type: 3}
   crySound: {fileID: 8300000, guid: 9fe7fce397c749643bef0d862cd8cf5f, type: 3}
+  burnSound: {fileID: 8300000, guid: 299d309630343e341879b27c25e6e05d, type: 3}
 --- !u!114 &11490986
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -13,6 +13,8 @@ public class Goal : MonoBehaviour {
     protected AudioClip goalSound;
     [SerializeField]
     protected AudioClip crySound;
+    [SerializeField]
+    protected AudioClip burnSound;
     void Start()
     {
         vfx = GetComponent<ParticleSystem>();
@@ -36,7 +38,12 @@ public class Goal : MonoBehaviour {
         sfx.spread = 0;
         sfx.clip = goalSound;
         sfx.Play();
-        Callback.FireAndForget(() => { sfx.spread = 360; sfx.clip = crySound; sfx.Play(); }, sfx.clip.length / 2, this);
+        sfx.PlayOneShot(burnSound);
+        Callback.FireAndForget(() =>
+        {
+            //sfx.spread = 360; 
+            sfx.PlayOneShot(crySound);
+        }, goalSound.length / 2, this);
         ScreenShake.RandomShake(this, 0.1f, 0.25f);
     }
 }
