@@ -181,7 +181,12 @@ public class RaygunAbility : AbstractGenericAbility, IOpponentsAbility {
         }, 10, this);
         */
 
-        actualStunTime = stunTime * (initialArcAngle - angle) / initialArcAngle;
+        float timeLerp = (initialArcAngle - angle) / initialArcAngle;
+
+        for(int i = 0; i < 3; i++)
+            timeLerp *= timeLerp; //highly polynomial falloff
+
+        actualStunTime = stunTime * timeLerp;
 
         foreach (Transform t in hitTargets)
         {
