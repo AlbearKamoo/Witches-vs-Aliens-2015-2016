@@ -50,7 +50,6 @@ public class RaygunAbility : AbstractGenericAbility, IOpponentsAbility {
     Stats myStats;
     List<GameObject> hitVisuals = new List<GameObject>();
     Countdown resetVisualsCountdown;
-    RaygunRay ray;
     AudioSource sfx;
 
     float angle; //current angle, in radians, in the range [0, 2pi]
@@ -97,8 +96,6 @@ public class RaygunAbility : AbstractGenericAbility, IOpponentsAbility {
         arcMesh.vertices = verticies;
         arcMesh.uv = uvs;
         arcMesh.triangles = triangles;
-
-        ray = Instantiate(rayPrefab).GetComponent<RaygunRay>();
     }
 
     protected override void Start()
@@ -183,14 +180,16 @@ public class RaygunAbility : AbstractGenericAbility, IOpponentsAbility {
 
         float timeLerp = (initialArcAngle - angle) / initialArcAngle;
 
-        for(int i = 0; i < 3; i++)
-            timeLerp *= timeLerp; //highly polynomial falloff
+        //highly polynomial falloff
+        timeLerp *= timeLerp * timeLerp;
+        timeLerp *= timeLerp;
 
         actualStunTime = stunTime * timeLerp;
 
         foreach (Transform t in hitTargets)
         {
-            hitTarget(t, actualStunTime);
+            if(hitTarget(t, actualStunTime))
+                SimplePool.Spawn(rayPrefab).GetComponent<RaygunRay>().playShotVFX(this.transform.position, t.position - this.transform.position);
         }
 
         resetVisualsCountdown.Play();
@@ -216,7 +215,7 @@ public class RaygunAbility : AbstractGenericAbility, IOpponentsAbility {
                 sfx.Play();
 
                 direction = transform.right;
-                ray.playShotVFX(this.transform.position, direction);
+                SimplePool.Spawn(rayPrefab).GetComponent<RaygunRay>().playShotVFX(this.transform.position, direction);
 
                 RaycastHit2D[] hits = Physics2D.RaycastAll(this.transform.position, direction);
                 for (int i = 0; i < hits.Length; i++)
@@ -234,12 +233,12 @@ public class RaygunAbility : AbstractGenericAbility, IOpponentsAbility {
             }, this);
     }
 
-    void hitTarget(Transform hit)
+    bool hitTarget(Transform hit)
     {
-        hitTarget(hit, stunTime);
+        return hitTarget(hit, stunTime);
     }
 
-    void hitTarget(Transform hit, float stunTime)
+    bool hitTarget(Transform hit, float stunTime)
     {
         InputToAction input = hit.GetComponent<InputToAction>();
         if (input != null)
@@ -252,8 +251,10 @@ public class RaygunAbility : AbstractGenericAbility, IOpponentsAbility {
                 visuals.transform.SetParent(hit);
                 visuals.transform.localPosition = Vector3.zero;
                 hitVisuals.Add(visuals);
+                return true;
             }
         }
+        return false;
     }
 
     void clearHitVisuals()
