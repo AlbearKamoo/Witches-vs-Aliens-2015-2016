@@ -16,8 +16,6 @@ public class RegisteredPlayerUIView : MonoBehaviour, ISpawnable {
     protected Image CharacterSprite;
     [SerializeField]
     protected float visualsSelectSensitivity;
-    [SerializeField]
-    protected float displayedVisualsUpdateDelay;
     AbstractPlayerVisuals spriteSource;
     IEnumerator readyRoutine;
     IEnumerator gameVisualsRoutine;
@@ -141,20 +139,10 @@ public class RegisteredPlayerUIView : MonoBehaviour, ISpawnable {
 
             while (true)
             {
-                yield return new WaitForSeconds(displayedVisualsUpdateDelay);
+                yield return null;
 
-                if (characterVisualsVector != currentlyDisplayedVector) //if we need to update at all
-                {
-                    if (characterVisualsVector == previousStoredVector) //if the player has finished choosing
-                    {
-                        currentlyDisplayedVector = characterVisualsVector;
-                        hueShift.shiftAsync = characterVisualsVector;
-                    }
-                    else
-                    {
-                        previousStoredVector = characterVisualsVector;
-                    }
-                }
+                currentlyDisplayedVector = characterVisualsVector;
+                hueShift.shiftAsync = characterVisualsVector;
             }
         }
     }

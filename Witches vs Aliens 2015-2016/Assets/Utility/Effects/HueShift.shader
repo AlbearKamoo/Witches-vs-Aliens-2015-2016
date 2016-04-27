@@ -155,7 +155,7 @@
 				float C = Q.x - min(Q.w, Q.y);
 				float hue = abs((Q.w - Q.y) / (6 * C + Epsilon) + Q.z);
 				float value = Q.x;
-				float saturation = C / (value + Epsilon);
+				float saturation = C;// / (value + Epsilon);
 
 				//hue shift
 				hue = frac(hue + _Shift);
@@ -165,7 +165,7 @@
 				col.b = 2 - abs(6 * hue - 4);
 				saturate(col.rgb);
 
-				col.rgb = (col.rgb - 1) * saturation + 1;
+				col.rgb = lerp(fixed3(1, 1, 1), col.rgb, saturation);
 				col.rgb *= value;
 
 				return col;
