@@ -4,6 +4,7 @@
 	{
 		_MainTex("Main Texture", 2D) = "white" {}
 		_JFATex("final JFA texture", 2D) = "white" {}
+		[Toggle(DISTANCE_FIELD)] _DISTANCE_FIELD("distance field rendering", Float) = 0
 	}
 	SubShader
 	{
@@ -17,6 +18,7 @@
 			CGPROGRAM
 			#pragma vertex vert
 			#pragma fragment frag
+			#pragma shader_feature DISTANCE_FIELD
 			
 			#include "UnityCG.cginc"
 
@@ -52,17 +54,17 @@
 
 				//result.rgb /= maxComponent;
 
-				result.a = 1;
-
-				return result;
-				/*
-				half dist = frac(distance(col.rg, i.uv) * 15);
+				#if DISTANCE_FIELD
+				half dist = frac(distance(col.rg, i.uv) * 50);
 
 				dist = dist * dist;
 				dist = dist * dist;
 
 				return fixed4(dist, dist, dist, 1);
-				*/
+				#else
+				result.a = 1;
+				return result;
+				#endif
 			}
 			ENDCG
 		}
