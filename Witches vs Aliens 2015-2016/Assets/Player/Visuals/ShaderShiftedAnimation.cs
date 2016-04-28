@@ -127,6 +127,8 @@ public class ShaderShiftedAnimation : AnimatedFourWayPlayerVisuals, IHueShiftabl
     public Vector2 visualsToHueVector(Vector2 characterVisualsVector)
     {
         Vector2 result = characterVisualsVector;
+        if (!GameSelection.colorBounds)
+            return result;
 
         //have the vector snap to (n = numShades) spots
         result *= numShades;
