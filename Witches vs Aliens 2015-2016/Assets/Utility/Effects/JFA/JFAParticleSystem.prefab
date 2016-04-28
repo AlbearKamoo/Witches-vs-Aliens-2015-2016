@@ -405,7 +405,7 @@ ParticleSystem:
     serializedVersion: 2
     m_Type: 0
     rate:
-      scalar: 1000
+      scalar: 50
       maxCurve:
         serializedVersion: 2
         m_Curve:
