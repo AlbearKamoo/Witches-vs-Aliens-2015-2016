@@ -59,6 +59,17 @@
 				return UV.x >= 0 && UV.x <= 1 && UV.y >= 0 && UV.y <= 1;
 			}
 
+			half JFADistance(half2 pos1, half2 pos2)
+			{
+				/*
+				half2 delta = abs(pos1 - pos2);
+				return max(delta.x, delta.y);
+				*/
+				half2 delta = pos1 - pos2;
+				return max(abs(delta.x), max( abs(1.73205080757 * delta.y + delta.x) / 2, abs(1.73205080757 * delta.y - delta.x) / 2));
+				//1.73205080757 = sqrt(3)
+			}
+
 			#if FIRST
 			half3 updatePoint(half3 previousPoint, half2 testUV)
 			{
@@ -82,7 +93,7 @@
 				}
 				else
 				{
-					testCol.z = distance(currentUV, testCol.xy);
+					testCol.z = JFADistance(currentUV, testCol.xy);
 
 					if(testCol.z < previousPoint.z)
 					{
@@ -108,7 +119,7 @@
 				if(step(0.1, testCol.a) == 1)
 				{
 					closestPoint.xy = testCol.xy;
-					closestPoint.z = distance(i.centerUV, testCol.xy);
+					closestPoint.z = JFADistance(i.centerUV, testCol.xy);
 					closestPoint.a = 1;
 
 				}
