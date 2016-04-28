@@ -48,19 +48,21 @@
 			{
 				fixed4 col = tex2D(_JFATex, i.uv);
 				fixed4 result = tex2D(_MainTex, col.xy);
-				fixed maxComponent = max(result.r, max(result.g, result.b));
+				//fixed maxComponent = max(result.r, max(result.g, result.b));
 
-				result.rgb /= maxComponent;
-				//result.rgb *= col.z;
+				//result.rgb /= maxComponent;
 
-				//return result;
+				result.a = 1;
 
+				return result;
+				/*
 				half dist = frac(distance(col.rg, i.uv) * 15);
 
 				dist = dist * dist;
 				dist = dist * dist;
 
 				return fixed4(dist, dist, dist, 1);
+				*/
 			}
 			ENDCG
 		}

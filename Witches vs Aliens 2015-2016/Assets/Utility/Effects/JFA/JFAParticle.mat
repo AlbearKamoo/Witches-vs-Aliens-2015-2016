@@ -7,8 +7,8 @@ Material:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: JFAParticle
-  m_Shader: {fileID: 10753, guid: 0000000000000000e000000000000000, type: 0}
-  m_ShaderKeywords: 
+  m_Shader: {fileID: 4800000, guid: 79b7bedc7b10afa409f6b2d5356a05eb, type: 3}
+  m_ShaderKeywords: PIXELSNAP_ON USE_COLOR
   m_LightmapFlags: 5
   m_CustomRenderQueue: 3000
   stringTagMap: {}
@@ -19,7 +19,7 @@ Material:
         first:
           name: _MainTex
         second:
-          m_Texture: {fileID: 2800000, guid: 5eaf02e475fd99e46ad66ece3f616815, type: 3}
+          m_Texture: {fileID: 2800000, guid: 893f2b55208260c42bcc18c927d3e88c, type: 3}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
       data:
@@ -94,7 +94,7 @@ Material:
       data:
         first:
           name: PixelSnap
-        second: 0
+        second: 1
       data:
         first:
           name: _Parallax
@@ -134,6 +134,10 @@ Material:
       data:
         first:
           name: _InvFade
+        second: 1
+      data:
+        first:
+          name: _USES_COLOR
         second: 1
     m_Colors:
       data:

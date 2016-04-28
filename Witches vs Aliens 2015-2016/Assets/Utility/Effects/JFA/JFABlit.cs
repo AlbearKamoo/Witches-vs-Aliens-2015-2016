@@ -20,9 +20,6 @@ public class JFABlit : MonoBehaviour
         temp1.filterMode = FilterMode.Point;
         temp2.filterMode = FilterMode.Point;
 
-        temp1.useMipMap = false;
-        temp2.useMipMap = false;
-
         materialFirst.SetFloat("_Width", src.width);
         materialGeneral.SetFloat("_Width", src.width);
         materialFirst.SetFloat("_Height", src.height);

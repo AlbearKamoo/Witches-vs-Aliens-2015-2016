@@ -75,7 +75,7 @@
 			half4 updatePoint(half4 previousPoint, half2 currentUV, half2 testUV)
 			{
 				fixed4 testCol = tex2D(_MainTex, testUV);
-				testCol.a = step(0.1, testCol.a); //1 if actual seed point, zero otherwise
+				testCol.a = step(0.5, testCol.a); //1 if actual seed point, zero otherwise
 				if(!validUV(testUV) || testCol.a != 1)
 				{
 					return previousPoint;
