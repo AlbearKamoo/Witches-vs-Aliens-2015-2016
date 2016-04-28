@@ -18,6 +18,8 @@ public class GameEndScripting : MonoBehaviour, INetworkable
 
     [SerializeField]
     protected float gameEndTime;
+    [SerializeField]
+    protected Image highlightGradient;
 
     [AutoLink(childPath = "WitchStats")]
     [SerializeField]
@@ -46,7 +48,7 @@ public class GameEndScripting : MonoBehaviour, INetworkable
         canvas = GameObject.FindGameObjectWithTag(Tags.canvas).GetComponentInParent<Canvas>().transform;
 
         Image fade = GetComponent<Image>();
-        Callback.DoLerp((float l) => fade.color = Color.Lerp(Color.clear, Color.black, l), gameEndTime, this, mode : Callback.Mode.REALTIME);
+        Callback.DoLerp((float l) => fade.color = fade.color.setAlphaFloat(l), gameEndTime, this, mode : Callback.Mode.REALTIME);
 	}
 
     void Start()
@@ -103,6 +105,8 @@ public class GameEndScripting : MonoBehaviour, INetworkable
             if(playerInput != null)
                 inputs.Add(playerInput);
         }
+
+        highlightGradient.color = Color.white;
 
         Callback.FireAndForget(() => Callback.DoLerp((float l) => continueTooltip.alpha = l, gameEndTime, this), gameEndTime, this);
         if (NetworkNode.node == null || NetworkNode.node is Server)
