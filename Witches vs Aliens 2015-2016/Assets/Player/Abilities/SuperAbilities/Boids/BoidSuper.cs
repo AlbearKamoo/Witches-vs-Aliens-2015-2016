@@ -52,7 +52,7 @@ public class BoidSuper : TimedSuperAbility, IPuckAbility, IAlliesAbility, IRando
         }
         puckCollider.gameObject.AddComponent<MobileAvoidBoid>();
 
-        ready = true; //for easy testing
+        //ready = true; //for easy testing
     }
 
     protected override void OnActivate()
