@@ -26,6 +26,8 @@ public class ProgrammaticSpawning : MonoBehaviour, IObserver<Message> {
 
     [SerializeField]
     protected GameObject CountdownPrefab;
+    [SerializeField]
+    protected Vector3 countdownPosition;
 
     [SerializeField]
     [AutoLink(parentTag = Tags.stage, parentName = "Left")]
@@ -304,8 +306,12 @@ public class ProgrammaticSpawning : MonoBehaviour, IObserver<Message> {
         {
             yield return null;
             timeRemaining -= Time.deltaTime;
-            if(timeRemaining < countdownTimes.Peek())
-                SimplePool.Spawn(CountdownPrefab, Vector3.zero).GetComponent<TimerCountdown>().count = countdownTimes.Dequeue().ToString();
+            if (timeRemaining < countdownTimes.Peek())
+            {
+                GameObject spawnedCountdownNumber = SimplePool.Spawn(CountdownPrefab, Vector3.zero);
+                spawnedCountdownNumber.GetComponent<TimerCountdown>().count = countdownTimes.Dequeue().ToString();
+                spawnedCountdownNumber.transform.position = countdownPosition;
+            }
         }
 
         spawnedMainMusicPrefab = Instantiate(MainMusicPrefab);
