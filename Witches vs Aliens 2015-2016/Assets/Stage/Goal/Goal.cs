@@ -38,7 +38,7 @@ public class Goal : MonoBehaviour {
         sfx.spread = 0;
         sfx.clip = goalSound;
         sfx.Play();
-        sfx.PlayOneShot(burnSound);
+        //sfx.PlayOneShot(burnSound);
         Callback.FireAndForget(() =>
         {
             //sfx.spread = 360; 
