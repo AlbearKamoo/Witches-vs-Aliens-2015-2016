@@ -36,7 +36,7 @@ public class CharacterHolder : MonoBehaviour {
 
     IEnumerator Flash()
     {
-        return Callback.Routines.DoLerpRoutine((float l) => myMat.SetFloat(Tags.ShaderParams.cutoff, l), selectFlashDuration, this, reverse: true);
+        return Callback.Routines.DoLerpRoutine((float l) => myMat.SetFloat(Tags.ShaderParams.cutoff, (l + 1)/2), selectFlashDuration, this, reverse: true);
     }
 }
 [System.Serializable]

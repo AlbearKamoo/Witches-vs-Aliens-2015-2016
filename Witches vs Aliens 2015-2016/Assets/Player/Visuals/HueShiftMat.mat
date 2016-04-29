@@ -130,7 +130,7 @@ Material:
       data:
         first:
           name: _Shift
-        second: 0
+        second: 0.88
     m_Colors:
       data:
         first:
