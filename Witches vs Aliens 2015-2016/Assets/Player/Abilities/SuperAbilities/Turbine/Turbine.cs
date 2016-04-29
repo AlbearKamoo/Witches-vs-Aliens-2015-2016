@@ -26,7 +26,7 @@ public class Turbine : MonoBehaviour {
     void Awake()
     {
         rigid = GetComponent<Rigidbody2D>();
-        myColliders = GetComponentsInChildren<Collider2D>();
+        myColliders = GetComponentsInChildren<Collider2D>(true);
         active = true;
     }
 

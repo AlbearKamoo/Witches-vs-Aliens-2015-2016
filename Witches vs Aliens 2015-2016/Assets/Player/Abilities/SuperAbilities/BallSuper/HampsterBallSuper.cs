@@ -30,7 +30,7 @@ public class HampsterBallSuper : TimedSuperAbility, IPuckAbility, IAlliesAbility
             balls[i].ignoreCollider(puckCollider);
 
             foreach (Transform ally in _allies)
-                balls[i].ignoreColliders(ally.GetComponentsInChildren<Collider2D>());
+                balls[i].ignoreColliders(ally.GetComponentsInChildren<Collider2D>(true));
             balls[i].active = false;
         }
 

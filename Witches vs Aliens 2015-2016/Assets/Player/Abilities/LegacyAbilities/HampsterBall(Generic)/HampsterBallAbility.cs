@@ -15,7 +15,7 @@ public class HampsterBallAbility : TimedGenericAbility, IPuckAbility, IAlliesAbi
     {
         set {
             foreach (Transform ally in value)
-                ball.ignoreColliders(ally.GetComponentsInChildren<Collider2D>());
+                ball.ignoreColliders(ally.GetComponentsInChildren<Collider2D>(true));
         }
     }
 

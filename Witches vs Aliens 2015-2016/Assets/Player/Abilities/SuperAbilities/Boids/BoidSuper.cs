@@ -25,7 +25,7 @@ public class BoidSuper : TimedSuperAbility, IPuckAbility, IAlliesAbility, IRando
         allyColliders = new List<Collider2D>();
         for (int i = 0; i < value.Count; i++)
         {
-            allyColliders.AddRange(value[i].GetComponentsInChildren<Collider2D>());
+            allyColliders.AddRange(value[i].GetComponentsInChildren<Collider2D>(true));
         }
     } }
 
