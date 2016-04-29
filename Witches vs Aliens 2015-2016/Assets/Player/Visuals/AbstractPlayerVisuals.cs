@@ -26,5 +26,7 @@ public abstract class AbstractPlayerVisuals : MonoBehaviour {
         return selectionSprite(Vector2.zero);
     }
 
+    public virtual Material material { get { return GetComponent<Renderer>().material; } }
+
     protected abstract void UpdateVisualRotation(Vector2 direction);
 }

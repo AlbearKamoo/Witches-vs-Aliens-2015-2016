@@ -21,6 +21,7 @@ public class GameEndPlayerEntry : MonoBehaviour {
         this.maxNumGoals = maxNumGoals;
         this.player = player;
         playerContainer.sprite = player.selectionSprite();
+        playerContainer.material = player.material;
 
         numGoalsText.text = numGoals.ToString();
 
