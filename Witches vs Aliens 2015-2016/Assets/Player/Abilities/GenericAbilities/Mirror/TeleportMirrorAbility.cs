@@ -3,7 +3,7 @@ using System.Collections;
 
 public class TeleportMirrorAbility : GenericAbility
 {
-    Rigidbody2D myRigidbody;
+    protected Rigidbody2D myRigidbody;
 
     // Use this for initialization
     protected override void Start()
