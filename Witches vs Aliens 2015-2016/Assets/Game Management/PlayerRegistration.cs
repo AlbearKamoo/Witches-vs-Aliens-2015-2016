@@ -456,6 +456,11 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
         ui.registration = data;
         data.ui = ui;
 
+        if (data.localID != -1)
+        {
+            ui.playerName = possiblePlayers[data.localID].name;
+        }
+
         Vector2 echoPosition = data.selector.transform.position;
 
         Destroy(data.selector.gameObject);

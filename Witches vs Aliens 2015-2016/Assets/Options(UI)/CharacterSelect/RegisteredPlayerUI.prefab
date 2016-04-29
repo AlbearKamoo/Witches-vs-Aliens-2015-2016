@@ -229,7 +229,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Player0 (WASD)
+  m_Text: Networked Player
 --- !u!222 &22215170
 CanvasRenderer:
   m_ObjectHideFlags: 1
