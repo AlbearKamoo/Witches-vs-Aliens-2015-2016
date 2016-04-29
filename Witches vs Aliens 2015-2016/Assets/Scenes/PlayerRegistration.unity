@@ -120,6 +120,7 @@ MonoBehaviour:
   countdownVoice: {fileID: 8300000, guid: 5b84ac5bf89c31e4ab422295910ef143, type: 3}
   puckSpawnPoint: {fileID: 718076068}
   mainGameSceneName: Derek
+  mainMenuSceneName: Main Menu
   playerRegistrationPrefab: {fileID: 171078, guid: df99a46226850ad4194db9a6272820ae,
     type: 2}
   playerRegistrationUIPrefab: {fileID: 188064, guid: 7d3002974c2c21c4395e3760c66a4b4f,
@@ -252,6 +253,7 @@ MonoBehaviour:
   - {fileID: 1847882280}
   - {fileID: 428674989}
   startGameKeyBindings: 0d0000002000000051010000
+  keyHoldThreshold: 2
   UIParentWitch: {fileID: 351718218}
   UIParentAlien: {fileID: 714022693}
 --- !u!114 &21640696

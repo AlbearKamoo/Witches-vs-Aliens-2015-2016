@@ -26,6 +26,8 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
 
     [SerializeField]
     protected string mainGameSceneName;
+    [SerializeField]
+    protected string mainMenuSceneName;
 
     [SerializeField]
     protected GameObject playerRegistrationPrefab;
@@ -41,6 +43,9 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
 
     [SerializeField]
     protected KeyCode[] startGameKeyBindings;
+
+    [SerializeField]
+    protected float keyHoldThreshold;
 
     [SerializeField]
     [AutoLink(parentTag = Tags.canvas, childPath = "RegisteredWitchPlayers")]
@@ -62,6 +67,8 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
 
     Vector2[] joystickEdgeTriggers;
     Vector2[] joystickEdgeTriggersXY;
+
+    float[] pressedTimes;
 
     NetworkNode node;
     NetworkMode mode;
@@ -95,6 +102,10 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
         joystickEdgeTriggersXY = new Vector2[possiblePlayers.Length];
         for (int i = 0; i < joystickEdgeTriggersXY.Length; i++)
             joystickEdgeTriggersXY[i] = Vector2.zero;
+
+        pressedTimes = new float[possiblePlayers.Length];
+        for (int i = 0; i < pressedTimes.Length; i++)
+            pressedTimes[i] = 0;
 
         pressStart = GetComponentInChildren<Canvas>().gameObject;
         pressStart.SetActive(false);
@@ -163,7 +174,6 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
     {
         for (int i = 0; i < possiblePlayers.Length; i++)
         {
-
             if (registeredPlayers.ContainsKey(localIDToPlayerID[i]))
             {
                 if (registeredPlayers[localIDToPlayerID[i]].registrationState == RegistrationState.READY)
@@ -181,16 +191,53 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
 
     void checkPressedBack()
     {
+        if (registeredPlayers.Count == 0)
+        {
+            for (int i = 0; i < possiblePlayers.Length; i++)
+            {
+                if (pressedBack(i))
+                    EndGame();
+            }
+        }
+        else
+        {
+            for (int i = 0; i < possiblePlayers.Length; i++)
+            {
+                if (heldBack(i))
+                {
+                    pressedTimes[i] += Time.deltaTime;
+                    Debug.Log(pressedTimes[i]);
+                    if (pressedTimes[i] > keyHoldThreshold)
+                        EndGame();
+                }
+                else
+                {
+                    pressedTimes[i] = 0;
+                }
+            }
+        }
+
         for (int i = 0; i < possiblePlayers.Length; i++)
         {
             if (registeredPlayers.ContainsKey(localIDToPlayerID[i]))
             {
-                if (pressedBack(i)) //register
+                if (pressedBack(i)) //deregister
                 {
                     OnPressedBack(i);
                 }
             }
         }
+    }
+
+    void EndGame()
+    {
+        if (node != null)
+            Destroy(node.gameObject);
+
+        Destroy(this);
+        Destroy(pressStart.gameObject);
+
+        Application.LoadLevel(mainMenuSceneName);
     }
 
     RegistrationState localIDToState(int localID)
@@ -202,6 +249,8 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
 
     void OnPressedAccept(int localID)
     {
+        pressedTimes[localID] = 0;
+
         switch (localIDToState(localID))
         {
             case RegistrationState.NOTREGISTERED:
@@ -531,6 +580,8 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
 
     void OnPressedBack(int localID)
     {
+        pressedTimes[localID] = 0;
+
         int playerID = localIDToPlayerID[localID];
         switch (localIDToState(localID))
         {
@@ -826,7 +877,19 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
             return returnValue;
         }
         return false;
-}
+    }
+
+    bool heldBack(int i)
+    {
+        if (possiblePlayers[i].bindings.inputMode == InputConfiguration.PlayerInputType.MOUSE)
+        {
+            return Input.GetKey(KeyCode.Escape) || Input.GetMouseButton(1);
+        }
+        else
+        {
+            return Input.GetAxis(possiblePlayers[i].bindings.genericAbilityAxis) != 0 || Input.GetAxis(possiblePlayers[i].bindings.backAbilityAxis) != 0;
+        }
+    }
     // non-state-machine implementation
     /*
     void Update()
