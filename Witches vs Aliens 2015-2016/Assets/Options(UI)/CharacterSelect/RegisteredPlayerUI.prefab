@@ -196,7 +196,7 @@ MonoBehaviour:
   selectFlashDuration: 0.5
   title: {fileID: 11493286}
   CharacterSprite: {fileID: 11419026}
-  visualsSelectSensitivity: 2
+  visualsSelectSensitivity: 0
 --- !u!114 &11493286
 MonoBehaviour:
   m_ObjectHideFlags: 1

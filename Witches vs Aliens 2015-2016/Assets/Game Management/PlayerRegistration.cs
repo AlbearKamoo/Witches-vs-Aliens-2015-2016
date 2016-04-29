@@ -709,6 +709,7 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
 
             if (GameSelection.balancedTeams)
             {
+                Debug.Log("Ding");
                 switch (r.context.charactersData[r.SelectedCharacterID].character.side)
                 {
                     case Side.LEFT:

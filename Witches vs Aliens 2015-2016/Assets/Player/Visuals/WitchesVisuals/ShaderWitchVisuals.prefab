@@ -55,9 +55,9 @@ MonoBehaviour:
   timePerLoop: 0.25
   flipLeftSprites: 1
   flipRightSprites: 0
-  hueMin: -0.15
-  hueRange: 0.35
-  numShades: 3
+  hueMin: 0
+  hueRange: 1
+  numShades: 2048
 --- !u!212 &21238160
 SpriteRenderer:
   m_ObjectHideFlags: 1

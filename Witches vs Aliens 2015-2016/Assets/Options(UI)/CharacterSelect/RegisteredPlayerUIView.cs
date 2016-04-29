@@ -37,7 +37,6 @@ public class RegisteredPlayerUIView : MonoBehaviour, ISpawnable {
         Assert.IsTrue(canvasGroup.alpha == 0);
         layout = GetComponent<LayoutElement>();
         background = GetComponent<Image>();
-        characterVisualsVector = Vector2.one / 2;//new Vector2(Random.value, Random.value);
 
         myMat = CharacterSprite.material = Instantiate(CharacterSprite.material);
 	}
@@ -77,7 +76,7 @@ public class RegisteredPlayerUIView : MonoBehaviour, ISpawnable {
     {
         CharacterSprite.enabled = true;
         spriteSource = registration.context.charactersData[ID].character.visuals.GetComponent<AbstractPlayerVisuals>();
-        UpdateCharacterVisuals(characterVisualsVector = Vector2.one / 2);
+        UpdateCharacterVisuals(characterVisualsVector = registration.context.charactersData[ID].character.initialVisualsVector);
 
         Assert.IsNull(readyRoutine);
         readyRoutine = SelectCharacterVisuals();

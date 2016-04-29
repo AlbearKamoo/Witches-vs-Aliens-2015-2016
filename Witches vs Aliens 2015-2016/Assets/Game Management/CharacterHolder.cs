@@ -22,15 +22,15 @@ public class CharacterHolder : MonoBehaviour {
         SpriteRenderer myRend = GetComponent<SpriteRenderer>();
         audioSource = GetComponent<AudioSource>();
         audioSource.clip = character.selectionSound;
-        myMat = Instantiate(myRend.material);
-        myRend.material = myMat;
-        myMat.SetFloat(Tags.ShaderParams.cutoff, 0);
-        flashCountdown = new Countdown(Flash, this, playOnAwake : true);
+        myMat = myRend.material = Instantiate(myRend.material);
+        //myMat.SetFloat(Tags.ShaderParams.cutoff, 0);
+        myMat.SetFloat("_Shift", character.initialVisualsVector.x);
+        //flashCountdown = new Countdown(Flash, this, playOnAwake : true);
     }
 
     public void Select()
     {
-        flashCountdown.Restart();
+        //flashCountdown.Restart();
         audioSource.Play();
     }
 
@@ -51,5 +51,6 @@ public class CharacterComponents
     public AudioClip selectionSound;
 
     public Side side;
+    public Vector2 initialVisualsVector;
     public CharacterComponents(){}
 }
