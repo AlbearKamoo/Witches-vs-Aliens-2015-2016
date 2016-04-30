@@ -2,7 +2,7 @@
 using System.Collections;
 
 [RequireComponent(typeof(AudioSource))]
-public class MindMergePayload : SkillShotPayload {
+public class MindMergePayload : SkillShotPayload, IInterruptableAbility {
 
     [SerializeField]
     protected GameObject visualsPrefab;
@@ -16,6 +16,7 @@ public class MindMergePayload : SkillShotPayload {
     DistanceJoint2D joint;
     MindMergeVisuals selfVisuals;
     MindMergeVisuals otherVisuals;
+    InterruptableProxy otherInterrupt;
 
     AudioSource sfx;
 
@@ -45,6 +46,9 @@ public class MindMergePayload : SkillShotPayload {
         otherVisuals = otherSpawnedVisuals.GetComponent<MindMergeVisuals>();
         otherVisuals.target = rigid;
         otherVisuals.flowIn = true;
+        otherInterrupt = otherSpawnedVisuals.AddComponent<InterruptableProxy>();
+        otherInterrupt.source = this;
+        otherInterrupt.enabled = false;
 
         selfSpawnedVisuals.SetActive(false);
         otherSpawnedVisuals.SetActive(false);
@@ -59,6 +63,7 @@ public class MindMergePayload : SkillShotPayload {
     {
         target.GetComponent<LastBumped>().setLastBumped(bullet.Source.transform.root);
         AttachToTarget(target.GetComponent<Rigidbody2D>(), puckDuration);
+        otherInterrupt.enabled = true;
     }
 
     void AttachToTarget(Rigidbody2D target, float duration)
@@ -77,11 +82,19 @@ public class MindMergePayload : SkillShotPayload {
         Callback.FireAndForget(End, duration, this);
     }
 
+    public void Interrupt(Side side)
+    {
+        if(side != this.bullet.Side)
+            bullet.Reset();
+        //play sound?
+    }
+
     public override void Reset()
     {
         joint.enabled = false;
         selfVisuals.gameObject.SetActive(false);
         otherVisuals.gameObject.SetActive(false);
         sfx.Stop();
+        otherInterrupt.enabled = false;
     }
 }

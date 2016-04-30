@@ -414,7 +414,7 @@ MonoBehaviour:
       basePlayer: {fileID: 146214, guid: a8095cd9d9bc36f4e87d6eeda567d5fa, type: 2}
       visuals: {fileID: 106104, guid: 652446bdc4c4752479d5d092a4ee1f0f, type: 2}
       movementAbility: {fileID: 186010, guid: 999ab97c110d5bc4baa999b79b3005e9, type: 2}
-      genericAbility: {fileID: 110450, guid: bc177a2768bd39946866f5ebcbe5d375, type: 2}
+      genericAbility: {fileID: 166162, guid: 86aa63429b3c295489a40a37f5b4d258, type: 2}
       superAbility: {fileID: 143026, guid: 9f0bc11609a97544496b9a6170fe50f5, type: 2}
       selectionSound: {fileID: 0}
       side: 1
@@ -438,7 +438,7 @@ MonoBehaviour:
   - character:
       basePlayer: {fileID: 146214, guid: a8095cd9d9bc36f4e87d6eeda567d5fa, type: 2}
       visuals: {fileID: 186382, guid: d58cb17b4ddacef4aaabf2fc8656265a, type: 2}
-      movementAbility: {fileID: 177582, guid: b3ffc9938492a984a8513ab58c226585, type: 2}
+      movementAbility: {fileID: 116816, guid: 24f9725c0345564498ac1b6243018210, type: 2}
       genericAbility: {fileID: 148832, guid: 713a26e49fd54a942bfe0ef0e5ef0cc7, type: 2}
       superAbility: {fileID: 118026, guid: 96b91265f5dcf6448869685576df4a10, type: 2}
       selectionSound: {fileID: 0}

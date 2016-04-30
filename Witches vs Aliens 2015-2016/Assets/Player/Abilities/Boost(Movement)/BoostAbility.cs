@@ -12,12 +12,20 @@ public class BoostAbility : AbstractMovementAbility, IObserver<ResetMessage> {
     AudioController sfx;
     ParticleSystem vfx;
     Rigidbody2D rigid;
+    Interrupt interruptor;
 
     protected override void OnActivate()
     {
         base.OnActivate();
         sfx.Play();
         StartCoroutine(playFX());
+        interruptor.active = true;
+    }
+
+    protected override void OnDeactivate()
+    {
+        base.OnDeactivate();
+        interruptor.active = false;
     }
 
     [SerializeField]
@@ -48,6 +56,7 @@ public class BoostAbility : AbstractMovementAbility, IObserver<ResetMessage> {
         action = GetComponentInParent<InputToAction>();
         vfx.startSize = 2*transform.parent.GetComponentInChildren<CircleCollider2D>().radius;
         rigid = GetComponentInParent<Rigidbody2D>();
+        interruptor = transform.root.AddComponent<Interrupt>();
     }
 
     protected override void onFire(Vector2 direction)
