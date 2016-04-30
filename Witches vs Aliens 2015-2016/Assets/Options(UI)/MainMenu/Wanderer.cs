@@ -23,6 +23,12 @@ public abstract class AbstractWanderNode : MonoBehaviour
     [SerializeField]
     protected AbstractWanderNode[] neighbors;
 
+    protected virtual void OnDrawGizmos()
+    {
+        for (int i = 0; i < neighbors.Length; i++)
+            Gizmos.DrawLine(transform.position, neighbors[i].transform.position);
+    }
+
     protected AbstractWanderNode randomNeighbor()
     {
         UnityEngine.Assertions.Assert.IsTrue(neighbors.Length >= 2);
