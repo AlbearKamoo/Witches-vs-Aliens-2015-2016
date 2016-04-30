@@ -22,10 +22,14 @@ public class HampsterBallSuper : TimedSuperAbility, IPuckAbility, IAlliesAbility
     {
         base.Start();
 
+        Side mySide = GetComponentInParent<Stats>().side;
+
         balls = new HampsterBall[_opponents.Count];
         for (int i = 0; i < _opponents.Count; i++)
         {
             balls[i] = SimplePool.Spawn(hampsterBallPrefab).GetComponent<HampsterBall>();
+
+            balls[i].side = mySide;
 
             balls[i].ignoreCollider(puckCollider);
 

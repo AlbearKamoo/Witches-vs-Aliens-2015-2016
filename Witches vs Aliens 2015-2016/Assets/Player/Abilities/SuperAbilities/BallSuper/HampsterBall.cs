@@ -52,6 +52,8 @@ public class HampsterBall : MonoBehaviour, ISpeedLimiter {
     Rigidbody2D rigid;
     List<Collider2D> ignoreCollisionList;
 
+    public Side side { get; set; }
+
     const float TwoPI = 2 * Mathf.PI;
 
 	// Use this for initialization
@@ -103,9 +105,17 @@ public class HampsterBall : MonoBehaviour, ISpeedLimiter {
         ignoreCollisionList.Add(collider);
     }
 
-    void OnCollisionEnter2D()
+    void OnCollisionEnter2D(Collision2D col)
     {
         //limit velocity
         rigid.velocity = Vector2.ClampMagnitude(rigid.velocity, initialMaxSpeed);
+        Stats otherStats = col.transform.GetComponentInParent<Stats>();
+        if (otherStats != null && otherStats.side == side)
+        {
+            Debug.LogError("Collision was not ignored");
+            Debug.Log(col.collider);
+            ignoreCollisionList.Add(col.collider);
+            Physics2D.IgnoreCollision(ball, col.collider);
+        }
     }
 }
