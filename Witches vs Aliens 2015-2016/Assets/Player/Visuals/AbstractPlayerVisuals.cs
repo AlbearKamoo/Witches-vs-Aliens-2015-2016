@@ -7,7 +7,9 @@ public abstract class AbstractPlayerVisuals : MonoBehaviour {
     public abstract float alpha { get; set; }
 
 	protected virtual void Start () {
-        GetComponentInParent<VisualAnimate>().targets[0] = GetComponent<Renderer>();
+        VisualAnimate animator = GetComponentInParent<VisualAnimate>();
+        if(animator != null)
+            animator.targets[0] = GetComponent<Renderer>();
         rigid = GetComponentInParent<Rigidbody2D>();
 	}
 	
