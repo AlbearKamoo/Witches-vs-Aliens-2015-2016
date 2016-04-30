@@ -373,6 +373,7 @@ MonoBehaviour:
   overtimeClip: {fileID: 8300000, guid: dcb29bb7f9b62b74c89faed2a1ac12bc, type: 3}
   PuckPrefab: {fileID: 135402, guid: 6e5f3e0169f30de41bb5f3e1b78cbd68, type: 2}
   CountdownPrefab: {fileID: 117972, guid: dfe48462a6a6f7048acab47a282010dc, type: 2}
+  ControllerPrefab: {fileID: 126254, guid: 333319d59ce40ed40a5198d784fbb37d, type: 2}
   countdownPosition: {x: 0, y: 7.5, z: 0}
   leftRespawnPointsParent: {fileID: 432936660}
   rightRespawnPointsParent: {fileID: 432936661}
@@ -478,7 +479,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!23 &837175484
 MeshRenderer:
   m_ObjectHideFlags: 0
