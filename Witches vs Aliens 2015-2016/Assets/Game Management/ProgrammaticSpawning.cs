@@ -27,9 +27,10 @@ public class ProgrammaticSpawning : MonoBehaviour, IObserver<Message> {
     [SerializeField]
     protected GameObject CountdownPrefab;
     [SerializeField]
-    protected GameObject ControllerPrefab;
-    [SerializeField]
     protected Vector3 countdownPosition;
+
+    [SerializeField]
+    protected GameObject ControllerPrefab;
 
     [SerializeField]
     [AutoLink(parentTag = Tags.stage, parentName = "Left")]
@@ -299,7 +300,7 @@ public class ProgrammaticSpawning : MonoBehaviour, IObserver<Message> {
         Instantiate(IntroMusicPrefab);
 
         Callback.FireAndForget(() => Instantiate(IntroCountdownPrefab), introCountdownVoiceDelay, this);
-        Callback.FireAndForget(() => Instantiate(ControllerPrefab), 0, this);
+        Instantiate(ControllerPrefab);
 
         float timeRemaining = introDuration;
 
