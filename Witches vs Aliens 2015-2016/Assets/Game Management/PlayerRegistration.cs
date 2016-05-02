@@ -206,7 +206,6 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
                 if (heldBack(i))
                 {
                     pressedTimes[i] += Time.deltaTime;
-                    Debug.Log(pressedTimes[i]);
                     if (pressedTimes[i] > keyHoldThreshold)
                         EndGame();
                 }

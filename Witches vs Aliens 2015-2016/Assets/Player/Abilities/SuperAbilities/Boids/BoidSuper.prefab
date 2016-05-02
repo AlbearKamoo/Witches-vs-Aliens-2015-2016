@@ -114,7 +114,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 333ef15274688334d9caf6e273fb1614, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  duration: 180
+  duration: 30
   boidPrefab: {fileID: 109554, guid: b6cb319720191ca43b7fbaa3f16230f9, type: 2}
   boidOverlay: {fileID: 184524, guid: e0f740c3c70b72e47b0aeea5f48ea198, type: 2}
   numBoids: 60
