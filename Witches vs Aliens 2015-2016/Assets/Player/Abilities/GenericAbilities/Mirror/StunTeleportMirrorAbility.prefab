@@ -165,7 +165,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   AbilityUIPrefab: {fileID: 156974, guid: 84971435ea446c143b8a8db9a71452e1, type: 2}
   cooldownTime: 2
-  hitVisualsPrefab: {fileID: 185536, guid: fbe4435a2bd3e1049974d7ab9cab36d9, type: 2}
+  hitVisualsPrefab: {fileID: 131210, guid: 8d7a58e7f4189b849a77430f9f5318fd, type: 2}
   radius: 5
   stunTime: 2
 --- !u!1001 &100100000
