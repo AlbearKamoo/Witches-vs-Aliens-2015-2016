@@ -15,10 +15,12 @@ public class StunTeleportAbility : TeleportMirrorAbility {
     List<GameObject> hitVisuals = new List<GameObject>();
     Countdown resetVisualsCountdown;
     MeshRenderer rend;
+    AudioSource audioSource;
 
     protected override void Awake()
     {
         base.Awake();
+        audioSource = GetComponent<AudioSource>();
         resetVisualsCountdown = new Countdown(() => Callback.Routines.FireAndForgetRoutine(clearHitVisuals, stunTime, this), this);
         rend = GetComponent<MeshRenderer>();
         rend.enabled = false;
@@ -33,6 +35,9 @@ public class StunTeleportAbility : TeleportMirrorAbility {
     protected override void onFire(Vector2 direction)
     {
         base.onFire(direction);
+
+        audioSource.Play();
+
         foreach (Collider2D coll in Physics2D.OverlapCircleAll(myRigidbody.position, radius))
         {
             hitTarget(coll.transform.root, stunTime);
