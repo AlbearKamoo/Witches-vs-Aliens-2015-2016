@@ -74,9 +74,6 @@ GameObject:
   - 114: {fileID: 11489954}
   - 114: {fileID: 11460504}
   - 114: {fileID: 11480236}
-  - 114: {fileID: 11421016}
-  - 114: {fileID: 11491074}
-  - 114: {fileID: 11418958}
   m_Layer: 5
   m_Name: Close Button
   m_TagString: Canvas
@@ -379,11 +376,9 @@ GameObject:
   - 114: {fileID: 11451530}
   - 114: {fileID: 11431130}
   - 114: {fileID: 11410588}
-  - 114: {fileID: 11453908}
   - 114: {fileID: 11476836}
   - 114: {fileID: 11438250}
   - 114: {fileID: 11409734}
-  - 114: {fileID: 11449186}
   m_Layer: 5
   m_Name: Quit
   m_TagString: Untagged
@@ -1117,30 +1112,6 @@ MonoBehaviour:
   m_EffectColor: {r: 0.29411763, g: 0.29411763, b: 0.29411763, a: 0.5}
   m_EffectDistance: {x: 1, y: -1}
   m_UseGraphicAlpha: 1
---- !u!114 &11418958
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 109882}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2ffa05e88045fae4b97e8c280ef1f88d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  key: 337
---- !u!114 &11421016
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 109882}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2ffa05e88045fae4b97e8c280ef1f88d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  key: 333
 --- !u!114 &11422158
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1507,18 +1478,6 @@ MonoBehaviour:
   OvertimeTextColor: {r: 1, g: 0.75208914, b: 0, a: 1}
   OvertimeOutlineColor: {r: 0.5019608, g: 0.2516795, b: 0, a: 0.5019608}
   timeRemainingSec: 180
---- !u!114 &11449186
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 163372}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2ffa05e88045fae4b97e8c280ef1f88d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  key: 13
 --- !u!114 &11449838
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1679,18 +1638,6 @@ MonoBehaviour:
   m_EffectColor: {r: 1, g: 1, b: 1, a: 0.5}
   m_EffectDistance: {x: 1, y: -1}
   m_UseGraphicAlpha: 1
---- !u!114 &11453908
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 163372}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2ffa05e88045fae4b97e8c280ef1f88d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  key: 337
 --- !u!114 &11455004
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2026,18 +1973,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   key: 337
---- !u!114 &11491074
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 109882}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2ffa05e88045fae4b97e8c280ef1f88d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  key: 331
 --- !u!114 &11494268
 MonoBehaviour:
   m_ObjectHideFlags: 1
