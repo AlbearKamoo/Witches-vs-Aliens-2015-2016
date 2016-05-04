@@ -6,6 +6,7 @@ using System.Linq;
 using UnityEngine.Assertions;
 
 [RequireComponent(typeof(SetupData))]
+[RequireComponent(typeof(AudioController))]
 public class PlayerRegistration : MonoBehaviour, INetworkable {
     [SerializeField]
     protected GameObject puckPrefab;
@@ -15,9 +16,6 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
 
     [SerializeField]
     protected GameObject nullSuperPrefab;
-
-    [SerializeField]
-    protected AudioClip countdownVoice;
 
     [SerializeField]
     protected Transform puckSpawnPoint;
@@ -78,6 +76,7 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
     GameObject pressStart;
 
     GameObject puck;
+    AudioController buttonSound;
 
     static PersistentRegistration[] previousRegistrationData = new PersistentRegistration[0];
 
@@ -90,6 +89,7 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
         }
 
         data = GetComponent<SetupData>();
+        buttonSound = GetComponent<AudioController>();
 
         localIDToPlayerID = new int[possiblePlayers.Length];
         for (int i = 0; i < localIDToPlayerID.Length; i++)
@@ -248,6 +248,8 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
 
     void OnPressedAccept(int localID)
     {
+        buttonSound.Play();
+
         pressedTimes[localID] = 0;
 
         switch (localIDToState(localID))
@@ -584,6 +586,8 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
 
     void OnPressedBack(int localID)
     {
+        buttonSound.Play();
+
         pressedTimes[localID] = 0;
 
         int playerID = localIDToPlayerID[localID];
