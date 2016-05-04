@@ -6,9 +6,9 @@ Material:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: JFAFirst
-  m_Shader: {fileID: 4800000, guid: a9c41aca669f6b9429de8737c9c8e4ce, type: 3}
-  m_ShaderKeywords: FIRST
+  m_Name: Shatter
+  m_Shader: {fileID: 4800000, guid: 95fb739c39dc6bb4f8b3b4b5d7f96832, type: 3}
+  m_ShaderKeywords: 
   m_LightmapFlags: 5
   m_CustomRenderQueue: 3000
   stringTagMap: {}
@@ -19,7 +19,7 @@ Material:
         first:
           name: _MainTex
         second:
-          m_Texture: {fileID: 0}
+          m_Texture: {fileID: 2800000, guid: 08f29a7d8a18b65439e696378c4c5349, type: 3}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
       data:
@@ -78,6 +78,13 @@ Material:
           m_Texture: {fileID: 0}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _StrengthMap
+        second:
+          m_Texture: {fileID: 2800000, guid: 5bf589adec7e5714a9f87bca4f9a392c, type: 3}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
     m_Floats:
       data:
         first:
@@ -129,20 +136,8 @@ Material:
         second: 0
       data:
         first:
-          name: _Width
-        second: 1024
-      data:
-        first:
-          name: _Height
-        second: 1024
-      data:
-        first:
-          name: _Distance
-        second: 1024
-      data:
-        first:
-          name: _FIRST
-        second: 0
+          name: _Strength
+        second: 0.02
     m_Colors:
       data:
         first:

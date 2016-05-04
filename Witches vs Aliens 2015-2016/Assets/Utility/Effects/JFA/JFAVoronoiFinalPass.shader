@@ -46,15 +46,18 @@
 				return o;
 			}
 
-			half JFADistance(half2 pos1, half2 pos2)
+						half JFADistance(half2 pos1, half2 pos2)
 			{
 				/*
 				half2 delta = abs(pos1 - pos2);
 				return max(delta.x, delta.y);
 				*/
+				/*
 				half2 delta = pos1 - pos2;
 				return max(abs(delta.x), max( abs(1.73205080757 * delta.y + delta.x) / 2, abs(1.73205080757 * delta.y - delta.x) / 2));
 				//1.73205080757 = sqrt(3)
+				*/
+				return distance(pos1, pos2);
 			}
 			
 			fixed4 frag (v2f i) : SV_Target
