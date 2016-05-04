@@ -19,6 +19,8 @@ public class GameEndScripting : MonoBehaviour, INetworkable
     [SerializeField]
     protected float gameEndTime;
     [SerializeField]
+    protected Text title;
+    [SerializeField]
     protected Image highlightGradient;
 
     [AutoLink(childPath = "WitchStats")]
@@ -107,6 +109,12 @@ public class GameEndScripting : MonoBehaviour, INetworkable
         }
 
         highlightGradient.color = Color.white;
+        if (leftScore < rightScore)
+            title.text = "Witches Win!";
+        else if (leftScore > rightScore)
+            title.text = "Aliens Win!";
+
+        title.color = title.color.setAlphaFloat(1);
 
         Callback.FireAndForget(() => Callback.DoLerp((float l) => continueTooltip.alpha = l, gameEndTime, this), gameEndTime, this);
         if (NetworkNode.node == null || NetworkNode.node is Server)
