@@ -140,6 +140,9 @@ public class RaygunAbility : AbstractGenericAbility, IOpponentsAbility {
         Reset(0);
         active = false;
 
+        sfx.clip = fireClip;
+        sfx.Play();
+
         HashSet<Transform> hitTargets = new HashSet<Transform>(); //use a set to prevent duplicates
 
         float angleDegrees = Mathf.Rad2Deg * angle;
