@@ -15,6 +15,7 @@ public class StunTeleportAbility : TeleportMirrorAbility {
     List<GameObject> hitVisuals = new List<GameObject>();
     Countdown resetVisualsCountdown;
     MeshRenderer rend;
+    Material mat;
     AudioSource audioSource;
 
     protected override void Awake()
@@ -23,6 +24,8 @@ public class StunTeleportAbility : TeleportMirrorAbility {
         audioSource = GetComponent<AudioSource>();
         resetVisualsCountdown = new Countdown(() => Callback.Routines.FireAndForgetRoutine(clearHitVisuals, stunTime, this), this);
         rend = GetComponent<MeshRenderer>();
+        mat = rend.material = Instantiate(rend.material);
+        mat.SetFloat("_MaxRadius", radius);
         rend.enabled = false;
     }
 
@@ -44,7 +47,7 @@ public class StunTeleportAbility : TeleportMirrorAbility {
         }
         resetVisualsCountdown.Play();
         rend.enabled = true;
-        Callback.FireAndForget(() => rend.enabled = false, 1, this);
+        Callback.DoLerp((float l) => mat.SetFloat("_Strength", l*l), 0.25f, this, reverse: true).FollowedBy(() => rend.enabled = false, this);
     }
 
     bool hitTarget(Transform hit, float stunTime)

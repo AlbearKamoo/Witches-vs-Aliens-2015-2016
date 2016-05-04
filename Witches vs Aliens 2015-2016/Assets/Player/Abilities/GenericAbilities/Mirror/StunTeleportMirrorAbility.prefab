@@ -10,9 +10,9 @@ GameObject:
   - 4: {fileID: 446252}
   - 114: {fileID: 11448108}
   - 33: {fileID: 3372396}
-  - 114: {fileID: 11463856}
   - 23: {fileID: 2322742}
   - 82: {fileID: 8282450}
+  - 114: {fileID: 11440090}
   m_Layer: 0
   m_Name: StunTeleportMirrorAbility
   m_TagString: Untagged
@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 148832}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 10, y: 10, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -42,7 +42,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000e000000000000000, type: 0}
+  - {fileID: 2100000, guid: 8a7c96a8ad5d42149a71666245c24b8e, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 1
@@ -64,7 +64,7 @@ MeshFilter:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 148832}
-  m_Mesh: {fileID: 0}
+  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!82 &8282450
 AudioSource:
   m_ObjectHideFlags: 1
@@ -76,7 +76,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: ef9b1f09b61e47543850393174006bc0, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.1
+  m_Volume: 0.15
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -86,7 +86,7 @@ AudioSource:
   MinDistance: 1
   MaxDistance: 500
   Pan2D: 0
-  rolloffMode: 0
+  rolloffMode: 2
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0
@@ -99,13 +99,13 @@ AudioSource:
       outSlope: 0
       tangentMode: 0
     - time: 1
-      value: 0
+      value: 0.99767447
       inSlope: 0
       outSlope: 0
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
+    m_RotationOrder: 0
   panLevelCustomCurve:
     serializedVersion: 2
     m_Curve:
@@ -139,6 +139,19 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
+--- !u!114 &11440090
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 148832}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa422b76a5fd55a408570c5e03954f7c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sortingLayer: Overlay
+  orderInLayer: 0
 --- !u!114 &11448108
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -154,21 +167,7 @@ MonoBehaviour:
   cooldownTime: 2
   hitVisualsPrefab: {fileID: 185536, guid: fbe4435a2bd3e1049974d7ab9cab36d9, type: 2}
   radius: 5
-  stunTime: 1
---- !u!114 &11463856
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 148832}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 08c4489f964fa8c429a2a0de54a30ba4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  innerRadius: 4
-  outerRadius: 5
-  numSides: 40
+  stunTime: 2
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
