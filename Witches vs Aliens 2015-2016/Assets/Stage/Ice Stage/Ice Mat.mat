@@ -83,8 +83,22 @@ Material:
           name: _NormalTex
         second:
           m_Texture: {fileID: 2800000, guid: 32523a87e4eae2745a06e301daf5a7a6, type: 3}
-          m_Scale: {x: 1, y: 1}
+          m_Scale: {x: 4, y: 4}
           m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _NormalTex1
+        second:
+          m_Texture: {fileID: 2800000, guid: 32523a87e4eae2745a06e301daf5a7a6, type: 3}
+          m_Scale: {x: 3, y: 3}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _NormalTex2
+        second:
+          m_Texture: {fileID: 2800000, guid: 32523a87e4eae2745a06e301daf5a7a6, type: 3}
+          m_Scale: {x: 2, y: 2}
+          m_Offset: {x: 0.5, y: 0}
     m_Floats:
       data:
         first:
@@ -137,7 +151,11 @@ Material:
       data:
         first:
           name: _Shine
-        second: 200
+        second: 30
+      data:
+        first:
+          name: _DistortionStrength
+        second: 0.066
     m_Colors:
       data:
         first:
@@ -146,7 +164,7 @@ Material:
       data:
         first:
           name: _Color
-        second: {r: 1, g: 1, b: 1, a: 1}
+        second: {r: 0.12687428, g: 0.3018733, b: 0.5882353, a: 1}
       data:
         first:
           name: _LightVector
