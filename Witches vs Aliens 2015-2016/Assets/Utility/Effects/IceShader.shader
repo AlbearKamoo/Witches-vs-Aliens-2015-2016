@@ -86,7 +86,7 @@
 
 
 
-				return (lightingCol * (1 - col.a / 4)) + col / 4;
+				return (lightingCol * (1 - col.a / 4)) + (1 + _Color) * col / 8;
 			}
 			ENDCG
 		}
