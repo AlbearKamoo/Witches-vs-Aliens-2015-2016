@@ -32,6 +32,10 @@ public class ShockwaveAbility : AbstractGenericAbility
 
     AudioSource sfx;
 
+    float particleStartLifetime;
+    Vector2 initialLocalScale;
+    float progress;
+
     // Use this for initialization
     protected override void Awake()
     {
@@ -41,6 +45,9 @@ public class ShockwaveAbility : AbstractGenericAbility
         {
             particles.startSize = 2 * radius;
         }
+
+        particleStartLifetime = chargingvfx.startLifetime;
+        initialLocalScale = background.localScale;
     }
 
     protected override void onFire(Vector2 direction)
@@ -54,13 +61,19 @@ public class ShockwaveAbility : AbstractGenericAbility
         background.gameObject.SetActive(true);
         Vector2 initialLocalScale = background.localScale;
 
-        Callback.DoLerp((float l) => background.localScale = initialLocalScale - backgroundMagnitude * Mathf.Sin(10 * Mathf.PI * l) * Vector2.one, chargeUp, this).FollowedBy(() =>
+        Callback.DoLerp((float l) =>
+        {
+            progress = l;
+            background.localScale = initialLocalScale - backgroundMagnitude * Mathf.Sin(10 * Mathf.PI * l) * Vector2.one;
+            chargingvfx.startSize = 2 + (2 * radius * l);
+            chargingvfx.startLifetime = particleStartLifetime * l;
+        }, chargeUp, this).FollowedBy(() =>
         {
             background.localScale = initialLocalScale;
 
             StopChargingFX();
 
-            if(active)
+            if (active)
             {
                 Instantiate(wavevfx, this.transform.position, Quaternion.identity);
 
@@ -81,13 +94,47 @@ public class ShockwaveAbility : AbstractGenericAbility
                             hitRigidbody.velocity = limiter.maxSpeed * displacement;
                             if (hit.CompareTag(Tags.puck))
                                 hit.GetComponent<LastBumped>().setLastBumped(this.transform.root);
+                        }
                     }
                 }
-            }
-            active = false;
+                active = false;
             }
         }, this);
     }
+
+    protected override bool onFireActive(Vector2 direction)
+    {
+        background.localScale = initialLocalScale;
+
+        StopChargingFX();
+
+        GameObject instantiatedWave = Instantiate(wavevfx, this.transform.position, Quaternion.identity) as GameObject;
+        instantiatedWave.GetComponent<ShockwaveWave>().scale = progress;
+        Vector2 thisPosition = this.transform.position;
+        foreach (Collider2D hit in Physics2D.OverlapCircleAll(thisPosition, progress * radius))
+        {
+            ISpeedLimiter limiter = hit.GetComponentInParent<ISpeedLimiter>();
+            if (limiter != null)
+            {
+                if (!affectsPlayers && hit.CompareTag(Tags.player))
+                    continue;
+
+                Vector2 displacement = ((Vector2)(hit.transform.position)) - thisPosition;
+                if (displacement != Vector2.zero)
+                {
+                    Rigidbody2D hitRigidbody = hit.GetComponentInParent<Rigidbody2D>();
+                    displacement.Normalize();
+                    hitRigidbody.velocity = limiter.maxSpeed * displacement;
+                    if (hit.CompareTag(Tags.puck))
+                        hit.GetComponent<LastBumped>().setLastBumped(this.transform.root);
+                }
+            }
+        }
+        active = false;
+
+        return true;
+    }
+
 
     void StopChargingFX()
     {

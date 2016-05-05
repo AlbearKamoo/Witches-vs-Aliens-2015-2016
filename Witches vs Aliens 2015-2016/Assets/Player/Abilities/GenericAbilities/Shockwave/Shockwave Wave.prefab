@@ -48,6 +48,7 @@ GameObject:
   - 198: {fileID: 19888690}
   - 114: {fileID: 11404376}
   - 82: {fileID: 8235718}
+  - 114: {fileID: 11412854}
   m_Layer: 0
   m_Name: Shockwave Wave
   m_TagString: Untagged
@@ -212,6 +213,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   time: 2
+--- !u!114 &11412854
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 187954}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2453a9736c0543b41aa6ce4091895141, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &11444874
 MonoBehaviour:
   m_ObjectHideFlags: 1

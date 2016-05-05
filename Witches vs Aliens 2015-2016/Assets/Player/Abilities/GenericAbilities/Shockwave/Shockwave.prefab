@@ -313,7 +313,7 @@ ParticleSystem:
   speed: 1
   randomSeed: 0
   looping: 1
-  prewarm: 1
+  prewarm: 0
   playOnAwake: 0
   moveWithTransform: 1
   scalingMode: 2
@@ -321,7 +321,7 @@ ParticleSystem:
     serializedVersion: 2
     enabled: 1
     startLifetime:
-      scalar: 1.5
+      scalar: 0.75
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -633,7 +633,7 @@ ParticleSystem:
     serializedVersion: 2
     m_Type: 0
     rate:
-      scalar: 6
+      scalar: 15
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -824,7 +824,7 @@ ParticleSystem:
           rgba: 246
         key1:
           serializedVersion: 2
-          rgba: 4279521002
+          rgba: 3356774122
         key2:
           serializedVersion: 2
           rgba: 4278190080
@@ -852,7 +852,7 @@ ParticleSystem:
         ctime6: 0
         ctime7: 0
         atime0: 0
-        atime1: 65535
+        atime1: 6554
         atime2: 65535
         atime3: 0
         atime4: 0
@@ -860,7 +860,7 @@ ParticleSystem:
         atime6: 0
         atime7: 0
         m_NumColorKeys: 2
-        m_NumAlphaKeys: 2
+        m_NumAlphaKeys: 3
       minGradient:
         key0:
           serializedVersion: 2
@@ -1833,7 +1833,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1441101375
   m_SortingOrder: -1
-  m_Sprite: {fileID: 21300000, guid: 4b351ede06c875042b59560817b25338, type: 3}
+  m_Sprite: {fileID: 21300000, guid: fc493c887ec356945bee1b623129dcb9, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 0.5019608}
   m_FlipX: 0
   m_FlipY: 0
@@ -1863,7 +1863,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1441101375
   m_SortingOrder: -1
-  m_Sprite: {fileID: 21300000, guid: 4b351ede06c875042b59560817b25338, type: 3}
+  m_Sprite: {fileID: 21300000, guid: fc493c887ec356945bee1b623129dcb9, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 0.5019608}
   m_FlipX: 0
   m_FlipY: 0
