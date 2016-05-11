@@ -523,8 +523,14 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
                 }
                 break;
         }
-        GameObject.Instantiate(character.movementAbility).transform.SetParent(spawnedPlayer.transform, false);
-        GameObject.Instantiate(character.genericAbility).transform.SetParent(spawnedPlayer.transform, false);
+        GameObject movementAbility = GameObject.Instantiate(character.movementAbility);
+        movementAbility.GetComponentInChildren<NotSuperAbility>().cooldownTime /= 4;
+        movementAbility.transform.SetParent(spawnedPlayer.transform, false);
+
+        GameObject genericAbility = GameObject.Instantiate(character.genericAbility);
+        genericAbility.GetComponentInChildren<NotSuperAbility>().cooldownTime /= 4;
+        genericAbility.transform.SetParent(spawnedPlayer.transform, false);
+
         GameObject.Instantiate(nullSuperPrefab).transform.SetParent(spawnedPlayer.transform, false);
 
         GameObject instantiatedMeshInteraction = GameObject.Instantiate(meshInteraction);
@@ -717,7 +723,6 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
 
             if (GameSelection.balancedTeams)
             {
-                Debug.Log("Ding");
                 switch (r.context.charactersData[r.SelectedCharacterID].character.side)
                 {
                     case Side.LEFT:

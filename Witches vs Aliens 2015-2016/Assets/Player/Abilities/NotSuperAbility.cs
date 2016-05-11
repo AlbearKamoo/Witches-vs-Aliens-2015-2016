@@ -7,7 +7,7 @@ public abstract class NotSuperAbility : AbstractAbility, IObservable<AbilityStat
     protected GameObject AbilityUIPrefab;
 
     [SerializeField]
-    protected float cooldownTime;
+    public float cooldownTime;
 
     Observable<AbilityStateChangedMessage> _stateChangedObservable = new Observable<AbilityStateChangedMessage>();
     public Observable<AbilityStateChangedMessage> Observable(IObservable<AbilityStateChangedMessage> self)
@@ -33,11 +33,12 @@ public abstract class NotSuperAbility : AbstractAbility, IObservable<AbilityStat
 
     protected virtual void Awake()
     {
-        cooldownCountdown = new Countdown(Cooldown, this);
+        //cooldownCountdown = new Countdown(Cooldown, this); //moved to start
     }
 
     protected virtual void Start()
     {
+        cooldownCountdown = new Countdown(Cooldown, this);
         GameObject UI = Instantiate(AbilityUIPrefab);
         UI.transform.SetParent(transform.root.GetComponentInChildren<AbilityUIParent>().transform, false);
         UI.GetComponent<AbstractAbilityUI>().Construct(constructorInfo());
