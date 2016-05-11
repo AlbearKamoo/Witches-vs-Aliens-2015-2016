@@ -53,6 +53,9 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
     [AutoLink(parentTag = Tags.canvas, childPath = "RegisteredAlienPlayers")]
     protected Transform UIParentAlien;
 
+    const float horizontalBounds = 28;
+    const float verticalBounds = 8;
+
     SetupData data;
     Dictionary<int, Registration> registeredPlayers = new Dictionary<int, Registration>(); //int key is the playerID
 
@@ -116,6 +119,7 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
         puck = Instantiate(puckPrefab);
 
         puck.GetComponent<Rigidbody2D>().velocity = puck.GetComponent<ISpeedLimiter>().maxSpeed * Random.insideUnitCircle;
+        puck.gameObject.AddComponent<OutOfBoundsCheck>().Init(new Vector2(-horizontalBounds, -verticalBounds), new Vector2(horizontalBounds, verticalBounds));
         GameObject.Instantiate(meshInteraction).transform.SetParent(puck.transform, false);
 
 
@@ -489,6 +493,7 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
         CharacterComponents character = charactersData[data.SelectedCharacterID].character;
 
         GameObject spawnedPlayer = (GameObject)Instantiate(character.basePlayer);
+        spawnedPlayer.AddComponent<OutOfBoundsCheck>().Init(new Vector2(-horizontalBounds, -verticalBounds), new Vector2(horizontalBounds, verticalBounds));
         Stats spawnedStats = spawnedPlayer.AddComponent<Stats>();
         spawnedStats.side = character.side;
         spawnedStats.playerID = playerID;
