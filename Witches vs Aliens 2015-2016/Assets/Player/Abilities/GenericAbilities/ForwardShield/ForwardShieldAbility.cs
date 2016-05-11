@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
-public class ForwardShieldAbility : TimedGenericAbility, IObserver<MovementAbilityFiredMessage>
+public class ForwardShieldAbility : TimedGenericAbility, IObserver<MovementAbilityFiredMessage>, IIgnoreSpawnedColliders
 {
     [SerializeField]
     protected GameObject forwardShieldPrefab;
@@ -9,11 +10,25 @@ public class ForwardShieldAbility : TimedGenericAbility, IObserver<MovementAbili
     GameObject forwardShield;
     InputToAction action;
     FloatStat massMod;
+    Collider2D shieldCol;
+
+    List<Collider2D> ignoreCollisionList = new List<Collider2D>();
+
+    public void ignoreColliders(IEnumerable<Collider2D> colliders)
+    {
+        ignoreCollisionList.AddRange(colliders);
+    }
+
+    public void ignoreCollider(Collider2D collider)
+    {
+        ignoreCollisionList.Add(collider);
+    }
 
     protected override void Awake()
     {
         base.Awake();
         forwardShield = GameObject.Instantiate(forwardShieldPrefab);
+        shieldCol = forwardShield.GetComponentInChildren<Collider2D>();
         forwardShield.SetActive(false);
     }
 
@@ -39,6 +54,8 @@ public class ForwardShieldAbility : TimedGenericAbility, IObserver<MovementAbili
     {
         base.OnActivate();
         forwardShield.SetActive(true);
+        foreach (Collider2D coll in ignoreCollisionList)
+            Physics2D.IgnoreCollision(shieldCol, coll); //ignore collision gets wiped when the collider is deactivated
         massMod = action.mass.addModifier(99f);
     }
 
@@ -49,4 +66,11 @@ public class ForwardShieldAbility : TimedGenericAbility, IObserver<MovementAbili
         action.mass.removeModifier(massMod);
         massMod = null;
     }
+}
+
+public interface IIgnoreSpawnedColliders
+{
+    void ignoreColliders(IEnumerable<Collider2D> colliders);
+
+    void ignoreCollider(Collider2D collider);
 }

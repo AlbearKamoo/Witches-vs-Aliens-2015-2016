@@ -9,10 +9,14 @@ public class TurbineSuper : TimedSuperAbility, IAlliesAbility
     protected GameObject turbinePrefab;
 
     List<Collider2D> allyColliders;
+
+    List<Transform> _allies;
+
     public List<Transform> allies 
     { 
         set
         {
+            _allies = value;
             allyColliders = new List<Collider2D>();
             for (int i = 0; i < value.Count; i++)
             {
@@ -26,8 +30,16 @@ public class TurbineSuper : TimedSuperAbility, IAlliesAbility
     protected override void Start()
     {
         turbine = Instantiate(turbinePrefab).GetComponent<Turbine>();
+        Collider2D[] turbineColliders = turbine.GetComponentsInChildren<Collider2D>(true);
+        foreach (Transform ally in _allies)
+        {
+            foreach (IIgnoreSpawnedColliders i in ally.GetComponentsInChildren<IIgnoreSpawnedColliders>())
+            {
+                i.ignoreColliders(turbineColliders);
+            }
+        }
         base.Start();
-        //ready = true; //for easy testing
+        ready = true; //for easy testing
         turbine.active = false;
     }
 
