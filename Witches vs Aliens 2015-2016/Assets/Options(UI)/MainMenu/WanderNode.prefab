@@ -45,7 +45,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  speed: 40
+  speed: 20
   accel: 1
 --- !u!114 &11406960
 MonoBehaviour:
