@@ -17,6 +17,7 @@ public class WandererSpawner : MonoBehaviour {
         for(int i = 0; i < numWanderers; i++)
         {
             GameObject instantiatedWanderer = Instantiate(wandererPrefab);
+            instantiatedWanderer.GetComponentInChildren<IHueShiftableVisuals>().shift = new Vector2(Random.value, Random.value);
             instantiatedWanderer.transform.position = node.targetPosition();
             node.direct(instantiatedWanderer.GetComponent<Wanderer>());
         }
