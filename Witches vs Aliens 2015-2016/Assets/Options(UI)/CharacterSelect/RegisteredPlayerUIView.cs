@@ -39,6 +39,11 @@ public class RegisteredPlayerUIView : MonoBehaviour, ISpawnable {
         background = GetComponent<Image>();
 
         myMat = CharacterSprite.material = Instantiate(CharacterSprite.material);
+
+        if (GameSelection.colorBounds)
+        {
+            visualsSelectSensitivity = 0;
+        }
 	}
 
     public void Create()
