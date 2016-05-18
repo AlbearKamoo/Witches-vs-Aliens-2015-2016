@@ -29,6 +29,7 @@ GameObject:
   - 33: {fileID: 3338094}
   - 23: {fileID: 2326760}
   - 114: {fileID: 11417272}
+  - 114: {fileID: 11459370}
   m_Layer: 0
   m_Name: BoidsOverlay
   m_TagString: Untagged
@@ -150,6 +151,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b94dc86103b8634085ceab4cad0950b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &11459370
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 184524}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa422b76a5fd55a408570c5e03954f7c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sortingLayer: Stage
+  orderInLayer: 5
 --- !u!114 &11464400
 MonoBehaviour:
   m_ObjectHideFlags: 1

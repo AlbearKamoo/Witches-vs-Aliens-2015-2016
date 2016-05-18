@@ -89,7 +89,12 @@
 				//outline
 				normalizedAlpha = 1 - normalizedAlpha;
 				normalizedAlpha *= normalizedAlpha;
-				result.rb += normalizedAlpha;
+
+				//purple coloring
+				//result.rb += normalizedAlpha;
+
+				//inverted purple coloring
+				result.g += normalizedAlpha / 2;
 
 				return result;
 			}
