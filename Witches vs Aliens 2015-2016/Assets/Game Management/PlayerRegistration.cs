@@ -1063,6 +1063,13 @@ public class PlayerRegistration : MonoBehaviour, INetworkable {
             node.Unsubscribe(this);
             node.Clear();
         }
+
+        if (MenuMusic.singleton != null)
+        {
+            Destroy(MenuMusic.singleton.gameObject);
+            MenuMusic.singleton = null;
+        }
+
         Destroy(this);
         Destroy(pressStart.gameObject);
 

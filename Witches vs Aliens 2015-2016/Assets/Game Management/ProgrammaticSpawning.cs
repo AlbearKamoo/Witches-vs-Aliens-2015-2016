@@ -89,6 +89,7 @@ public class ProgrammaticSpawning : MonoBehaviour, IObserver<Message> {
     void Awake () {
 
         Assert.IsTrue(Time.timeScale == 1);
+        Assert.IsTrue(MenuMusic.singleton == null);
         if (Time.timeScale != 1)
         {
             Pause.unPause();
