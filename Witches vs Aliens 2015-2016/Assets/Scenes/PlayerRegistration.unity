@@ -121,7 +121,7 @@ MonoBehaviour:
   nullSuperPrefab: {fileID: 105680, guid: 5f1280ea6606137478581a28ca3a2475, type: 2}
   puckSpawnPoint: {fileID: 718076068}
   mainGameSceneName: Derek
-  mainMenuSceneName: Main Menu
+  mainMenuSceneName: Main Menu with Wanderers
   playerRegistrationPrefab: {fileID: 171078, guid: df99a46226850ad4194db9a6272820ae,
     type: 2}
   playerRegistrationUIPrefab: {fileID: 188064, guid: 7d3002974c2c21c4395e3760c66a4b4f,
