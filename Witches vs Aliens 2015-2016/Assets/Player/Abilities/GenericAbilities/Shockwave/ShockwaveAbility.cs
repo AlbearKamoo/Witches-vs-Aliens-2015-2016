@@ -65,7 +65,7 @@ public class ShockwaveAbility : AbstractGenericAbility
         {
             progress = l;
             background.localScale = initialLocalScale - backgroundMagnitude * Mathf.Sin(10 * Mathf.PI * l) * Vector2.one;
-            chargingvfx.startSize = 2 + (2 * radius * l);
+            chargingvfx.startSize = 1 + (2 * radius * l);
             chargingvfx.startLifetime = particleStartLifetime * l;
         }, chargeUp, this).FollowedBy(() =>
         {

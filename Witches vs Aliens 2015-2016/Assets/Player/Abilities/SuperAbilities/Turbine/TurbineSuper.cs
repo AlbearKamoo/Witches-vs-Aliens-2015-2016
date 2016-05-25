@@ -39,7 +39,7 @@ public class TurbineSuper : TimedSuperAbility, IAlliesAbility
             }
         }
         base.Start();
-        ready = true; //for easy testing
+        //ready = true; //for easy testing
         turbine.active = false;
     }
 
