@@ -252,7 +252,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: PLAY LAN
+  m_Text: ADV. SETUP
 --- !u!222 &122109568
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -324,7 +324,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -130}
-  m_SizeDelta: {x: 600, y: 100}
+  m_SizeDelta: {x: 750, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &218926109
 MonoBehaviour:
@@ -2294,26 +2294,18 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 70
+    m_FontSize: 218
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 1
-    m_MaxSize: 140
-    m_Alignment: 7
+    m_MaxSize: 218
+    m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "OpportunistAimBonus=10\r\nEstablishedDefensesArmorBonus=1\r\nEstablishedDefensesDefenseBonus=10\t\t;
-    Not in use\r\nHarrierAimBonus=10\r\nHarrierCritBonus=20\r\nCripplingShotAimBonus=30\t\t\t\t;
-    Deprecated\r\nCripplingShotAmmoCost=1\t\t\t\t\t; Deprecated\r\nCripplingShotActionPointCost=1\t\t\t;
-    Deprecated\r\nCripplingShotCooldown=4\t\t\t\t\t; Deprecated\r\nCripplingShotDuration=2\t\t\t\t\t;
-    Deprecated\r\nCripplingShotMobilityReduction=-6\t\t; Deprecated\r\nCripplingShotDodgeReduction=-15\t\t\t;
-    Deprecated\r\nStaggeringShotAimBonus=30\r\nStaggeringShotAmmoCost=1\r\nStaggeringShotActionPointCost=1\r\nStaggeringShotCooldown=4\r\nStaggeringShotDodgeReduction=-20\r\nStaggeringShotDuration=2\r\nShakeItOffWillBonus=10\r\nStickAndMoveDamageBonus=2\r\nStickAndMoveDefenseBonus=20\r\nStickAndMoveMobilityBonus=4\r\nStickAndMoveMobilityDuration=1\t\t\t;
-    Deprecated\r\nStickAndMoveDodgeBonus=20\t\t\t\t; Deprecated\r\nStickAndMoveDodgeDuration=1\t\t\t\t;
-    Deprecated\r\nExplosiveActionCooldown=3\r\nExplosiveActionBonusActionPoints=1\r\nExplosiveActionRecoveryDelay=1\r\nExplosiveActionRecoveryActionPoints=1\r\nZoneOfControlReactionFireRadius=5\r\nZoneOfControlReactionFireShotsPerTurn=1\r\nZoneOfControlCounterAttackChance=75\r\nZoneOfControlCountersPerTurn=1\r\nFlareCharges=2\r\nFlareCooldown=1\r\nFlareRadius=4\r\nFlareHeight=3\r\nFlareRange=18\r\nFlareDuration=1\r\nEscapeAndEvadeCooldown=5\r\nEscapeAndEvadeDodgeBonus=15\t\t\t\t;
-    Deprecated\r\nEscapeAndEvadeDetectionRadiusModifier=0.70f\r\nEscapeAndEvadeStealthDuration=1\r\nDeepReservesWoundPercentToHeal=0.5f\r\nDeepReservesDamagePercentToHeal=0.5f\r\nDeepReservesMaxHealPerTurn=2\r\nDeepReservesMaxTotalHealAmount=8\r\nFireForEffectCooldown=3\r\nFireForEffectRadius=3\r\nFireForEffectAmmoCost=3\r\nFireForEffectAbilityPointCost=1\r\nFireForEffectRange=25\r\nExtraConditioningHealthBonus=2\r\nExtraConditioningAimBonus=4\r\nExtraConditioningWillBonus=4\r\n\r\n[LucubrationsInfantryClass.X2Effect_EstablishedDefenses]\r\nLowCoverBonusArmor=1\r\nHighCoverBonusArmor=2\r\nBonusArmorChance=100\r\n\r\n[LucubrationsInfantryClass.X2Effect_CripplingShotDamage]\r\nDamageMultiplier=-0.75f\r\n\r\n[LucubrationsInfantryClass.X2Effect_StaggeringShotDamage]\r\nDamageMultiplier=-0.5f\r\n\r\n[LucubrationsInfantryClass.X2Effect_Illuminated]\r\nDefensePenalty=-10\r\n\r\n[LucubrationsInfantryClass.X2Effect_Resilience]\r\nCritChancePenalty=-200\r\n"
+  m_Text: Long Ago, In the land of seas...
 --- !u!222 &1901500136
 CanvasRenderer:
   m_ObjectHideFlags: 0
