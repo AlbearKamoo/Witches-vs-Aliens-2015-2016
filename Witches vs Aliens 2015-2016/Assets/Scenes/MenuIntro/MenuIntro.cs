@@ -18,10 +18,21 @@ public class MenuIntro : MonoBehaviour {
         else
         {
             disabled = true;
+            /*
             Callback.FireAndForget(() => {
-                Instantiate(menuMusic);
-                Destroy(this.gameObject);
-            }, 5, this);
+                
+            }, GetComponent<AudioSource>().clip.length, this);
+            */
+            CanvasGroup alphaControl = GetComponent<CanvasGroup>();
+
+            Callback.FireAndForget(() =>
+            {
+                Callback.DoLerp((float l) => alphaControl.alpha = l * l * l, 2, this, reverse: true).FollowedBy(() =>
+                {
+                    Instantiate(menuMusic);
+                    Destroy(this.gameObject);
+                }, this);
+            }, GetComponent<AudioSource>().clip.length - 2, this);
         }
 	}
 
