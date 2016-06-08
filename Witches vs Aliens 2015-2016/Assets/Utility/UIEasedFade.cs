@@ -15,6 +15,9 @@ public class UIEasedFade : MonoBehaviour {
     [SerializeField]
     protected float transitionTime;
 
+    [SerializeField]
+    protected GameObject defaultSelectedObject;
+
 	// Use this for initialization
 	void Awake () {
         canvasGroup = GetComponent<CanvasGroup>();
@@ -26,6 +29,7 @@ public class UIEasedFade : MonoBehaviour {
         target = 1f;
         canvasGroup.interactable = true;
         canvasGroup.blocksRaycasts = true;
+        UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(defaultSelectedObject);
         moveTarget.Play();
     }
 
